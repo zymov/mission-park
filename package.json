@@ -1,0 +1,43 @@
+{
+  "name": "mission-park",
+  "version": "0.1.0",
+  "description": "A task distribution platform build with react and nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zymokey/mission-park.git"
+  },
+  "author": "zym",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zymokey/mission-park/issues"
+  },
+  "homepage": "https://github.com/zymokey/mission-park#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "material-ui": "^0.16.6",
+    "mongoose": "^4.7.7",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-router": "^3.0.1",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "css-loader": "^0.26.1",
+    "nodemon": "^1.11.0",
+    "react-hot-loader": "^1.3.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
