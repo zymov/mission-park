@@ -1,27 +1,34 @@
 import React from 'react';
 import {render} from 'react-dom';
+import {Provider} from 'react-redux';
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 import SignIn from './views/sign_in.jsx';
 import SignUp from './views/sign_up.jsx';
 import Home from './views/home.jsx';
+import store from './store';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends React.Component {
 	render(){
 		return(
-			<div>
+			<MuiThemeProvider muiTheme={getMuiTheme()}>
         {this.props.children}
-			</div>
+			</MuiThemeProvider>
 		);
 	}
 }
 
 render(
 	(
-		<Router history={browserHistory} >
-			<Route path="/" component={App} >
-				<IndexRoute component={Home} />
-				<Route path="signin" component={SignIn} />
-				<Route path="signup" component={SignUp} />
-			</Route>
-		</Router>
+		<Provider store={store} >
+			<Router history={browserHistory} >
+				<Route path="/" component={App} >
+					<IndexRoute component={Home} />
+					<Route path="signin" component={SignIn} />
+					<Route path="signup" component={SignUp} />
+				</Route>
+			</Router>
+		</Provider>
 	), document.getElementById('app'));

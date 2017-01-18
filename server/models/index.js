@@ -8,7 +8,7 @@ module.exports.connect = ()=>{
 		console.error(`connection error: ${err}`);
 		process.exit(1);
 	});
-	
-	require('./user');
+
+	var User = require('./user');
 
 }
