@@ -40,7 +40,7 @@ app.use(flash());
 app.use('/', express.static(path.join(__dirname, '../')));
 
 const authRouter = require('./routes/auth');
-app.use('/', authRouter);
+app.use('/auth', authRouter);
 
 
 app.get('*', function (req, res){
