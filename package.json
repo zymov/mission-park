@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js"
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,11 +18,19 @@
   },
   "homepage": "https://github.com/zymokey/mission-park#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.16.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
+    "express-session": "^1.14.2",
     "jsonwebtoken": "^7.2.1",
     "jwt-decode": "^2.1.0",
     "material-ui": "^0.16.6",
     "mongoose": "^4.7.7",
+    "morgan": "^1.7.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",

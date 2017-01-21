@@ -29,7 +29,7 @@ export function logout(){
 	}
 }
 
-export function loginUser(email, password, redirect='/'){
+export function signinUser(email, password, redirect='/'){
 	return function(dispatch){
 		dispatch(loginRequest());
 		formData = `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
@@ -56,6 +56,15 @@ export function loginUser(email, password, redirect='/'){
 	}
 }
 
+export function signupUser(name, email, password, redirect='/'){
+	// const name = encodeURIComponent(this.state.user.name);
+ //  const email = encodeURIComponent(this.state.user.email);
+ //  const password = encodeURIComponent(this.state.user.password);
+ //  const formData = `name=${name}&email=${email}&password=${password}`;
+
+ 
+}
+
 export function receivePersonalHomeData(data) {
 	return {
 		type: RECEIVE_PERSONAL_HOME_DATA,
@@ -75,7 +84,7 @@ export function fetchPersonalHomeData(token) {
 	return (dispatch, state) => {
 		dispatch(fetchPersonalHomeDataRequest());
 		const xhr = new XMLHttpRequest();
-    xhr.open('get', '/api/dashboard');
+    xhr.open('get', '/');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     // set the authorization HTTP header
     xhr.setRequestHeader('Authorization', `bearer ${token}`);

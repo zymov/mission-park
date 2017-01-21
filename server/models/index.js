@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
-module.exports.connect = ()=>{
-	mongoose.connect('mongodb://localhost/mission_park');
+module.exports.connect = (url)=>{
+	mongoose.connect(url);
 
 	var db = mongoose.connection;
 	db.on('error', (err)=>{
