@@ -73,14 +73,14 @@ module.exports = function(passport){
 				if(!user){
 
 					var error = new Error('No user found.');
-					error.name = 'IncorrectCredentialsError';
+					error.name = 'IncorrectEmail';
 					return done(error);
 
 				}
 				if(!user.validPassword(password)){
 
 					var error = new Error('Incorrect password.');
-					error.name = 'IncorrectCredentialsError';
+					error.name = 'IncorrectPassword';
 					return done(error);
 
 				} 

@@ -72,7 +72,7 @@ router.post('/signup', (req, res, next)=>{
 	return passport.authenticate('local-signup', (err)=> {
 		if(err){
 
-			if(err.name === 'MongoError' && err.code === 11000){
+			if((err.name === 'MongoError' && err.code === 11000) || err.name === 'IncorrectCredentialsError'){
         // the 11000 Mongo code is for a duplication email error
         // the 409 HTTP status code is for conflict error
 				return res.status(409).json({
@@ -83,7 +83,15 @@ router.post('/signup', (req, res, next)=>{
 					}
 				});
 			}
-
+			// else if(err.name === 'IncorrectCredentialsError'){
+			// 	return res.status(400).json({
+			// 		success: false,
+			// 		message: 'Check the form for errors.',
+			// 		errors: {
+			// 			email: 'This email is already taken.'
+			// 		}
+			// 	})
+			// }
 			return res.status(400).json({
 				success: false,
 				message: 'Could not process the form.',
@@ -118,11 +126,23 @@ router.post('/signin', (req, res, next)=>{
 
   return passport.authenticate('local-signin', (err, token, userData)=>{
   	if (err) {
-      if (err.name === 'IncorrectCredentialsError') {
+      if (err.name === 'IncorrectEmail') {
         return res.status(400).json({
           success: false,
-          message: err.message
+          message: 'Check the form for errors.',
+          errors: {
+          	email: 'No user found.'
+          }
         });
+      }
+      else if(err.name === 'IncorrectPassword') {
+				return res.status(400).json({
+					success: false,
+					message: 'Check the form for errors.',
+					errors: {
+						password: 'Incorrect password.'
+					}
+				});
       }
 
       return res.status(400).json({
