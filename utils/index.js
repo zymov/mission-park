@@ -24,3 +24,12 @@ export function createReducer(initialState, reducerMap) {
       : state;
   };
 }
+
+
+export function checkUserSignin(){
+  return !!localStorage.getItem('token');
+}
+
+export function deAuthenticateUser(){
+  localStorage.removeItem('token');
+}

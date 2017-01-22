@@ -9,6 +9,7 @@ import store from './store';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {deAuthenticateUser} from '../utils';
 
 class App extends React.Component {
 	render(){
@@ -26,6 +27,7 @@ render(
 			<Router history={browserHistory} >
 				<Route path="/" component={App} >
 					<IndexRoute component={Home} />
+					<Route path="signout" onEnter={ (nextState, replace)=>{deAuthenticateUser(); replace('/')} } />
 					<Route path="signin" component={SignIn} />
 					<Route path="signup" component={SignUp} />
 				</Route>
