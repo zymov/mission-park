@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router';
 import { Card, CardText } from 'material-ui/Card';
@@ -122,6 +122,10 @@ class SignUp extends React.Component {
 // 	email: state.email,
 // 	password: state.password
 // });
+
+SignUp.contextTypes = {
+	router: PropTypes.object.isRequired
+}
 
 export default SignUp;
 // connect(mapStateToProps)(SignUp);

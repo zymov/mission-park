@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
 require('./models').connect(require('../config/dbUrl').url);	//connect db
-require('../config/passport');
 
 var path = require('path');
 var express = require('express');
 var app = express();
 
 var passport = require('passport');
+
 var flash = require('connect-flash');
 
 
@@ -23,17 +23,18 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser());
 
-require('../config/passport')(passport);
 
 app.use(passport.initialize());
-app.use(passport.session());
-// app.use(express.cookieParser('keyboard cat'));
+//use express session before passport session to ensure that the login session is restored in the correct order.
 app.use(session({ 
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: true }
 }));
+app.use(passport.session());
+require('../config/passport')(passport);
+// app.use(express.cookieParser('keyboard cat'));
 app.use(flash());
 
 

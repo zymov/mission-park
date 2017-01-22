@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {Link} from 'react-router';
@@ -55,7 +55,6 @@ class SignIn extends React.Component {
 
         // save the token
         localStorage.setItem('token', xhr.response.token);
-
         // change the current URL to /
         this.context.router.replace('/');
       } else {
@@ -130,6 +129,10 @@ class SignIn extends React.Component {
 // const mapDispatchToProps = (dispatch) => ({
 // 	actions: bindActionCreators(actionCreators, dispatch)
 // });
+
+SignIn.contextTypes = {
+	router: PropTypes.object.isRequired
+}
 
 export default SignIn;
 // connect(mapStateToProps, mapDispatchToProps)(SignInForm);

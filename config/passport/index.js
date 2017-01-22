@@ -24,7 +24,7 @@ module.exports = function(passport){
 		passReqToCallback: true
 	}, function(req, email, password, done){
 
-		process.nextTick(function(){
+		// process.nextTick(function(){
 
 			User.findOne({'email': email}, function(err, user){
 				if(err) {return done(err)}
@@ -32,7 +32,7 @@ module.exports = function(passport){
 
 					var error = new Error('That email is already taken.');
 					error.name = 'IncorrectCredentialsError';
-					return done(null, false, error);
+					return done(error);
 
 				} else {
 
@@ -47,7 +47,7 @@ module.exports = function(passport){
 				}
 			});
 
-		});
+		// });
 
 	}));
 
@@ -66,22 +66,22 @@ module.exports = function(passport){
 			email = email.toLowerCase();
 		}
 
-		process.nextTick(function(){
+		// process.nextTick(function(){
 
-			User.findOne({'email': email}, function(err, user){
+		return User.findOne({'email': email}, function(err, user){
 				if(err) {return done(err)}
 				if(!user){
 
 					var error = new Error('No user found.');
 					error.name = 'IncorrectCredentialsError';
-					return done(null, false, error);
+					return done(error);
 
 				}
 				if(!user.validPassword(password)){
 
 					var error = new Error('Incorrect password.');
 					error.name = 'IncorrectCredentialsError';
-					return done(null, false, error);
+					return done(error);
 
 				} 
 				else {
@@ -95,7 +95,7 @@ module.exports = function(passport){
 				}
 			});
 
-		});
+		// });
 
 	}));
 
