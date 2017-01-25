@@ -9,20 +9,20 @@ import * as actionCreators from '../actions/userActions';
 
 class SignIn extends React.Component {
 
-	constructor(props){
-		super(props);
+	constructor(props,context){
+		super(props, context);
 
-    const storedMessage = localStorage.getItem('successMessage');
-    let successMessage = '';
+    // const storedMessage = localStorage.getItem('successMessage');
+    // let successMessage = '';
 
-    if (storedMessage) {
-      successMessage = storedMessage;
-      localStorage.removeItem('successMessage');
-    }
+    // if (storedMessage) {
+    //   successMessage = storedMessage;
+    //   localStorage.removeItem('successMessage');
+    // }
 
 		this.state = {
-      errors: {},
-      successMessage,
+      // signinErrors: {},
+      // successMessage,
       user: {
         email: '',
         password: ''
@@ -31,45 +31,45 @@ class SignIn extends React.Component {
 	}
 
 	handleSubmit(event){
-		// this.props.actions.signinUser(this.state.email, this.state.password);
 		event.preventDefault();
+		this.props.actions.signinUser(this.state.user.email, this.state.user.password, this.context);
 
     // create a string for an HTTP body message
-    const email = encodeURIComponent(this.state.user.email);
-    const password = encodeURIComponent(this.state.user.password);
-    const formData = `email=${email}&password=${password}`;
+    // const email = encodeURIComponent(this.state.user.email);
+    // const password = encodeURIComponent(this.state.user.password);
+    // const formData = `email=${email}&password=${password}`;
 
-    // create an AJAX request
-    const xhr = new XMLHttpRequest();
-    xhr.open('post', '/auth/signin');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        // success
+    // // create an AJAX request
+    // const xhr = new XMLHttpRequest();
+    // xhr.open('post', '/auth/signin');
+    // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    // xhr.responseType = 'json';
+    // xhr.addEventListener('load', () => {
+    //   if (xhr.status === 200) {
+    //     // success
 
-        // change the component-container state
-        this.setState({
-          errors: {}
-        });
+    //     // change the component-container state
+    //     this.setState({
+    //       errors: {}
+    //     });
 
-        // save the token
-        localStorage.setItem('token', xhr.response.token);
-        // change the current URL to /
-        this.context.router.replace('/');
-      } else {
-        // failure
+    //     // save the token
+    //     localStorage.setItem('token', xhr.response.token);
+    //     // change the current URL to /
+    //     this.context.router.replace('/');
+    //   } else {
+    //     // failure
 
-        // change the component state
-        const errors = xhr.response.errors ? xhr.response.errors : {};
-        errors.summary = xhr.response.message;
+    //     // change the component state
+    //     const errors = xhr.response.errors ? xhr.response.errors : {};
+    //     errors.summary = xhr.response.message;
 
-        this.setState({
-          errors
-        });
-      }
-    });
-    xhr.send(formData);
+    //     this.setState({
+    //       errors
+    //     });
+    //   }
+    // });
+    // xhr.send(formData);
 	}
 
 	handleChange(event){
@@ -89,14 +89,14 @@ class SignIn extends React.Component {
 				 onSubmit={this.handleSubmit.bind(this)}
 				>
 					<h2 className="card-heading">Sign In</h2>
-					{this.state.errors.summary && <p className="error-message">{this.state.errors.summary}</p>}
+					{this.props.errors.summary && <p className="error-message">{this.props.errors.summary}</p>}
 					<div className="field-line">
 						<TextField 
 							floatingLabelText="Email" 
 							name="email" 
-							errorText={this.state.errors.email} 
+							errorText={this.props.errors.email} 
 							onChange={this.handleChange.bind(this)} 
-							value={this.state.email} 
+							value={this.state.user.email} 
 						/>
 					</div>
 		      <div className="field-line">
@@ -105,8 +105,8 @@ class SignIn extends React.Component {
 		          type="password"
 		          name="password"
 		          onChange={this.handleChange.bind(this)}
-		          errorText={this.state.errors.password}
-		          value={this.state.password}
+		          errorText={this.props.errors.password}
+		          value={this.state.user.password}
 		        />
 		      </div>
 
@@ -121,18 +121,16 @@ class SignIn extends React.Component {
 	}
 }
 
-// const mapStateToProps = (state) => ({
-// 	isAuthenticating: state.auth.isAuthenticating,
-// 	statusText: state.auth.statusText
-// });
+const mapStateToProps = (state) => ({
+	errors: state.auth.signinErrors
+});
 
-// const mapDispatchToProps = (dispatch) => ({
-// 	actions: bindActionCreators(actionCreators, dispatch)
-// });
+const mapDispatchToProps = (dispatch) => ({
+	actions: bindActionCreators(actionCreators, dispatch)
+});
 
 SignIn.contextTypes = {
 	router: PropTypes.object.isRequired
 }
 
-export default SignIn;
-// connect(mapStateToProps, mapDispatchToProps)(SignInForm);
+export default connect(mapStateToProps,mapDispatchToProps)(SignIn);

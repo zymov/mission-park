@@ -83,15 +83,7 @@ router.post('/signup', (req, res, next)=>{
 					}
 				});
 			}
-			// else if(err.name === 'IncorrectCredentialsError'){
-			// 	return res.status(400).json({
-			// 		success: false,
-			// 		message: 'Check the form for errors.',
-			// 		errors: {
-			// 			email: 'This email is already taken.'
-			// 		}
-			// 	})
-			// }
+
 			return res.status(400).json({
 				success: false,
 				message: 'Could not process the form.',

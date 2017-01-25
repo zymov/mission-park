@@ -23,7 +23,7 @@ class App extends React.Component {
 
 render(
 	(
-		// <Provider store={store} >
+		<Provider store={store} >
 			<Router history={browserHistory} >
 				<Route path="/" component={App} >
 					<IndexRoute component={Home} />
@@ -32,5 +32,5 @@ render(
 					<Route path="signup" component={SignUp} />
 				</Route>
 			</Router>
-		// </Provider>
+		</Provider>
 	), document.getElementById('app'));
