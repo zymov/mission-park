@@ -11,6 +11,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {deAuthenticateUser} from '../utils';
 
+import routes from '../features/userSign/routes';
+
 class App extends React.Component {
 	render(){
 		return(
@@ -26,10 +28,13 @@ render(
 		<Provider store={store} >
 			<Router history={browserHistory} >
 				<Route path="/" component={App} >
-					<IndexRoute component={Home} />
-					<Route path="signout" onEnter={ (nextState, replace)=>{deAuthenticateUser(); replace('/')} } />
-					<Route path="signin" component={SignIn} />
-					<Route path="signup" component={SignUp} />
+					{
+						// <IndexRoute component={Home} />
+						// <Route path="signout" onEnter={ (nextState, replace)=>{deAuthenticateUser(); replace('/')} } />
+						// <Route path="signin" component={SignIn} />
+						// <Route path="signup" component={SignUp} />
+						routes
+					}
 				</Route>
 			</Router>
 		</Provider>
