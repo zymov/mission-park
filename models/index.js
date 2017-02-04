@@ -9,6 +9,6 @@ module.exports.connect = (url)=>{
 		process.exit(1);
 	});
 
-	var User = require('./user');
+	var User = require('./user/user');
 
 }

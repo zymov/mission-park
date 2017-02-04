@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-require('./models').connect(require('../config/dbUrl').url);	//connect db
+require('../models').connect(require('../config/dbUrl').url);	//connect db
 
 var path = require('path');
 var express = require('express');
