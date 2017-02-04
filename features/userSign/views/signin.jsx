@@ -84,39 +84,41 @@ class SignIn extends React.Component {
 
 	render(){
 		return (
-			<Card className="container">
+			<div className="container" style={{maxWidth: '360px'}}>
 				<form action="/" 
 				 onSubmit={this.handleSubmit.bind(this)}
 				>
-					<h2 className="card-heading">Sign In</h2>
-					{this.props.errors.summary && <p className="error-message">{this.props.errors.summary}</p>}
-					<div className="field-line">
-						<TextField 
-							floatingLabelText="Email" 
+					<h2>Sign In</h2>
+					{this.props.errors.summary && <p className="text-danger">{this.props.errors.summary}</p>}
+					<div className="form-group">
+						<input 
+							// floatingLabelText="Email" 
 							name="email" 
-							errorText={this.props.errors.email} 
+							type="email" 
+							className="form-control" 
+							// errorText={this.props.errors.email} 
 							onChange={this.handleChange.bind(this)} 
 							value={this.state.user.email} 
 						/>
-					</div>
-		      <div className="field-line">
-		        <TextField
-		          floatingLabelText="Password"
-		          type="password"
+						<label className="text-danger">{this.props.errors.email}</label>
+		        <input
+		          // floatingLabelText="Password"
+		          type="password" 
+		          className="form-control" 
 		          name="password"
 		          onChange={this.handleChange.bind(this)}
-		          errorText={this.props.errors.password}
+		          // errorText={this.props.errors.password}
 		          value={this.state.user.password}
 		        />
+		        <label className="text-danger">{this.props.errors.password}</label>
+			      <div>
+			        <button type="submit" className="btn btn-success btn-group btn-group-justified" >sign in</button>
+			      </div>
 		      </div>
 
-		      <div className="button-line">
-		        <RaisedButton type="submit" label="Log in" primary />
-		      </div>
-
-		      <CardText>Don't have an account? <Link to={'/signup'}>Create one</Link>.</CardText>
+		      <p>Don't have an account? <Link to={'/signup'}>Create one</Link>.</p>
 				</form>
-			</Card>
+			</div>
 		);
 	}
 }

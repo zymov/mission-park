@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 import SignIn from './views/signin.jsx';
 import SignUp from './views/signup.jsx';
 import Home   from './views/home.jsx';

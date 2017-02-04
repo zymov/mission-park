@@ -75,46 +75,50 @@ class SignUp extends React.Component {
 
 	render(){
 		return(
-			<Card className="container">
+			<div className="container" style={{maxWidth: '360px'}}>
 		    <form action="/"  
 		    onSubmit={this.handleSubmit.bind(this)}
 		    >
-		      <h2 className="card-heading">Sign Up</h2>
+		      <h2>Sign Up</h2>
 	      	{this.props.errors.summary && <p className="error-message">{this.props.errors.summary}</p>}
-		      <div className="field-line">
-		        <TextField
-		          floatingLabelText="Name" 
+		      <div className="form-group">
+		        <input
+		          // floatingLabelText="Name" 
 		          name="name" 
-		          errorText={this.props.errors.name} 
+		          type="text" 
+		          // errorText={this.props.errors.name} 
+		          className="form-control" 
 		          onChange={this.handleChange.bind(this)} 
 		          value={this.state.user.name} 
 		        />
-		      </div>
-		      <div className="field-line">
-		        <TextField
-		          floatingLabelText="Email"
+		        <label className="text-danger">{this.props.errors.name}</label>
+		        <input
+		          // floatingLabelText="Email"
 		          name="email"
-		          errorText={this.props.errors.email}
+		          type="email" 
+		          // errorText={this.props.errors.email}
+		          className="form-control" 
 		          onChange={this.handleChange.bind(this)} 
 		          value={this.state.user.email}
 		        />
-		      </div>
-		      <div className="field-line">
-		        <TextField
-		          floatingLabelText="Password" 
-		          type="password"
+		        <label className="text-danger">{this.props.errors.email}</label>
+		        <input
+		          // floatingLabelText="Password" 
 		          name="password"
+		          type="password"
+		          className="form-control" 
 		          onChange={this.handleChange.bind(this)} 
-		          errorText={this.props.errors.password}
+		          // errorText={this.props.errors.password}
 		          value={this.state.user.password}
 		        />
+		        <label className="text-danger">{this.props.errors.password}</label>
+			      <div>
+			        <button type="submit" className="btn btn-success btn-group btn-group-justified" >Create New Account</button>
+			      </div>
 		      </div>
-		      <div className="button-line">
-		        <RaisedButton type="submit" label="Create New Account" primary />
-		      </div>
-		      <CardText>Already have an account? <Link to={'/signin'}>Log in</Link></CardText>
+		      <p>Already have an account? <Link to={'/signin'}>Log in</Link></p>
 		    </form>
-		  </Card>
+		  </div>
 		);
 	}
 }
