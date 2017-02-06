@@ -97,6 +97,7 @@ class SignIn extends React.Component {
 							type="email" 
 							className="form-control" 
 							// errorText={this.props.errors.email} 
+							placeholder="email" 
 							onChange={this.handleChange.bind(this)} 
 							value={this.state.user.email} 
 						/>
@@ -105,15 +106,14 @@ class SignIn extends React.Component {
 		          // floatingLabelText="Password"
 		          type="password" 
 		          className="form-control" 
-		          name="password"
+		          name="password" 
+		          placeholder="password" 
 		          onChange={this.handleChange.bind(this)}
 		          // errorText={this.props.errors.password}
 		          value={this.state.user.password}
 		        />
 		        <label className="text-danger">{this.props.errors.password}</label>
-			      <div>
-			        <button type="submit" className="btn btn-success btn-group btn-group-justified" >sign in</button>
-			      </div>
+		        <button type="submit" className="btn btn-success btn-block" role="button">sign in</button>
 		      </div>
 
 		      <p>Don't have an account? <Link to={'/signup'}>Create one</Link>.</p>

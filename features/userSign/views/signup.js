@@ -80,7 +80,7 @@ class SignUp extends React.Component {
 		    onSubmit={this.handleSubmit.bind(this)}
 		    >
 		      <h2>Sign Up</h2>
-	      	{this.props.errors.summary && <p className="error-message">{this.props.errors.summary}</p>}
+	      	{this.props.errors.summary && <p className="text-danger">{this.props.errors.summary}</p>}
 		      <div className="form-group">
 		        <input
 		          // floatingLabelText="Name" 
@@ -88,6 +88,7 @@ class SignUp extends React.Component {
 		          type="text" 
 		          // errorText={this.props.errors.name} 
 		          className="form-control" 
+		          placeholder="your name"
 		          onChange={this.handleChange.bind(this)} 
 		          value={this.state.user.name} 
 		        />
@@ -98,6 +99,7 @@ class SignUp extends React.Component {
 		          type="email" 
 		          // errorText={this.props.errors.email}
 		          className="form-control" 
+		          placeholder="email" 
 		          onChange={this.handleChange.bind(this)} 
 		          value={this.state.user.email}
 		        />
@@ -107,14 +109,13 @@ class SignUp extends React.Component {
 		          name="password"
 		          type="password"
 		          className="form-control" 
+		          placeholder="password" 
 		          onChange={this.handleChange.bind(this)} 
 		          // errorText={this.props.errors.password}
 		          value={this.state.user.password}
 		        />
 		        <label className="text-danger">{this.props.errors.password}</label>
-			      <div>
-			        <button type="submit" className="btn btn-success btn-group btn-group-justified" >Create New Account</button>
-			      </div>
+		        <button type="submit" className="btn btn-success btn-block" role="button">Create New Account</button>
 		      </div>
 		      <p>Already have an account? <Link to={'/signin'}>Log in</Link></p>
 		    </form>

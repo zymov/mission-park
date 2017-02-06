@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import {checkUserSignin} from '../../../utils';
-import Board from '../../taskBoard/views/board.jsx';
+import Board from '../../taskBoard/views/board';
 
 export default class Home extends React.Component {
 
