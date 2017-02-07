@@ -10,5 +10,5 @@ module.exports.connect = (url)=>{
 	});
 
 	var User = require('./user/user');
-
+	var Task = require('./task/task');
 }

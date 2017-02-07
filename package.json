@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/zymokey/mission-park#readme",
   "dependencies": {
+    "axios": "^0.15.3",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.16.0",
     "connect-flash": "^0.1.1",

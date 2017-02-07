@@ -8,10 +8,10 @@ export default class ModalBody extends React.Component {
 	render(){
 		return(
 			<div className="modal-body">
-        <textarea className="form-control" name="taskContent" 
+        <textarea className="form-control" name="taskName" 
         placeholder="任务内容" rows="3" 
         onChange={this.props.handleInputChange} 
-        value={this.props.taskContent}></textarea>
+        value={this.props.taskName}></textarea>
       </div>
 		)
 	}

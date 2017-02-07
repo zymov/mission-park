@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var taskSchema = new mongoose.Schema({
-	taskContent: { type: String },
+	taskName: { type: String },
 	createTime: {type: Date },
 	owner: {type: String }
 });
