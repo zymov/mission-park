@@ -13,13 +13,13 @@ import { deAuthenticateUser } from '../utils';
 
 import rootStore from './rootStore';
 
-import routes from '../features/userSign/routes';
+import routes from '../features/homePage/routes';
 
 class App extends React.Component {
 	render(){
 		return(
 			// <MuiThemeProvider muiTheme={getMuiTheme()}>
-			<div className="container">
+			<div>
         {this.props.children}
       </div>
 			// </MuiThemeProvider>

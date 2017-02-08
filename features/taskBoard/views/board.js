@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './card';
-import Mod from './mod';
+// import Mod from './mod';
 
 export default class Board extends React.Component {
 
@@ -10,8 +10,13 @@ export default class Board extends React.Component {
 
 	render(){
 		return(
-			<div>
-				<Mod />
+			<div className="container">
+				<div className="btn-group" role="group" aria-label="Basic example">
+				  <button type="button" className="btn btn-secondary">新增任务列表</button>
+				  <button type="button" className="btn btn-secondary">Middle</button>
+				  <button type="button" className="btn btn-secondary">Right</button>
+				</div>
+				<Card />
 			</div>
 		)
 	}
