@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import {checkUserSignin} from '../../../utils';
 import Board from '../../taskBoard/views/board';
-import Navbar from './navbar';
+// import Navbar from './navbar';
 import SignIn from '../../userSign/views/signin';
 import Project from '../../project/views/project';
 
@@ -16,10 +16,7 @@ class Home extends React.Component {
 			)
 		} else {
 			return (
-				<div>
-					<Navbar />
 					<Project />
-				</div>
 			)
 		}
 
@@ -31,7 +28,3 @@ class Home extends React.Component {
 export default Home;
 
 
-// <div>
-// 					<Navbar />	
-// 					<Board />
-// 				</div>

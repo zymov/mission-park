@@ -6,12 +6,13 @@ import Home   from './views/home';
 import Project from '../project/views/project';
 import Board from '../taskBoard/views/board';
 import userAuthRoutes from '../userSign/routes';
+import Navbar from '../homePage/views/navbar';
+import App from '../app';
 
 import {deAuthenticateUser} from '../../utils';
 
-//<Route path="task" component={Board} />
 const routes = (
-	<Route >
+	<Route path="/" component={App} >
 	  <IndexRoute component={Home} />
 	  <Route path="/project" component={Project} />
   	<Route path="/project/task" component={Board} />
@@ -19,8 +20,5 @@ const routes = (
 	</Route>
 );
 
-//<Route path="signout" onEnter={ (nextState, replace)=>{deAuthenticateUser(); replace('/')} } />
-		// <Route path="signin" component={SignIn} />
-		// <Route path="signup" component={SignUp} />
 
 export default routes;
