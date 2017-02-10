@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from './card';
 // import Mod from './mod';
-import Navbar from '../../homePage/views/navbar';
+// import Navbar from '../../homePage/views/navbar';
 
 export default class Board extends React.Component {
 
@@ -11,8 +11,6 @@ export default class Board extends React.Component {
 
 	render(){
 		return(
-			<div>
-				<Navbar />
 				<div className="container">
 					<div className="btn-group" role="group" aria-label="Basic example">
 					  <button type="button" className="btn btn-secondary">新增任务列表</button>
@@ -21,7 +19,6 @@ export default class Board extends React.Component {
 					</div>
 					<Card />
 				</div>
-			</div>
 		)
 	}
 }

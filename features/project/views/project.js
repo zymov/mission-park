@@ -1,12 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router';
-import Navbar from '../../homePage/views/navbar';
+// import Navbar from '../../homePage/views/navbar';
 
 export default class Project extends React.Component {
 	render(){
 		return(
-			<div>
-				<Navbar />
 				<div className="container card-deck">
 				  <div className="card">
 				    <img className="card-img-top" src="/static/imgs/cover-media.jpg" alt="Card image cap"/>
@@ -42,7 +40,6 @@ export default class Project extends React.Component {
 				    </div>
 				  </div>
 			  </div>
-			</div>
 		)
 	}
 }
