@@ -5,7 +5,7 @@ import SignUp from '../userSign/views/signup';
 import Home   from './views/home';
 import Project from '../project/views/project';
 import Board from '../taskBoard/views/board';
-import userAuthRoutes from '../userSign/routes';
+// import userAuthRoutes from '../userSign/routes';
 import Navbar from '../homePage/views/navbar';
 import App from '../app';
 
@@ -16,7 +16,7 @@ const routes = (
 	  <IndexRoute component={Home} />
 	  <Route path="/project" component={Project} />
   	<Route path="/project/task" component={Board} />
-	  {userAuthRoutes}
+	  {/*userAuthRoutes*/}
 	</Route>
 );
 

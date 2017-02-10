@@ -6,18 +6,18 @@ export default class Project extends React.Component {
 	render(){
 		return(
 				<div className="container card-deck">
-				  <div className="card">
-				    <img className="card-img-top" src="/static/imgs/cover-media.jpg" alt="Card image cap"/>
-				    <div className="card-block">
-				      <h4 className="card-title">Card title</h4>
-				      <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				    </div>
-				    <div className="card-footer">
-				      <small className="text-muted">Last updated 3 mins ago</small>
-				      <Link to="/project/task" >link</Link>
-				    </div>
-				  </div>
-				  <div className="card">
+				  <Link to="project" className="card" >
+					    <img className="card-img-top" src="/static/imgs/cover-media.jpg" alt="Card image cap"/>
+					    <div className="card-block">
+					      <h4 className="card-title">Card title</h4>
+					      <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					    </div>
+					    <div className="card-footer">
+					      <small className="text-muted">Last updated 3 mins ago</small>
+					      <Link to="/project/task" >link</Link>
+					    </div>
+				  </Link>
+				  <Link to="project" className="card">
 				    <img className="card-img-top" src="/static/imgs/cover-media.jpg" alt="Card image cap"/>
 				    <div className="card-block">
 				      <h4 className="card-title">Card title</h4>
@@ -27,8 +27,8 @@ export default class Project extends React.Component {
 				      <small className="text-muted">Last updated 3 mins ago</small>
 				      <Link to="/project/task" >link</Link>
 				    </div>
-				  </div>
-				  <div className="card">
+				  </Link>
+				  <Link to="project" className="card">
 				    <img className="card-img-top" src="/static/imgs/cover-media.jpg" alt="Card image cap"/>
 				    <div className="card-block">
 				      <h4 className="card-title">Card title</h4>
@@ -38,7 +38,7 @@ export default class Project extends React.Component {
 				      <small className="text-muted">Last updated 3 mins ago</small>
 				      <Link to="/project/task" >link</Link>
 				    </div>
-				  </div>
+				  </Link>
 			  </div>
 		)
 	}

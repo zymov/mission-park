@@ -7,12 +7,14 @@ import { deAuthenticateUser } from '../utils';
 import rootStore from './rootStore';
 
 import routes from '../features/homePage/routes';
+import userAuthRoutes from '../features/userSign/routes';
 
 render(
 	(
 		<Provider store={rootStore} >
 			<Router history={browserHistory} >
 				{routes}
+				{userAuthRoutes}
 			</Router>
 		</Provider>
 	), document.getElementById('app'));
