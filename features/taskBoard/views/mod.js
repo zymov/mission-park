@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ModalWrapper, ModalHeader, ModalBody, ModalFooter } from '../../../components/modal_dialog';
+import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../components/modal_dialog';
 // import * as actionCreators from '../actions';
 import { addTask } from '../actions';
 
@@ -31,10 +31,17 @@ class Mod extends React.Component {
 	render(){
 		return(
 			<div>
-				<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#newTaskDialog">Launch demo modal</button>
+				<TriggerBtn dataTarget="#newTaskDialog" />
 				<ModalWrapper id="newTaskDialog" >
 					<ModalHeader createTaskTo="x"/>
-					<ModalBody handleInputChange={this.handleInputChange} taskName={this.state.taskName} />
+					<div className="modal-body">
+						<div className="form-group" >
+		        	<textarea className="form-control" name="taskName" 
+			        	placeholder="任务内容" rows="3" 
+			        	onChange={this.handleInputChange} 
+			        	value={this.state.taskName}></textarea>
+			      </div>
+		      </div>
 					<ModalFooter handleSubmit={this.handleSubmit} />
 				</ModalWrapper>
 			</div>

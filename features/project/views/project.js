@@ -1,44 +1,64 @@
 import React from 'react';
 import {Link} from 'react-router';
-// import Navbar from '../../homePage/views/navbar';
+// import AddProject from './addProject';
+import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../components/modal_dialog';
+import ProjectCard from './projectCard';
 
 export default class Project extends React.Component {
+
+	constructor(props){
+		super(props);
+
+		this.state = {
+			projectName: '',
+			description: ''
+		}
+		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleInputChange(event){
+		const target = event.target;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const name = target.name;
+		this.setState({
+			[name]: value
+		});
+	}
+
+	handleSubmit(){
+		// this.props.addProject(this.state.taskName);
+	}
+
 	render(){
 		return(
 				<div className="container card-deck">
-				  <Link to="project" className="card" >
-					    <img className="card-img-top" src="/static/imgs/cover-media.jpg" alt="Card image cap"/>
-					    <div className="card-block">
-					      <h4 className="card-title">Card title</h4>
-					      <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+					<button type="button" className="btn btn-primary btn-lg btn-block" 
+						data-toggle="modal" 
+						data-target="#addProject">Add Project</button>
+					<ProjectCard />
+					<ProjectCard />
+					<ProjectCard />
+					<ProjectCard />
+					
+				  <ModalWrapper id="addProject" >
+						<ModalHeader createTaskTo="x" />
+						<div className="modal-body">
+							<div className="form-group" >
+				        <input className="form-control" name="projectName" 
+					        placeholder="项目名称" 
+					        onChange={this.handleInputChange} 
+					        value={this.state.projectName} />
 					    </div>
-					    <div className="card-footer">
-					      <small className="text-muted">Last updated 3 mins ago</small>
-					      <Link to="/project/task" >link</Link>
-					    </div>
-				  </Link>
-				  <Link to="project" className="card">
-				    <img className="card-img-top" src="/static/imgs/cover-media.jpg" alt="Card image cap"/>
-				    <div className="card-block">
-				      <h4 className="card-title">Card title</h4>
-				      <p className="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-				    </div>
-				    <div className="card-footer">
-				      <small className="text-muted">Last updated 3 mins ago</small>
-				      <Link to="/project/task" >link</Link>
-				    </div>
-				  </Link>
-				  <Link to="project" className="card">
-				    <img className="card-img-top" src="/static/imgs/cover-media.jpg" alt="Card image cap"/>
-				    <div className="card-block">
-				      <h4 className="card-title">Card title</h4>
-				      <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-				    </div>
-				    <div className="card-footer">
-				      <small className="text-muted">Last updated 3 mins ago</small>
-				      <Link to="/project/task" >link</Link>
-				    </div>
-				  </Link>
+					    <div className="form-group" >
+					      <textarea className="form-control" name="description"  
+					        placeholder="项目简介（选填）" rows="2" 
+					        onChange={this.handleInputChange} 
+					        value={this.state.description}></textarea>
+				      </div>
+			      </div>
+						<ModalFooter handleSubmit={this.handleSubmit} />
+					</ModalWrapper>
 			  </div>
 		)
 	}
