@@ -1,10 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router';
-// import AddProject from './addProject';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../components/modal_dialog';
 import ProjectCard from './projectCard';
 
-export default class Project extends React.Component {
+import {addProject, fetchProject} from '../actions';
+
+class Project extends React.Component {
 
 	constructor(props){
 		super(props);
@@ -17,6 +19,10 @@ export default class Project extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	componentWillMount(){
+		this.props.fetchProject();
+	}
+
 	handleInputChange(event){
 		const target = event.target;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -27,7 +33,14 @@ export default class Project extends React.Component {
 	}
 
 	handleSubmit(){
-		// this.props.addProject(this.state.taskName);
+
+		var payload = {
+			projectName: this.state.projectName,
+			description: this.state.description,
+			token: localStorage.getItem('token')
+		}
+
+		this.props.addProject(payload);
 	}
 
 	render(){
@@ -63,3 +76,12 @@ export default class Project extends React.Component {
 		)
 	}
 }
+
+const mapDispatchToProps = (dispatch) => {
+	return ({
+		addProject: (payload) => { dispatch(addProject(payload)); },
+		fetchProject: () => dispatch(fetchProject())
+	});
+}
+
+export default connect(null, mapDispatchToProps)(Project);

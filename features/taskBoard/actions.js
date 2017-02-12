@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const ADD_NEW_TASK = 'ADD_NEW_TASK';
+export const ADD_TASK = 'ADD_TASK';
 
 export function addTask(taskName){
 	return function(dispatch){

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 require('../models').connect(require('../config/dbUrl').url);	//connect db
+var jwt = require('jsonwebtoken');
 
 var path = require('path');
 var express = require('express');
@@ -40,11 +41,33 @@ app.use(flash());
 
 app.use('/', express.static(path.join(__dirname, '../')));
 
+// app.use(function(req, res, next){
+// 	var token = req.sessionStorage.token;
+// 	// var token = req.headers['authorization'];
+// 	if(!token) return next();
+// 	token = token.replace('Bearer', '');
+
+// 	jwt.verify(token, require('../config/jwt.js').jwtSecret, function(err, user){
+// 		if(err){
+// 			return res.status(401).json({
+// 				success: false,
+// 				message: 'Please register Sign In using a valid email address.'
+// 			});
+// 		} else {
+// 			req.user = user;
+// 			next();
+// 		}
+// 	});
+// });
+
 const authRouter = require('./routes/auth');
 const taskRouter = require('./routes/task');
+const projectRouter = require('./routes/project');
+// const rootRouter = require('./routes/root');
+// app.use(rootRouter);
 app.use('/auth', authRouter);
 app.use('/task', taskRouter);
-
+app.use('/project', projectRouter);
 
 app.get('*', function (req, res){
   res.sendFile(path.resolve(__dirname,'../index.html'))

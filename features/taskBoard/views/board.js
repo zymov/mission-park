@@ -1,7 +1,5 @@
 import React from 'react';
 import Card from './card';
-// import Mod from './mod';
-// import Navbar from '../../homePage/views/navbar';
 
 export default class Board extends React.Component {
 

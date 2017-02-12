@@ -20,44 +20,6 @@ class SignUp extends React.Component {
 	handleSubmit(event){
 		event.preventDefault();
 		this.props.actions.signupUser(this.state.user.name, this.state.user.email, this.state.user.password, this.context);
-
-    // create a string for an HTTP body message
-    // const name = encodeURIComponent(this.state.user.name);
-    // const email = encodeURIComponent(this.state.user.email);
-    // const password = encodeURIComponent(this.state.user.password);
-    // const formData = `name=${name}&email=${email}&password=${password}`;
-
-    // create an AJAX request
-    // const xhr = new XMLHttpRequest();
-    // xhr.open('post', '/auth/signup');
-    // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    // xhr.responseType = 'json';
-    // xhr.addEventListener('load', () => {
-    //   if (xhr.status === 200) {
-    //     // success
-
-    //     // change the component-container state
-    //     this.setState({
-    //       errors: {}
-    //     });
-
-    //     // set a message
-    //     localStorage.setItem('successMessage', xhr.response.message);
-
-    //     // make a redirect
-    //     this.context.router.replace('/signin');
-    //   } else {
-    //     // failure
-
-    //     const errors = xhr.response.errors ? xhr.response.errors : {};
-    //     errors.summary = xhr.response.message;
-
-    //     this.setState({
-    //       errors
-    //     });
-    //   }
-    // });
-    // xhr.send(formData);
 	}
 
 	handleChange(event){

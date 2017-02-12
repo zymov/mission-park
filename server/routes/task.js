@@ -5,7 +5,7 @@ const router = new express.Router();
 var Task = require('mongoose').model('Task');
 
 router.post('/addtask', function(req, res){
-	if(req.body.taskName != ''){
+	if(req.body.taskName.trim()){
 		var task = new Task();
 		task.taskName = req.body.taskName;
 		task.createTime = new Date();

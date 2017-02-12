@@ -1,28 +1,36 @@
 import React from 'react';
-import { Link } from 'react-router';
-import {checkUserSignin} from '../../../utils';
-import Board from '../../taskBoard/views/board';
-// import Navbar from './navbar';
-// import SignIn from '../../userSign/views/signin';
+// import { connect } from 'react-redux';
 import Project from '../../project/views/project';
+
+// import {fetchProject} from '../actions';
 
 class Home extends React.Component {
 
+	constructor(props){
+		super(props);
+	}
+
+	// componentWillMount(){
+	// 	this.props.fetchProject();
+	// }
+
 	render(){
 
-		// if(!checkUserSignin()){
-		// 	return (
-		// 			<SignIn />
-		// 	)
-		// } else {
 			return (
 					<Project />
 			)
-		// }
 
 	}
 
 }
+
+// const mapDispatchToProps = (dispatch) => {
+// 	return ({
+// 		fetchProject: () => dispatch(fetchProject())
+// 	})
+// }
+
+// export default connect(null, mapDispatchToProps)(Home);
 
 export default Home;
 
