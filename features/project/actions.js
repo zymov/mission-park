@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 export const ADD_PROJECT = 'ADD_PROJECT';
-export const FETCH_PROJECT = 'FETCH_PROJECT';
+export const FETCH_PROJECT_REQUEST = 'FETCH_PROJECT_REQUEST';
+export const FETCH_PROJECT_SUCCESS = 'FETCH_PROJECT_SUCCESS';
+export const FETCH_PROJECT_FAILURE = 'FETCH_PROJECT_FAILURE';
 
 export function addProject(payload){
 
@@ -15,17 +17,39 @@ export function addProject(payload){
 		});	
 	}
 	
-
 }
 
 export function fetchProject(){
 	return function(dispatch){
+		dispatch(fetchProjectRequest());
 		axios.get('/project/fetch')
 		.then(function(res){
-			console.log(res.data);
+			dispatch(fetchProjectSuccess(res.data));
 		})
 		.catch(function(err){
-			console.log(err);
+			dispatch(fetchProjectFailure(err));
 		});
+	}
+}
+
+export function fetchProjectRequest(){
+	return {
+		type: 'FETCH_PROJECT_REQUEST'
+	}
+}
+
+export function fetchProjectSuccess(projects){
+	return {
+		type: 'FETCH_PROJECT_SUCCESS',
+		payload: projects
+	}
+}
+
+export function fetchProjectFailure(err){
+	return {
+		type: 'FETCH_PROJECT_FAILURE',
+		payload: {
+			errors: err
+		}
 	}
 }

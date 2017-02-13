@@ -44,16 +44,30 @@ class Project extends React.Component {
 	}
 
 	render(){
+		const { isFetching, projects, errors } = this.props;
+
+		var contentText = '';
+		if(isFetching){
+			contentText = "fetching projects..."
+		} else if (errors){
+			contentText = '<div class="alert alert-danger" role="alert">' 
+			    					+ `<strong>Oh snap!</strong> Error: ${errors}.</div>`;
+		} else if (!projects || projects.length == 0){
+			contentText = '';
+		} else {
+			contentText = projects.map(function(project, index){
+				return (
+					<ProjectCard key={index} project={project} />
+				)
+			});	
+		}
+
 		return(
 				<div className="container card-deck">
 					<button type="button" className="btn btn-primary btn-lg btn-block" 
 						data-toggle="modal" 
 						data-target="#addProject">Add Project</button>
-					<ProjectCard />
-					<ProjectCard />
-					<ProjectCard />
-					<ProjectCard />
-					
+					{contentText}
 				  <ModalWrapper id="addProject" >
 						<ModalHeader createTaskTo="x" />
 						<div className="modal-body">
@@ -77,11 +91,17 @@ class Project extends React.Component {
 	}
 }
 
+const mapStateToProps = (state) => ({
+	isFetching: state.project.isFetching,
+	projects: state.project.projects,
+	errors: state.project.errors
+});
+
 const mapDispatchToProps = (dispatch) => {
 	return ({
 		addProject: (payload) => { dispatch(addProject(payload)); },
 		fetchProject: () => dispatch(fetchProject())
 	});
-}
+};
 
-export default connect(null, mapDispatchToProps)(Project);
+export default connect(mapStateToProps, mapDispatchToProps)(Project);

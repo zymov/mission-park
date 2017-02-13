@@ -84,7 +84,7 @@ class SignIn extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	errors: state.signinErrors
+	errors: state.auth.signinErrors
 });
 
 const mapDispatchToProps = (dispatch) => ({
