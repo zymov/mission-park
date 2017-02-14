@@ -11,7 +11,7 @@ const routes = (
 	<Route path="/" component={App} >
 	  <IndexRoute component={Home} />
 	  <Route path="/project" component={Project} />
-  	<Route path="/project/task" component={Board} />
+  	<Route path="/project/:projectId/taskboard" component={Board} />
 	</Route>
 );
 
