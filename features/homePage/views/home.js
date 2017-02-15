@@ -1,6 +1,6 @@
 import React from 'react';
 // import { connect } from 'react-redux';
-import Project from '../../project/views/project';
+import ProjectList from '../../project/views/projectList';
 
 // import {fetchProject} from '../actions';
 
@@ -17,7 +17,7 @@ class Home extends React.Component {
 	render(){
 
 			return (
-					<Project />
+					<ProjectList />
 			)
 
 	}

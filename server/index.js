@@ -67,7 +67,7 @@ const projectRouter = require('./routes/project');
 // app.use(rootRouter);
 app.use('/auth', authRouter);
 app.use('/task', taskRouter);
-app.use('/project', projectRouter);
+app.use('/projects', projectRouter);
 
 app.get('*', function (req, res){
   res.sendFile(path.resolve(__dirname,'../index.html'))

@@ -8,7 +8,7 @@ export const FETCH_PROJECT_FAILURE = 'FETCH_PROJECT_FAILURE';
 export function addProject(payload){
 
 	return function(dispatch){
-		axios.post('/project/addproject',payload)
+		axios.post('/projects/addproject',payload)
 		.then(function(res){
 			console.log(res.data.message, res.data.owner);
 		})
@@ -22,7 +22,7 @@ export function addProject(payload){
 export function fetchProject(){
 	return function(dispatch){
 		dispatch(fetchProjectRequest());
-		axios.get('/project/fetch')
+		axios.get('/projects/fetch')
 		.then(function(res){
 			dispatch(fetchProjectSuccess(res.data));
 		})

@@ -40,3 +40,21 @@ body {
   margin-top: -21px;
   background-color: #fff;
 }
+.app-navbar {
+  background-color: #fff;
+  box-shadow: 0 0 2px 0 rgba(0,0,0,.5);
+}
+.project-nav {
+  background-color: #eee;
+  line-height: 40px;
+}
+.project-nav .nav-link {
+  padding: .5em 3em;
+}
+.taskboard {
+  margin-top: 10px;
+}
+.active-projectnav {
+  background-color: #fafafa;
+}
+

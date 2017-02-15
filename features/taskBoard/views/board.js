@@ -14,10 +14,10 @@ export default class Board extends React.Component {
 
 	render(){
 
-		console.log(this.props.params.projectId);
+		
 
 		return(
-				<div className="container">
+				<div className="container taskboard">
 					
 					<div className="row" style={{marginBottom: '10px'}}>
 						<div className="col-md-4">
