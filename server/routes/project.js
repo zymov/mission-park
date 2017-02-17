@@ -24,18 +24,15 @@ router.post('/addproject', function(req, res){
 			project.save(function(err){
 				if(err){
 					res.status(500).json({
-						message: 'sorry, server is busy!'
+						errors: 'sorry, server is busy!'
 					});
 				} else {
-					res.status(200).json({
-						message: 'add project successfully!',
-						owner: userName
-					});
+					res.status(200).json({project});
 				}
 			});
 		} else {
 			res.status(400).json({
-				message: 'check your task name'
+				errors: 'check your project name'
 			});
 		}
 
@@ -45,7 +42,7 @@ router.post('/addproject', function(req, res){
 
 router.get('/fetch', function(req, res){
 
-	Project.find({}).exec(function(err, projects){
+	Project.find({}).sort({createTime: -1}).exec(function(err, projects){
 		if(err) {
 			console.log(err);
 			return res.status(500).json({

@@ -1,18 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import ProjectToolbar from './projectToolbar';
 import ProjectCard from './projectCard';
 
-import {fetchProject} from '../actions';
+import * as actionCreators from '../actions';
 
 class ProjectList extends React.Component {
 
 	componentWillMount(){
-		this.props.fetchProject();
+		this.props.actions.fetchProject();
 	}
 
 	render(){
-		const { isFetching, projects, errors } = this.props;
+		const { newProject, isFetching, projects, errors } = this.props;
 
 		var contentText = '';
 		if(isFetching){
@@ -30,6 +31,15 @@ class ProjectList extends React.Component {
 			});	
 		}
 
+		if(newProject){
+			if(contentText == '') {
+				contentText = <ProjectCard project={newProject} />;
+			} else {
+				contentText.unshift(<ProjectCard project={newProject} />);
+			}
+			
+		}
+
 		return(
 				<div className="container card-deck">
 					<ProjectToolbar />
@@ -42,13 +52,12 @@ class ProjectList extends React.Component {
 const mapStateToProps = (state) => ({
 	isFetching: state.project.isFetching,
 	projects: state.project.projects,
-	errors: state.project.errors
+	errors: state.project.errors,
+	newProject: state.project.newProject
 });
 
-const mapDispatchToProps = (dispatch) => {
-	return ({
-		fetchProject: () => dispatch(fetchProject())
-	});
-};
+const mapDispatchToProps = (dispatch) => ({
+	actions: bindActionCreators(actionCreators, dispatch)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectList);

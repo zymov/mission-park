@@ -66,7 +66,7 @@ const projectRouter = require('./routes/project');
 // const rootRouter = require('./routes/root');
 // app.use(rootRouter);
 app.use('/auth', authRouter);
-app.use('/task', taskRouter);
+app.use('/tasks', taskRouter);
 app.use('/projects', projectRouter);
 
 app.get('*', function (req, res){

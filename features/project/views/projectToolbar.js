@@ -25,7 +25,7 @@ class ProjectToolbar extends React.Component {
 		});
 	}
 
-	handleSubmit(){
+	handleSubmit(event){
 
 		var payload = {
 			projectName: this.state.projectName,
@@ -34,11 +34,16 @@ class ProjectToolbar extends React.Component {
 		}
 
 		this.props.addProject(payload);
+		this.setState({
+			projectName: '',
+			description: ''
+		});
+		$('#addProject').click();
 	}
 
 	render(){
 		return(
-			<div className="container">
+			<div className="container" style={{marginTop: '20px'}}>
 				<button type="button" className="btn btn-primary btn-lg btn-block" 
 					data-toggle="modal" 
 					data-target="#addProject">Add Project</button>
