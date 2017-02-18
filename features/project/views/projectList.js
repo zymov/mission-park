@@ -13,46 +13,49 @@ class ProjectList extends React.Component {
 	}
 
 	render(){
-		const { newProject, isFetching, projects, errors } = this.props;
+		const { newProject, fetchingProject, projects, fetchingErrors, addingProjectErrors } = this.props;
 
-		var contentText = '';
-		if(isFetching){
-			contentText = "fetching projects..."
-		} else if (errors){
-			contentText = '<div class="alert alert-danger" role="alert">' 
-			    					+ `<strong>Oh snap!</strong> Error: ${errors}.</div>`;
-		} else if (!projects || projects.length == 0){
-			contentText = '';
-		} else {
-			contentText = projects.map(function(project, index){
+		var fetchedProject = [], infoText = '';
+		if(fetchingProject){
+			infoText = "fetching projects..."
+		} else if (fetchingErrors){
+			infoText = `<div class="alert alert-danger" role="alert">
+			    						<strong>Oh snap!</strong> Error: ${fetchingErrors}.</div>`;
+		} else if (addingProjectErrors){
+			infoText = `<div class="alert alert-danger" role="alert">
+			    						<strong>Oh snap!</strong> Error: ${addingProjectErrors}.</div>`;
+		} 
+		// else if (!projects || projects.length == 0){
+		// 	infoText = '';
+		// } 
+
+		if(projects && projects.length > 0){
+			fetchedProject = projects.map(function(project, index){
 				return (
 					<ProjectCard key={index} project={project} />
 				)
 			});	
 		}
 
-		if(newProject){
-			if(contentText == '') {
-				contentText = <ProjectCard project={newProject} />;
-			} else {
-				contentText.unshift(<ProjectCard project={newProject} />);
-			}
-			
+		if(newProject && !fetchingProject){
+				fetchedProject.unshift(<ProjectCard project={newProject} />);
 		}
 
 		return(
 				<div className="container card-deck">
 					<ProjectToolbar />
-					{contentText}
+					{infoText}
+					{fetchedProject}
 			  </div>
 		)
 	}
 }
 
 const mapStateToProps = (state) => ({
-	isFetching: state.project.isFetching,
+	fetchingProject: state.project.fetchingProject,
 	projects: state.project.projects,
-	errors: state.project.errors,
+	fetchingErrors: state.project.fetchingErrors,
+	addingProjectErrors: state.project.addingProjectErrors,
 	newProject: state.project.newProject
 });
 

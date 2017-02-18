@@ -1,16 +1,17 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../components/modal_dialog';
-// import * as actionCreators from '../actions';
-import { addTask } from '../actions';
+import * as actionCreators from '../actions';
 
-class Mod extends React.Component {
+class AddTasklist extends React.Component {
+
 	constructor(props){
 		super(props);
 		this.state = {
-			taskName: ''
+			tasklistName: ''
 		}
+
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -25,21 +26,29 @@ class Mod extends React.Component {
 	}
 
 	handleSubmit(){
-		this.props.addTask(this.state.taskName);
+		var payload = {
+			tasklistName: this.state.tasklistName
+		}
+		this.props.actions.addTasklist(payload);
+		this.setState({
+			tasklistName: ''
+		});
+		$('#addTasklist').click();
+		this.props.actions.fetchTasklist();
 	}
 
 	render(){
 		return(
 			<div>
-				<TriggerBtn dataTarget="#newTaskDialog" />
-				<ModalWrapper id="newTaskDialog" >
-					<ModalHeader createTo="x"/>
+				<TriggerBtn dataTarget="#addTasklist" />
+				<ModalWrapper id="addTasklist" >
+					<ModalHeader createTasklistTo='project'/>
 					<div className="modal-body">
 						<div className="form-group" >
-		        	<textarea className="form-control" name="taskName" 
-			        	placeholder="任务内容" rows="3" 
+		        	<input className="form-control" name="tasklistName" 
+			        	placeholder="列表名称" 
 			        	onChange={this.handleInputChange} 
-			        	value={this.state.taskName}></textarea>
+			        	value={this.state.tasklistName} />
 			      </div>
 		      </div>
 					<ModalFooter handleSubmit={this.handleSubmit} />
@@ -47,17 +56,11 @@ class Mod extends React.Component {
 			</div>
 		)
 	}
+
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return({
-		addTask: taskname => { dispatch(addTask(taskname)); }	//addTask(x) returns a function
-	})
-}
+const mapDispatchToProps = (dispatch) => ({
+	actions: bindActionCreators(actionCreators, dispatch)
+});
 
-// ({
-// 	actions: bindActionCreators(actionCreators, dispatch)
-// })
-
-export default connect(null, mapDispatchToProps)(Mod);
-
+export default connect(null, mapDispatchToProps)(AddTasklist);

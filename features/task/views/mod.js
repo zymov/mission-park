@@ -1,14 +1,15 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../components/modal_dialog';
-import { addTaskList } from '../actions';
+// import * as actionCreators from '../actions';
+import { addTask } from '../actions';
 
-class AddTaskList extends React.Component {
-
+class Mod extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			tasklistName: ''
+			taskName: ''
 		}
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,21 +25,21 @@ class AddTaskList extends React.Component {
 	}
 
 	handleSubmit(){
-		this.props.addTaskList(this.state.tasklistName);
+		this.props.addTask(this.state.taskName);
 	}
 
 	render(){
 		return(
 			<div>
-				<TriggerBtn dataTarget="#newTaskListDialog" />
-				<ModalWrapper id="newTaskListDialog" >
-					<ModalHeader createList={true} createTo="x"/>
+				<TriggerBtn dataTarget="#newTaskDialog" />
+				<ModalWrapper id="newTaskDialog" >
+					<ModalHeader createTaskTo="task list"/>
 					<div className="modal-body">
 						<div className="form-group" >
-		        	<input className="form-control" name="tasklistName" 
-			        	placeholder="列表名称" 
+		        	<textarea className="form-control" name="taskName" 
+			        	placeholder="任务内容" rows="3" 
 			        	onChange={this.handleInputChange} 
-			        	value={this.state.tasklistName} />
+			        	value={this.state.taskName}></textarea>
 			      </div>
 		      </div>
 					<ModalFooter handleSubmit={this.handleSubmit} />
@@ -46,11 +47,17 @@ class AddTaskList extends React.Component {
 			</div>
 		)
 	}
-
 }
 
-const mapDispatchToProps = dispatch => ({
-	addTaskList: tasklistName => dispatch(addTaskList(tasklistName))
-});
+const mapDispatchToProps = (dispatch) => {
+	return({
+		addTask: taskname => { dispatch(addTask(taskname)); }	//addTask(x) returns a function
+	})
+}
 
-export default connect(null, mapDispatchToProps)(AddTaskList);
+// ({
+// 	actions: bindActionCreators(actionCreators, dispatch)
+// })
+
+export default connect(null, mapDispatchToProps)(Mod);
+

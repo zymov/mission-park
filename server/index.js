@@ -62,11 +62,13 @@ app.use('/', express.static(path.join(__dirname, '../')));
 
 const authRouter = require('./routes/auth');
 const taskRouter = require('./routes/task');
+// const tasklistRouter = require('./routes/tasklist');
 const projectRouter = require('./routes/project');
 // const rootRouter = require('./routes/root');
 // app.use(rootRouter);
 app.use('/auth', authRouter);
 app.use('/tasks', taskRouter);
+// app.use('/tasklists', tasklistRouter);
 app.use('/projects', projectRouter);
 
 app.get('*', function (req, res){

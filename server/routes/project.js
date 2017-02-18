@@ -50,7 +50,7 @@ router.get('/fetch', function(req, res){
 			});
 		} 
 
-		res.json(projects);
+		res.json({projects});
 
 	});
 

@@ -2,11 +2,12 @@
 import { ADD_PROJECT_REQUEST, ADD_PROJECT_SUCCESS, ADD_PROJECT_FAILURE, FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS, FETCH_PROJECT_FAILURE } from './actions';
 
 const initialState = {
-	isFetching: false,
-	isAdding: false,
+	fetchingProject: false,
+	addingProject: false,
 	projects: null,
 	newProject: null,
-	errors: null
+	fetchingErrors: null,
+	addingProjectErrors: null
 }
 
 export default function project(state = initialState, action){
@@ -14,31 +15,31 @@ export default function project(state = initialState, action){
 	switch (action.type) {
 		case FETCH_PROJECT_REQUEST:
 			return Object.assign({}, state, {
-				isFetching: true
+				fetchingProject: true
 			});
 		case FETCH_PROJECT_SUCCESS:
 			return Object.assign({}, state, {
-				isFetching: false,
+				fetchingProject: false,
 				projects: action.payload
 			})
 		case FETCH_PROJECT_FAILURE:
 			return Object.assign({}, state, {
-				isFetching: false,
-				errors: action.payload.errors
+				fetchingProject: false,
+				fetchingErrors: action.payload.errors
 			})
 		case ADD_PROJECT_REQUEST: 
 			return Object.assign({}, state, {
-				isAdding: true
+				addingProject: true
 			})
 		case ADD_PROJECT_SUCCESS:
 			return Object.assign({}, state, {
-				isAdding: false,
+				addingProject: false,
 				newProject: action.payload
 			})
 		case ADD_PROJECT_FAILURE:
 			return Object.assign({}, state, {
-				isAdding: false,
-				errors: action.payload.errors
+				addingProject: false,
+				addingProjectErrors: action.payload.errors
 			})
 		default:
 			return state;

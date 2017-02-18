@@ -7,10 +7,19 @@ export default class ModalHeader extends React.Component {
 	}
 
 	render(){
+
+		var headerText = '创建新';
+		if(this.props.createProject){
+			headerText += '项目'
+		} else if(this.props.createTaskListTo){
+			headerText += '任务列表至' + this.props.createTaskListTo;
+		} else {
+			headerText += '任务至' + this.props.createTaskTo;
+		}
+
 		return(
 			<div className="modal-header">
-      	<h5 className="modal-title">
-      	创建新任务{this.props.createList ? '列表' : ''}{this.props.createTo ? '至' + this.props.createTo : ''}</h5>
+      	<h5 className="modal-title">{headerText}</h5>
         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

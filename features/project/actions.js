@@ -51,7 +51,7 @@ export function fetchProject(){
 		dispatch(fetchProjectRequest());
 		axios.get('/projects/fetch')
 		.then(function(res){
-			dispatch(fetchProjectSuccess(res.data));
+			dispatch(fetchProjectSuccess(res.data.projects));
 		})
 		.catch(function(err){
 			dispatch(fetchProjectFailure(err));

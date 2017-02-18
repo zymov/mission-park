@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../components/modal_dialog';
-import { addProject } from '../actions';
+import * as actionCreators from '../actions';
 
 class ProjectToolbar extends React.Component {
 
@@ -33,12 +34,13 @@ class ProjectToolbar extends React.Component {
 			token: localStorage.getItem('token')
 		}
 
-		this.props.addProject(payload);
+		this.props.actions.addProject(payload);
 		this.setState({
 			projectName: '',
 			description: ''
 		});
 		$('#addProject').click();
+		this.props.actions.fetchProject();
 	}
 
 	render(){
@@ -48,7 +50,7 @@ class ProjectToolbar extends React.Component {
 					data-toggle="modal" 
 					data-target="#addProject">Add Project</button>
 				<ModalWrapper id="addProject" >
-					<ModalHeader createTaskTo="x" />
+					<ModalHeader createProject={true} />
 					<div className="modal-body">
 						<div className="form-group" >
 			        <input className="form-control" name="projectName" 
@@ -71,10 +73,8 @@ class ProjectToolbar extends React.Component {
 
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return ({
-		addProject: (payload) => { dispatch(addProject(payload)); }
-	});
-};
+const mapDispatchToProps = (dispatch) => ({
+	actions: bindActionCreators(actionCreators, dispatch)
+});
 
 export default connect(null, mapDispatchToProps)(ProjectToolbar);
