@@ -13,38 +13,21 @@ class ProjectList extends React.Component {
 	}
 
 	render(){
-		const { newProject, fetchingProject, projects, fetchingErrors, addingProjectErrors } = this.props;
+		const { newProject, isLoading, projects, isError, infoText } = this.props;
 
-		var fetchedProject = [], infoText = '';
-		if(fetchingProject){
-			infoText = "fetching projects..."
-		} else if (fetchingErrors){
-			infoText = `<div class="alert alert-danger" role="alert">
-			    						<strong>Oh snap!</strong> Error: ${fetchingErrors}.</div>`;
-		} else if (addingProjectErrors){
-			infoText = `<div class="alert alert-danger" role="alert">
-			    						<strong>Oh snap!</strong> Error: ${addingProjectErrors}.</div>`;
-		} 
-		// else if (!projects || projects.length == 0){
-		// 	infoText = '';
-		// } 
-
-		if(projects && projects.length > 0){
-			fetchedProject = projects.map(function(project, index){
-				return (
-					<ProjectCard key={index} project={project} />
-				)
-			});	
-		}
-
-		if(newProject && !fetchingProject){
-				fetchedProject.unshift(<ProjectCard project={newProject} />);
-		}
+		var fetchedProject = [];
+		
+		fetchedProject = projects.map(function(project, index){
+			return (
+				<ProjectCard key={index} project={project} />
+			)
+		});	
 
 		return(
 				<div className="container card-deck">
 					<ProjectToolbar />
-					{infoText}
+					{isLoading && <div className="container col-md-9 alert alert-default" role="alert">{infoText}.</div>}
+					{isError && <div className="container col-md-9 alert alert-danger" role="alert">{infoText}.</div>}
 					{fetchedProject}
 			  </div>
 		)
@@ -52,11 +35,11 @@ class ProjectList extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	fetchingProject: state.project.fetchingProject,
+	isLoading: state.project.isLoading,
 	projects: state.project.projects,
-	fetchingErrors: state.project.fetchingErrors,
-	addingProjectErrors: state.project.addingProjectErrors,
-	newProject: state.project.newProject
+	isError: state.project.isError,
+	newProject: state.project.newProject,
+	infoText: state.project.infoText
 });
 
 const mapDispatchToProps = (dispatch) => ({

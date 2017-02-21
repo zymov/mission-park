@@ -33,3 +33,8 @@ export function checkUserSignin(){
 export function deAuthenticateUser(){
   localStorage.removeItem('token');
 }
+
+export function addNewObjectToList(list, newObject){
+  list.unshift(newObject);
+  return list;
+}

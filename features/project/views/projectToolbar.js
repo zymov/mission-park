@@ -40,7 +40,7 @@ class ProjectToolbar extends React.Component {
 			description: ''
 		});
 		$('#addProject').click();
-		this.props.actions.fetchProject();
+		// this.props.actions.fetchProject();
 	}
 
 	render(){

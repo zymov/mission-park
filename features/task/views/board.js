@@ -22,26 +22,9 @@ class Board extends React.Component {
 
 	render(){
 
-		const { fetchingTasklist, addingTasklist, addingTask, tasklists, newTasklist, newTask, addingTasklistErrors, addingTaskErrors, fetchingTasklistErrors } = this.props;
+		const { isLoading, tasklists, newTasklist, newTask, isError, infoText } = this.props;
 
-		var fetchedTaskList = [], infoText = '';
-
-		if(fetchingTasklist){
-			infoText = 'fething task list...';
-		} else if (addingTasklist){
-			infoText = 'adding new task list...';
-		} else if (addingTask){
-			infoText = 'adding new task...';
-		} else if (fetchingTasklistErrors){
-			infoText = `<div className="alert alert-danger" role="alert">
-			    				<strong>Oh snap!</strong> Error: ${fetchingTasklistErrors}.</div>`;
-		} else if (addingTasklistErrors){
-			infoText = `<div className="alert alert-danger" role="alert">
-			    				<strong>Oh snap!</strong> Error: ${addingTasklistErrors}.</div>`;
-		} else if (addingTaskErrors){
-			infoText = `<div className="alert alert-danger" role="alert">
-			    				<strong>Oh snap!</strong> Error: ${addingTaskErrors}.</div>`;
-		} 
+		var fetchedTaskList = [], _infoText = '';
 
 		if (tasklists && tasklists.length > 0){
 			fetchedTaskList = tasklists.map(function(tasklist, index){
@@ -49,15 +32,10 @@ class Board extends React.Component {
 			});
 		}
 
-		if(newTasklist && !fetchingTasklist){
-			fetchedTaskList.unshift(<Tasklist tasklist={newTasklist} />);
-		}
-
-
-
 		return(
 				<div className="container taskboard">
-					{infoText}
+					{isLoading && <div className="container col-md-9 alert alert-default" role="alert">{infoText}.</div>}
+					{isError && <div className="container col-md-9 alert alert-danger" role="alert">{infoText}.</div>}
 					<div className="row">
 						<div className="col-md-4">
 							<div className="btn-group" role="group" aria-label="Basic example">
@@ -88,17 +66,12 @@ class Board extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	fetchingTasklist: state.task.fetchingTasklist,
-	addingTasklist: state.task.addingTasklist,
-	addingTask: state.task.addingTask,
-
+	isLoading: state.task.isLoading,
 	tasklists: state.task.tasklists,
 	newTasklist: state.task.newTasklist,
 	newTask: state.task.newTask,
-
-	addingTasklistErrors: state.task.addingTasklistErrors,
-	addingTaskErrors: state.task.addingTaskErrors,
-	fetchingTasklistErrors: state.task.fetchingTasklistErrors
+	isError: state.task.isError,
+	infoText: state.task.infoText
 })
 
 const mapDispatchToProps = dispatch => ({

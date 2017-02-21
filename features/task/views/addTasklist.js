@@ -34,7 +34,6 @@ class AddTasklist extends React.Component {
 			tasklistName: ''
 		});
 		$('#addTasklist').click();
-		this.props.actions.fetchTasklist();
 	}
 
 	render(){

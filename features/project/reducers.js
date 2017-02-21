@@ -1,13 +1,23 @@
 
 import { ADD_PROJECT_REQUEST, ADD_PROJECT_SUCCESS, ADD_PROJECT_FAILURE, FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS, FETCH_PROJECT_FAILURE } from './actions';
 
+import { addNewObjectToList } from '../../utils';
+
 const initialState = {
-	fetchingProject: false,
-	addingProject: false,
-	projects: null,
+	// fetchingProject: false,
+	// addingProject: false,
+	isLoading: false,
+
+	projects: [],
 	newProject: null,
-	fetchingErrors: null,
-	addingProjectErrors: null
+
+	fetchSuccess: false,
+
+	// fetchingErrors: null,
+	// addingProjectErrors: null,
+	isError: false,
+
+	infoText: ''
 }
 
 export default function project(state = initialState, action){
@@ -15,31 +25,42 @@ export default function project(state = initialState, action){
 	switch (action.type) {
 		case FETCH_PROJECT_REQUEST:
 			return Object.assign({}, state, {
-				fetchingProject: true
+				isLoading: true,
+				projects: [],
+				infoText: 'fetching projects...'
 			});
 		case FETCH_PROJECT_SUCCESS:
 			return Object.assign({}, state, {
-				fetchingProject: false,
-				projects: action.payload
+				isLoading: false,
+				projects: action.payload,
+				infoText: ''
 			})
 		case FETCH_PROJECT_FAILURE:
 			return Object.assign({}, state, {
-				fetchingProject: false,
-				fetchingErrors: action.payload.errors
+				isLoading: false,
+				isError: true,
+				projects: [],
+				infoText: 'Error:' + action.payload.errors
 			})
 		case ADD_PROJECT_REQUEST: 
 			return Object.assign({}, state, {
-				addingProject: true
+				isLoading: true,
+				infoText: 'adding project...',
+				newProject: null
 			})
 		case ADD_PROJECT_SUCCESS:
 			return Object.assign({}, state, {
-				addingProject: false,
-				newProject: action.payload
+				isLoading: false,
+				newProject: action.payload,
+				projects: addNewObjectToList(state.projects, action.payload),
+				infoText: ''
 			})
 		case ADD_PROJECT_FAILURE:
 			return Object.assign({}, state, {
-				addingProject: false,
-				addingProjectErrors: action.payload.errors
+				isLoading: false,
+				isError: true,
+				newProject: null,
+				infoText: 'Error:' + action.payload.errors
 			})
 		default:
 			return state;
