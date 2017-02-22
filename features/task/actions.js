@@ -52,7 +52,9 @@ export function fetchTasklist(projectId){
 	return function(dispatch){
 		dispatch(fetchTasklistRequest());
 		axios.get('/tasks/fetchtasklist', {
-			projectId: projectId
+			params: {
+				projectId: projectId
+			}
 		})
 		.then(function(res){
 			dispatch(fetchTasklistSuccess(res.data.tasklists));

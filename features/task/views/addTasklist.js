@@ -27,7 +27,8 @@ class AddTasklist extends React.Component {
 
 	handleSubmit(){
 		var payload = {
-			tasklistName: this.state.tasklistName
+			tasklistName: this.state.tasklistName,
+			projectId: this.props.projectId
 		}
 		this.props.actions.addTasklist(payload);
 		this.setState({

@@ -17,7 +17,7 @@ class Board extends React.Component {
 	}
 
 	componentWillMount(){
-		this.props.actions.fetchTasklist();
+		this.props.actions.fetchTasklist(this.props.params.projectId);
 	}
 
 	render(){
@@ -39,7 +39,7 @@ class Board extends React.Component {
 					<div className="row">
 						<div className="col-md-4">
 							<div className="btn-group" role="group" aria-label="Basic example">
-							  <AddTasklist />
+							  <AddTasklist projectId={this.props.params.projectId} />
 							  <button type="button" className="btn btn-secondary">btn2</button>
 							  <button type="button" className="btn btn-secondary">btn3</button>
 							</div>

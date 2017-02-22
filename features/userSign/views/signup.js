@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {Link} from 'react-router';
 import * as actionCreators from '../actions';
