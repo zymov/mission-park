@@ -1,12 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { fetchTask } from '../actions';
 
-export default class Tasklist extends React.Component {
+class Tasklist extends React.Component {
+
+	handleClick(){
+		this.props.fetchTask(this.props.tasklist._id);
+	}
+
 	render(){
 
 		const { tasklistName, createTime } = this.props.tasklist;
 
 		return(
-			<a href="#" className="list-group-item list-group-item-action flex-column align-items-start ">
+			<a href="javascript:void(0);" onClick={this.handleClick.bind(this)} className="list-group-item list-group-item-action flex-column align-items-start ">
 		    <div className="d-flex w-100 justify-content-between">
 		      <h5 className="mb-1">{this.props.tasklist.tasklistName}</h5>
 		      <small>{createTime}</small>
@@ -17,3 +25,9 @@ export default class Tasklist extends React.Component {
 		)
 	}
 }
+
+const mapDispatchToProps = dispatch => ({
+	fetchTask: tasklistId => dispatch(fetchTask(tasklistId))
+});
+
+export default connect(null, mapDispatchToProps)(Tasklist);

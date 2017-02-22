@@ -4,6 +4,7 @@ import Home   from './views/home';
 import ProjectList from '../project/views/projectList';
 import Project from '../project/views/project';
 import Board from '../task/views/board';
+import TaskContainer from '../task/views/taskContainer';
 import Navbar from '../homePage/views/navbar';
 import App from '../app';
 
@@ -13,11 +14,9 @@ const routes = (
 	  <IndexRoute component={Home} />
 	  <Route path="/projects" component={ProjectList} />
 	  <Route path="/project/:projectId" component={Project} >
-  		<Route path="taskboard" component={Board} >
-  		</Route>
+  		<Route path="taskboard" component={Board} />
   	</Route>
 	</Route>
 );
-
 
 export default routes;

@@ -5,7 +5,7 @@ import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../com
 // import * as actionCreators from '../actions';
 import { addTask } from '../actions';
 
-class Mod extends React.Component {
+class AddTask extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -25,14 +25,22 @@ class Mod extends React.Component {
 	}
 
 	handleSubmit(){
-		this.props.addTask(this.state.taskName);
+		var payload = {
+			taskName: this.state.taskName,
+			tasklistId: this.props.tasklistId
+		}
+		this.props.addTask(payload);
+		this.setState({
+			taskName: ''
+		});
+		$('#newTask').click();
 	}
 
 	render(){
 		return(
 			<div>
-				<TriggerBtn dataTarget="#newTaskDialog" />
-				<ModalWrapper id="newTaskDialog" >
+				<TriggerBtn dataTarget="#newTask" />
+				<ModalWrapper id="newTask" >
 					<ModalHeader createTaskTo="task list"/>
 					<div className="modal-body">
 						<div className="form-group" >
@@ -59,5 +67,5 @@ const mapDispatchToProps = (dispatch) => {
 // 	actions: bindActionCreators(actionCreators, dispatch)
 // })
 
-export default connect(null, mapDispatchToProps)(Mod);
+export default connect(null, mapDispatchToProps)(AddTask);
 

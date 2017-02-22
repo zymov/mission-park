@@ -1,11 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Mod from './mod';
 import Tasklist from './tasklist';
 import AddTasklist from './addTasklist';
 import TasklistContainer from './tasklistContainer';
-import Task from './task';
 import TaskContainer from './taskContainer';
 
 import * as actionCreators from '../actions';
@@ -22,14 +20,20 @@ class Board extends React.Component {
 
 	render(){
 
-		const { isLoading, tasklists, newTasklist, newTask, isError, infoText } = this.props;
+		const { isLoading, tasklists, newTasklist, isError, infoText, currentTasklistId } = this.props;
 
-		var fetchedTaskList = [], _infoText = '';
+		var fetchedTaskList = [];
 
-		if (tasklists && tasklists.length > 0){
-			fetchedTaskList = tasklists.map(function(tasklist, index){
-				return <Tasklist key={index} tasklist={tasklist} />
-			});
+		fetchedTaskList = tasklists.map(function(tasklist, index){
+			return <Tasklist key={index} tasklist={tasklist} />;
+		});
+
+		var tasklistId = null;
+
+		if(currentTasklistId) {
+			tasklistId = currentTasklistId;
+		} else if (tasklists.length > 0) { 
+			tasklistId = tasklists[0]._id; 
 		}
 
 		return(
@@ -47,18 +51,7 @@ class Board extends React.Component {
 								{fetchedTaskList}
 							</TasklistContainer>
 						</div>
-						<div className="col-md-8">
-							<div className="btn-group" role="group" aria-label="Basic example">
-						  	<Mod />
-							  <button type="button" className="btn btn-secondary">btn2</button>
-							  <button type="button" className="btn btn-secondary">btn3</button>
-							</div>
-							<TaskContainer>
-								<Task />
-								<Task />
-								<Task />
-							</TaskContainer>
-						</div>
+						<TaskContainer tasklistId={tasklistId}/>
 					</div>
 				</div>
 		)
@@ -71,7 +64,8 @@ const mapStateToProps = state => ({
 	newTasklist: state.task.newTasklist,
 	newTask: state.task.newTask,
 	isError: state.task.isError,
-	infoText: state.task.infoText
+	infoText: state.task.infoText,
+	currentTasklistId: state.task.currentTasklistId
 })
 
 const mapDispatchToProps = dispatch => ({
