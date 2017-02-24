@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Task from './task';
 import AddTask from './addTask';
-import * as actionCreators from '../actions';
+import * as actionCreators from '../actions/taskActions';
 
 class TaskContainer extends React.Component {
 
@@ -16,7 +16,7 @@ class TaskContainer extends React.Component {
 	}
 
 	render(){
-		const { isLoading, tasks, newTask, isError, infoText, currentTasklistId } = this.props;
+		const { taskLoading, tasks, newTask, taskError, taskInfoText, currentTasklistId } = this.props;
 
 		var fetchedTasks = [];
 
@@ -38,14 +38,17 @@ class TaskContainer extends React.Component {
 }
 
 
-const mapStateToProps = state => ({
-	isLoading: state.task.isLoading,
-	tasks: state.task.tasks,
-	newTask: state.task.newTask,
-	isError: state.task.isError,
-	infoText: state.task.infoText,
-	currentTasklistId: state.task.currentTasklistId
-})
+const mapStateToProps = state => {
+	const tbt = state.taskboard.task;
+	return {
+		taskLoading: tbt.taskLoading,
+		tasks: tbt.tasks,
+		newTask: tbt.newTask,
+		taskError: tbt.taskError,
+		taskInfoText: tbt.taskInfoText,
+		currentTasklistId: tbt.currentTasklistId
+	}
+}
 
 const mapDispatchToProps = dispatch => ({
 	actions: bindActionCreators(actionCreators, dispatch)

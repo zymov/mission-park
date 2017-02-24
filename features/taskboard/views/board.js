@@ -6,7 +6,7 @@ import AddTasklist from './addTasklist';
 import TasklistContainer from './tasklistContainer';
 import TaskContainer from './taskContainer';
 
-import * as actionCreators from '../actions';
+import * as actionCreators from '../actions/tasklistActions';
 
 class Board extends React.Component {
 
@@ -20,7 +20,8 @@ class Board extends React.Component {
 
 	render(){
 
-		const { isLoading, tasklists, newTasklist, isError, infoText, currentTasklistId } = this.props;
+		const { tasklistLoading, tasklists, tasklistError, tasklistInfoText, 
+						taskLoading, taskError, taskInfoText, currentTasklistId } = this.props;
 
 		var fetchedTaskList = [];
 
@@ -38,8 +39,10 @@ class Board extends React.Component {
 
 		return(
 				<div className="container taskboard">
-					{isLoading && <div className="container col-md-9 alert alert-default" role="alert">{infoText}.</div>}
-					{isError && <div className="container col-md-9 alert alert-danger" role="alert">{infoText}.</div>}
+					{tasklistLoading && <div className="container col-md-9 alert alert-default" role="alert">{tasklistInfoText}.</div>}
+					{taskLoading && <div className="container col-md-9 alert alert-default" role="alert">{taskInfoText}.</div>}
+					{tasklistError && <div className="container col-md-9 alert alert-danger" role="alert">{tasklistInfoText}.</div>}
+					{taskError && <div className="container col-md-9 alert alert-danger" role="alert">{taskInfoText}.</div>}
 					<div className="row">
 						<div className="col-md-4">
 							<div className="btn-group" role="group" aria-label="Basic example">
@@ -58,15 +61,22 @@ class Board extends React.Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	isLoading: state.task.isLoading,
-	tasklists: state.task.tasklists,
-	newTasklist: state.task.newTasklist,
-	newTask: state.task.newTask,
-	isError: state.task.isError,
-	infoText: state.task.infoText,
-	currentTasklistId: state.task.currentTasklistId
-})
+const mapStateToProps = state => {
+	const tb = state.taskboard;
+	return {
+		taskLoading: 						tb.task.taskLoading,
+		newTask: 								tb.task.newTask,
+		taskError: 							tb.task.taskError,
+		taskInfoText: 					tb.task.taskInfoText,
+		currentTasklistId: 			tb.task.currentTasklistId,
+
+		tasklistLoading: 				tb.tasklist.tasklistLoading,
+		tasklists: 							tb.tasklist.tasklists,
+		newTasklist: 						tb.tasklist.newTasklist,
+		tasklistError: 					tb.tasklist.tasklistError,
+		tasklistInfoText: 			tb.tasklist.tasklistInfoText,
+	}
+}
 
 const mapDispatchToProps = dispatch => ({
 	actions: bindActionCreators(actionCreators, dispatch)
