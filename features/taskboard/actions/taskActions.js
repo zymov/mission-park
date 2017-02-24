@@ -9,6 +9,7 @@ export const FETCH_TASK_SUCCESS = 'FETCH_TASK_SUCCESS';
 export const FETCH_TASK_FAILURE = 'FETCH_TASK_FAILURE';
 
 export const SET_CURRENT_TASKLIST_ID = 'SET_CURRENT_TASKLIST_ID';
+export const NULL_TASKLIST_ID = 'NULL_TASKLIST_ID';
 
 /* add */
 export function addTask(payload){

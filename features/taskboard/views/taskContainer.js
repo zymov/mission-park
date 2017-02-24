@@ -12,7 +12,7 @@ class TaskContainer extends React.Component {
 	}
 
 	componentWillMount(){
-		this.props.actions.fetchTask(this.props.tasklistId);
+		this.props.actions.fetchTask(this.props.currentTasklistId);
 	}
 
 	render(){

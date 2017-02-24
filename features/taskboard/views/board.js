@@ -6,7 +6,9 @@ import AddTasklist from './addTasklist';
 import TasklistContainer from './tasklistContainer';
 import TaskContainer from './taskContainer';
 
-import * as actionCreators from '../actions/tasklistActions';
+// import * as actionCreators from '../actions/tasklistActions';
+import { fetchTasklist } from '../actions/tasklistActions';
+import { fetchTask } from '../actions/taskActions';
 
 class Board extends React.Component {
 
@@ -15,8 +17,10 @@ class Board extends React.Component {
 	}
 
 	componentWillMount(){
-		this.props.actions.fetchTasklist(this.props.params.projectId);
+		this.props.fetchTasklist(this.props.params.projectId);
 	}
+
+
 
 	render(){
 
@@ -26,16 +30,16 @@ class Board extends React.Component {
 		var fetchedTaskList = [];
 
 		fetchedTaskList = tasklists.map(function(tasklist, index){
-			return <Tasklist key={index} tasklist={tasklist} />;
+			return <Tasklist key={index} index={index} tasklist={tasklist} />;
 		});
 
-		var tasklistId = null;
+		// var tasklistId = null;
 
-		if(currentTasklistId) {
-			tasklistId = currentTasklistId;
-		} else if (tasklists.length > 0) { 
-			tasklistId = tasklists[0]._id; 
-		}
+		// if(currentTasklistId) {
+		// 	tasklistId = currentTasklistId;
+		// } else if (tasklists.length > 0) { 
+		// 	tasklistId = tasklists[0]._id; 
+		// }
 
 		return(
 				<div className="container taskboard">
@@ -54,7 +58,7 @@ class Board extends React.Component {
 								{fetchedTaskList}
 							</TasklistContainer>
 						</div>
-						<TaskContainer tasklistId={tasklistId}/>
+						{ currentTasklistId && <TaskContainer tasklistId={currentTasklistId}/> }
 					</div>
 				</div>
 		)
@@ -79,7 +83,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-	actions: bindActionCreators(actionCreators, dispatch)
+	fetchTasklist: projectId => { dispatch(fetchTasklist(projectId)); },
+	fetchTask: tasklistId => { dispatch(fetchTask(tasklistId)); }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

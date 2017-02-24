@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { fetchTask } from './taskActions';
 
 export const ADD_TASKLIST_REQUEST = 'ADD_TASKLIST_REQUEST';
 export const ADD_TASKLIST_SUCCESS = 'ADD_TASKLIST_SUCCESS';
@@ -53,6 +54,7 @@ export function fetchTasklist(projectId){
 		})
 		.then(function(res){
 			dispatch(fetchTasklistSuccess(res.data.tasklists));
+			res.data.tasklists[0] && dispatch(fetchTask(res.data.tasklists[0]._id));
 		})
 		.catch(function(err){
 			dispatch(fetchTasklistFailure(err));

@@ -1,7 +1,7 @@
 import { 
 	ADD_TASK_REQUEST, ADD_TASK_SUCCESS, ADD_TASK_FAILURE, 
 	FETCH_TASK_REQUEST, FETCH_TASK_SUCCESS, FETCH_TASK_FAILURE, 
-	SET_CURRENT_TASKLIST_ID } from '../actions/taskActions';
+	SET_CURRENT_TASKLIST_ID, NULL_TASKLIST_ID } from '../actions/taskActions';
 
 
 import { addNewObjectToList } from '../../../utils';
@@ -62,6 +62,10 @@ export default function task(state = initialState, action){
 		case SET_CURRENT_TASKLIST_ID:
 			return Object.assign({}, state, {
 				currentTasklistId: action.payload
+			});
+		case NULL_TASKLIST_ID:
+			return Object.assign({}, state, {
+				tasks: []
 			});
 		default:
 			return state;
