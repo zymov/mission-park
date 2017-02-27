@@ -17,17 +17,22 @@ export default class ProjectCard extends React.Component {
 		const { projectName, description, createTime, owner } = this.props.project;
 
 		return(
-			<div className="card" onClick={this.handleClick.bind(this)} >
-		    <img className="card-img-top" src="/static/imgs/cover-media.jpg" alt="Card image cap"/>
-		    <div className="card-block">
-		      <h4 className="card-title">{projectName}</h4>
-		      <p className="card-text">{description}</p>
-		    </div>
-		    <div className="card-footer">
-		    	{`owned by:${owner}`}
-		      <small className="text-muted">{createTime}</small>
-		    </div>
-	  	</div>
+
+			  <div className="col-sm-6 col-md-4">
+			    <div className="thumbnail"  onClick={this.handleClick.bind(this)} >
+			      <img src="/static/imgs/cover-media.jpg" alt="project img" />
+			      <div className="caption">
+			        <h3>{projectName}</h3>
+			        <p title={description}>{description}</p>
+			      </div>
+			      <div className="panel-footer">
+				    	{`owned by:${owner}`}
+				      <small className="text-muted">{createTime}</small>
+				    </div>
+			    </div>
+			  </div>
+
+
 		)
 	}
 }
@@ -35,3 +40,4 @@ export default class ProjectCard extends React.Component {
 ProjectCard.contextTypes = {
 	router: PropTypes.object.isRequired
 }
+

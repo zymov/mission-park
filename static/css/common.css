@@ -1,11 +1,44 @@
 body {
 	background-color: #fafafa;
 }
-.card-header {
+#project-list .thumbnail {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  transition: all 0.2s;
+  cursor: pointer;
+  margin-top: 30px;
+  height: 400px;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+#project-list .thumbnail:hover {
+  box-shadow: 0 7px 21px rgba(0,0,0,.15);
+  -webkit-transform: translate3d(0,-6px,0);
+  transform: translate3d(0,-6px,0);
+  transition: all 0.2s;  
+}
+#project-list .thumbnail>img {
+  width: 100%;
+}
+#project-list .thumbnail .caption {
+  height: 180px;
+}
+#project-list .thumbnail .caption p {
+  display: block;
+  display: -webkit-box;
+  height: 95px; /* =line-height*font-size*line-to-show */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 5; /*line-to-show*/
+  -webkit-box-orient: vertical;
+}
+/*.panel-header {
 	padding: 8px 20px;
 	font-weight: bold;
 }
-.card-deck .card {
+.container .panel {
+  float: left;
 	text-decoration: none;
 	transition: all 0.2s;
 	cursor: pointer;
@@ -15,46 +48,60 @@ body {
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
 }
-.card-deck .card:not(:first-child) {
+.container .panel:not(:first-child) {
     margin-left: 12px;
 }
-.card-deck .card:not(:last-child) {
+.container .panel:not(:last-child) {
     margin-right: 12px;
 }
-.card-deck .card:hover {
+.container .panel:hover {
 	box-shadow: 0 7px 21px rgba(0,0,0,.15);
 	-webkit-transform: translate3d(0,-6px,0);
   transform: translate3d(0,-6px,0);
   transition: all 0.2s;
 }
-.card-title {
+.panel-title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.card .add-project {
+.panel .add-project {
   width: 345px;
   height: 400px;
   cursor: pointer;
   margin-left: -21px;
   margin-top: -21px;
   background-color: #fff;
-}
+}*/
 .app-navbar {
+  margin-bottom: 3px;
+  border: 0;
+  border-radius: 0;
+  z-index: 999;
   background-color: #fff;
-  box-shadow: 0 0 2px 0 rgba(0,0,0,.5);
+  box-shadow: 0 0 3px 0 rgba(0,0,0,.5);
 }
 .project-nav {
   background-color: #eee;
   line-height: 40px;
+  text-align: center;
+  margin-top: -3px;
 }
-.project-nav .nav-link {
+.project-nav ul li.nav-item {
+  display: inline-block;
+}
+.project-nav ul .nav-link {
   padding: .5em 3em;
 }
 .taskboard {
   margin-top: 10px;
 }
-.active-projectnav {
+.project-nav a.active-projectnav {
   background-color: #fafafa;
 }
-
+.project-nav a.nav-link.active-projectnav:hover {
+  background-color: #fafafa;
+}
+.project-nav a.nav-link:hover {
+  background-color: #eee;
+}

@@ -22,11 +22,13 @@ class ProjectList extends React.Component {
 		});	
 
 		return(
-				<div className="container card-deck">
+				<div id="project-list" className="container">
 					<ProjectToolbar />
 					{isLoading && <div className="container col-md-9 alert alert-default" role="alert">{infoText}.</div>}
 					{isError && <div className="container col-md-9 alert alert-danger" role="alert">{infoText}.</div>}
-					{fetchedProject}
+					<div className="row">
+						{fetchedProject}
+					</div>
 			  </div>
 		)
 	}

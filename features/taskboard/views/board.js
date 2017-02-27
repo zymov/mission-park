@@ -33,14 +33,6 @@ class Board extends React.Component {
 			return <Tasklist key={index} index={index} tasklist={tasklist} />;
 		});
 
-		// var tasklistId = null;
-
-		// if(currentTasklistId) {
-		// 	tasklistId = currentTasklistId;
-		// } else if (tasklists.length > 0) { 
-		// 	tasklistId = tasklists[0]._id; 
-		// }
-
 		return(
 				<div className="container taskboard">
 					{tasklistLoading && <div className="container col-md-9 alert alert-default" role="alert">{tasklistInfoText}.</div>}

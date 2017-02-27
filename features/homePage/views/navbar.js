@@ -4,38 +4,57 @@ import {Link} from 'react-router';
 class Navbar extends React.Component {
 	render(){
 		return(
-			<nav className="navbar app-navbar navbar-toggleable-md navbar-light" >
-		    <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-		      <span className="navbar-toggler-icon"></span>
-		    </button>
-		    <a className="navbar-brand" href="#">Navbar</a>
+			<nav className="app-navbar navbar navbar-default">
+			  <div className="container-fluid">
+			    <div className="navbar-header">
+			      <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			        <span className="sr-only">Toggle navigation</span>
+			        <span className="icon-bar"></span>
+			        <span className="icon-bar"></span>
+			        <span className="icon-bar"></span>
+			      </button>
+			      <a className="navbar-brand" href="/">Brand</a>
+			    </div>
 
-		    <div className="collapse navbar-collapse" id="navbarColor03">
-		      <ul className="navbar-nav mr-auto">
-		        <li className="nav-item active">
-		          <a className="nav-link" href="#">Home<span className="sr-only">(current)</span></a>
-		        </li>
-		        <li className="nav-item">
-		          <Link className="nav-link" to="/">项目</Link>
-		        </li>
-		        <li className="nav-item">
-		          <Link className="nav-link" to="#">时间线</Link>
-		        </li>
-		        <li className="nav-item">
-		          <a className="nav-link" href="#">通知</a>
-		        </li>
-		      </ul>
-		      <form className="form-inline">
-		        <input className="form-control mr-sm-2" type="text" placeholder="Search" />
-		        <button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-		      </form>
-		      <ul className="navbar-nav">
-		      	<li className="nav-item">
-		      		<Link className="nav-link" to="/signout" >sign out</Link>
-		      	</li>
-		      </ul>
-		    </div>
-		  </nav>
+			    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			      <ul className="nav navbar-nav">
+			        <li className="active"><a href="/">projects <span className="sr-only">(current)</span></a></li>
+			        <li><a href="/">Link</a></li>
+			        <li className="dropdown">
+			          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
+			          <ul className="dropdown-menu">
+			            <li><a href="#">Action</a></li>
+			            <li><a href="#">Another action</a></li>
+			            <li><a href="#">Something else here</a></li>
+			            <li role="separator" className="divider"></li>
+			            <li><a href="#">Separated link</a></li>
+			            <li role="separator" className="divider"></li>
+			            <li><a href="#">One more separated link</a></li>
+			          </ul>
+			        </li>
+			      </ul>
+			      <form className="navbar-form navbar-left">
+			        <div className="form-group">
+			          <input type="text" className="form-control" placeholder="Search" />
+			        </div>
+			        <button type="submit" className="btn btn-default">Submit</button>
+			      </form>
+			      <ul className="nav navbar-nav navbar-right">
+			        <li><a href="#">Link</a></li>
+			        <li className="dropdown">
+			          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
+			          <ul className="dropdown-menu">
+			            <li><a href="#">Action</a></li>
+			            <li><a href="#">Another action</a></li>
+			            <li><a href="#">Something else here</a></li>
+			            <li role="separator" className="divider"></li>
+			            <li><a href="#">Separated link</a></li>
+			          </ul>
+			        </li>
+			      </ul>
+			    </div>
+			  </div>
+			</nav>
 		)
 	}
 
