@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../components/modal_dialog';
+import Example from './autoSuggest';
 import * as actionCreators from '../actions/tasklistActions';
 
 class AddTasklist extends React.Component {
@@ -13,8 +14,9 @@ class AddTasklist extends React.Component {
 			dueDate: null,
 			priority: 0,	// 0: normal, 1: important, 2:very important
 			executor: null
-		}
+		}; 
 		this.priorityList = ['一般', '紧急', '非常紧急'];
+		this.priorityColors = ['#555', '#ffaf38', '#ff4f3e'];
 		this.labelStyle = {lineHeight: '34px', marginBottom: 0, marginRight: '20px', float: 'left'};
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -73,23 +75,22 @@ class AddTasklist extends React.Component {
 							  <div className='input-group date'>
 							  	<label style={this.labelStyle}>截止时间</label>
 	                <input type='text' placeholder="列表截止日期" className="form-control" id='datetimepicker1' 
-	                	style={{width: '170px', float: 'right'}}/>
+	                	style={{width: '170px'}}/>
 	              </div>
 							</div>
 						  <div className="col-md-6">
 						  	<label style={this.labelStyle}>优先级</label>
 							  <div className="dropdown" style={{float: 'left'}}>
-							  	<button className="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style={{background: 'none', border: 0, lineHeight: '34px'}}>
+							  	<button className="dropdown-toggle" type="button" id="priorityDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style={{background: 'none', border: 0, lineHeight: '32px', color: this.priorityColors[this.state.priority]}}>
 								    {this.priorityList[this.state.priority]}
 								  </button>
-								  <ul className="dropdown-menu" onClick={this.selectPriority} aria-labelledby="dropdownMenu1">
-								    <li><a href="javascript:void(0);">一般</a></li>
-								    <li><a href="javascript:void(0);">紧急</a></li>
-								    <li><a href="javascript:void(0);">非常紧急</a></li>
+								  <ul className="dropdown-menu" onClick={this.selectPriority} aria-labelledby="priorityDropdown">
+								    <li><a href="javascript:void(0);" style={{color: '#555'}}>一般</a></li>
+								    <li><a href="javascript:void(0);" style={{color: '#ffaf38'}}>紧急</a></li>
+								    <li><a href="javascript:void(0);" style={{color: '#ff4f3e'}}>非常紧急</a></li>
 								  </ul>
 							  </div>
 							</div>
-
 			      </div>
 		      </div>
 					<ModalFooter handleSubmit={this.handleSubmit} />
