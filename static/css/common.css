@@ -1,6 +1,14 @@
 body {
 	background-color: #fafafa;
 }
+.clearfix {*zoom: 1;}
+.clearfix:after {
+  clear: both;
+  content: '.';
+  display: block;
+  visibility: hidden;
+  height: 0;
+}
 #project-list .thumbnail {
   padding: 0;
   border: 0;
@@ -33,46 +41,6 @@ body {
   -webkit-line-clamp: 5; /*line-to-show*/
   -webkit-box-orient: vertical;
 }
-/*.panel-header {
-	padding: 8px 20px;
-	font-weight: bold;
-}
-.container .panel {
-  float: left;
-	text-decoration: none;
-	transition: all 0.2s;
-	cursor: pointer;
-  max-width: 346px;
-  margin-top: 30px;
-  height: 400px;
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
-}
-.container .panel:not(:first-child) {
-    margin-left: 12px;
-}
-.container .panel:not(:last-child) {
-    margin-right: 12px;
-}
-.container .panel:hover {
-	box-shadow: 0 7px 21px rgba(0,0,0,.15);
-	-webkit-transform: translate3d(0,-6px,0);
-  transform: translate3d(0,-6px,0);
-  transition: all 0.2s;
-}
-.panel-title {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.panel .add-project {
-  width: 345px;
-  height: 400px;
-  cursor: pointer;
-  margin-left: -21px;
-  margin-top: -21px;
-  background-color: #fff;
-}*/
 .app-navbar {
   margin-bottom: 3px;
   border: 0;
@@ -105,3 +73,4 @@ body {
 .project-nav a.nav-link:hover {
   background-color: #eee;
 }
+

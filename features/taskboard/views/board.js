@@ -2,25 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Tasklist from './tasklist';
-import AddTasklist from './addTasklist';
+// import AddTasklist from './addTasklist';
+import TasklistToolbar from './tasklistToolbar';
 import TasklistContainer from './tasklistContainer';
+import TaskToolbar from './taskToolbar';
 import TaskContainer from './taskContainer';
 
 // import * as actionCreators from '../actions/tasklistActions';
-import { fetchTasklist } from '../actions/tasklistActions';
-import { fetchTask } from '../actions/taskActions';
+// import { fetchTasklist } from '../actions/tasklistActions';
+// import { fetchTask } from '../actions/taskActions';
 
 class Board extends React.Component {
 
 	constructor(props){
 		super(props);
 	}
-
-	componentWillMount(){
-		this.props.fetchTasklist(this.props.params.projectId);
-	}
-
-
 
 	render(){
 
@@ -41,16 +37,15 @@ class Board extends React.Component {
 					{taskError && <div className="container col-md-9 alert alert-danger" role="alert">{taskInfoText}.</div>}
 					<div className="row">
 						<div className="col-md-4">
-							<div className="btn-group" role="group" aria-label="Basic example">
-							  <AddTasklist projectId={this.props.params.projectId} />
-							  <button type="button" className="btn btn-secondary">btn2</button>
-							  <button type="button" className="btn btn-secondary">btn3</button>
-							</div>
+							<TasklistToolbar projectId={this.props.params.projectId} />
 							<TasklistContainer>
 								{fetchedTaskList}
 							</TasklistContainer>
 						</div>
-						{ currentTasklistId && <TaskContainer tasklistId={currentTasklistId}/> }
+						<div className="col-md-8">
+							{ currentTasklistId && <TaskToolbar tasklistId={currentTasklistId}/> }
+							{ currentTasklistId && <TaskContainer tasklistId={currentTasklistId}/> }
+						</div>
 					</div>
 				</div>
 		)
@@ -74,9 +69,9 @@ const mapStateToProps = state => {
 	}
 }
 
-const mapDispatchToProps = dispatch => ({
-	fetchTasklist: projectId => { dispatch(fetchTasklist(projectId)); },
-	fetchTask: tasklistId => { dispatch(fetchTask(tasklistId)); }
-})
+// const mapDispatchToProps = dispatch => ({
+// 	fetchTasklist: projectId => { dispatch(fetchTasklist(projectId)); },
+// 	fetchTask: tasklistId => { dispatch(fetchTask(tasklistId)); }
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board);
+export default connect(mapStateToProps, null)(Board);

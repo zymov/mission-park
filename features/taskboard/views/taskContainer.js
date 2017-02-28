@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Task from './task';
-import AddTask from './addTask';
+import TaskToolbar from './taskToolbar';
 import * as actionCreators from '../actions/taskActions';
 
 class TaskContainer extends React.Component {
@@ -25,12 +25,7 @@ class TaskContainer extends React.Component {
 		});
 
 		return(
-			<div className="col-md-8">
-				<div className="btn-group" role="group" aria-label="Basic example">
-			  	<AddTask tasklistId={currentTasklistId} />
-				  <button type="button" className="btn btn-secondary">btn2</button>
-				  <button type="button" className="btn btn-secondary">btn3</button>
-				</div>
+			<div>
 				{fetchedTasks}
 			</div>
 		)
