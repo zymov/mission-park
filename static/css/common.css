@@ -1,14 +1,6 @@
 body {
 	background-color: #fafafa;
 }
-.clearfix {*zoom: 1;}
-.clearfix:after {
-  clear: both;
-  content: '.';
-  display: block;
-  visibility: hidden;
-  height: 0;
-}
 #project-list .thumbnail {
   padding: 0;
   border: 0;
@@ -73,4 +65,59 @@ body {
 .project-nav a.nav-link:hover {
   background-color: #eee;
 }
-
+.list-group-item:first-child, .list-group-item:last-child{border-radius: 0;}
+.tasklist {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 5px;
+}
+.tasklist .tasklist-priority {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  transition: all 0.2s;
+}
+.priority-0 {
+  background-color: #ddd;
+}
+.priority-1 {
+  background-color: #ffaf38;
+}
+.priority-2 {
+  background-color: #ff4f3e;
+}
+.tasklist:hover .tasklist-priority{
+  transition: all 0.2s;
+  width: 6px;
+}
+.tasklist.active .tasklist-priority {
+  width: 6px;
+}
+.tasklist .tasklist-options {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+.tasklist .tasklist-options .dropdown button{
+  background: none;
+  border: 0;
+}
+.tasklist > label {
+  margin-right: 20px;
+}
+.label-wrapper {
+  padding: 10px 0;
+}
+.label-wrapper span {
+  margin: 6px 12px 0 0;
+}
+.tasklist-footer {
+  background-color: #f5f5f5;
+  border-top: 1px solid #eee;
+  display: block;
+  padding: 4px 15px;
+  margin: 0 -15px -10px;
+}

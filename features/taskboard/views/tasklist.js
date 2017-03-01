@@ -5,24 +5,31 @@ import { fetchTask } from '../actions/taskActions';
 
 class Tasklist extends React.Component {
 
-	handleClick(){
+	handleClick(e){
+		e.stopPropagation();
 		this.props.fetchTask(this.props.tasklist._id);
 	}
 
 	render(){
 
-		const { tasklistName, createTime } = this.props.tasklist;
+		const { _id, tasklistName, createTime, dueDate, priority } = this.props.tasklist;
 
 		return(
-			<a href="javascript:void(0);" onClick={this.handleClick.bind(this)} className="list-group-item list-group-item-action flex-column align-items-start ">
-		    <div className="d-flex w-100 justify-content-between">
-		      <h5 className="mb-1">{this.props.tasklist.tasklistName}</h5>
-		      <small>{createTime}</small>
+			<div onClick={this.handleClick.bind(this)} className="list-group-item tasklist clearfix">
+				<div className="tasklist-priority priority-1"></div>
+	      <h4 title={tasklistName} className="list-group-item-heading">{tasklistName}</h4>
+	      <label className="label label-warning" >优先级: {priority}</label>
+	      <label className="label label-danger" >截止日期: {dueDate}</label>
+		    <div className="label-wrapper">
+		    	<span className="badge">标签1</span>
+			    <span className="badge">label2</span>
+			    <span className="badge">label3</span>
+			    <span className="badge">labe2</span>
+			    <span className="badge">lab标签1e2labe2</span>
 		    </div>
-		    <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-		    <small>Donec id elit non mi porta.</small>
-		  </a>
-		)
+	      <small className="tasklist-footer">创建时间: {createTime}</small>
+		  </div>
+		);
 	}
 }
 

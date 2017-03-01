@@ -12,6 +12,8 @@ router.post('/addtasklist', function(req, res){
 		tasklist.tasklistName = req.body.tasklistName;
 		tasklist.createTime = new Date();
 		tasklist._projectid = req.body.projectId;
+		tasklist.dueDate = new Date(req.body.dueDate);
+		tasklist.priority = req.body.priority;
 		tasklist.save(function(err){
 			if(err){
 				res.status(500).json({
@@ -28,7 +30,7 @@ router.post('/addtasklist', function(req, res){
 			errors: 'check your tasklist name'
 		})
 	}
-})
+});
 
 router.get('/fetchtasklist', function(req, res){
 	var projectId = utils.getQueryVariable(req.url, 'projectId');
