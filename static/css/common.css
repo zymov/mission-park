@@ -93,7 +93,7 @@ body {
   transition: all 0.2s;
   width: 6px;
 }
-.tasklist.active .tasklist-priority {
+.current-tasklist .tasklist-priority {
   width: 6px;
 }
 .tasklist .tasklist-options {

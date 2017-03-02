@@ -8,7 +8,13 @@ class Tasklist extends React.Component {
 	handleClick(e){
 		e.stopPropagation();
 		if(this.props.tasklist._id == this.props.currentTasklistId){return;}
-		this.props.fetchTask(this.props.tasklist._id);
+		this.props.fetchTask(this.props.tasklist._id, this.props.index);
+	}
+
+	componentDidMount(){
+		if(this.props.index == 0){
+			this.props.fetchTask(this.props.tasklist._id, 0);
+		}
 	}
 
 	render(){
@@ -16,7 +22,8 @@ class Tasklist extends React.Component {
 		const { _id, tasklistName, createTime, dueDate, priority } = this.props.tasklist;
 
 		return(
-			<div onClick={this.handleClick.bind(this)} className="list-group-item tasklist clearfix">
+			<div onClick={this.handleClick.bind(this)} 
+			className={`list-group-item tasklist clearfix ${this.props.activeTasklist == this.props.index ? 'current-tasklist' : ''}`}>
 				<div className={`tasklist-priority priority-${priority}`}></div>
 	      <h4 title={tasklistName} className="list-group-item-heading">{tasklistName}</h4>
 	      <label className="label label-warning" >优先级: {priority}</label>
@@ -35,11 +42,12 @@ class Tasklist extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	currentTasklistId: state.taskboard.task.currentTasklistId
+	currentTasklistId: state.taskboard.task.currentTasklistId,
+	activeTasklist: state.taskboard.task.activeTasklist
 });
 
 const mapDispatchToProps = dispatch => ({
-	fetchTask: tasklistId => dispatch(fetchTask(tasklistId))
+	fetchTask: (tasklistId, index) => dispatch(fetchTask(tasklistId, index))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasklist);

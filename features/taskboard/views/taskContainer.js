@@ -12,7 +12,7 @@ class TaskContainer extends React.Component {
 	}
 
 	componentWillMount(){
-		this.props.actions.fetchTask(this.props.currentTasklistId);
+		this.props.actions.fetchTask(this.props.currentTasklistId, this.props.activeTasklist);
 	}
 
 	render(){
@@ -41,7 +41,8 @@ const mapStateToProps = state => {
 		newTask: tbt.newTask,
 		taskError: tbt.taskError,
 		taskInfoText: tbt.taskInfoText,
-		currentTasklistId: tbt.currentTasklistId
+		currentTasklistId: tbt.currentTasklistId,
+		activeTasklist: tbt.activeTasklist
 	}
 }
 

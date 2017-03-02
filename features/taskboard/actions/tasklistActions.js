@@ -9,6 +9,8 @@ export const FETCH_TASKLIST_REQUEST = 'FETCH_TASKLIST_REQUEST';
 export const FETCH_TASKLIST_SUCCESS = 'FETCH_TASKLIST_SUCCESS';
 export const FETCH_TASKLIST_FAILURE = 'FETCH_TASKLIST_FAILURE';
 
+export const SET_CURRENT_TASKLIST_ID_TO_NULL = 'SET_CURRENT_TASKLIST_ID_TO_NULL';
+
 export function addTasklist(payload){
 	return function(dispatch){
 		dispatch(addTasklistRequest());
@@ -54,7 +56,8 @@ export function fetchTasklist(projectId){
 		})
 		.then(function(res){
 			dispatch(fetchTasklistSuccess(res.data.tasklists));
-			res.data.tasklists[0] && dispatch(fetchTask(res.data.tasklists[0]._id));
+			res.data.tasklists[0] && dispatch(fetchTask(res.data.tasklists[0]._id, 0));
+			res.data.tasklists.length == 0 && dispatch(setCurrentTasklistIdToNull());
 		})
 		.catch(function(err){
 			dispatch(fetchTasklistFailure(err));
@@ -81,5 +84,11 @@ export function fetchTasklistFailure(err){
 		payload: {
 			errors: err
 		}
+	}
+}
+
+export function setCurrentTasklistIdToNull(){
+	return {
+		type: 'SET_CURRENT_TASKLIST_ID_TO_NULL'
 	}
 }

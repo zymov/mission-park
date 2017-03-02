@@ -1,8 +1,9 @@
 import { 
 	ADD_TASK_REQUEST, ADD_TASK_SUCCESS, ADD_TASK_FAILURE, 
 	FETCH_TASK_REQUEST, FETCH_TASK_SUCCESS, FETCH_TASK_FAILURE, 
-	SET_CURRENT_TASKLIST_ID, NULL_TASKLIST_ID } from '../actions/taskActions';
-
+	SET_CURRENT_TASKLIST_ID, SET_ACTIVE_TASKLIST, 
+	NULL_TASKLIST_ID } from '../actions/taskActions';
+import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
 
 import { addNewObjectToList } from '../../../utils';
 
@@ -16,7 +17,8 @@ const initialState = {
 
 	taskInfoText: '',
 
-	currentTasklistId: null
+	currentTasklistId: null,
+	activeTasklist: 0
 }
 
 export default function task(state = initialState, action){
@@ -63,9 +65,17 @@ export default function task(state = initialState, action){
 			return Object.assign({}, state, {
 				currentTasklistId: action.payload
 			});
+		case SET_ACTIVE_TASKLIST:
+			return Object.assign({}, state, {
+				activeTasklist: action.payload
+			})
 		case NULL_TASKLIST_ID:
 			return Object.assign({}, state, {
 				tasks: []
+			});
+		case SET_CURRENT_TASKLIST_ID_TO_NULL:
+			return Object.assign({}, state, {
+				currentTasklistId: null
 			});
 		default:
 			return state;

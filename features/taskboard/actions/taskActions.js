@@ -9,6 +9,7 @@ export const FETCH_TASK_SUCCESS = 'FETCH_TASK_SUCCESS';
 export const FETCH_TASK_FAILURE = 'FETCH_TASK_FAILURE';
 
 export const SET_CURRENT_TASKLIST_ID = 'SET_CURRENT_TASKLIST_ID';
+export const SET_ACTIVE_TASKLIST = 'SET_ACTIVE_TASKLIST';
 export const NULL_TASKLIST_ID = 'NULL_TASKLIST_ID';
 
 /* add */
@@ -48,12 +49,13 @@ export function addTaskFailure(err){
 }
 
 /* fetch */
-export function fetchTask(tasklistId){
+export function fetchTask(tasklistId, index){
 	if(!tasklistId) return {
 		type: 'NULL_TASKLIST_ID'
 	};
 	return function(dispatch){
 		dispatch(setCurrentTasklistId(tasklistId));
+		dispatch(setActiveTasklist(index));
 		dispatch(fetchTaskRequest());
 		axios.get('/tasks/fetchtask', {
 			params: {
@@ -73,6 +75,13 @@ export function setCurrentTasklistId(tasklistId){
 	return {
 		type: 'SET_CURRENT_TASKLIST_ID',
 		payload: tasklistId
+	}
+}
+
+export function setActiveTasklist(index){
+	return {
+		type: 'SET_ACTIVE_TASKLIST',
+		payload: index
 	}
 }
 

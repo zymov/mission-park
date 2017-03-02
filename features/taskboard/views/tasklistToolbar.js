@@ -10,10 +10,6 @@ class TasklistToolbar extends React.Component {
 		super(props);
 	}
 
-	componentWillMount(){
-		this.props.fetchTasklist(this.props.projectId);
-	}
-
 	render(){
 		return(
 			<div className="btn-group" role="group" aria-label="Basic example">
@@ -27,9 +23,11 @@ class TasklistToolbar extends React.Component {
 }
 
 
-const mapDispatchToProps = dispatch => ({
-	fetchTasklist: projectId => { dispatch(fetchTasklist(projectId)); }
-})
+// const mapDispatchToProps = dispatch => ({
+// 	fetchTasklist: projectId => { dispatch(fetchTasklist(projectId)); }
+// });
 
 
-export default connect(null, mapDispatchToProps)(TasklistToolbar);
+// export default connect(null, mapDispatchToProps)(TasklistToolbar);
+
+export default TasklistToolbar;
