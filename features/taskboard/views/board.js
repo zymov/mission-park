@@ -18,12 +18,6 @@ class Board extends React.Component {
 						taskLoading, taskError, taskInfoText, 
 						currentTasklistId } = this.props;
 
-		// var fetchedTaskList = [];
-
-		// fetchedTaskList = tasklists.map(function(tasklist, index){
-		// 	return <Tasklist key={index} index={index} tasklist={tasklist} />;
-		// });
-
 		return(
 				<div className="container taskboard">
 					{tasklistLoading && <div className="container col-md-9 alert alert-default" role="alert">{tasklistInfoText}.</div>}
