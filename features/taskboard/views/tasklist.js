@@ -7,6 +7,7 @@ class Tasklist extends React.Component {
 
 	handleClick(e){
 		e.stopPropagation();
+		if(this.props.tasklist._id == this.props.currentTasklistId){return;}
 		this.props.fetchTask(this.props.tasklist._id);
 	}
 
@@ -16,7 +17,7 @@ class Tasklist extends React.Component {
 
 		return(
 			<div onClick={this.handleClick.bind(this)} className="list-group-item tasklist clearfix">
-				<div className="tasklist-priority priority-1"></div>
+				<div className={`tasklist-priority priority-${priority}`}></div>
 	      <h4 title={tasklistName} className="list-group-item-heading">{tasklistName}</h4>
 	      <label className="label label-warning" >优先级: {priority}</label>
 	      <label className="label label-danger" >截止日期: {dueDate}</label>
@@ -33,8 +34,12 @@ class Tasklist extends React.Component {
 	}
 }
 
+const mapStateToProps = state => ({
+	currentTasklistId: state.taskboard.task.currentTasklistId
+});
+
 const mapDispatchToProps = dispatch => ({
 	fetchTask: tasklistId => dispatch(fetchTask(tasklistId))
 });
 
-export default connect(null, mapDispatchToProps)(Tasklist);
+export default connect(mapStateToProps, mapDispatchToProps)(Tasklist);
