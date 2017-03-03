@@ -4,19 +4,11 @@ import { ADD_PROJECT_REQUEST, ADD_PROJECT_SUCCESS, ADD_PROJECT_FAILURE, FETCH_PR
 import { addNewObjectToList } from '../../utils';
 
 const initialState = {
-	// fetchingProject: false,
-	// addingProject: false,
 	isLoading: false,
-
 	projects: [],
 	newProject: null,
-
 	fetchSuccess: false,
-
-	// fetchingErrors: null,
-	// addingProjectErrors: null,
 	isError: false,
-
 	infoText: ''
 }
 

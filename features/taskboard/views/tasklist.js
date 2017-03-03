@@ -8,12 +8,12 @@ class Tasklist extends React.Component {
 	handleClick(e){
 		e.stopPropagation();
 		if(this.props.tasklist._id == this.props.currentTasklistId){return;}
-		this.props.fetchTask(this.props.tasklist._id, this.props.index);
+		this.props.fetchTask(this.props.tasklist._id, this.props.index, this.props.tasklist.tasklistName);
 	}
 
 	componentDidMount(){
 		if(this.props.index == 0){
-			this.props.fetchTask(this.props.tasklist._id, 0);
+			this.props.fetchTask(this.props.tasklist._id, 0, this.props.tasklist.tasklistName);
 		}
 	}
 
@@ -47,7 +47,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	fetchTask: (tasklistId, index) => dispatch(fetchTask(tasklistId, index))
+	fetchTask: (tasklistId, index, tasklistName) => dispatch(fetchTask(tasklistId, index, tasklistName))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasklist);

@@ -56,8 +56,12 @@ export function fetchTasklist(projectId){
 		})
 		.then(function(res){
 			dispatch(fetchTasklistSuccess(res.data.tasklists));
-			res.data.tasklists[0] && dispatch(fetchTask(res.data.tasklists[0]._id, 0));
+			res.data.tasklists[0] && dispatch(fetchTask(res.data.tasklists[0]._id, 0, res.data.tasklists[0].tasklistName));
+
+			//clear currentTasklistId from state tree to prevent project which has none tasklist 
+			// from getting the previous [currentTasklistId] in state tree.
 			res.data.tasklists.length == 0 && dispatch(setCurrentTasklistIdToNull());
+
 		})
 		.catch(function(err){
 			dispatch(fetchTasklistFailure(err));

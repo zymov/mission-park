@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../components/modal_dialog';
+import Dropdown from '../../../components/dropdown';
 // import * as actionCreators from '../actions';
 import { addTask } from '../actions/taskActions';
 
@@ -9,10 +10,42 @@ class AddTask extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			taskName: ''
+			taskName: '',
+			dueDate: '',
+			priority: 0,
+			description: '',
+			executor: '',
+			repeat: 0
 		}
+
+		this.priorityList = ['一般', '紧急', '非常紧急'];
+		this.priorityColors = ['#555', '#ffaf38', '#ff4f3e'];
+
+		this.repeatList = ['不重复', '每小时', '每天', '每周', '每月', '每年'];
+
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.selectPriority = this.selectPriority.bind(this);
+		this.selectRepeat = this.selectRepeat.bind(this);
+
+		this.priorityDropdown = {
+			menulist: [
+				{name: '一般', style: {color: '#555'}}, 
+				{name: '紧急', style: {color: '#ffaf38'}}, 
+				{name: '非常紧急', style: {color: "#ff4f3e"}}],
+			btnId: 'priorityDropdown',
+			handleClick: this.selectPriority
+		}
+
+		this.repeatDropdown = {
+			menulist: [ {name: '不重复'}, {name: '每小时'}, {name: '每天'}, {name: '每周'}, {name: '每月'}, {name: '每年'} ],
+			btnId: 'repeatDropdown',
+			handleClick: this.selectRepeat
+		}
+	}
+
+	componentDidMount(){
+		$('#taskDueDate').datetimepicker();
 	}
 
 	handleInputChange(event){
@@ -24,10 +57,30 @@ class AddTask extends React.Component {
 		});
 	}
 
+	selectPriority(event){
+		const target = event.target;
+		const priority = this.priorityList.indexOf(target.text);
+		this.setState({
+			priority: priority
+		});
+	}
+
+	selectRepeat(event){
+		const target = event.target;
+		const repeat = this.repeatList.indexOf(target.text);
+		this.setState({
+			repeat: repeat
+		});
+	}
+
 	handleSubmit(){
 		var payload = {
 			taskName: this.state.taskName,
-			tasklistId: this.props.tasklistId
+			tasklistId: this.props.tasklistId,
+			description: this.state.description,
+			priority: this.state.priority,
+			dueDate: this.state.dueDate,
+			executor: this.state.executor
 		}
 		this.props.addTask(payload);
 		this.setState({
@@ -41,14 +94,56 @@ class AddTask extends React.Component {
 			<div>
 				<TriggerBtn dataTarget="#newTask" />
 				<ModalWrapper id="newTask" >
-					<ModalHeader createTaskTo="task list"/>
+					<ModalHeader createTaskTo={this.props.currentTasklistName}/>
 					<div className="modal-body">
-						<div className="form-group" >
-		        	<textarea className="form-control" name="taskName" 
-			        	placeholder="任务内容" rows="3" 
-			        	onChange={this.handleInputChange} 
-			        	value={this.state.taskName}></textarea>
-			      </div>
+
+						<div className="row">
+							<div className="col-md-12 form-group" >
+			        	<input className="form-control" name="taskName" 
+				        	placeholder="任务内容" 
+				        	onChange={this.handleInputChange} 
+				        	value={this.state.taskName} />
+				      </div>
+				    </div>
+			    	
+			    	<div className="row">
+			    		<div className="col-md-12 form-group">
+				    		<textarea className="form-control" name="description" 
+				        	placeholder="任务简介" rows="3" 
+				        	onChange={this.handleInputChange} 
+				        	value={this.state.description}></textarea>
+			        </div>
+			    	</div>
+			      
+			      <div className="row">
+			      	<div className="col-md-4 form-group">
+							  <div className='input-group date'>
+							  	<label>截止时间</label>
+	                <input type='text' placeholder="点击设置" title="点击设置" className="form-control" name='dueDate' id='taskDueDate' 
+	                	 onBlur={this.handleInputChange} value={this.state.dueDate}/>
+	              </div>
+							</div>
+
+						  <div className="col-md-4 form-group">
+						  	<label>优先级</label>
+								<Dropdown dropdown={this.priorityDropdown} 
+									btnStyle={{color: this.priorityColors[this.state.priority]}} 
+									btnName={this.priorityList[this.state.priority]} />
+			     		</div>
+
+	     				<div className="col-md-4 form-group">
+		     				<label>重复</label>
+		     				<Dropdown dropdown={this.repeatDropdown} 
+		     					btnStyle={{color: '#555'}}
+									btnName={this.repeatList[this.state.repeat]} />
+		     			</div>
+		     		</div>
+
+		     		<div className="row">
+		     			<label>执行者</label>
+		     			
+		     		</div>
+
 		      </div>
 					<ModalFooter handleSubmit={this.handleSubmit} />
 				</ModalWrapper>
@@ -56,6 +151,10 @@ class AddTask extends React.Component {
 		)
 	}
 }
+
+const mapStateToProps = state => ({
+	currentTasklistName: state.taskboard.task.currentTasklistName
+})
 
 const mapDispatchToProps = (dispatch) => {
 	return({
@@ -67,5 +166,5 @@ const mapDispatchToProps = (dispatch) => {
 // 	actions: bindActionCreators(actionCreators, dispatch)
 // })
 
-export default connect(null, mapDispatchToProps)(AddTask);
+export default connect(mapStateToProps, mapDispatchToProps)(AddTask);
 

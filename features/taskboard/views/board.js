@@ -5,6 +5,7 @@ import TasklistToolbar from './tasklistToolbar';
 import TasklistContainer from './tasklistContainer';
 import TaskToolbar from './taskToolbar';
 import TaskContainer from './taskContainer';
+import Tasklist from './tasklist';
 
 class Board extends React.Component {
 
@@ -16,7 +17,14 @@ class Board extends React.Component {
 
 		const { tasklistLoading, tasklistError, tasklistInfoText, 
 						taskLoading, taskError, taskInfoText, 
-						currentTasklistId } = this.props;
+						currentTasklistId, tasklists } = this.props;
+
+
+		var fetchedTaskList = [];
+
+		fetchedTaskList = tasklists.map(function(tasklist, index){
+			return <Tasklist key={index} index={index} tasklist={tasklist} />;
+		});
 
 		return(
 				<div className="container taskboard">
@@ -27,7 +35,9 @@ class Board extends React.Component {
 					<div className="row">
 						<div className="col-md-4">
 							<TasklistToolbar projectId={this.props.params.projectId} />
-							<TasklistContainer projectId={this.props.params.projectId} />
+							<TasklistContainer projectId={this.props.params.projectId} >
+								{fetchedTaskList}
+							</TasklistContainer>
 						</div>
 						<div className="col-md-8">
 							{ currentTasklistId && <TaskToolbar tasklistId={currentTasklistId}/> }
@@ -47,6 +57,8 @@ const mapStateToProps = state => {
 		taskInfoText: 					tb.task.taskInfoText,
 		currentTasklistId: 			tb.task.currentTasklistId,
 
+		tasklists: 							tb.tasklist.tasklists,
+
 		tasklistLoading: 				tb.tasklist.tasklistLoading,
 		tasklistError: 					tb.tasklist.tasklistError,
 		tasklistInfoText: 			tb.tasklist.tasklistInfoText,
@@ -54,8 +66,6 @@ const mapStateToProps = state => {
 }
 
 // const mapDispatchToProps = dispatch => ({
-// 	fetchTasklist: projectId => { dispatch(fetchTasklist(projectId)); },
-// 	fetchTask: tasklistId => { dispatch(fetchTask(tasklistId)); }
 // })
 
 export default connect(mapStateToProps, null)(Board);

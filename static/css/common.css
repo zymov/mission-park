@@ -1,6 +1,54 @@
 body {
 	background-color: #fafafa;
 }
+input, textarea {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.modal-body input, .modal-body textarea {
+  /*outline: none;
+  border: none !important;*/
+}
+.modal-body input:hover, .modal-body textarea:hover, .modal-body input:focus, .modal-body textarea:focus {
+  /*background-color: rgba(0,0,0,.05);*/
+}
+.modal-body .date > input {
+  border: none !important;
+  cursor: pointer;
+  text-align: center;
+}
+.modal-body .form-group {
+  border-right: 1px solid #ddd;
+}
+.modal-body .form-group .dropdown {
+  text-align: center;
+}
+.modal-body label {
+  display: block;
+  line-height: 34px;
+  margin-bottom: 0px;
+  margin-right: 20px;
+  float: left;
+  font-weight: normal;
+  width: 100%;
+  text-align: center;
+}
+.modal-body .dropdown button.dropdown-toggle {
+  background: none;
+  border: 0px;
+  line-height: 32px;
+}
+.modal-body .dropdown button.dropdown-toggle:hover {
+  color: #3DA8F5 !important;
+}
+.dropdown-menu, .form-control, .btn { border-radius: 2px; }
+.modal-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 540px;
+}
 #project-list .thumbnail {
   padding: 0;
   border: 0;

@@ -11,9 +11,6 @@ class TaskContainer extends React.Component {
 		super(props);
 	}
 
-	// componentWillMount(){
-	// 	this.props.actions.fetchTask(this.props.currentTasklistId, this.props.activeTasklist);
-	// }
 
 	render(){
 		const { taskLoading, tasks, newTask, taskError, taskInfoText, currentTasklistId } = this.props;

@@ -11,23 +11,23 @@ class TasklistContainer extends React.Component {
 
 	render(){
 
-		var fetchedTaskList = [];
+		// var fetchedTaskList = [];
 
-		fetchedTaskList = this.props.tasklists.map(function(tasklist, index){
-			return <Tasklist key={index} index={index} tasklist={tasklist} />;
-		});
+		// fetchedTaskList = this.props.tasklists.map(function(tasklist, index){
+		// 	return <Tasklist key={index} index={index} tasklist={tasklist} />;
+		// });
 
 		return(
 			<div className="list-group">
-				{fetchedTaskList}
+				{this.props.children}
 			</div>
 		)
 	}
 }
 
-const mapStateToProps = state => ({
-	tasklists: state.taskboard.tasklist.tasklists
-});
+// const mapStateToProps = state => ({
+// 	tasklists: state.taskboard.tasklist.tasklists
+// });
 
 const mapDispatchToProps = dispatch => ({
 	fetchTasklist: projectId => { dispatch(fetchTasklist(projectId)); }
@@ -35,4 +35,4 @@ const mapDispatchToProps = dispatch => ({
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(TasklistContainer);
+export default connect(null, mapDispatchToProps)(TasklistContainer);

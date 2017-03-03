@@ -15,7 +15,6 @@ export function addProject(payload){
 		axios.post('/projects/addproject',payload)
 		.then(function(res){
 			dispatch(addProjectSuccess(res.data.project));
-			// console.log(res.data.message, res.data.owner);
 		})
 		.catch(function(err){
 			dispatch(addProjectFailure(err));
