@@ -1,22 +1,33 @@
 body {
 	background-color: #fafafa;
 }
+/* common style start */
 input, textarea {
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
 }
+.dropdown-menu, .form-control, .btn, .tooltip-inner { border-radius: 2px; }
+.tooltip.top { margin-top: 2px; }
+/* common style end */
+
+/* modal-dialog start */
 .modal-body input, .modal-body textarea {
   /*outline: none;
   border: none !important;*/
+  max-width: 567px;
 }
 .modal-body input:hover, .modal-body textarea:hover, .modal-body input:focus, .modal-body textarea:focus {
   /*background-color: rgba(0,0,0,.05);*/
 }
+.modal-content {border-radius: 3px;}
 .modal-body .date > input {
   border: none !important;
   cursor: pointer;
   text-align: center;
+}
+.modal-body .date > input:hover {
+  color: #3DA8F5;
 }
 .modal-body .form-group {
   border-right: 1px solid #ddd;
@@ -42,13 +53,25 @@ input, textarea {
 .modal-body .dropdown button.dropdown-toggle:hover {
   color: #3DA8F5 !important;
 }
-.dropdown-menu, .form-control, .btn { border-radius: 2px; }
 .modal-title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 540px;
 }
+/* modal-dialog end */
+
+.priority-0 {
+  background-color: #ddd;
+}
+.priority-1 {
+  background-color: #ffaf38;
+}
+.priority-2 {
+  background-color: #ff4f3e;
+}
+
+/* project start */
 #project-list .thumbnail {
   padding: 0;
   border: 0;
@@ -81,6 +104,9 @@ input, textarea {
   -webkit-line-clamp: 5; /*line-to-show*/
   -webkit-box-orient: vertical;
 }
+/* project end */
+
+/* common navbar start */
 .app-navbar {
   margin-bottom: 3px;
   border: 0;
@@ -113,6 +139,109 @@ input, textarea {
 .project-nav a.nav-link:hover {
   background-color: #eee;
 }
+/* common navbar end */
+
+/* task modal-dialog start */
+.executor-row > label {
+  float: none;
+}
+.executor-row > ul.executor-list {padding: 0 15px;}
+.executor-list > li {
+  position: relative;
+  float: left;
+  list-style-type: none;
+  margin: 0 10px 5px 0;
+}
+.executor-list > li > a {
+  display: block;
+  position: relative;
+  background-color: #f1f8ff;
+  color: #0366d6;
+  text-decoration: none;
+  padding: 4px 8px 4px 32px;
+  cursor: pointer;
+  border-radius: 2px;
+  line-height: 20px;
+  transition: all 0.2s;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.executor-list > li > a > img {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+.executor-list > li > .remove-executor {
+  position: absolute;
+  line-height: 24px;
+  padding-left: 6px;
+  top: 2px;
+  right: 6px;
+  z-index: 0;
+  opacity: 0;
+  color: #0366d6;
+  background-color: #f1f8ff;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.executor-list li.removable:hover .remove-executor {
+  opacity: 1;
+  z-index: 2;
+}
+.executor-list > li > a.new-executor {
+  padding-left: 8px;
+}
+.dd {
+  position: absolute;
+  margin-top: 4px;
+  padding: 4px 0 8px 0;
+  background-color: #fff;
+  left: -105px;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.15);
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+.dd > .dd-input {
+  padding: 8px 12px;
+  min-width: 200px;
+  border-bottom: 1px solid #eee;
+}
+ul.dd-menu {
+  padding-left: 0;
+  list-style-type: none;
+}
+ul.dd-menu > li > a.menu-item {
+  display: block;
+  position: relative;
+  line-height: 32px;
+  padding: 6px 12px 6px 48px;
+  text-decoration: none;
+  color: #0366d6;
+  max-width: 240px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+ul.dd-menu > li > a.menu-item:hover {
+  background-color: #f1f8ff;
+}
+a.menu-item img {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+}
+/* task modal-dialog end */
+
+
+
+/* tasklist start */
 .list-group-item:first-child, .list-group-item:last-child{border-radius: 0;}
 .tasklist {
   position: relative;
@@ -127,15 +256,6 @@ input, textarea {
   height: 100%;
   width: 3px;
   transition: all 0.2s;
-}
-.priority-0 {
-  background-color: #ddd;
-}
-.priority-1 {
-  background-color: #ffaf38;
-}
-.priority-2 {
-  background-color: #ff4f3e;
 }
 .tasklist:hover .tasklist-priority{
   transition: all 0.2s;
@@ -169,3 +289,4 @@ input, textarea {
   padding: 4px 15px;
   margin: 0 -15px -10px;
 }
+/* tasklist end */

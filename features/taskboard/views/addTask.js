@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../components/modal_dialog';
 import Dropdown from '../../../components/dropdown';
+import DropdownInput from '../../../components/dropdownInput';
 // import * as actionCreators from '../actions';
 import { addTask } from '../actions/taskActions';
 
@@ -139,9 +140,32 @@ class AddTask extends React.Component {
 		     			</div>
 		     		</div>
 
-		     		<div className="row">
+		     		<div className="row executor-row">
 		     			<label>执行者</label>
-		     			
+		     			<ul className="executor-list clearfix">
+		     				<li className="removable"><a title="zymokey">
+		     							<img src="/static/imgs/101.png" />zymokey</a>
+		     						<span className="remove-executor glyphicon glyphicon-remove"></span></li>
+								<li className="removable"><a title="按时大大发多少公司">
+		     							<img src="/static/imgs/101.png" />按时大大发多少公司</a>
+		     							<span className="remove-executor glyphicon glyphicon-remove"></span></li>
+		     				<li className="removable"><a title="Tai Lopez">
+		     							<img src="/static/imgs/101.png" />Tai Lopez</a>
+		     							<span className="remove-executor glyphicon glyphicon-remove"></span></li>
+		     				<li className="removable"><a title="只是代售点">
+		     							<img src="/static/imgs/100.png" />只是代售点</a>
+		     							<span className="remove-executor glyphicon glyphicon-remove"></span></li>
+		     				<li className="removable"><a title="只是代售点">
+		     							<img src="/static/imgs/100.png" />只是代售点</a>
+		     							<span className="remove-executor glyphicon glyphicon-remove"></span></li>
+		     				<li className="removable"><a title="只是代售点">
+		     							<img src="/static/imgs/100.png" />只是代售点</a>
+		     							<span className="remove-executor glyphicon glyphicon-remove"></span></li>
+		     				<li>
+	     						<a title="add new executor" id="executorDropdown" className="new-executor glyphicon glyphicon-plus"></a>
+		     					<DropdownInput />
+		     				</li>
+		     			</ul>
 		     		</div>
 
 		      </div>

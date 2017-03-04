@@ -6,24 +6,23 @@ class DropdownInput extends React.Component {
 		super(props);
 	}
 
+	componentWillMount(){
+		
+	}
+
 	render(){
 
-	  const { menulist, btnId, handleClick } = this.props.dropdown; 
-
-	  var dropdownMenu = menulist.map(function(item, index){
-	  	return (
-		    <li key={index}><a href="javascript:void(0);" name={item.name} style={item.style}>{item.name}</a></li>
-	  	);
-	  });
 
 	  return (
-	  	<div className="dropdown">
-  	  	<button className="dropdown-toggle" type="button" id={btnId} 
-  	  	data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style={this.props.btnStyle}>
-  		    {this.props.btnName}
-  		  </button>
-  		  <ul className="dropdown-menu" onClick={handleClick.bind(this)} aria-labelledby={btnId}>
-  		    {dropdownMenu}
+	  	<div className="dd">
+	  		<div className="dd-input">
+		  		<input type="text" className="form-control" placeholder="查找"/>
+	  		</div>
+  		  <ul className="dd-menu" >
+  		  	<li><a className="menu-item" href="javascript:void(0);" ><img src="/static/imgs/100.png"/>asdklaskj</a></li>
+  		    <li><a className="menu-item" href="javascript:void(0);" ><img src="/static/imgs/100.png"/>asdkla</a></li>
+  		    <li><a className="menu-item" href="javascript:void(0);" ><img src="/static/imgs/100.png"/>asdklskj</a></li>
+  		    <li><a className="menu-item" href="javascript:void(0);" ><img src="/static/imgs/100.png"/>asdklasdaaskj</a></li>
   		  </ul>
   	  </div>
   	);
