@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectNav from './projectNav';
+import ProjectNav from '../components/projectNav';
 
 export default class Project extends React.Component {
 

@@ -11,7 +11,7 @@ class TaskToolbar extends React.Component {
 	render(){
 		return(
 			<div className="btn-group" role="group" aria-label="Basic example">
-		  	<AddTask tasklistId={this.props.tasklistId} />
+		  	<AddTask projectId={this.props.projectId} tasklistId={this.props.tasklistId} />
 			  <button type="button" className="btn btn-secondary">btn2</button>
 			  <button type="button" className="btn btn-secondary">btn3</button>
 			</div>

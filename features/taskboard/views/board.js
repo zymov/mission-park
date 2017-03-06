@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-import TasklistToolbar from './tasklistToolbar';
-import TasklistContainer from './tasklistContainer';
-import TaskToolbar from './taskToolbar';
-import TaskContainer from './taskContainer';
-import Tasklist from './tasklist';
+import TasklistToolbar from '../components/tasklistToolbar';
+import TasklistContainer from '../components/tasklistContainer';
+import TaskToolbar from '../components/taskToolbar';
+import TaskContainer from '../components/taskContainer';
+import Tasklist from '../components/tasklist';
 
 class Board extends React.Component {
 
@@ -17,7 +17,8 @@ class Board extends React.Component {
 
 		const { tasklistLoading, tasklistError, tasklistInfoText, 
 						taskLoading, taskError, taskInfoText, 
-						currentTasklistId, tasklists } = this.props;
+						currentTasklistId, tasklists,
+						dropdownLoading, dropdownError, dropdownInfoText } = this.props;
 
 
 		var fetchedTaskList = [];
@@ -30,8 +31,12 @@ class Board extends React.Component {
 				<div className="container taskboard">
 					{tasklistLoading && <div className="container col-md-9 alert alert-default" role="alert">{tasklistInfoText}.</div>}
 					{taskLoading && <div className="container col-md-9 alert alert-default" role="alert">{taskInfoText}.</div>}
+					{/*dropdownLoading && <div className="container col-md-9 alert alert-default" role="alert">{dropdownInfoText}.</div>*/}
+
 					{tasklistError && <div className="container col-md-9 alert alert-danger" role="alert">{tasklistInfoText}.</div>}
 					{taskError && <div className="container col-md-9 alert alert-danger" role="alert">{taskInfoText}.</div>}
+					{/*dropdownError && <div className="container col-md-9 alert alert-danger" role="alert">{dropdownInfoText}.</div>*/}
+
 					<div className="row">
 						<div className="col-md-4">
 							<TasklistToolbar projectId={this.props.params.projectId} />
@@ -40,8 +45,8 @@ class Board extends React.Component {
 							</TasklistContainer>
 						</div>
 						<div className="col-md-8">
-							{ currentTasklistId && <TaskToolbar tasklistId={currentTasklistId}/> }
-							{ currentTasklistId && <TaskContainer tasklistId={currentTasklistId}/> }
+							{ currentTasklistId && <TaskToolbar projectId={this.props.params.projectId}  tasklistId={currentTasklistId}/> }
+							{ currentTasklistId && <TaskContainer projectId={this.props.params.projectId}  tasklistId={currentTasklistId}/> }
 						</div>
 					</div>
 				</div>
@@ -57,11 +62,15 @@ const mapStateToProps = state => {
 		taskInfoText: 					tb.task.taskInfoText,
 		currentTasklistId: 			tb.task.currentTasklistId,
 
-		tasklists: 							tb.tasklist.tasklists,
+		dropdownLoading: 				tb.task.dropdownLoading,
+		dropdownError: 					tb.task.dropdownError,
+		dropdownInfoText: 			tb.task.dropdownInfoText,
 
+		tasklists: 							tb.tasklist.tasklists,
 		tasklistLoading: 				tb.tasklist.tasklistLoading,
 		tasklistError: 					tb.tasklist.tasklistError,
-		tasklistInfoText: 			tb.tasklist.tasklistInfoText,
+		tasklistInfoText: 			tb.tasklist.tasklistInfoText
+
 	}
 }
 

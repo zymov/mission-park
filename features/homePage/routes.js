@@ -4,8 +4,6 @@ import Home   from './views/home';
 import ProjectList from '../project/views/projectList';
 import Project from '../project/views/project';
 import Board from '../taskboard/views/board';
-import TaskContainer from '../taskboard/views/taskContainer';
-import Navbar from '../homePage/views/navbar';
 import App from '../app';
 
 

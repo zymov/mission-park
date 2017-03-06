@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ProjectToolbar from './projectToolbar';
-import ProjectCard from './projectCard';
+import ProjectToolbar from '../components/projectToolbar';
+import ProjectCard from '../components/projectCard';
 
 import * as actionCreators from '../actions';
 

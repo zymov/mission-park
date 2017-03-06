@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../../components/modal_dialog';
-import Dropdown from '../../../components/dropdown';
-import Example from './autoSuggest';
+import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../components/modal_dialog';
+import Dropdown from './dropdown/dropdown';
 import * as actionCreators from '../actions/tasklistActions';
 
 class AddTasklist extends React.Component {

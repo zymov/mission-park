@@ -46,7 +46,7 @@ router.get('/fetch', function(req, res){
 		if(err) {
 			console.log(err);
 			return res.status(500).json({
-				message: 'Could not receive projects.'
+				errors: 'Could not receive projects.'
 			});
 		} 
 
@@ -55,5 +55,22 @@ router.get('/fetch', function(req, res){
 	});
 
 });
+
+router.get('/getusers', function(req, res){
+
+	// find by req.body.projectId  ???
+
+	User.find({}).sort({name: 1}).exec(function(err, users){
+		if(err){
+			console.log(err);
+			return res.status(500).json({
+				errors: 'Could not receive users.'
+			});
+		}
+
+		res.json({users});
+
+	});
+})
 
 module.exports = router;
