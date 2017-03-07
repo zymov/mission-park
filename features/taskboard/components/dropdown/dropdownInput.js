@@ -1,19 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import DDListItem from './ddListItem';
 
 class DropdownInput extends React.Component {
 
 	constructor(props){
 		super(props);
+
 	}
 
 	render(){
 
 		var dropdownList = [];
 
-		dropdownList = this.props.executors.map(function(item, index){
+		dropdownList = this.props.projectUsers.map(function(item, index){
 			return (
-				<DDListItem key={index} executor={item} />
+				<DDListItem key={index} user={item} />
 			);
 		});
 
@@ -31,5 +33,13 @@ class DropdownInput extends React.Component {
 
 }
 
+const mapStateToProps = state => ({
+	executors: state.taskboard.task.executors,
+	projectUsers: state.taskboard.task.projectUsers
+});
 
-export default DropdownInput;
+// const mapDispatchToProps = dispatch => ({
+// 	addExecutor: user => { dispatch(addExecutor(user)); }
+// });
+
+export default connect(mapStateToProps, null)(DropdownInput);

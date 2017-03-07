@@ -2,7 +2,7 @@ import {
 	ADD_TASKLIST_REQUEST, ADD_TASKLIST_SUCCESS, ADD_TASKLIST_FAILURE,
 	FETCH_TASKLIST_REQUEST, FETCH_TASKLIST_SUCCESS, FETCH_TASKLIST_FAILURE } from '../actions/tasklistActions';
 
-import { addNewObjectToList } from '../../../utils';
+import { addNewObjectToArrayBegin } from '../../../utils';
 
 const initialState = {
 	tasklistLoading: false,
@@ -26,7 +26,7 @@ export default function tasklist(state = initialState, action){
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				newTasklist: action.payload,
-				tasklists: addNewObjectToList(state.tasklists, action.payload),
+				tasklists: addNewObjectToArrayBegin(state.tasklists, action.payload),
 				tasklistInfoText: ''
 			});
 		case ADD_TASKLIST_FAILURE:

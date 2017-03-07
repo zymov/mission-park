@@ -3,11 +3,12 @@ import {
 	FETCH_TASK_REQUEST, FETCH_TASK_SUCCESS, FETCH_TASK_FAILURE, 
 	SET_CURRENT_TASKLIST, 
 	NULL_TASKLIST_ID,
-	OPEN_EXECUTOR_DROPDOWN, CLOSE_EXECUTOR_DROPDOWN, FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE 
+	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN, FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, 
+	ADD_EXECUTOR, REMOVE_EXECUTOR  
 } from '../actions/taskActions';
 import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
 
-import { addNewObjectToList } from '../../../utils';
+import { addNewObjectToArrayBegin, addNewObjectToArrayEnd } from '../../../utils';
 
 const initialState = {
 	taskLoading: false,
@@ -19,9 +20,10 @@ const initialState = {
 	activeTasklist: 0,
 	currentTasklistName: '',
 
-	// executor dropdown state
-	showExecutorDropdown: false,
+	// users dropdown state
+	showUsersDropdown: false,
 	dropdownLoading: false,
+	projectUsers: [],
 	executors: [],
 	dropdownError: false, 
 	dropdownInfoText: ''
@@ -38,7 +40,7 @@ export default function task(state = initialState, action){
 			return Object.assign({}, state, {
 				taskLoading: false,
 				newTask: action.payload,
-				tasks: addNewObjectToList(state.tasks, action.payload),
+				tasks: addNewObjectToArrayBegin(state.tasks, action.payload),
 				taskInfoText: ''
 			});
 		case ADD_TASK_FAILURE:
@@ -81,9 +83,11 @@ export default function task(state = initialState, action){
 			return Object.assign({}, state, {
 				currentTasklistId: null
 			});
-		case OPEN_EXECUTOR_DROPDOWN:
+
+		// users dropdown reducer
+		case OPEN_USERS_DROPDOWN:
 			return Object.assign({}, state, {
-				showExecutorDropdown: true
+				showUsersDropdown: true
 			});
 		case FETCH_USERS_REQUEST:
 			return Object.assign({}, state, {
@@ -93,17 +97,25 @@ export default function task(state = initialState, action){
 		case FETCH_USERS_SUCCESS:
 			return Object.assign({}, state, {
 				dropdownLoading: false,
-				executors: action.payload
+				projectUsers: action.payload
 			});
 		case FETCH_USERS_FAILURE:
 			return Object.assign({}, state, {
-				executors: [],
+				projectUsers: [],
 				dropdownInfoText: action.payload.errors
 			});
-		case CLOSE_EXECUTOR_DROPDOWN:
+		case CLOSE_USERS_DROPDOWN:
 			return Object.assign({}, state, {
-				showExecutorDropdown: false
-			})
+				showUsersDropdown: false
+			});
+		case ADD_EXECUTOR: 
+			return Object.assign({}, state, {
+				executors: addNewObjectToArrayEnd(state.executors, action.payload)	// The concat method creates a new array instead of mutating the original array itself!!!
+			});
+		// case REMOVE_EXECUTOR:
+		// 	return Object.assign({}, state, {
+		// 		executors: 
+		// 	})
 		default:
 			return state;
 	}

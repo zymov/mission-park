@@ -1,6 +1,6 @@
 import { ADD_PROJECT_REQUEST, ADD_PROJECT_SUCCESS, ADD_PROJECT_FAILURE, FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS, FETCH_PROJECT_FAILURE } from './actions';
 
-import { addNewObjectToList } from '../../utils';
+import { addNewObjectToArrayBegin } from '../../utils';
 
 const initialState = {
 	isLoading: false,
@@ -43,7 +43,7 @@ export default function project(state = initialState, action){
 			return Object.assign({}, state, {
 				isLoading: false,
 				newProject: action.payload,
-				projects: addNewObjectToList(state.projects, action.payload),
+				projects: addNewObjectToArrayBegin(state.projects, action.payload),
 				infoText: ''
 			})
 		case ADD_PROJECT_FAILURE:

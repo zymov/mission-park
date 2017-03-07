@@ -11,14 +11,14 @@ export const FETCH_TASK_FAILURE = 'FETCH_TASK_FAILURE';
 export const SET_CURRENT_TASKLIST = 'SET_CURRENT_TASKLIST';
 export const NULL_TASKLIST_ID = 'NULL_TASKLIST_ID';
 
-export const OPEN_EXECUTOR_DROPDOWN = 'OPEN_EXECUTOR_DROPDOWN';
+export const OPEN_USERS_DROPDOWN = 'OPEN_USERS_DROPDOWN';
 export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
 export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
-export const CLOSE_EXECUTOR_DROPDOWN = 'CLOSE_EXECUTOR_DROPDOWN';
+export const CLOSE_USERS_DROPDOWN = 'CLOSE_USERS_DROPDOWN';
 
-export const REMOVE_EXECUTOR = 'REMOVE_EXECUTOR';
 export const ADD_EXECUTOR = 'ADD_EXECUTOR';
+export const REMOVE_EXECUTOR = 'REMOVE_EXECUTOR';
 
 /* add */
 export function addTask(payload){
@@ -112,9 +112,9 @@ export function fetchTaskFailure(err){
 }
 
 /* get executor dropdown */
-export function getExecutorDropdown(projectId){
+export function getUsersDropdown(projectId){
 	return function(dispatch){
-		dispatch( openExecutorDropdown() );
+		dispatch( openUsersDropdown() );
 		fetchUsers(dispatch, projectId);
 	}
 }
@@ -132,15 +132,15 @@ export function fetchUsers(dispatch, projectId){
 		});
 }
 
-export function openExecutorDropdown(){
+export function openUsersDropdown(){
 	return {
-		type: 'OPEN_EXECUTOR_DROPDOWN'
+		type: 'OPEN_USERS_DROPDOWN'
 	}
 }
 
-export function closeExecutorDropdown(){
+export function closeUsersDropdown(){
 	return {
-		type: 'CLOSE_EXECUTOR_DROPDOWN'
+		type: 'CLOSE_USERS_DROPDOWN'
 	}
 }
 
@@ -167,8 +167,16 @@ export function fetchUsersFailure(err){
 }
 
 /* dropdown list click event */
-export function changeExecutors(projectId){
-	return function(dispatch){
-		
+export function addExecutor(user){
+	return {
+		type: 'ADD_EXECUTOR',
+		payload: user
+	}
+}
+
+export function removeExecutor(user){
+	return {
+		type: 'REMOVE_EXECUTOR',
+		payload: user
 	}
 }

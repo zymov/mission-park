@@ -194,6 +194,7 @@ input, textarea {
 }
 .executor-list > li > a.new-executor {
   padding-left: 8px;
+  top: 0;
 }
 .dd {
   position: absolute;

@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
-import DropdownInput from './dropdown/dropdownInput';
+import Executors from './executors';
 // import * as actionCreators from '../actions';
-import { addTask, getExecutorDropdown, closeExecutorDropdown, changeExecutors } from '../actions/taskActions';
+import { addTask, closeUsersDropdown, addExecutor, removeExecutor } from '../actions/taskActions';
 
 class AddTask extends React.Component {
 	constructor(props){
@@ -16,7 +16,6 @@ class AddTask extends React.Component {
 			dueDate: '',
 			priority: 0,
 			description: '',
-			executor: '',
 			repeat: 0
 		}
 
@@ -29,8 +28,6 @@ class AddTask extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.selectPriority = this.selectPriority.bind(this);
 		this.selectRepeat = this.selectRepeat.bind(this);
-		this.documentClick = this.documentClick.bind(this);
-		this.changeExecutors = this.changeExecutors.bind(this);
 
 		this.priorityDropdown = {
 			menulist: [
@@ -48,31 +45,8 @@ class AddTask extends React.Component {
 		}
 	}
 
-	componentWillMount(){
-		document.addEventListener('click', this.documentClick, false);
-	}
-
 	componentDidMount(){
 		$('#taskDueDate').datetimepicker();
-	}
-
-	componentWillUnmount(){
-		document.removeEventListener('click', this.documentClick, false);
-	}
-
-	documentClick(e){
-		//ReactDOM.findDOMNode(this)
-		if($('#executorDropdown')[0].contains(e.target)){
-			return;
-		} else {
-			this.props.closeExecutorDropdown();
-		}
-	}
-
-	dropdownClick(e){
-		if(e.target.nodeName == 'A'){
-			
-		} else { return; }
 	}
 
 	handleInputChange(event){
@@ -113,13 +87,11 @@ class AddTask extends React.Component {
 		this.setState({
 			taskName: ''
 		});
-		this.props.closeExecutorDropdown();
+		this.props.closeUsersDropdown();
 		$('#newTask').click();	// use state?
 	}
 
-	changeExecutors(){
-		this.props.getExecutorDropdown(this.props.projectId);
-	}
+
 
 	render(){
 		return(
@@ -173,31 +145,7 @@ class AddTask extends React.Component {
 
 		     		<div className="row executor-row">
 		     			<label>执行者</label>
-		     			<ul className="executor-list clearfix">
-		     				<li className="removable"><a title="zymokey">
-		     							<img src="/static/imgs/101.png" />zymokey</a>
-		     						<span className="remove-executor glyphicon glyphicon-remove"></span></li>
-								<li className="removable"><a title="按时大大发多少公司">
-		     							<img src="/static/imgs/101.png" />按时大大发多少公司</a>
-		     							<span className="remove-executor glyphicon glyphicon-remove"></span></li>
-		     				<li className="removable"><a title="Tai Lopez">
-		     							<img src="/static/imgs/101.png" />Tai Lopez</a>
-		     							<span className="remove-executor glyphicon glyphicon-remove"></span></li>
-		     				<li className="removable"><a title="只是代售点">
-		     							<img src="/static/imgs/100.png" />只是代售点</a>
-		     							<span className="remove-executor glyphicon glyphicon-remove"></span></li>
-		     				<li className="removable"><a title="只是代售点">
-		     							<img src="/static/imgs/100.png" />只是代售点</a>
-		     							<span className="remove-executor glyphicon glyphicon-remove"></span></li>
-		     				<li className="removable"><a title="只是代售点">
-		     							<img src="/static/imgs/100.png" />只是代售点</a>
-		     							<span className="remove-executor glyphicon glyphicon-remove"></span></li>
-		     				<li id="executorDropdown" onClick={this.changeExecutors} >
-	     						<a title="add new executor" 
-	     								className="new-executor glyphicon glyphicon-plus"></a>
-		     					{ this.props.showExecutorDropdown && <DropdownInput onClick={this.dropdownClick} executors={this.props.executors} />}
-		     				</li>
-		     			</ul>
+		     			<Executors projectId={this.props.projectId} />
 		     		</div>
 
 		      </div>
@@ -209,16 +157,13 @@ class AddTask extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	currentTasklistName: state.taskboard.task.currentTasklistName,
-	showExecutorDropdown: state.taskboard.task.showExecutorDropdown,
-	executors: state.taskboard.task.executors
+	currentTasklistName: state.taskboard.task.currentTasklistName
 })
 
 const mapDispatchToProps = (dispatch) => {
 	return({
 		addTask: taskname => { dispatch(addTask(taskname)); },	//addTask(x) returns a function
-		getExecutorDropdown: projectId => { dispatch(getExecutorDropdown(projectId)); },
-		closeExecutorDropdown: () => { dispatch(closeExecutorDropdown()); },
+		closeUsersDropdown: () => { dispatch(closeUsersDropdown()); },
 		addExecutor: (projectId) => { dispatch(addExecutor(projectId)); },
 		removeExecutor: (projectId) => { dispatch(removeExecutor(projectId)); }
 	})

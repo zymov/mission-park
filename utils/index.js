@@ -37,9 +37,14 @@ module.exports = {
     localStorage.removeItem('token');
   },
 
-  addNewObjectToList: function (list, newObject){
-    list.unshift(newObject);
-    return list;
+  addNewObjectToArrayBegin: function (list, newObject){
+    var newList = list.slice(0);
+    newList.unshift(newObject);
+    return newList;
+  },
+
+  addNewObjectToArrayEnd: function (list, newObject){
+    return list.concat(newObject);
   },
 
   getQueryVariable: function (url, key){
@@ -52,6 +57,12 @@ module.exports = {
       }
     }
     return null;
+  },
+
+  getIndexOfObjectArray: function(objectArr, obj, attribute){
+    return objectArr.map(function(item, index){
+      return item[attribute];
+    }).indexOf(obj[attribute]);
   }
 
 }
