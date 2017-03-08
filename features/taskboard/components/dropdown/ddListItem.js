@@ -1,21 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addExecutor } from '../../actions/taskActions';
+import { addExecutor, removeExecutor } from '../../actions/taskActions';
 import { getIndexOfObjectArray } from '../../../../utils';
 
 class DDListItem extends React.Component {
 
 	constructor(props){
 		super(props);
-
 		this.handleClick = this.handleClick.bind(this);
-
 	}
 
 	handleClick(e){
-		
-		//this.props.executors.indexOf(this.props.user) == -1 
-		getIndexOfObjectArray(this.props.executors, this.props.user, 'name') == -1 && this.props.addExecutor(this.props.user);
+
+		if(getIndexOfObjectArray(this.props.executors, this.props.user, 'email') == -1){
+			this.props.addExecutor(this.props.user);
+		} else {
+			this.props.removeExecutor(this.props.user);		//remove user by it's position(index)? Which method performs better?
+		}
 		
 	}
 
@@ -26,6 +27,7 @@ class DDListItem extends React.Component {
 	    	<a className="dd-list-item" href="javascript:void(0);" onClick={this.handleClick}>
 	    		<img src="/static/imgs/100.png"/>
 	    		{this.props.user.name}
+	    		{ this.props.userSelected && <i className="glyphicon glyphicon-ok"></i>}
 	    	</a>
 	    </li>
   	);
@@ -38,7 +40,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	addExecutor: user => { dispatch(addExecutor(user)); }
+	addExecutor: user => { dispatch(addExecutor(user)); },
+	removeExecutor: user => { dispatch(removeExecutor(user)); }
 });
 
 

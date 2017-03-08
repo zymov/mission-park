@@ -8,7 +8,7 @@ import {
 } from '../actions/taskActions';
 import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
 
-import { addNewObjectToArrayBegin, addNewObjectToArrayEnd } from '../../../utils';
+import { addNewObjectToArrayBegin, addNewObjectToArrayEnd, removeSpecificObjectFromArray } from '../../../utils';
 
 const initialState = {
 	taskLoading: false,
@@ -112,10 +112,10 @@ export default function task(state = initialState, action){
 			return Object.assign({}, state, {
 				executors: addNewObjectToArrayEnd(state.executors, action.payload)	// The concat method creates a new array instead of mutating the original array itself!!!
 			});
-		// case REMOVE_EXECUTOR:
-		// 	return Object.assign({}, state, {
-		// 		executors: 
-		// 	})
+		case REMOVE_EXECUTOR:
+			return Object.assign({}, state, {
+				executors: removeSpecificObjectFromArray(state.executors, action.payload, 'email')
+			})
 		default:
 			return state;
 	}

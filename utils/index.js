@@ -63,6 +63,12 @@ module.exports = {
     return objectArr.map(function(item, index){
       return item[attribute];
     }).indexOf(obj[attribute]);
+  },
+
+  removeSpecificObjectFromArray: function(objectArr, obj, attribute){ //return a new array instead of mutating the original array
+    return objectArr.filter(function(object){
+      return object[attribute] != obj[attribute];
+    });
   }
 
 }

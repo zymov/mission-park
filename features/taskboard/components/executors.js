@@ -14,6 +14,7 @@ class Executors extends React.Component {
 	}
 
 	changeExecutors(){
+		if(this.props.showUsersDropdown){return;}
 		this.props.getUsersDropdown(this.props.projectId);
 	}
 

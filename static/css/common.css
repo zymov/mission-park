@@ -220,10 +220,10 @@ ul.dd-menu > li > a.dd-list-item {
   display: block;
   position: relative;
   line-height: 32px;
-  padding: 6px 12px 6px 48px;
+  padding: 6px 32px 6px 48px;
   text-decoration: none;
   color: #0366d6;
-  max-width: 240px;
+  max-width: 220px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -237,6 +237,11 @@ a.dd-list-item img {
     position: absolute;
     top: 6px;
     left: 6px;
+}
+a.dd-list-item i {
+  position: absolute;
+  right: 13px;
+  top: 16px;
 }
 /* task modal-dialog end */
 
