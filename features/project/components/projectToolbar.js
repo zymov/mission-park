@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../components/modal_dialog';
+import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
 import * as actionCreators from '../actions';
 
 class ProjectToolbar extends React.Component {

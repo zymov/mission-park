@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { fetchUsers } from '../../common/actions';
 
 export const ADD_TASK_REQUEST = 'ADD_TASK_REQUEST';
 export const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
@@ -12,13 +13,11 @@ export const SET_CURRENT_TASKLIST = 'SET_CURRENT_TASKLIST';
 export const NULL_TASKLIST_ID = 'NULL_TASKLIST_ID';
 
 export const OPEN_USERS_DROPDOWN = 'OPEN_USERS_DROPDOWN';
-export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
-export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
-export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 export const CLOSE_USERS_DROPDOWN = 'CLOSE_USERS_DROPDOWN';
 
 export const ADD_EXECUTOR = 'ADD_EXECUTOR';
 export const REMOVE_EXECUTOR = 'REMOVE_EXECUTOR';
+export const REMOVE_ALL_EXECUTOR = 'REMOVE_ALL_EXECUTOR';
 
 /* add */
 export function addTask(payload){
@@ -119,18 +118,6 @@ export function getUsersDropdown(projectId){
 	}
 }
 
-export function fetchUsers(dispatch, projectId){
-		dispatch( fetchUsersRequest() );
-		axios.get('/projects/getusers', {
-			projectId: projectId
-		})
-		.then(function(res){
-			dispatch( fetchUsersSuccess(res.data.users) );
-		})
-		.catch(function(err){
-			dispatch( fetchUsersFailure(err) );
-		});
-}
 
 export function openUsersDropdown(){
 	return {
@@ -144,27 +131,6 @@ export function closeUsersDropdown(){
 	}
 }
 
-export function fetchUsersRequest(){
-	return {
-		type: 'FETCH_USERS_REQUEST'
-	}
-}
-
-export function fetchUsersSuccess(users){
-	return {
-		type: 'FETCH_USERS_SUCCESS',
-		payload: users
-	}
-}
-
-export function fetchUsersFailure(err){
-	return {
-		type: 'FETCH_USERS_FAILURE',
-		payload: {
-			errors: err
-		}
-	}
-}
 
 /* dropdown list click event */
 export function addExecutor(user){
@@ -178,5 +144,11 @@ export function removeExecutor(user){
 	return {
 		type: 'REMOVE_EXECUTOR',
 		payload: user
+	}
+}
+
+export function removeAllExecutor(){
+	return {
+		type: 'REMOVE_ALL_EXECUTOR'
 	}
 }

@@ -3,8 +3,8 @@ import {
 	FETCH_TASK_REQUEST, FETCH_TASK_SUCCESS, FETCH_TASK_FAILURE, 
 	SET_CURRENT_TASKLIST, 
 	NULL_TASKLIST_ID,
-	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN, FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, 
-	ADD_EXECUTOR, REMOVE_EXECUTOR  
+	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN,  
+	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR  
 } from '../actions/taskActions';
 import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
 
@@ -22,11 +22,7 @@ const initialState = {
 
 	// users dropdown state
 	showUsersDropdown: false,
-	dropdownLoading: false,
-	projectUsers: [],
 	executors: [],
-	dropdownError: false, 
-	dropdownInfoText: ''
 }
 
 export default function task(state = initialState, action){
@@ -89,21 +85,7 @@ export default function task(state = initialState, action){
 			return Object.assign({}, state, {
 				showUsersDropdown: true
 			});
-		case FETCH_USERS_REQUEST:
-			return Object.assign({}, state, {
-				dropdownLoading: true,
-				dropdownInfoText: 'fetching users...'
-			});
-		case FETCH_USERS_SUCCESS:
-			return Object.assign({}, state, {
-				dropdownLoading: false,
-				projectUsers: action.payload
-			});
-		case FETCH_USERS_FAILURE:
-			return Object.assign({}, state, {
-				projectUsers: [],
-				dropdownInfoText: action.payload.errors
-			});
+		
 		case CLOSE_USERS_DROPDOWN:
 			return Object.assign({}, state, {
 				showUsersDropdown: false
@@ -115,6 +97,10 @@ export default function task(state = initialState, action){
 		case REMOVE_EXECUTOR:
 			return Object.assign({}, state, {
 				executors: removeSpecificObjectFromArray(state.executors, action.payload, 'email')
+			});
+		case REMOVE_ALL_EXECUTOR:
+			return Object.assign({}, state, {
+				executors: []
 			})
 		default:
 			return state;

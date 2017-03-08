@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../components/modal_dialog';
+import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
 import Executors from './executors';
 // import * as actionCreators from '../actions';
-import { addTask, closeUsersDropdown, addExecutor, removeExecutor } from '../actions/taskActions';
+import { addTask, closeUsersDropdown, removeAllExecutor } from '../actions/taskActions';
 
 class AddTask extends React.Component {
 	constructor(props){
@@ -88,6 +88,7 @@ class AddTask extends React.Component {
 			taskName: ''
 		});
 		this.props.closeUsersDropdown();
+		this.props.removeAllExecutor();
 		$('#newTask').click();	// use state?
 	}
 
@@ -164,8 +165,7 @@ const mapDispatchToProps = (dispatch) => {
 	return({
 		addTask: taskname => { dispatch(addTask(taskname)); },	//addTask(x) returns a function
 		closeUsersDropdown: () => { dispatch(closeUsersDropdown()); },
-		addExecutor: (projectId) => { dispatch(addExecutor(projectId)); },
-		removeExecutor: (projectId) => { dispatch(removeExecutor(projectId)); }
+		removeAllExecutor: () => { dispatch(removeAllExecutor(projectId)); }
 	})
 }
 
