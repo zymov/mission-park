@@ -1,10 +1,14 @@
 var mongoose = require('mongoose');
 
 var taskSchema = new mongoose.Schema({
-	taskName: { type: String },
+	_tasklistId: { type: String },
+	taskName: { type: String, required: true },
+	description: { type: String },
+	dueDate: { type: Date },
+	priority: { type: Number },
+	repeat: { type: Number },
+	executors: { type: Array, required: true },
 	createTime: { type: Date },
-	owner: { type: String },
-	_tasklistId: { type: String }
 });
 
 var Task = mongoose.model('Task',taskSchema);

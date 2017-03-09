@@ -88,7 +88,7 @@ class AddTasklist extends React.Component {
 				     <div className="row">
 
 				      	<div className="col-md-6 form-group">
-								  <div className='input-group date'>
+								  <div className='date'>
 								  	<label>截止时间</label>
 		                <input type='text' placeholder="点击设置" className="form-control" name='dueDate' id='tasklistDueDate' 
 		                	onBlur={this.handleInputChange} value={this.state.dueDate}/>

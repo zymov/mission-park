@@ -76,16 +76,18 @@ class AddTask extends React.Component {
 
 	handleSubmit(){
 		var payload = {
-			taskName: this.state.taskName,
 			tasklistId: this.props.tasklistId,
+			taskName: this.state.taskName,
 			description: this.state.description,
-			priority: this.state.priority,
 			dueDate: this.state.dueDate,
-			executor: this.state.executor
+			priority: this.state.priority,
+			repeat: this.state.repeat,
+			executors: this.props.executors
 		}
 		this.props.addTask(payload);
 		this.setState({
-			taskName: ''
+			taskName: '',
+			description: ''
 		});
 		this.props.closeUsersDropdown();
 		this.props.removeAllExecutor();
@@ -122,7 +124,7 @@ class AddTask extends React.Component {
 			      
 			      <div className="row">
 			      	<div className="col-md-4 form-group">
-							  <div className='input-group date'>
+							  <div className='date'>
 							  	<label>截止时间</label>
 	                <input type='text' placeholder="点击设置" title="点击设置" className="form-control" name='dueDate' id='taskDueDate' 
 	                	 onBlur={this.handleInputChange} value={this.state.dueDate}/>
@@ -158,14 +160,15 @@ class AddTask extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	currentTasklistName: state.taskboard.task.currentTasklistName
+	currentTasklistName: state.taskboard.task.currentTasklistName,
+	executors: state.taskboard.task.executors
 })
 
 const mapDispatchToProps = (dispatch) => {
 	return({
 		addTask: taskname => { dispatch(addTask(taskname)); },	//addTask(x) returns a function
 		closeUsersDropdown: () => { dispatch(closeUsersDropdown()); },
-		removeAllExecutor: () => { dispatch(removeAllExecutor(projectId)); }
+		removeAllExecutor: () => { dispatch(removeAllExecutor()); }
 	})
 }
 

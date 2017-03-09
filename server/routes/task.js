@@ -51,9 +51,14 @@ router.get('/fetchtasklist', function(req, res){
 router.post('/addtask', function(req, res){
 	if(req.body.taskName.trim()){
 		var task = new Task();
-		task.taskName = req.body.taskName;
-		task.createTime = new Date();
 		task._tasklistId = req.body.tasklistId;
+		task.taskName = req.body.taskName;
+		task.description = req.body.description;
+		task.dueDate = req.body.dueDate;
+		task.priority = req.body.priority;
+		task.repeat = req.body.repeat;
+		task.executors = req.body.executors;
+		task.createTime = new Date();
 		task.save(function(err){
 			if(err){
 				res.status(500).json({

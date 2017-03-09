@@ -9,6 +9,7 @@ input, textarea {
 }
 .dropdown-menu, .form-control, .btn, .tooltip-inner { border-radius: 2px; }
 .tooltip.top { margin-top: 2px; }
+.dropdown { max-width: 160px; margin: 0 auto; } 
 /* common style end */
 
 /* modal-dialog start */
@@ -25,6 +26,7 @@ input, textarea {
   border: none !important;
   cursor: pointer;
   text-align: center;
+  background-color: #f8f8f8;
 }
 .modal-body .date > input:hover {
   color: #3DA8F5;
@@ -39,7 +41,6 @@ input, textarea {
   display: block;
   line-height: 34px;
   margin-bottom: 0px;
-  margin-right: 20px;
   float: left;
   font-weight: normal;
   width: 100%;
@@ -245,7 +246,9 @@ a.dd-list-item i {
 }
 /* task modal-dialog end */
 
+/* tasklist modal-dialog start */
 
+/* tasklist modal-dialog end */
 
 /* tasklist start */
 .list-group-item:first-child, .list-group-item:last-child{border-radius: 0;}

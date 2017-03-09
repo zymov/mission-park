@@ -9,8 +9,8 @@ export default class ModalFooter extends React.Component {
 	render(){
 		return(
 			<div className="modal-footer">
-	      <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-	      <button type="button" className="btn btn-primary" onClick={this.props.handleSubmit}>Save changes</button>
+	      <button type="button" className="btn btn-secondary" data-dismiss="modal">取消</button>
+	      <button type="button" className="btn btn-primary" onClick={this.props.handleSubmit}>保存</button>
 	    </div>
 		)
 	}
