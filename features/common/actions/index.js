@@ -4,12 +4,12 @@ export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
 export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 
-export function findUserByName(input){
+export function findUserByName(userName){
 	return function(dispatch){
 		dispatch(fetchUsersRequest());
 		axios.get('/projects/getusers', {
 			params: {
-				userName: input
+				userName: userName
 			}
 		})
 		.then(function(res){
