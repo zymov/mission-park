@@ -52,7 +52,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	findUserByName: input => { dispatch(findUserByName(input)); }
+	findUserByName: (userName) => { dispatch(findUserByName(userName)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropdownInput);

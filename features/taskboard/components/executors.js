@@ -48,7 +48,7 @@ class Executors extends React.Component {
  				{executorList}
  				<li id="executorDropdown" onClick={this.changeExecutors.bind(this)} >
 						<a title="add new executor" className="new-executor glyphicon glyphicon-plus"></a>
- 					{ showUsersDropdown && <DropdownInput />}
+ 					{ showUsersDropdown && <DropdownInput projectId={this.props.projectId} />}
  				</li>
  			</ul>
 		);

@@ -6,6 +6,8 @@ var User = require('mongoose').model('User');
 var jwt = require('jsonwebtoken');
 var jwtSecret = require('../../config/jwt').jwtSecret;
 
+var utils = require('../../utils');
+
 
 router.post('/addproject', function(req, res){	
 	
@@ -58,9 +60,12 @@ router.get('/fetch', function(req, res){
 
 router.get('/getusers', function(req, res){
 
-	// find by req.body.projectId  ???
+	var userName = utils.getQueryVariable(req.url, 'userName');
 
-	User.find({}).sort({name: 1}).exec(function(err, users){
+	const regex = new RegExp(utils.escapeRegex(userName ? userName : ''), 'gi'); 
+
+	// and find by req.body.projectId  ???
+	User.find({name: regex}).sort({name: 1}).exec(function(err, users){
 		if(err){
 			console.log(err);
 			return res.status(500).json({

@@ -1,5 +1,8 @@
 module.exports = {
 
+  escapeRegex: function(text){
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  },
 
   checkHttpStatus: function (response){
   	if(response.status >= 200 && response.status < 300){
@@ -48,15 +51,18 @@ module.exports = {
   },
 
   getQueryVariable: function (url, key){
-    var query = url.split('?')[1];
-    var variables = query.split('&');
-    for(var i = 0; i < variables.length; i++){
-      var pair = variables[i].split('=');
-      if(key == pair[0]){
-        return pair[1];
+    if(~url.indexOf('?')){
+      var query = url.split('?')[1];
+      var variables = query.split('&');
+      for(var i = 0; i < variables.length; i++){
+        var pair = variables[i].split('=');
+        if(key == pair[0]){
+          return pair[1];
+        }
       }
+    } else {
+      return null;
     }
-    return null;
   },
 
   getIndexOfObjectArray: function(objectArr, obj, attribute){

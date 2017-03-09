@@ -8,7 +8,9 @@ export function findUserByName(input){
 	return function(dispatch){
 		dispatch(fetchUsersRequest());
 		axios.get('/projects/getusers', {
-			userName: input
+			params: {
+				userName: input
+			}
 		})
 		.then(function(res){
 			dispatch(fetchUsersSuccess(res.data.users));
