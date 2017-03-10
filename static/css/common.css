@@ -117,7 +117,7 @@ input, textarea {
   box-shadow: 0 0 3px 0 rgba(0,0,0,.5);
 }
 .project-nav {
-  background-color: #eee;
+  background-color: #f1f1f1;
   line-height: 40px;
   text-align: center;
   margin-top: -3px;
@@ -147,13 +147,13 @@ input, textarea {
   float: none;
 }
 .executor-row > ul.executor-list {padding: 0 15px;}
-.executor-list > li {
+.executor-list > li, .task-labels > li {
   position: relative;
   float: left;
   list-style-type: none;
   margin: 0 10px 5px 0;
 }
-.executor-list > li > a {
+.executor-list > li > a, .task-labels > li > a  {
   display: block;
   position: relative;
   background-color: #f1f8ff;
@@ -258,7 +258,7 @@ a.dd-list-item i {
   transition: all 0.2s;
   margin-bottom: 5px;
 }
-.tasklist .tasklist-priority {
+.tasklist .tasklist-priority, .task .task-priority {
   position: absolute;
   top: 0;
   left: 0;
@@ -266,7 +266,7 @@ a.dd-list-item i {
   width: 3px;
   transition: all 0.2s;
 }
-.tasklist:hover .tasklist-priority{
+.tasklist:hover .tasklist-priority, .task:hover .task-priority {
   transition: all 0.2s;
   width: 6px;
 }
@@ -299,3 +299,85 @@ a.dd-list-item i {
   margin: 0 -15px -10px;
 }
 /* tasklist end */
+
+/* task start  */
+.task-box {padding: 0;}
+.task-container {
+  background-color: #eeeeee;
+  border-radius: 3px;
+  padding: 10px;
+  min-height: 74px;
+}
+.task {
+  position: relative;
+  margin-bottom: 10px;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  cursor: pointer;
+}
+.task:last-child {margin-bottom: 0;}
+.task .check-box {
+  display: block;
+  float: left;
+  margin: 15px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  border: 2px solid #999;
+  border-radius: 3px;
+  box-sizing: content-box;
+  color: #555;
+}
+.task .check-box span {
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+}
+.task .task-content {
+  margin-left: 54px;
+}
+.task .task-content .task-basic {
+  padding: 15px 0;
+  line-height: 24px;
+  height: 54px;
+  margin: 0;
+}
+.task .task-content .task-basic p {
+  display: inline-block;
+  line-height: 24px;
+  margin-top: 1px;
+  font-size: 16px;
+  margin-bottom: 0;
+  max-width: 410px;
+  white-space: nowrap;
+  padding-left: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.task-basic .task-attr {
+  float: right;
+  border-left: 1px solid #ddd;
+  padding: 0 15px;
+}
+.task-basic .task-attr span {
+  display: block;
+  float: left;
+  margin-right: 15px;
+  padding: 0 6px;
+  color: #fff;
+  border-radius: 2px;
+  background-color: #3DA8F5;
+}
+.task .task-content .task-info {
+  padding-bottom: 10px;
+  line-height: 24px;
+}
+.task-labels {
+  margin-bottom: 0;
+  padding-left: 0;
+}
+.task-labels > li > a {
+  padding: 2px 8px;
+}
+/* task end */

@@ -22,7 +22,7 @@ class TaskContainer extends React.Component {
 		});
 
 		return(
-			<div>
+			<div className="task-container">
 				{fetchedTasks}
 			</div>
 		)

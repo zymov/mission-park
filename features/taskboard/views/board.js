@@ -38,13 +38,13 @@ class Board extends React.Component {
 					{/*dropdownError && <div className="container col-md-9 alert alert-danger" role="alert">{dropdownInfoText}.</div>*/}
 
 					<div className="row">
-						<div className="col-md-4">
+						<div className="tasklist-box col-md-4">
 							<TasklistToolbar projectId={this.props.params.projectId} />
 							<TasklistContainer projectId={this.props.params.projectId} >
 								{fetchedTaskList}
 							</TasklistContainer>
 						</div>
-						<div className="col-md-8">
+						<div className="task-box col-md-8">
 							{ currentTasklistId && <TaskToolbar projectId={this.props.params.projectId}  tasklistId={currentTasklistId}/> }
 							{ currentTasklistId && <TaskContainer projectId={this.props.params.projectId}  tasklistId={currentTasklistId}/> }
 						</div>

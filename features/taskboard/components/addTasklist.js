@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
 import * as actionCreators from '../actions/tasklistActions';
+import { priorityList, priorityColors } from '../../../utils';
 
 class AddTasklist extends React.Component {
 
@@ -14,8 +15,6 @@ class AddTasklist extends React.Component {
 			dueDate: '',
 			priority: 0	// 0: normal, 1: important, 2:very important
 		}; 
-		this.priorityList = ['一般', '紧急', '非常紧急'];
-		this.priorityColors = ['#555', '#ffaf38', '#ff4f3e'];
 
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,7 +62,7 @@ class AddTasklist extends React.Component {
 
 	selectPriority(event){
 		const target = event.target;
-		const priority = this.priorityList.indexOf(target.text);
+		const priority = priorityList.indexOf(target.text);
 		this.setState({
 			priority: priority
 		});
@@ -98,8 +97,8 @@ class AddTasklist extends React.Component {
 							  <div className="col-md-6 form-group">
 							  	<label>优先级</label>
 							  	<Dropdown dropdown={this.priorityDropdown} 
-										btnStyle={{color: this.priorityColors[this.state.priority]}} 
-										btnName={this.priorityList[this.state.priority]} />
+										btnStyle={{color: priorityColors[this.state.priority]}} 
+										btnName={priorityList[this.state.priority]} />
 				     		 </div>
 
 				    </div>

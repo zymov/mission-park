@@ -1,7 +1,15 @@
 module.exports = {
 
+  priorityList: ['一般', '紧急', '非常紧急'],
+  priorityColors: ['#555', '#ffaf38', '#ff4f3e'],
+  repeatList: ['不重复', '每小时', '每天', '每周', '每月', '每年'],
+  
   escapeRegex: function(text){
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  },
+
+  formatDate: function(date){
+    return date.replace('T', ' ').slice(0, -8);
   },
 
   checkHttpStatus: function (response){

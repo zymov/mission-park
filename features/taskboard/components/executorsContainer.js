@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import RemovableLabel from './removableLabel';
+import ExecutorLabel from './executorLabel';
 import DropdownInput from './dropdown/dropdownInput';
 import { getUsersDropdown, closeUsersDropdown } from '../actions/taskActions';
 
-class Executors extends React.Component {
+class ExecutorsContainer extends React.Component {
 
 	constructor(props){
 		super(props);
@@ -40,7 +40,7 @@ class Executors extends React.Component {
 
 		var executorList = [];
 		executorList = executors.map(function(item, index){
-			return <RemovableLabel key={index} executor={item}/>;
+			return <ExecutorLabel key={index} executor={item} removable={true}/>;
 		});
 
 		return(
@@ -66,4 +66,4 @@ const mapDispatchToProps = dispatch => ({
 	closeUsersDropdown: () => { dispatch(closeUsersDropdown()); }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Executors);
+export default connect(mapStateToProps, mapDispatchToProps)(ExecutorsContainer);

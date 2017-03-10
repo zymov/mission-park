@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
-import Executors from './executors';
+import ExecutorsContainer from './executorsContainer';
 // import * as actionCreators from '../actions';
 import { addTask, closeUsersDropdown, removeAllExecutor } from '../actions/taskActions';
+import { priorityList, priorityColors, repeatList } from '../../../utils';
 
 class AddTask extends React.Component {
 	constructor(props){
@@ -18,11 +19,6 @@ class AddTask extends React.Component {
 			description: '',
 			repeat: 0
 		}
-
-		this.priorityList = ['一般', '紧急', '非常紧急'];
-		this.priorityColors = ['#555', '#ffaf38', '#ff4f3e'];
-
-		this.repeatList = ['不重复', '每小时', '每天', '每周', '每月', '每年'];
 
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,7 +56,7 @@ class AddTask extends React.Component {
 
 	selectPriority(event){
 		const target = event.target;
-		const priority = this.priorityList.indexOf(target.text);
+		const priority = priorityList.indexOf(target.text);
 		this.setState({
 			priority: priority
 		});
@@ -68,7 +64,7 @@ class AddTask extends React.Component {
 
 	selectRepeat(event){
 		const target = event.target;
-		const repeat = this.repeatList.indexOf(target.text);
+		const repeat = repeatList.indexOf(target.text);
 		this.setState({
 			repeat: repeat
 		});
@@ -134,21 +130,21 @@ class AddTask extends React.Component {
 						  <div className="col-md-4 form-group">
 						  	<label>优先级</label>
 								<Dropdown dropdown={this.priorityDropdown} 
-									btnStyle={{color: this.priorityColors[this.state.priority]}} 
-									btnName={this.priorityList[this.state.priority]} />
+									btnStyle={{color: priorityColors[this.state.priority]}} 
+									btnName={priorityList[this.state.priority]} />
 			     		</div>
 
 	     				<div className="col-md-4 form-group">
 		     				<label>重复</label>
 		     				<Dropdown dropdown={this.repeatDropdown} 
 		     					btnStyle={{color: '#555'}}
-									btnName={this.repeatList[this.state.repeat]} />
+									btnName={repeatList[this.state.repeat]} />
 		     			</div>
 		     		</div>
 
 		     		<div className="row executor-row">
 		     			<label>执行者</label>
-		     			<Executors projectId={this.props.projectId} />
+		     			<ExecutorsContainer projectId={this.props.projectId} />
 		     		</div>
 
 		      </div>
