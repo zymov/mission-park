@@ -111,13 +111,6 @@ export function fetchTaskFailure(err){
 }
 
 /* get executor dropdown */
-export function getUsersDropdown(projectId){
-	return function(dispatch){
-		dispatch( openUsersDropdown() );
-		fetchUsers(dispatch, projectId);
-	}
-}
-
 
 export function openUsersDropdown(){
 	return {
@@ -150,5 +143,47 @@ export function removeExecutor(user){
 export function removeAllExecutor(){
 	return {
 		type: 'REMOVE_ALL_EXECUTOR'
+	}
+}
+
+
+/* accomplish task */
+export function accomplishTask(task){
+	if(task.repeat){
+		accomplishRepeatTask(task);
+	} else {
+		accomplishSimpleTask(task);
+	}
+}
+
+export function accomplishSimpleTask(task){
+	return function(dispatch){
+		
+	}
+}
+
+export function accomplishRepeatTask(task){
+
+}
+
+export function accomplishTaskRequest(){
+	return {
+		type: 'ACCOMPLISH_TASK_REQUEST'
+	}
+}
+
+export function accomplishTaskSuccess(task){
+	return {
+		type: 'ACCOMPLISH_TASK_SUCCESS',
+		payload: task
+	}
+}
+
+export function accomplishTaskFailure(err){
+	return {
+		type: 'ACCOMPLISH_TASK_FAILURE',
+		payload: {
+			errors: err
+		}
 	}
 }

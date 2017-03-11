@@ -22,10 +22,13 @@ export function findUserByName(userName){
 }
 
 
-export function fetchUsers(dispatch, projectId){
+export function fetchUsers(projectId){
+	return function(dispatch){
 		dispatch( fetchUsersRequest() );
 		axios.get('/projects/getusers', {
-			projectId: projectId
+			params: {
+				projectId: projectId
+			}
 		})
 		.then(function(res){
 			dispatch( fetchUsersSuccess(res.data.users) );
@@ -33,6 +36,7 @@ export function fetchUsers(dispatch, projectId){
 		.catch(function(err){
 			dispatch( fetchUsersFailure(err) );
 		});
+	}
 }
 
 export function fetchUsersRequest(){

@@ -1,15 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ExecutorLabel from './executorLabel';
 import InfoTag from './infoTag';
 import { formatDate, repeatList } from '../../../utils'
+import { accomplishTask } from '../actions/taskActions';
 
 class Task extends React.Component {
 	constructor(props){
 		super(props);
 	}
 
-	accomplishTask(e){
-
+	clickCheckbox(e){
+		this.props.accomplishTask(this.props.task);
 	}
 
 	editTask(){
@@ -29,8 +31,8 @@ class Task extends React.Component {
 		return(
 			<div className="task">
 				<div className={`task-priority priority-${priority}`}></div>
-				<a className="check-box" onClick={this.accomplishTask.bind(this)}>
-					{ <span className="glyphicon glyphicon-ok"></span> }
+				<a className="check-box" onClick={this.clickCheckbox.bind(this)}>
+					{ false && <span className="glyphicon glyphicon-ok"></span> }
 				</a>
 				<div className="task-content" onClick={this.editTask.bind(this)}>
 					<div className="task-basic">
@@ -53,5 +55,8 @@ class Task extends React.Component {
 	
 }
 
+const mapDispatchToProps = dispatch => ({
+	accomplishTask: task => { dispatch(accomplishTask(task)); }
+});
 
-export default Task;
+export default connect(null, mapDispatchToProps)(Task);

@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ExecutorLabel from './executorLabel';
 import DropdownInput from './dropdown/dropdownInput';
-import { getUsersDropdown, closeUsersDropdown } from '../actions/taskActions';
+import { openUsersDropdown, closeUsersDropdown } from '../actions/taskActions';
+import { fetchUsers } from '../../common/actions';
 
 class ExecutorsContainer extends React.Component {
 
@@ -15,7 +16,9 @@ class ExecutorsContainer extends React.Component {
 
 	changeExecutors(){
 		if(this.props.showUsersDropdown){return;}
-		this.props.getUsersDropdown(this.props.projectId);
+		this.props.openUsersDropdown();
+		this.props.fetchUsers(this.props.projectId);
+
 	}
 
 	componentWillMount(){
@@ -62,7 +65,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	getUsersDropdown: projectId => { dispatch(getUsersDropdown(projectId)); },
+	openUsersDropdown: () => { dispatch(openUsersDropdown()); },
+	fetchUsers: projectId => { dispatch(fetchUsers(projectId)); },
 	closeUsersDropdown: () => { dispatch(closeUsersDropdown()); }
 })
 
