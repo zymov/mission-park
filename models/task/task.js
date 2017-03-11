@@ -5,6 +5,7 @@ var taskSchema = new mongoose.Schema({
 	taskName: { type: String, required: true },
 	description: { type: String },
 	dueDate: { type: Date },
+	accomplished: { type: Boolean },
 	priority: { type: Number },
 	repeat: { type: Number },
 	executors: { type: Array, required: true },

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import DDListItem from './ddListItem';
 import { findUserByName } from '../../../common/actions';
-import { getIndexOfObjectArray } from '../../../../utils';
+import { getIndexOfArray } from '../../../../utils';
 
 class DropdownInput extends React.Component {
 
@@ -22,7 +22,7 @@ class DropdownInput extends React.Component {
 		dropdownList = this.props.projectUsers.map(function(item, index){
 			var userSelected = false;
 			if(this.props.executors.length > 0){
-				var objIndex = getIndexOfObjectArray(this.props.executors, item, 'email');
+				var objIndex = getIndexOfArray(this.props.executors, item, 'email');
 				if(objIndex != -1){
 					userSelected = true;
 				}

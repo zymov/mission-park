@@ -6,6 +6,7 @@ var tasklistSchema = new mongoose.Schema({
 	_projectid: { type: String },
 	priority: { type: Number },
 	dueDate: { type: Date },
+	accomplished: { type: Boolean },
 	_executorid: { type: String }
 });
 

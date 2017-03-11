@@ -19,6 +19,10 @@ export const ADD_EXECUTOR = 'ADD_EXECUTOR';
 export const REMOVE_EXECUTOR = 'REMOVE_EXECUTOR';
 export const REMOVE_ALL_EXECUTOR = 'REMOVE_ALL_EXECUTOR';
 
+export const TOGGLE_TASK_REQUEST = 'TOGGLE_TASK_REQUEST';
+export const TOGGLE_TASK_SUCCESS = 'TOGGLE_TASK_SUCCESS';
+export const TOGGLE_TASK_FAILURE = 'TOGGLE_TASK_FAILURE';
+
 /* add */
 export function addTask(payload){
 	return function(dispatch){
@@ -147,41 +151,38 @@ export function removeAllExecutor(){
 }
 
 
-/* accomplish task */
-export function accomplishTask(task){
-	if(task.repeat){
-		accomplishRepeatTask(task);
-	} else {
-		accomplishSimpleTask(task);
-	}
-}
-
-export function accomplishSimpleTask(task){
+/* toggle task */
+export function toggleTask(task){
 	return function(dispatch){
-		
+		dispatch(toggleTaskRequest());
+		axios.post('/tasks/toggletask', {
+			task: task
+		})
+		.then(function(res){
+			dispatch(toggleTaskSuccess(res.data.updatedTask));
+		})
+		.catch(function(err){
+			dispatch(toggleTaskFailure(err));
+		})
 	}
 }
 
-export function accomplishRepeatTask(task){
-
-}
-
-export function accomplishTaskRequest(){
+export function toggleTaskRequest(){
 	return {
-		type: 'ACCOMPLISH_TASK_REQUEST'
+		type: 'TOGGLE_TASK_REQUEST'
 	}
 }
 
-export function accomplishTaskSuccess(task){
+export function toggleTaskSuccess(task){
 	return {
-		type: 'ACCOMPLISH_TASK_SUCCESS',
+		type: 'TOGGLE_TASK_SUCCESS',
 		payload: task
 	}
 }
 
-export function accomplishTaskFailure(err){
+export function toggleTaskFailure(err){
 	return {
-		type: 'ACCOMPLISH_TASK_FAILURE',
+		type: 'TOGGLE_TASK_FAILURE',
 		payload: {
 			errors: err
 		}

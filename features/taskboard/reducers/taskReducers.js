@@ -1,14 +1,14 @@
 import { 
 	ADD_TASK_REQUEST, ADD_TASK_SUCCESS, ADD_TASK_FAILURE, 
 	FETCH_TASK_REQUEST, FETCH_TASK_SUCCESS, FETCH_TASK_FAILURE, 
-	SET_CURRENT_TASKLIST, 
-	NULL_TASKLIST_ID,
+	SET_CURRENT_TASKLIST, NULL_TASKLIST_ID,
 	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN,  
-	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR  
+	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR, 
+	TOGGLE_TASK_REQUEST, TOGGLE_TASK_SUCCESS, TOGGLE_TASK_FAILURE 
 } from '../actions/taskActions';
 import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
 
-import { addNewObjectToArrayBegin, addNewObjectToArrayEnd, removeSpecificObjectFromArray } from '../../../utils';
+import { addNewItemToArrayBegin, addNewItemToArrayEnd, removeSpecificItemFromArray, updateAndMoveItemFromArray } from '../../../utils';
 
 const initialState = {
 	taskLoading: false,
@@ -23,10 +23,14 @@ const initialState = {
 	// users dropdown state
 	showUsersDropdown: false,
 	executors: [],
+
+	// toggle task
+	toggling: false
 }
 
 export default function task(state = initialState, action){
 	switch(action.type){
+		/* add task */
 		case ADD_TASK_REQUEST:
 			return Object.assign({}, state, {
 				taskLoading: true,
@@ -36,7 +40,7 @@ export default function task(state = initialState, action){
 			return Object.assign({}, state, {
 				taskLoading: false,
 				newTask: action.payload,
-				tasks: addNewObjectToArrayBegin(state.tasks, action.payload),
+				tasks: addNewItemToArrayBegin(state.tasks, action.payload),
 				taskInfoText: ''
 			});
 		case ADD_TASK_FAILURE:
@@ -46,7 +50,7 @@ export default function task(state = initialState, action){
 				newTask: null,
 				taskInfoText: 'Error:' + action.payload.errors
 			});
-
+		/* fetch task */
 		case FETCH_TASK_REQUEST:
 			return Object.assign({}, state, {
 				taskLoading: true,
@@ -80,7 +84,7 @@ export default function task(state = initialState, action){
 				currentTasklistId: null
 			});
 
-		// users dropdown reducer
+		/* users dropdown reducer */
 		case OPEN_USERS_DROPDOWN:
 			return Object.assign({}, state, {
 				showUsersDropdown: true
@@ -92,15 +96,32 @@ export default function task(state = initialState, action){
 			});
 		case ADD_EXECUTOR: 
 			return Object.assign({}, state, {
-				executors: addNewObjectToArrayEnd(state.executors, action.payload)	// The concat method creates a new array instead of mutating the original array itself!!!
+				executors: addNewItemToArrayEnd(state.executors, action.payload)	// The concat method creates a new array instead of mutating the original array itself!!!
 			});
 		case REMOVE_EXECUTOR:
 			return Object.assign({}, state, {
-				executors: removeSpecificObjectFromArray(state.executors, action.payload, 'email')
+				executors: removeSpecificItemFromArray(state.executors, action.payload, 'email')
 			});
 		case REMOVE_ALL_EXECUTOR:
 			return Object.assign({}, state, {
 				executors: []
+			});
+
+		/* toggle task */
+		case TOGGLE_TASK_REQUEST:
+			return Object.assign({}, state, {
+				toggling: true
+			});
+		case TOGGLE_TASK_SUCCESS: 
+			return Object.assign({}, state, {
+				toggling: false,
+				tasks: updateAndMoveItemFromArray(state.tasks, action.payload)
+			});
+		case TOGGLE_TASK_FAILURE:
+			return Object.assign({}, state, {
+				toggling: false,
+				taskError: true,
+				taskInfoText: 'Error:' + action.payload.errors
 			})
 		default:
 			return state;

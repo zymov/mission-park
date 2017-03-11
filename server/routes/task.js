@@ -13,6 +13,7 @@ router.post('/addtasklist', function(req, res){
 		tasklist.createTime = new Date();
 		tasklist._projectid = req.body.projectId;
 		tasklist.dueDate = new Date(req.body.dueDate);
+		tasklist.accomplished = false;
 		tasklist.priority = req.body.priority;
 		tasklist.save(function(err){
 			if(err){
@@ -55,6 +56,7 @@ router.post('/addtask', function(req, res){
 		task.taskName = req.body.taskName;
 		task.description = req.body.description;
 		task.dueDate = req.body.dueDate;
+		task.accomplished = false;
 		task.priority = req.body.priority;
 		task.repeat = req.body.repeat;
 		task.executors = req.body.executors;
@@ -78,7 +80,7 @@ router.post('/addtask', function(req, res){
 router.get('/fetchtask', function(req, res){
 	var tasklistId = utils.getQueryVariable(req.url, 'tasklistId');
 
-	Task.find({_tasklistId: tasklistId}).sort({createTime: 1}).exec(function(err, tasks){
+	Task.find({_tasklistId: tasklistId}).sort({accomplished: 1, createTime: -1}).exec(function(err, tasks){
 		if(err){
 			console.log(err);
 			return res.status(500).json({
@@ -88,5 +90,38 @@ router.get('/fetchtask', function(req, res){
 		res.json({tasks});
 	})
 })
+
+router.post('/toggletask', function(req, res){
+
+	Task.findOne({_id: req.body.task._id}).exec(function(err, task){
+		if(err){
+			console.log(err);
+			return res.status(500).json({
+				message: 'Could not handle this task.'
+			});
+		}
+		
+		if(task.repeat){
+			var interval = utils.repeatFuncList[task.repeat];
+			task.dueDate = task.dueDate['set' + interval](task.dueDate['get' + interval]() + (task.repeat == 3 ? 7 : 1 ) );
+			task.markModified('dueDate');
+		} else {
+			task.accomplished = !task.accomplished;
+		}
+
+		task.save(function(err, updatedTask){
+			if(err){
+				console.log(err);
+				return res.status(500).json({
+					message: 'Could not save the change.'
+				});
+			} else {
+				return res.status(200).json({updatedTask});
+			}
+		});
+	});
+
+
+});
 
 module.exports = router;

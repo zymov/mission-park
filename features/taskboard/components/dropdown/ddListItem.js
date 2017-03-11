@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addExecutor, removeExecutor } from '../../actions/taskActions';
-import { getIndexOfObjectArray } from '../../../../utils';
+import { getIndexOfArray } from '../../../../utils';
 
 class DDListItem extends React.Component {
 
@@ -12,7 +12,7 @@ class DDListItem extends React.Component {
 
 	handleClick(e){
 
-		if(getIndexOfObjectArray(this.props.executors, this.props.user, 'email') == -1){
+		if(getIndexOfArray(this.props.executors, this.props.user, 'email') == -1){
 			this.props.addExecutor(this.props.user);
 		} else {
 			this.props.removeExecutor(this.props.user);		//remove user by it's position(index)? Which method performs better?
