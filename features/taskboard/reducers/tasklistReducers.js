@@ -1,6 +1,6 @@
 import { 
 	ADD_TASKLIST_REQUEST, ADD_TASKLIST_SUCCESS, ADD_TASKLIST_FAILURE,
-	FETCH_TASKLIST_REQUEST, FETCH_TASKLIST_SUCCESS, FETCH_TASKLIST_FAILURE } from '../actions/tasklistActions';
+	FETCH_TASKLISTS_REQUEST, FETCH_TASKLISTS_SUCCESS, FETCH_TASKLISTS_FAILURE } from '../actions/tasklistActions';
 
 import { addNewItemToArrayBegin } from '../../../utils';
 
@@ -37,18 +37,18 @@ export default function tasklist(state = initialState, action){
 				tasklistInfoText: 'Error:' + action.payload.errors
 			});
 
-		case FETCH_TASKLIST_REQUEST:
+		case FETCH_TASKLISTS_REQUEST:
 			return Object.assign({}, state, {
 				tasklistLoading: true,
 				tasklistInfoText: 'fetching task list...'
 			});
-		case FETCH_TASKLIST_SUCCESS:
+		case FETCH_TASKLISTS_SUCCESS:
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				tasklists: action.payload,
 				tasklistInfoText: ''
 			});
-		case FETCH_TASKLIST_FAILURE:
+		case FETCH_TASKLISTS_FAILURE:
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				tasklistError: true,

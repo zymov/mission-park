@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { fetchTask } from '../actions/taskActions';
+import { fetchTasks } from '../actions/taskActions';
 import { formatDate } from '../../../utils';
 
 class Tasklist extends React.Component {
@@ -9,12 +9,12 @@ class Tasklist extends React.Component {
 	handleClick(e){
 		e.stopPropagation();
 		if(this.props.tasklist._id == this.props.currentTasklistId){return;}
-		this.props.fetchTask(this.props.tasklist._id, this.props.index, this.props.tasklist.tasklistName);
+		this.props.fetchTasks(this.props.tasklist._id, this.props.index, this.props.tasklist.tasklistName);
 	}
 
 	componentDidMount(){
 		if(this.props.index == 0){
-			this.props.fetchTask(this.props.tasklist._id, 0, this.props.tasklist.tasklistName);
+			this.props.fetchTasks(this.props.tasklist._id, 0, this.props.tasklist.tasklistName);
 		}
 	}
 
@@ -47,7 +47,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	fetchTask: (tasklistId, index, tasklistName) => dispatch(fetchTask(tasklistId, index, tasklistName))
+	fetchTasks: (tasklistId, index, tasklistName) => dispatch(fetchTasks(tasklistId, index, tasklistName))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasklist);

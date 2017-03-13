@@ -72,7 +72,7 @@ class AddTasklist extends React.Component {
 
 		return(
 			<div>
-				<TriggerBtn dataTarget="#addTasklist" />
+				<TriggerBtn dataTarget="#addTasklist" btnName="添加新任务列表"/>
 				<ModalWrapper id="addTasklist" >
 					<ModalHeader createTasklistTo='project'/>
 					<div className="modal-body clearfix">

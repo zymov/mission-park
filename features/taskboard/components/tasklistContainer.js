@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Tasklist from './tasklist';
-import { fetchTasklist } from '../actions/tasklistActions';
+import { fetchTasklists } from '../actions/tasklistActions';
 
 class TasklistContainer extends React.Component {
 
 	componentWillMount(){
-		this.props.fetchTasklist(this.props.projectId);
+		this.props.fetchTasklists(this.props.projectId);
 	}
 
 	render(){
@@ -30,7 +30,7 @@ class TasklistContainer extends React.Component {
 // });
 
 const mapDispatchToProps = dispatch => ({
-	fetchTasklist: projectId => { dispatch(fetchTasklist(projectId)); }
+	fetchTasklists: projectId => { dispatch(fetchTasklists(projectId)); }
 });
 
 

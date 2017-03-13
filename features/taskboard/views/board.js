@@ -6,6 +6,7 @@ import TasklistContainer from '../components/tasklistContainer';
 import TaskToolbar from '../components/taskToolbar';
 import TaskContainer from '../components/taskContainer';
 import Tasklist from '../components/tasklist';
+import TaskDetail from '../components/taskDetail';
 
 class Board extends React.Component {
 
@@ -18,7 +19,8 @@ class Board extends React.Component {
 		const { tasklistLoading, tasklistError, tasklistInfoText, 
 						taskLoading, taskError, taskInfoText, 
 						currentTasklistId, tasklists,
-						dropdownLoading, dropdownError, dropdownInfoText } = this.props;
+						dropdownLoading, dropdownError, dropdownInfoText,
+						showTaskDetail, taskDetail } = this.props;
 
 
 		var fetchedTaskList = [];
@@ -49,6 +51,7 @@ class Board extends React.Component {
 							{ currentTasklistId && <TaskContainer projectId={this.props.params.projectId}  tasklistId={currentTasklistId}/> }
 						</div>
 					</div>
+					{/*showTaskDetail && <TaskDetail taskDetail={taskDetail} modalName={`taskDetail${taskDetail._id}`} />*/}
 				</div>
 		)
 	}
@@ -66,10 +69,14 @@ const mapStateToProps = state => {
 		dropdownError: 					tb.task.dropdownError,
 		dropdownInfoText: 			tb.task.dropdownInfoText,
 
+		showTaskDetail: 				tb.task.showTaskDetail,
+		taskDetail: 						tb.task.taskDetail,
+
 		tasklists: 							tb.tasklist.tasklists,
 		tasklistLoading: 				tb.tasklist.tasklistLoading,
 		tasklistError: 					tb.tasklist.tasklistError,
 		tasklistInfoText: 			tb.tasklist.tasklistInfoText
+
 
 	}
 }

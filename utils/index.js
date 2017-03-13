@@ -1,11 +1,15 @@
 module.exports = {
 
-  that: this,
-
   priorityList: ['一般', '紧急', '非常紧急'],
   priorityColors: ['#555', '#ffaf38', '#ff4f3e'],
+  priorityMenuList: [
+          {name: '一般', style: {color: '#555'}}, 
+          {name: '紧急', style: {color: '#ffaf38'}}, 
+          {name: '非常紧急', style: {color: "#ff4f3e"}}
+        ],
   repeatList: ['不重复', '每小时', '每天', '每周', '每月', '每年'],
   repeatFuncList: ['', 'Hours', 'Date', 'Date', 'Month', 'FullYear'],
+  repeatMenuList: [ {name: '不重复'}, {name: '每小时'}, {name: '每天'}, {name: '每周'}, {name: '每月'}, {name: '每年'} ],
 
   escapeRegex: function(text){
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");

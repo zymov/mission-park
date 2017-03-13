@@ -6,7 +6,7 @@ export default class TriggerBtn extends React.Component {
 			<button type="button" className="btn btn-primary" 
 				data-toggle="modal" 
 				data-target={this.props.dataTarget}
-			>Launch demo modal</button>
+			>{this.props.btnName}</button>
 		)
 	}
 }

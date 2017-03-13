@@ -33,7 +33,7 @@ router.post('/addtasklist', function(req, res){
 	}
 });
 
-router.get('/fetchtasklist', function(req, res){
+router.get('/fetchtasklists', function(req, res){
 	var projectId = utils.getQueryVariable(req.url, 'projectId');
 
 	Tasklist.find({_projectid: projectId}).sort({createTime: -1}).exec(function(err, tasklists){
@@ -77,7 +77,7 @@ router.post('/addtask', function(req, res){
 	}
 });
 
-router.get('/fetchtask', function(req, res){
+router.get('/fetchtasks', function(req, res){
 	var tasklistId = utils.getQueryVariable(req.url, 'tasklistId');
 
 	Task.find({_tasklistId: tasklistId}).sort({accomplished: 1, createTime: -1}).exec(function(err, tasks){

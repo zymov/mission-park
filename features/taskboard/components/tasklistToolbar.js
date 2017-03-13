@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 import AddTasklist from './addTasklist';
-import { fetchTasklist } from '../actions/tasklistActions';
 
 class TasklistToolbar extends React.Component {
 
@@ -24,7 +23,7 @@ class TasklistToolbar extends React.Component {
 
 
 // const mapDispatchToProps = dispatch => ({
-// 	fetchTasklist: projectId => { dispatch(fetchTasklist(projectId)); }
+	
 // });
 
 

@@ -1,10 +1,11 @@
 import { 
 	ADD_TASK_REQUEST, ADD_TASK_SUCCESS, ADD_TASK_FAILURE, 
-	FETCH_TASK_REQUEST, FETCH_TASK_SUCCESS, FETCH_TASK_FAILURE, 
+	FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, FETCH_TASKS_FAILURE, 
 	SET_CURRENT_TASKLIST, NULL_TASKLIST_ID,
 	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN,  
 	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR, 
-	TOGGLE_TASK_REQUEST, TOGGLE_TASK_SUCCESS, TOGGLE_TASK_FAILURE 
+	TOGGLE_TASK_REQUEST, TOGGLE_TASK_SUCCESS, TOGGLE_TASK_FAILURE, 
+	SHOW_TASK_DETAIL
 } from '../actions/taskActions';
 import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
 
@@ -25,7 +26,11 @@ const initialState = {
 	executors: [],
 
 	// toggle task
-	toggling: false
+	toggling: false,
+
+	// show task detail
+	showTaskDetail: false,
+	taskDetail: null
 }
 
 export default function task(state = initialState, action){
@@ -51,18 +56,18 @@ export default function task(state = initialState, action){
 				taskInfoText: 'Error:' + action.payload.errors
 			});
 		/* fetch task */
-		case FETCH_TASK_REQUEST:
+		case FETCH_TASKS_REQUEST:
 			return Object.assign({}, state, {
 				taskLoading: true,
 				taskInfoText: 'fetching task ...'
 			});
-		case FETCH_TASK_SUCCESS:
+		case FETCH_TASKS_SUCCESS:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				tasks: action.payload,
 				taskInfoText: ''
 			});
-		case FETCH_TASK_FAILURE:
+		case FETCH_TASKS_FAILURE:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				taskError: true,
@@ -122,7 +127,14 @@ export default function task(state = initialState, action){
 				toggling: false,
 				taskError: true,
 				taskInfoText: 'Error:' + action.payload.errors
-			})
+			});
+
+		/* show task detail */
+		case SHOW_TASK_DETAIL:
+			return Object.assign({}, state, {
+				showTaskDetail: true,
+				taskDetail: action.payload
+			});
 		default:
 			return state;
 	}

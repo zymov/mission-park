@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { fetchTask } from './taskActions';
+import { fetchTasks } from './taskActions';
 
 export const ADD_TASKLIST_REQUEST = 'ADD_TASKLIST_REQUEST';
 export const ADD_TASKLIST_SUCCESS = 'ADD_TASKLIST_SUCCESS';
 export const ADD_TASKLIST_FAILURE = 'ADD_TASKLIST_FAILURE';
 
-export const FETCH_TASKLIST_REQUEST = 'FETCH_TASKLIST_REQUEST';
-export const FETCH_TASKLIST_SUCCESS = 'FETCH_TASKLIST_SUCCESS';
-export const FETCH_TASKLIST_FAILURE = 'FETCH_TASKLIST_FAILURE';
+export const FETCH_TASKLISTS_REQUEST = 'FETCH_TASKLISTS_REQUEST';
+export const FETCH_TASKLISTS_SUCCESS = 'FETCH_TASKLISTS_SUCCESS';
+export const FETCH_TASKLISTS_FAILURE = 'FETCH_TASKLISTS_FAILURE';
 
 export const SET_CURRENT_TASKLIST_ID_TO_NULL = 'SET_CURRENT_TASKLIST_ID_TO_NULL';
 
@@ -46,17 +46,17 @@ export function addTasklistFailure(err){
 	}
 }
 
-export function fetchTasklist(projectId){
+export function fetchTasklists(projectId){
 	return function(dispatch){
-		dispatch(fetchTasklistRequest());
-		axios.get('/tasks/fetchtasklist', {
+		dispatch(fetchTasklistsRequest());
+		axios.get('/tasks/fetchtasklists', {
 			params: {
 				projectId: projectId
 			}
 		})
 		.then(function(res){
-			dispatch(fetchTasklistSuccess(res.data.tasklists));
-			res.data.tasklists[0] && dispatch(fetchTask(res.data.tasklists[0]._id, 0, res.data.tasklists[0].tasklistName));
+			dispatch(fetchTasklistsSuccess(res.data.tasklists));
+			res.data.tasklists[0] && dispatch(fetchTasks(res.data.tasklists[0]._id, 0, res.data.tasklists[0].tasklistName));
 
 			//clear currentTasklistId from state tree to prevent project which has none tasklist 
 			// from getting the previous [currentTasklistId] in state tree.
@@ -64,27 +64,27 @@ export function fetchTasklist(projectId){
 
 		})
 		.catch(function(err){
-			dispatch(fetchTasklistFailure(err));
+			dispatch(fetchTasklistsFailure(err));
 		});
 	}
 }
 
-export function fetchTasklistRequest(){
+export function fetchTasklistsRequest(){
 	return {
-		type: 'FETCH_TASKLIST_REQUEST'
+		type: 'FETCH_TASKLISTS_REQUEST'
 	}
 }
 
-export function fetchTasklistSuccess(tasklists){
+export function fetchTasklistsSuccess(tasklists){
 	return {
-		type: 'FETCH_TASKLIST_SUCCESS',
+		type: 'FETCH_TASKLISTS_SUCCESS',
 		payload: tasklists
 	}
 }
 
-export function fetchTasklistFailure(err){
+export function fetchTasklistsFailure(err){
 	return {
-		type: 'FETCH_TASKLIST_FAILURE',
+		type: 'FETCH_TASKLISTS_FAILURE',
 		payload: {
 			errors: err
 		}

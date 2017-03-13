@@ -22,7 +22,7 @@ class TaskToolbar extends React.Component {
 
 
 // const mapDispatchToProps = dispatch => ({
-// 	fetchTasklist: projectId => { dispatch(fetchTasklist(projectId)); }
+	
 // })
 
 

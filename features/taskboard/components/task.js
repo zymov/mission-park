@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import ExecutorLabel from './executorLabel';
 import InfoTag from './infoTag';
 import { formatDate, repeatList } from '../../../utils'
-import { toggleTask } from '../actions/taskActions';
+import { toggleTask, showTaskDetail } from '../actions/taskActions';
+// import TriggerBtn from '../../common/components/modal_dialog/triggerBtn';
 
 class Task extends React.Component {
 	constructor(props){
@@ -14,19 +15,14 @@ class Task extends React.Component {
 		this.props.toggleTask(this.props.task);
 	}
 
-	editTask(){
-		console.log(1);
+	showTask(){
+	// 	this.props.showTaskDetail(this.props.task);
+	// 	$(`[data-target="#taskDetail${this.props.task._id}"]`).click();
 	}
 
 	render(){
 
-		const { taskName, dueDate, priority, repeat, executors, accomplished, createTime } = this.props.task;
-
-		var executorList = executors.map(function(item, index){
-			return (
-				<ExecutorLabel key={index} executor={item} removable={false}/>
-			);
-		});
+		const { taskName, dueDate, priority, repeat, accomplished, createTime } = this.props.task;
 
 		return(
 			<div className="task">
@@ -34,7 +30,7 @@ class Task extends React.Component {
 				<a className="check-box" onClick={this.clickCheckbox.bind(this)}>
 					{ accomplished && <span className="glyphicon glyphicon-ok"></span> }
 				</a>
-				<div className="task-content" onClick={this.editTask.bind(this)}>
+				<div className="task-content" onClick={this.showTask.bind(this)}>
 					<div className="task-basic">
 							<p className="task-name">{taskName}</p>
 							<div className="task-attr">
@@ -50,14 +46,20 @@ class Task extends React.Component {
 						</ul>
 					</div>
 				</div>
+				{/*<TriggerBtn dataTarget={`#taskDetail${this.props.task._id}`} btnName="" />*/}
 			</div>
 		)
 	}
-	
+
 }
 
+// const mapStateToProps = state => ({
+// 	taskDetail: state.taskboard.task.taskDetail
+// })
+
 const mapDispatchToProps = dispatch => ({
-	toggleTask: task => { dispatch(toggleTask(task)); }
+	toggleTask: task => { dispatch(toggleTask(task)); },
+	showTaskDetail: task => { dispatch(showTaskDetail(task)); }
 });
 
 export default connect(null, mapDispatchToProps)(Task);
