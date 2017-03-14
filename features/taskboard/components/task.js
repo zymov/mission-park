@@ -4,7 +4,7 @@ import ExecutorLabel from './executorLabel';
 import InfoTag from './infoTag';
 import { formatDate, repeatList } from '../../../utils'
 import { toggleTask, showTaskDetail } from '../actions/taskActions';
-// import TriggerBtn from '../../common/components/modal_dialog/triggerBtn';
+import TriggerBtn from '../../common/components/modal_dialog/triggerBtn';
 
 class Task extends React.Component {
 	constructor(props){
@@ -16,8 +16,7 @@ class Task extends React.Component {
 	}
 
 	showTask(){
-	// 	this.props.showTaskDetail(this.props.task);
-	// 	$(`[data-target="#taskDetail${this.props.task._id}"]`).click();
+		this.props.showTaskDetail(this.props.task);
 	}
 
 	render(){
@@ -46,7 +45,7 @@ class Task extends React.Component {
 						</ul>
 					</div>
 				</div>
-				{/*<TriggerBtn dataTarget={`#taskDetail${this.props.task._id}`} btnName="" />*/}
+				<TriggerBtn dataTarget={`#taskDetail${this.props.task._id}`} btnName="" />
 			</div>
 		)
 	}

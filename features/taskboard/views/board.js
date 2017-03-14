@@ -14,6 +14,14 @@ class Board extends React.Component {
 		super(props);
 	}
 
+
+	componentWillReceiveProps(nextProps){
+		if(this.props.taskDetail != nextProps.taskDetail){
+			console.log(nextProps.taskDetail._id, nextProps.taskDetail.taskName);
+			// $(`[data-target="#taskDetail${nextProps.taskDetail._id}"]`).click();
+		}
+	}
+
 	render(){
 
 		const { tasklistLoading, tasklistError, tasklistInfoText, 
@@ -51,7 +59,7 @@ class Board extends React.Component {
 							{ currentTasklistId && <TaskContainer projectId={this.props.params.projectId}  tasklistId={currentTasklistId}/> }
 						</div>
 					</div>
-					{/*showTaskDetail && <TaskDetail taskDetail={taskDetail} modalName={`taskDetail${taskDetail._id}`} />*/}
+					<TaskDetail taskDetail={taskDetail} modalName={`taskDetail${taskDetail ? taskDetail._id : ''}`} />
 				</div>
 		)
 	}
@@ -69,7 +77,6 @@ const mapStateToProps = state => {
 		dropdownError: 					tb.task.dropdownError,
 		dropdownInfoText: 			tb.task.dropdownInfoText,
 
-		showTaskDetail: 				tb.task.showTaskDetail,
 		taskDetail: 						tb.task.taskDetail,
 
 		tasklists: 							tb.tasklist.tasklists,

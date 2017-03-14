@@ -29,8 +29,9 @@ const initialState = {
 	toggling: false,
 
 	// show task detail
-	showTaskDetail: false,
-	taskDetail: null
+	editTaskTimestamp: null,
+	taskDetail: null,
+
 }
 
 export default function task(state = initialState, action){
@@ -132,7 +133,7 @@ export default function task(state = initialState, action){
 		/* show task detail */
 		case SHOW_TASK_DETAIL:
 			return Object.assign({}, state, {
-				showTaskDetail: true,
+				editTaskTimestamp: Date.now(),
 				taskDetail: action.payload
 			});
 		default:

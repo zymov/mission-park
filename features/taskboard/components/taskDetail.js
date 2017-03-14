@@ -38,25 +38,6 @@ class TaskDetail extends React.Component {
 		}
 	}
 
-	componentWillMount(){
-		const taskDetail = this.props.taskDetail;
-		if(taskDetail){
-			const { taskName, description, dueDate, priority, repeat, executors } = taskDetail;
-			this.setState({
-				taskName: taskName,
-				description: description,
-				dueDate: dueDate,
-				priority: priority,
-				repeat: repeat,
-				executors: executors
-			});
-		}
-	}
-
-	componentDidMount(){
-		$('#taskDueDate').datetimepicker();
-	}
-
 	handleInputChange(event){
 		const target = event.target;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -104,7 +85,28 @@ class TaskDetail extends React.Component {
 		this.props.removeAllExecutor();
 		$('#newTask').click();	// use state?
 	}
+	
+	componentDidMount(){
+		$('#taskDueDate').datetimepicker();
+	}
 
+	componentDidUpdate(prevProps, prevState){
+		if(prevProps.editTaskTimestamp != this.props.editTaskTimestamp){
+			const taskDetail = this.props.taskDetail;
+			if(taskDetail && this.props.modalName != 'newTask'){
+				const { taskName, description, dueDate, priority, repeat, executors } = taskDetail;
+				this.setState({
+					taskName: taskName,
+					description: description,
+					dueDate: dueDate,
+					priority: priority,
+					repeat: repeat,
+					executors: executors
+				});
+				$(`[data-target="#taskDetail${this.props.taskDetail._id}"]`).click();
+			}
+		}
+	}
 
 	render(){
 
@@ -168,11 +170,15 @@ class TaskDetail extends React.Component {
 
 }
 
-const mapStateToProps = state => ({
-	currentTasklistName: state.taskboard.task.currentTasklistName,
-	executors: state.taskboard.task.executors,
-	taskDetail: state.taskboard.task.taskDetail
-})
+const mapStateToProps = state => {
+	const stt = state.taskboard.task;
+	return ({
+		currentTasklistName: stt.currentTasklistName,
+		executors: stt.executors,
+		taskDetail: stt.taskDetail,
+		editTaskTimestamp: stt.editTaskTimestamp
+	});
+}
 
 const mapDispatchToProps = (dispatch) => {
 	return({

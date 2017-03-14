@@ -16,6 +16,7 @@ module.exports = {
   },
 
   formatDate: function(date){
+    if(!date){return;}
     return date.replace('T', ' ').slice(0, -8);
   },
 
