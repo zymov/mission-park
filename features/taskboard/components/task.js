@@ -45,7 +45,7 @@ class Task extends React.Component {
 						</ul>
 					</div>
 				</div>
-				<TriggerBtn dataTarget={`#taskDetail${this.props.task._id}`} btnName="" />
+				<TriggerBtn dataTarget={`#taskDetail${this.props.task._id}`} btnName="" display="none" />
 			</div>
 		)
 	}
