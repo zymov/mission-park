@@ -110,6 +110,8 @@ class TaskDetail extends React.Component {
 
 	render(){
 
+		let newTaskFlag = this.props.modalName == 'newTask';
+
 		return(
 			<ModalWrapper id={this.props.modalName} >
 				<ModalHeader createTaskTo={this.props.currentTasklistName}/>
@@ -159,7 +161,7 @@ class TaskDetail extends React.Component {
 
 	     		<div className="row executor-row">
 	     			<label>执行者</label>
-	     			<ExecutorsContainer projectId={this.props.projectId} />
+	     			<ExecutorsContainer projectId={this.props.projectId} newTaskFlag={newTaskFlag}/>
 	     		</div>
 
 	      </div>

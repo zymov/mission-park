@@ -14,14 +14,15 @@ class ExecutorsContainer extends React.Component {
 
 	}
 
-	changeExecutors(){
+	changeExecutors(e){
+		console.log(e.target.parentNode.id);
 		if(this.props.showUsersDropdown){return;}
 		this.props.openUsersDropdown();
 		this.props.fetchUsers(this.props.projectId);
 
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		document.addEventListener('click', this.documentClick, false);
 	}
 
@@ -30,8 +31,7 @@ class ExecutorsContainer extends React.Component {
 	}
 
 	documentClick(e){
-		//ReactDOM.findDOMNode(this)
-		if(!$('#executorDropdown')[0].contains(e.target)){
+		if( !$('#executorDropdown-newTask')[0].contains(e.target) && !$('#executorDropdown-editTask')[0].contains(e.target) ){
 			this.props.closeUsersDropdown();
 		}
 		
@@ -39,7 +39,9 @@ class ExecutorsContainer extends React.Component {
 
 	render(){
 
-		const { showUsersDropdown, executors } = this.props;
+		const { showUsersDropdown, executors, newTaskFlag } = this.props;
+
+		let dropdownId = 'executorDropdown-' + (newTaskFlag ? 'newTask' : 'editTask');
 
 		var executorList = [];
 		executorList = executors.map(function(item, index){
@@ -49,7 +51,7 @@ class ExecutorsContainer extends React.Component {
 		return(
 			<ul className="executor-list clearfix">
  				{executorList}
- 				<li id="executorDropdown" onClick={this.changeExecutors.bind(this)} >
+ 				<li id={dropdownId} onClick={this.changeExecutors.bind(this)} >
 						<a title="add new executor" className="new-executor glyphicon glyphicon-plus"></a>
  					{ showUsersDropdown && <DropdownInput projectId={this.props.projectId} />}
  				</li>
