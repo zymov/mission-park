@@ -11,19 +11,22 @@ class TaskDetail extends React.Component {
 
 	constructor(props){
 		super(props);
-
-		this.state = {
+		this.initialState = {
 			taskName: '',
 			dueDate: '',
 			priority: 0,
 			description: '',
-			repeat: 0
+			repeat: 0,
+			executors: []
 		}
+		this.state = this.initialState;
 
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.selectPriority = this.selectPriority.bind(this);
 		this.selectRepeat = this.selectRepeat.bind(this);
+
+		this.bgClick = this.bgClick.bind(this);
 
 		this.priorityDropdown = {
 			menulist: priorityMenuList,
@@ -64,7 +67,7 @@ class TaskDetail extends React.Component {
 	}
 
 	handleSubmit(){
-		var payload = {
+		let payload = {
 			tasklistId: this.props.tasklistId,
 			taskName: this.state.taskName,
 			description: this.state.description,
@@ -73,21 +76,30 @@ class TaskDetail extends React.Component {
 			repeat: this.state.repeat,
 			executors: this.props.executors
 		}
-		this.props.addTask(payload);
-		this.setState({
-			taskName: '',
-			description: '',
-			dueDate: '',
-			priority: 0,
-			repeat: 0
-		});
+		if(this.props.modalName == 'newTask'){
+			this.props.addTask(payload);
+		} else {
+			this.props.addTask(payload, this.props.taskDetail._id);
+		}
+		this.setState(this.initialState);
 		this.props.closeUsersDropdown();
 		this.props.removeAllExecutor();
 		$('#newTask').click();	// use state?
 	}
-	
+
 	componentDidMount(){
 		$('#taskDueDate').datetimepicker();
+		$('.modal.fade')[0].addEventListener('click', this.bgClick, false);
+	}
+
+	componentWillUnmount(){
+		$('.modal.fade')[0].addEventListener('click', this.bgClick, false);
+	}
+
+	bgClick(e){
+		if(!$('.modal-dialog')[0].contains(e.target)){
+			this.props.removeAllExecutor();
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState){

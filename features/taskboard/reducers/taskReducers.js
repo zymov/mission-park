@@ -134,7 +134,8 @@ export default function task(state = initialState, action){
 		case SHOW_TASK_DETAIL:
 			return Object.assign({}, state, {
 				editTaskTimestamp: Date.now(),
-				taskDetail: action.payload
+				taskDetail: action.payload,
+				executors: action.payload.executors
 			});
 		default:
 			return state;
