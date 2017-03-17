@@ -50,32 +50,62 @@ router.get('/fetchtasklists', function(req, res){
 
 /* task router */
 router.post('/addtask', function(req, res){
-	if(req.body.taskName.trim()){
-		var task = new Task();
-		task._tasklistId = req.body.tasklistId;
-		task.taskName = req.body.taskName;
-		task.description = req.body.description;
-		task.dueDate = req.body.dueDate;
+	if(req.body.taskName.trim()){	// validation function
+		let rb = req.body;
+		task = new Task();
+		task._tasklistId = rb.tasklistId;
 		task.accomplished = false;
-		task.priority = req.body.priority;
-		task.repeat = req.body.repeat;
-		task.executors = req.body.executors;
 		task.createTime = new Date();
+		task.taskName = rb.taskName;
+		task.description = rb.description;
+		task.dueDate = rb.dueDate;
+		task.priority = rb.priority;
+		task.repeat = rb.repeat;
+		task.executors = rb.executors;
+
 		task.save(function(err){
 			if(err){
-				res.status(500).json({
-					message: 'sorry, server is busy!'
-				});
+				console.log(err);
+				res.status(500).json({message: 'sorry, server is busy!'});
 			} else {
-				res.status(200).json({task: task});
+				res.status(200).json({task});
 			}
-		})
+		});
 	} else {
-		res.status(400).json({
-			message: 'check your task name'
+		return res.status(400).json({
+			message: 'check your task name.'
 		});
 	}
 });
+
+router.post('/edittask', function(req, res){
+	if(req.body._id){
+		let rb = req.body;
+		Task.findOne({_id: rb._id}).exec(function(err, task){
+			if(err){
+				console.log(err);
+				return res.status(400).json({message: 'Could not find the task you are editing.'});
+			}
+			task.taskName = rb.taskName;
+			task.description = rb.description;
+			task.dueDate = rb.dueDate;
+			task.priority = rb.priority;
+			task.repeat = rb.repeat;
+			task.executors = rb.executors;
+
+			task.save(function(err){
+				if(err){
+					console.log(err);
+					return res.status(500).json({message: 'Could not save the task, please try again.'});
+				}
+				return res.status(200).json({task});
+			});
+		});
+	} else {
+		return res.status(400).json({message: 'Could not handle the task.'});
+	}
+
+})
 
 router.get('/fetchtasks', function(req, res){
 	var tasklistId = utils.getQueryVariable(req.url, 'tasklistId');
@@ -84,7 +114,7 @@ router.get('/fetchtasks', function(req, res){
 		if(err){
 			console.log(err);
 			return res.status(500).json({
-				message: 'Could not receive tasks'
+				message: 'Could not receive tasks.'
 			});
 		}
 		res.json({tasks});

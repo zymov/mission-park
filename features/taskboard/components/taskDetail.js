@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ModalWrapper, ModalHeader, ModalFooter } from '../../common/components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
 import ExecutorsContainer from './executorsContainer';
-import { addTask, closeUsersDropdown, removeAllExecutor } from '../actions/taskActions';
+import { addTask, editTask, closeUsersDropdown, removeAllExecutor } from '../actions/taskActions';
 import { priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList } from '../../../utils';
 
 class TaskDetail extends React.Component {
@@ -66,7 +66,6 @@ class TaskDetail extends React.Component {
 
 	handleSubmit(){
 		let payload = {
-			tasklistId: this.props.tasklistId,
 			taskName: this.state.taskName,
 			description: this.state.description,
 			dueDate: this.state.dueDate,
@@ -75,14 +74,16 @@ class TaskDetail extends React.Component {
 			executors: this.props.executors
 		}
 		if(this.props.modalName == 'newTask'){
+			payload.tasklistId = this.props.tasklistId;
 			this.props.addTask(payload);
 		} else {
-			this.props.addTask(payload, this.props.taskDetail._id);
+			payload._id = this.props.taskDetail._id;
+			this.props.editTask(payload);
 		}
 		this.setState(this.initialState);
 		this.props.closeUsersDropdown();
 		this.props.removeAllExecutor();
-		$('#newTask').click();	// use state?
+		$(`#${this.props.modalName}`).click();	// use state?
 	}
 
 	componentDidMount(){
@@ -183,7 +184,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
 	return({
-		addTask: taskname => { dispatch(addTask(taskname)); },	//addTask(x) returns a function
+		addTask: (payload) => { dispatch(addTask(payload)); },
+		editTask: (payload) => { dispatch(editTask(payload)); },
 		closeUsersDropdown: () => { dispatch(closeUsersDropdown()); },
 		removeAllExecutor: () => { dispatch(removeAllExecutor()); }
 	})

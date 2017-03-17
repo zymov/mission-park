@@ -1,5 +1,6 @@
 import { 
 	ADD_TASK_REQUEST, ADD_TASK_SUCCESS, ADD_TASK_FAILURE, 
+	EDIT_TASK_REQUEST, EDIT_TASK_SUCCESS, EDIT_TASK_FAILURE, 
 	FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, FETCH_TASKS_FAILURE, 
 	SET_CURRENT_TASKLIST, NULL_TASKLIST_ID,
 	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN,  
@@ -9,7 +10,10 @@ import {
 } from '../actions/taskActions';
 import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
 
-import { addNewItemToArrayBegin, addNewItemToArrayEnd, removeSpecificItemFromArray, updateAndMoveItemFromArray } from '../../../utils';
+import { 
+	addNewItemToArrayBegin, addNewItemToArrayEnd, 
+	updateItemInArray, removeSpecificItemFromArray, updateAndMoveItemInArray 
+} from '../../../utils';
 
 const initialState = {
 	taskLoading: false,
@@ -56,6 +60,26 @@ export default function task(state = initialState, action){
 				newTask: null,
 				taskInfoText: 'Error:' + action.payload.errors
 			});
+			
+		/* edit task */
+		case EDIT_TASK_REQUEST:
+			return Object.assign({}, state, {
+				taskLoading: true,
+				taskInfoText: 'saving task...'
+			});
+		case EDIT_TASK_SUCCESS:
+			return Object.assign({}, state, {
+				taskLoading: false,
+				tasks: updateItemInArray(state.tasks, action.payload),
+				taskInfoText: ''
+			});
+		case EDIT_TASK_FAILURE:
+			return Object.assign({}, state, {
+				taskLoading: false,
+				taskError: true,
+				taskInfoText: 'Error:' + action.payload.errors
+			});
+
 		/* fetch task */
 		case FETCH_TASKS_REQUEST:
 			return Object.assign({}, state, {
@@ -121,7 +145,7 @@ export default function task(state = initialState, action){
 		case TOGGLE_TASK_SUCCESS: 
 			return Object.assign({}, state, {
 				toggling: false,
-				tasks: updateAndMoveItemFromArray(state.tasks, action.payload)
+				tasks: updateAndMoveItemInArray(state.tasks, action.payload)
 			});
 		case TOGGLE_TASK_FAILURE:
 			return Object.assign({}, state, {

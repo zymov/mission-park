@@ -5,6 +5,10 @@ export const ADD_TASK_REQUEST = 'ADD_TASK_REQUEST';
 export const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
 export const ADD_TASK_FAILURE = 'ADD_TASK_FAILURE';
 
+export const EDIT_TASK_REQUEST = 'EDIT_TASK_REQUEST';
+export const EDIT_TASK_SUCCESS = 'EDIT_TASK_SUCCESS';
+export const EDIT_TASK_FAILURE = 'EDIT_TASK_FAILURE';
+
 export const FETCH_TASKS_REQUEST = 'FETCH_TASKS_REQUEST';
 export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
 export const FETCH_TASKS_FAILURE = 'FETCH_TASKS_FAILURE';
@@ -25,7 +29,7 @@ export const TOGGLE_TASK_FAILURE = 'TOGGLE_TASK_FAILURE';
 
 export const SHOW_TASK_DETAIL = 'SHOW_TASK_DETAIL';
 
-/* add tasks */
+/* add and edit tasks */
 export function addTask(payload){
 	return function(dispatch){
 		dispatch(addTaskRequest());
@@ -55,6 +59,41 @@ export function addTaskSuccess(task){
 export function addTaskFailure(err){
 	return {
 		type: 'ADD_TASK_FAILURE',
+		payload: {
+			errors: err
+		}
+	}
+}
+
+export function editTask(payload){
+	return function(dispatch){
+		dispatch(editTaskRequest());
+		axios.post('/tasks/edittask', payload)
+		.then(function(res){
+			dispatch(editTaskSuccess(res.data.task));
+		})
+		.catch(function(err){
+			dispatch(editTaskFailure(err));
+		});
+	}
+}
+
+export function editTaskRequest(){
+	return {
+		type: 'EDIT_TASK_REQUEST'
+	}
+}
+
+export function editTaskSuccess(task){
+	return {
+		type: 'EDIT_TASK_SUCCESS',
+		payload: task
+	}
+}
+
+export function editTaskFailure(err){
+	return {
+		type: 'EDIT_TASK_FAILURE',
 		payload: {
 			errors: err
 		}

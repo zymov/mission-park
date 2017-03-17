@@ -15,7 +15,6 @@ class ExecutorsContainer extends React.Component {
 	}
 
 	changeExecutors(e){
-		console.log(e.target.parentNode.id);
 		if(this.props.showUsersDropdown){return;}
 		this.props.openUsersDropdown();
 		this.props.fetchUsers(this.props.projectId);

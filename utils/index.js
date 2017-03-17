@@ -99,30 +99,30 @@ module.exports = {
     });
   },
 
-  updateItemFromArray: function(arr, obj){
+  updateItemInArray: function(arr, obj){
     var index = module.exports.getIndexOfArray(arr, obj, '_id')
     var newArr = arr.slice();
     newArr[index] = obj;
     return newArr;
   },
 
-  insertItemFromArray: function(arr, obj, index){
+  insertItemIntoArray: function(arr, obj, index){
     var newArr = arr.slice();
     newArr.splice(index, 0, obj);
     return newArr;
   },
 
-  updateAndMoveItemFromArray: function(arr, obj){   //this method needs to be optimized!!!
+  updateAndMoveItemInArray: function(arr, obj){   //this method needs to be optimized!!!
     const self = module.exports;
     if(obj.repeat){
-      return self.updateItemFromArray(arr, obj);
+      return self.updateItemInArray(arr, obj);
     } else{
       var newArr = self.removeSpecificItemFromArray(arr, obj, '_id');
       if(obj.accomplished){
         return self.addNewItemToArrayEnd(newArr, obj);
       } else {
         var index = self.getIndexOfArrayByValue(arr, 'accomplished', true);
-        return self.insertItemFromArray(newArr, obj, index);
+        return self.insertItemIntoArray(newArr, obj, index);
       }
     } 
   }
