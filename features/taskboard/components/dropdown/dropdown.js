@@ -8,9 +8,9 @@ class Dropdown extends React.Component {
 
 	render(){
 
-	  const { menulist, btnId, handleClick } = this.props.dropdown; 
+	  const { menuList, btnId, handleClick } = this.props.dropdown; 
 
-	  var dropdownMenu = menulist.map(function(item, index){
+	  var dropdownMenu = menuList.map(function(item, index){
 	  	return (
 		    <li key={index}><a href="javascript:void(0);" name={item.name} style={item.style}>{item.name}</a></li>
 	  	);

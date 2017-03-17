@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { ModalWrapper, ModalHeader, ModalFooter } from '../../common/components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
 import ExecutorsContainer from './executorsContainer';
-import { addTask, editTask, closeUsersDropdown, removeAllExecutor } from '../actions/taskActions';
+import TagsContainer from './tagsContainer';
+import { addTask, editTask, closeUsersDropdown, closeTagsDropdown, removeAllExecutor, removeAllTag } from '../actions/taskActions';
 import { priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList, checkPropertyEquals } from '../../../utils';
 
 class TaskDetail extends React.Component {
@@ -27,13 +28,13 @@ class TaskDetail extends React.Component {
 		this.selectRepeat = this.selectRepeat.bind(this);
 
 		this.priorityDropdown = {
-			menulist: priorityMenuList,
+			menuList: priorityMenuList,
 			btnId: 'priorityDropdown',
 			handleClick: this.selectPriority
 		}
 
 		this.repeatDropdown = {
-			menulist: repeatMenuList,
+			menuList: repeatMenuList,
 			btnId: 'repeatDropdown',
 			handleClick: this.selectRepeat
 		}
@@ -71,7 +72,8 @@ class TaskDetail extends React.Component {
 			dueDate: this.state.dueDate,
 			priority: this.state.priority,
 			repeat: this.state.repeat,
-			executors: this.props.executors
+			executors: this.props.executors,
+			selectedTags: this.props.selectedTags
 		}
 		if(this.props.modalName == 'newTask'){
 			payload.tasklistId = this.props.tasklistId;
@@ -84,7 +86,9 @@ class TaskDetail extends React.Component {
 		}
 		this.setState(this.initialState);
 		this.props.closeUsersDropdown();
+		this.props.closeTagsDropdown();
 		this.props.removeAllExecutor();
+		this.props.removeAllTag();
 		$(`#${this.props.modalName}`).click();	// use state?
 	}
 
@@ -116,7 +120,7 @@ class TaskDetail extends React.Component {
 
 		return(
 			<ModalWrapper id={this.props.modalName} >
-				<ModalHeader createTaskTo={this.props.currentTasklistName}/>
+				<ModalHeader createTaskTo={this.props.currentTasklistName} newTaskFlag={newTaskFlag} />
 				<div className="modal-body">
 
 					<div className="row">
@@ -166,6 +170,11 @@ class TaskDetail extends React.Component {
 	     			<ExecutorsContainer projectId={this.props.projectId} newTaskFlag={newTaskFlag}/>
 	     		</div>
 
+	     		<div className="row executor-row">
+	     			<label>标签</label>
+	     			<TagsContainer projectId={this.props.projectId} newTaskFlag={newTaskFlag}/>
+	     		</div>
+
 	      </div>
 				<ModalFooter handleSubmit={this.handleSubmit} />
 			</ModalWrapper>
@@ -179,6 +188,7 @@ const mapStateToProps = state => {
 	return ({
 		currentTasklistName: stt.currentTasklistName,
 		executors: stt.executors,
+		selectedTags: state.common.selectedTags,
 		taskDetail: stt.taskDetail,
 		editTaskTimestamp: stt.editTaskTimestamp
 	});
@@ -189,7 +199,9 @@ const mapDispatchToProps = (dispatch) => {
 		addTask: (payload) => { dispatch(addTask(payload)); },
 		editTask: (payload) => { dispatch(editTask(payload)); },
 		closeUsersDropdown: () => { dispatch(closeUsersDropdown()); },
-		removeAllExecutor: () => { dispatch(removeAllExecutor()); }
+		closeTagsDropdown: () => { dispatch(closeTagsDropdown()); },
+		removeAllExecutor: () => { dispatch(removeAllExecutor()); },
+		removeAllTag: () => { dispatch(removeAllTag()); }
 	})
 }
 

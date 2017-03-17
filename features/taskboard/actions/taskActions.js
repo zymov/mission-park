@@ -19,9 +19,16 @@ export const NULL_TASKLIST_ID = 'NULL_TASKLIST_ID';
 export const OPEN_USERS_DROPDOWN = 'OPEN_USERS_DROPDOWN';
 export const CLOSE_USERS_DROPDOWN = 'CLOSE_USERS_DROPDOWN';
 
+export const OPEN_TAGS_DROPDOWN = 'OPEN_TAGS_DROPDOWN';
+export const CLOSE_TAGS_DROPDOWN = 'CLOSE_TAGS_DROPDOWN';
+
 export const ADD_EXECUTOR = 'ADD_EXECUTOR';
 export const REMOVE_EXECUTOR = 'REMOVE_EXECUTOR';
 export const REMOVE_ALL_EXECUTOR = 'REMOVE_ALL_EXECUTOR';
+
+export const ADD_TAG = 'ADD_TAG';
+export const REMOVE_TAG = 'REMOVE_TAG';
+export const REMOVE_ALL_TAG = 'REMOVE_ALL_TAG';
 
 export const TOGGLE_TASK_REQUEST = 'TOGGLE_TASK_REQUEST';
 export const TOGGLE_TASK_SUCCESS = 'TOGGLE_TASK_SUCCESS';
@@ -169,6 +176,18 @@ export function closeUsersDropdown(){
 	}
 }
 
+export function openTagsDropdown(){
+	return {
+		type: 'OPEN_TAGS_DROPDOWN'
+	}
+}
+
+export function closeTagsDropdown(){
+	return {
+		type: 'CLOSE_TAGS_DROPDOWN'
+	}
+}
+
 
 /* dropdown list click event */
 export function addExecutor(user){
@@ -188,6 +207,26 @@ export function removeExecutor(user){
 export function removeAllExecutor(){
 	return {
 		type: 'REMOVE_ALL_EXECUTOR'
+	}
+}
+
+export function addTag(tag){
+	return {
+		type: 'ADD_TAG',
+		payload: tag
+	}
+}
+
+export function removeTag(tag){
+	return {
+		type: 'REMOVE_TAG',
+		payload: tag
+	}
+}
+
+export function removeAllTag(){
+	return {
+		type: 'REMOVE_ALL_TAG'
 	}
 }
 

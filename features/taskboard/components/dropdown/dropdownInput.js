@@ -1,7 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import DDListItem from './ddListItem';
-import { findUserByName } from '../../../common/actions';
 import { getIndexOfArray } from '../../../../utils';
 
 class DropdownInput extends React.Component {
@@ -11,31 +9,28 @@ class DropdownInput extends React.Component {
 
 	}
 
-	handleChange(e){
-		this.props.findUserByName(e.target.value);
-	}
-
 	render(){
+		const { menuList, selectedList, inputHandler, itemClick, btnHandler } = this.props.dropdownInputData;
 
 		var dropdownList = [];
 
-		dropdownList = this.props.projectUsers.map(function(item, index){
-			var userSelected = false;
-			if(this.props.executors.length > 0){
-				var objIndex = getIndexOfArray(this.props.executors, item, 'email');
+		dropdownList = menuList.map(function(item, index){
+			var selected = false;
+			if(selectedList.length > 0){
+				var objIndex = getIndexOfArray(selectedList, item, '_id');
 				if(objIndex != -1){
-					userSelected = true;
+					selected = true;
 				}
 			}
 			return (
-				<DDListItem key={index} user={item} userSelected={userSelected}/>
+				<DDListItem key={index} item={item} selected={selected} itemClick={itemClick}/>
 			);
 		}.bind(this));	//bind 'this' to inner function
 
 	  return (
 	  	<div className="dd">
 	  		<div className="dd-input">
-		  		<input type="text" className="form-control" placeholder="查找" onChange={this.handleChange.bind(this)}/>
+		  		<input type="text" className="form-control" placeholder="查找" onChange={inputHandler}/>
 	  		</div>
   		  <ul className="dd-menu" >
   		  	{dropdownList}
@@ -46,13 +41,4 @@ class DropdownInput extends React.Component {
 
 }
 
-const mapStateToProps = state => ({
-	executors: state.taskboard.task.executors,
-	projectUsers: state.common.projectUsers
-});
-
-const mapDispatchToProps = dispatch => ({
-	findUserByName: (userName) => { dispatch(findUserByName(userName)); }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DropdownInput);
+export default DropdownInput;

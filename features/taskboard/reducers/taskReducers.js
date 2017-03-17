@@ -3,8 +3,8 @@ import {
 	EDIT_TASK_REQUEST, EDIT_TASK_SUCCESS, EDIT_TASK_FAILURE, 
 	FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, FETCH_TASKS_FAILURE, 
 	SET_CURRENT_TASKLIST, NULL_TASKLIST_ID,
-	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN,  
-	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR, 
+	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN, OPEN_TAGS_DROPDOWN, CLOSE_TAGS_DROPDOWN, 
+	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR, ADD_TAG, REMOVE_TAG, REMOVE_ALL_TAG, 
 	TOGGLE_TASK_REQUEST, TOGGLE_TASK_SUCCESS, TOGGLE_TASK_FAILURE, 
 	SHOW_TASK_DETAIL
 } from '../actions/taskActions';
@@ -25,9 +25,11 @@ const initialState = {
 	activeTasklist: 0,
 	currentTasklistName: '',
 
-	// users dropdown state
+	// users and tags dropdown state
 	showUsersDropdown: false,
 	executors: [],
+	showTagsDropdown: false,
+	selectedTags:[],
 
 	// toggle task
 	toggling: false,
@@ -124,17 +126,40 @@ export default function task(state = initialState, action){
 			return Object.assign({}, state, {
 				showUsersDropdown: false
 			});
+		case OPEN_TAGS_DROPDOWN:
+			return Object.assign({}, state, {
+				showTagsDropdown: true
+			});
+		
+		case CLOSE_TAGS_DROPDOWN:
+			return Object.assign({}, state, {
+				showTagsDropdown: false
+			});
+
 		case ADD_EXECUTOR: 
 			return Object.assign({}, state, {
 				executors: addNewItemToArrayEnd(state.executors, action.payload)	// The concat method creates a new array instead of mutating the original array itself!!!
 			});
 		case REMOVE_EXECUTOR:
 			return Object.assign({}, state, {
-				executors: removeSpecificItemFromArray(state.executors, action.payload, 'email')
+				executors: removeSpecificItemFromArray(state.executors, action.payload, '_id')
 			});
 		case REMOVE_ALL_EXECUTOR:
 			return Object.assign({}, state, {
 				executors: []
+			});
+
+		case ADD_TAG: 
+			return Object.assign({}, state, {
+				selectedTags: addNewItemToArrayEnd(state.selectedTags, action.payload)
+			});
+		case REMOVE_TAG:
+			return Object.assign({}, state, {
+				selectedTags: removeSpecificItemFromArray(state.selectedTags, action.payload, '_id')
+			});
+		case REMOVE_ALL_TAG:
+			return Object.assign({}, state, {
+				selectedTags: []
 			});
 
 		/* toggle task */

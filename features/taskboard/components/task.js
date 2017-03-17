@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ExecutorLabel from './executorLabel';
-import InfoTag from './infoTag';
 import { formatDate, repeatList } from '../../../utils'
 import { toggleTask, showTaskDetail } from '../actions/taskActions';
 import TriggerBtn from '../../common/components/modal_dialog/triggerBtn';
@@ -39,9 +37,6 @@ class Task extends React.Component {
 					</div>
 					<div className="task-info">	
 						<ul className="task-labels clearfix">
-							<InfoTag tag="abc"/>
-							<InfoTag tag="表歉意谁"/>
-							<InfoTag tag={createTime} />
 						</ul>
 					</div>
 				</div>

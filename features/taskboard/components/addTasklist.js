@@ -22,7 +22,7 @@ class AddTasklist extends React.Component {
 		this.selectPriority = this.selectPriority.bind(this);
 
 		this.priorityDropdown = {
-			menulist: [
+			menuList: [
 				{name: '一般', style: {color: '#555'}}, 
 				{name: '紧急', style: {color: '#ffaf38'}}, 
 				{name: '非常紧急', style: {color: "#ff4f3e"}}],

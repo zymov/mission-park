@@ -4,6 +4,7 @@ const router = new express.Router();
 
 var Task = require('mongoose').model('Task');
 var Tasklist = require('mongoose').model('Tasklist');
+var Tag = require('mongoose').model('Tag');
 
 /* tasklist router */
 router.post('/addtasklist', function(req, res){
@@ -153,5 +154,25 @@ router.post('/toggletask', function(req, res){
 
 
 });
+
+router.get('/gettags', function(req, res){
+
+	var tagName = utils.getQueryVariable(req.url, 'tagName');
+
+	const regex = new RegExp(utils.escapeRegex(tagName ? tagName : ''), 'gi'); 
+
+	// and find by req.body.projectId  ???
+	Tag.find({name: regex}).sort({name: 1}).exec(function(err, tags){
+		if(err){
+			console.log(err);
+			return res.status(500).json({
+				errors: 'Could not receive tags.'
+			});
+		}
+
+		res.json({tags});
+
+	});
+})
 
 module.exports = router;

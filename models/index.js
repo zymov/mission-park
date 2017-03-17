@@ -13,5 +13,6 @@ module.exports.connect = (url)=>{
 	var Task = require('./task/task');
 	var Project = require('./project/project');
 	var Tasklist = require('./tasklist/tasklist');
+	var Tag = require('./tag');
 
 }
