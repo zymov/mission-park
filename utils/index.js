@@ -125,6 +125,18 @@ module.exports = {
         return self.insertItemIntoArray(newArr, obj, index);
       }
     } 
+  },
+
+  /*
+    params:
+        obj1: original object, may have other keys
+        obj2: be compared object, has the key you want to be compared
+  */
+  checkPropertyEquals: function(obj1, obj2){
+    let keys = Object.keys(obj2);
+    return keys.every(function(item, index){
+      return obj1[item] == obj2[item];
+    });
   }
 
 }

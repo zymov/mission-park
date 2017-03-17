@@ -5,7 +5,7 @@ import { ModalWrapper, ModalHeader, ModalFooter } from '../../common/components/
 import Dropdown from './dropdown/dropdown';
 import ExecutorsContainer from './executorsContainer';
 import { addTask, editTask, closeUsersDropdown, removeAllExecutor } from '../actions/taskActions';
-import { priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList } from '../../../utils';
+import { priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList, checkPropertyEquals } from '../../../utils';
 
 class TaskDetail extends React.Component {
 
@@ -77,8 +77,10 @@ class TaskDetail extends React.Component {
 			payload.tasklistId = this.props.tasklistId;
 			this.props.addTask(payload);
 		} else {
-			payload._id = this.props.taskDetail._id;
-			this.props.editTask(payload);
+			if(!checkPropertyEquals(this.props.taskDetail, payload)){
+				payload._id = this.props.taskDetail._id;
+				this.props.editTask(payload);
+			}
 		}
 		this.setState(this.initialState);
 		this.props.closeUsersDropdown();
