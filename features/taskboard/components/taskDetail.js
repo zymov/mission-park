@@ -26,8 +26,6 @@ class TaskDetail extends React.Component {
 		this.selectPriority = this.selectPriority.bind(this);
 		this.selectRepeat = this.selectRepeat.bind(this);
 
-		this.bgClick = this.bgClick.bind(this);
-
 		this.priorityDropdown = {
 			menulist: priorityMenuList,
 			btnId: 'priorityDropdown',
@@ -89,17 +87,6 @@ class TaskDetail extends React.Component {
 
 	componentDidMount(){
 		$('#taskDueDate').datetimepicker();
-		$('.modal.fade')[0].addEventListener('click', this.bgClick, false);
-	}
-
-	componentWillUnmount(){
-		$('.modal.fade')[0].addEventListener('click', this.bgClick, false);
-	}
-
-	bgClick(e){
-		if(!$('.modal-dialog')[0].contains(e.target)){
-			this.props.removeAllExecutor();
-		}
 	}
 
 	componentDidUpdate(prevProps, prevState){
