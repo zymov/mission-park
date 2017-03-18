@@ -18,7 +18,8 @@ class TaskDetail extends React.Component {
 			priority: 0,
 			description: '',
 			repeat: 0,
-			executors: []
+			executors: [],
+			selectedTags: []
 		}
 		this.state = this.initialState;
 
@@ -100,14 +101,15 @@ class TaskDetail extends React.Component {
 		if(prevProps.editTaskTimestamp != this.props.editTaskTimestamp){
 			const taskDetail = this.props.taskDetail;
 			if(taskDetail && this.props.modalName != 'newTask'){
-				const { taskName, description, dueDate, priority, repeat, executors } = taskDetail;
+				const { taskName, description, dueDate, priority, repeat, executors, tags } = taskDetail;
 				this.setState({
 					taskName: taskName,
 					description: description,
 					dueDate: dueDate,
 					priority: priority,
 					repeat: repeat,
-					executors: executors
+					executors: executors,
+					selectedTags: tags
 				});
 				$(`[data-target="#taskDetail${this.props.taskDetail._id}"]`).click();
 			}
@@ -170,7 +172,7 @@ class TaskDetail extends React.Component {
 	     			<ExecutorsContainer projectId={this.props.projectId} newTaskFlag={newTaskFlag}/>
 	     		</div>
 
-	     		<div className="row executor-row">
+	     		<div className="row tag-row">
 	     			<label>标签</label>
 	     			<TagsContainer projectId={this.props.projectId} newTaskFlag={newTaskFlag}/>
 	     		</div>
@@ -188,7 +190,7 @@ const mapStateToProps = state => {
 	return ({
 		currentTasklistName: stt.currentTasklistName,
 		executors: stt.executors,
-		selectedTags: state.common.selectedTags,
+		selectedTags: stt.selectedTags,
 		taskDetail: stt.taskDetail,
 		editTaskTimestamp: stt.editTaskTimestamp
 	});

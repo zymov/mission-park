@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
 import ExecutorsContainer from './executorsContainer';
-import { removeAllExecutor } from '../actions/taskActions';
+import { removeAllExecutor, removeAllTag } from '../actions/taskActions';
 // import { priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList } from '../../../utils';
 import TaskDetail from './taskDetail';
 
@@ -25,13 +25,14 @@ class AddTask extends React.Component {
 
 	btnClick(e){
 		this.props.removeAllExecutor();
+		this.props.removeAllTag();
 	}
 
 	render(){
 		return(
 			<div>
 				<TriggerBtn dataTarget="#newTask" btnName="添加新任务"/>
-				<TaskDetail modalName="newTask" tasklistId={this.props.tasklistId} />
+				<TaskDetail modalName="newTask" projectId={this.props.projectId} tasklistId={this.props.tasklistId} />
 			</div>
 		)
 	}
@@ -44,7 +45,8 @@ class AddTask extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
 	return({
-		removeAllExecutor: () => { dispatch(removeAllExecutor()); }
+		removeAllExecutor: () => { dispatch(removeAllExecutor()); },
+		removeAllTag: () => { dispatch(removeAllTag()); }
 	})
 }
 

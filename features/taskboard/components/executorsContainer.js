@@ -51,10 +51,10 @@ class ExecutorsContainer extends React.Component {
 	}
 
 	documentClick(e){
+		if( !$('#executorDropdown-newTask')[0] || !$('#executorDropdown-editTask')[0]){ return; }
 		if( !$('#executorDropdown-newTask')[0].contains(e.target) && !$('#executorDropdown-editTask')[0].contains(e.target) ){
 			this.props.closeUsersDropdown();
 		}
-		
 	}
 
 	render(){

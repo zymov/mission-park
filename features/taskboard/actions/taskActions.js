@@ -43,6 +43,7 @@ export function addTask(payload){
 		axios.post('/tasks/addtask', payload)
 		.then(function(res){
 			dispatch(addTaskSuccess(res.data.task));
+			return res.data.task;
 		})
 		.catch(function(err){
 			dispatch(addTaskFailure(err));
@@ -210,17 +211,17 @@ export function removeAllExecutor(){
 	}
 }
 
-export function addTag(tag){
+export function addTag(tagName){
 	return {
 		type: 'ADD_TAG',
-		payload: tag
+		payload: tagName
 	}
 }
 
-export function removeTag(tag){
+export function removeTag(tagName){
 	return {
 		type: 'REMOVE_TAG',
-		payload: tag
+		payload: tagName
 	}
 }
 

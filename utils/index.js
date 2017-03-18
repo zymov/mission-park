@@ -93,9 +93,19 @@ module.exports = {
     }).indexOf(value);
   },
 
+  getArrayOfSpecKey: function(arr, key){
+    return arr.map(function(item, index){
+      return item[key];
+    })
+  },
+
   removeSpecificItemFromArray: function(arr, obj, attribute){ //return a new array instead of mutating the original array
     return arr.filter(function(object){
-      return object[attribute] != obj[attribute];
+      if(attribute){
+        return object[attribute] != obj[attribute];
+      } else {
+        return object != obj;
+      }
     });
   },
 

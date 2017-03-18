@@ -19,7 +19,13 @@ class Task extends React.Component {
 
 	render(){
 
-		const { taskName, dueDate, priority, repeat, accomplished, createTime } = this.props.task;
+		const { taskName, dueDate, priority, repeat, tags, accomplished, createTime } = this.props.task;
+
+		let tagsList = tags.map(function(item, index){
+			return (
+				<li key={index}><span><span className="tag-dot"></span>{item}</span></li>
+			);
+		});
 
 		return(
 			<div className="task">
@@ -36,7 +42,8 @@ class Task extends React.Component {
 							</div>
 					</div>
 					<div className="task-info">	
-						<ul className="task-labels clearfix">
+						<ul className="task-tags clearfix">
+							{tagsList}
 						</ul>
 					</div>
 				</div>

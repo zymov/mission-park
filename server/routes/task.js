@@ -63,6 +63,7 @@ router.post('/addtask', function(req, res){
 		task.priority = rb.priority;
 		task.repeat = rb.repeat;
 		task.executors = rb.executors;
+		task.tags = rb.selectedTags;
 
 		task.save(function(err){
 			if(err){
@@ -93,6 +94,7 @@ router.post('/edittask', function(req, res){
 			task.priority = rb.priority;
 			task.repeat = rb.repeat;
 			task.executors = rb.executors;
+			task.tags = rb.selectedTags;
 
 			task.save(function(err){
 				if(err){
@@ -155,24 +157,5 @@ router.post('/toggletask', function(req, res){
 
 });
 
-router.get('/gettags', function(req, res){
-
-	var tagName = utils.getQueryVariable(req.url, 'tagName');
-
-	const regex = new RegExp(utils.escapeRegex(tagName ? tagName : ''), 'gi'); 
-
-	// and find by req.body.projectId  ???
-	Tag.find({name: regex}).sort({name: 1}).exec(function(err, tags){
-		if(err){
-			console.log(err);
-			return res.status(500).json({
-				errors: 'Could not receive tags.'
-			});
-		}
-
-		res.json({tags});
-
-	});
-})
 
 module.exports = router;

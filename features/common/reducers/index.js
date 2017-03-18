@@ -1,11 +1,13 @@
 import { 
 	FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE,
-	FETCH_TAGS_REQUEST, FETCH_TAGS_SUCCESS, FETCH_TAGS_FAILURE 
+	FETCH_TAGS_REQUEST, FETCH_TAGS_SUCCESS, FETCH_TAGS_FAILURE,
+	SAVE_TAGS_REQUEST, SAVE_TAGS_SUCCESS, SAVE_TAGS_FAILURE 
 } from '../actions';
+import { addNewItemToArrayEnd } from '../../../utils';
 
 const initialState = {
 	projectUsers: [],
-	allTags: [],
+	projectTags: [],
 	loading: false,
 	infoText: ''
 }
@@ -36,13 +38,29 @@ export default function common(state=initialState, action){
 		case FETCH_TAGS_SUCCESS:
 			return Object.assign({}, state, {
 				loading: false,
-				allTags: action.payload
+				projectTags: action.payload
 			});
 		case FETCH_TAGS_FAILURE:
 			return Object.assign({}, state, {
-				allTags: [],
+				projectTags: [],
 				infoText: action.payload.errors
 			});
+
+		case SAVE_TAGS_REQUEST:
+			return Object.assign({}, state, {
+				loading: true,
+				infoText: 'saving tag...'
+			});
+		case SAVE_TAGS_SUCCESS:
+			return Object.assign({}, state, {
+				loading: false,
+				projectTags: addNewItemToArrayBegin(state.projectTags, action.payload)
+			});
+		case SAVE_TAGS_FAILURE:
+			return Object.assign({}, state, {
+				infoText: action.payload.errors
+			});
+		
 		default:
 			return state;
 	}

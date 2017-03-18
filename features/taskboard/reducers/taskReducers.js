@@ -155,7 +155,7 @@ export default function task(state = initialState, action){
 			});
 		case REMOVE_TAG:
 			return Object.assign({}, state, {
-				selectedTags: removeSpecificItemFromArray(state.selectedTags, action.payload, '_id')
+				selectedTags: removeSpecificItemFromArray(state.selectedTags, action.payload)
 			});
 		case REMOVE_ALL_TAG:
 			return Object.assign({}, state, {
@@ -184,7 +184,8 @@ export default function task(state = initialState, action){
 			return Object.assign({}, state, {
 				editTaskTimestamp: Date.now(),
 				taskDetail: action.payload,
-				executors: action.payload.executors
+				executors: action.payload.executors,
+				selectedTags: action.payload.tags
 			});
 		default:
 			return state;

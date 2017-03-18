@@ -30,6 +30,7 @@ class Board extends React.Component {
 						dropdownLoading, dropdownError, dropdownInfoText,
 						showTaskDetail, taskDetail } = this.props;
 
+		let projectId = this.props.params.projectId;
 
 		var fetchedTaskList = [];
 
@@ -49,17 +50,21 @@ class Board extends React.Component {
 
 					<div className="row">
 						<div className="tasklist-box col-md-4">
-							<TasklistToolbar projectId={this.props.params.projectId} />
-							<TasklistContainer projectId={this.props.params.projectId} >
+							<TasklistToolbar projectId={projectId} />
+							<TasklistContainer projectId={projectId} >
 								{fetchedTaskList}
 							</TasklistContainer>
 						</div>
 						<div className="task-box col-md-8">
-							{ currentTasklistId && <TaskToolbar projectId={this.props.params.projectId}  tasklistId={currentTasklistId}/> }
-							{ currentTasklistId && <TaskContainer projectId={this.props.params.projectId}  tasklistId={currentTasklistId}/> }
+							{ currentTasklistId && <TaskToolbar projectId={projectId}  tasklistId={currentTasklistId}/> }
+							{ currentTasklistId && <TaskContainer projectId={projectId}  tasklistId={currentTasklistId}/> }
 						</div>
 					</div>
-					<TaskDetail taskDetail={taskDetail} modalName={`taskDetail${taskDetail ? taskDetail._id : ''}`} />
+					<TaskDetail 
+						projectId={projectId} 
+						taskDetail={taskDetail} 
+						modalName={`taskDetail${taskDetail ? taskDetail._id : ''}`} 
+					/>
 				</div>
 		)
 	}

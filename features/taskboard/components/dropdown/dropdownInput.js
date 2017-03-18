@@ -12,12 +12,17 @@ class DropdownInput extends React.Component {
 	render(){
 		const { menuList, selectedList, inputHandler, itemClick, btnHandler } = this.props.dropdownInputData;
 
-		var dropdownList = [];
+		let dropdownList = [];
 
 		dropdownList = menuList.map(function(item, index){
-			var selected = false;
+			let selected = false;
 			if(selectedList.length > 0){
-				var objIndex = getIndexOfArray(selectedList, item, '_id');
+				let objIndex = -1;
+				if(item._id){
+					objIndex = getIndexOfArray(selectedList, item, '_id');
+				} else {
+					objIndex = selectedList.indexOf(item);
+				}
 				if(objIndex != -1){
 					selected = true;
 				}
@@ -31,6 +36,7 @@ class DropdownInput extends React.Component {
 	  	<div className="dd">
 	  		<div className="dd-input">
 		  		<input type="text" className="form-control" placeholder="查找" onChange={inputHandler}/>
+		  		{ btnHandler && <button type="button" className="add-label" onClick={btnHandler}>添加</button>}
 	  		</div>
   		  <ul className="dd-menu" >
   		  	{dropdownList}

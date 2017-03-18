@@ -14,7 +14,7 @@ class DDListItem extends React.Component {
 	    <li>
 	    	<a className="dd-list-item" href="javascript:void(0);" onClick={itemClick.bind(this, item)}>
 	    		<img src="/static/imgs/100.png"/>
-	    		{ item.name }
+	    		{ item.name || item }
 	    		{ selected && <i className="glyphicon glyphicon-ok"></i>}
 	    	</a>
 	    </li>

@@ -1,18 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import DropdownInput from './dropdown/dropdownInput';
+import InfoLabel from './infoLabel';
 import { addTag, removeTag, openTagsDropdown, closeTagsDropdown } from '../actions/taskActions';
-import { fetchTags, findTagByName } from '../../common/actions';
+import { fetchTags, findTagsByName, saveTag } from '../../common/actions';
+import { getIndexOfArray, getIndexOfArrayByValue } from '../../../utils';
 
 class TagsContainer extends React.Component {
 
 	constructor(props){
 		super(props);
 
-		this.documentClick = this.documentClick.bind(this);
-		this.itemClick = this.itemClick.bind(this);
+		this.changeTags = this.changeTags.bind(this);
 		this.inputHandler = this.inputHandler.bind(this);
+		this.btnHandler = this.btnHandler.bind(this);
+		this.itemClick = this.itemClick.bind(this);
 		this.labelClick = this.labelClick.bind(this);
+		this.documentClick = this.documentClick.bind(this);
 
 	}
 
@@ -20,15 +24,24 @@ class TagsContainer extends React.Component {
 		if(this.props.showTagsDropdown){return;}
 		this.props.openTagsDropdown();
 		this.props.fetchTags(this.props.projectId);
-
 	}
 
 	inputHandler(e){
-		this.props.findTagByName(e.target.value);
+		this.props.findTagsByName(e.target.value);
+	}
+
+	btnHandler(e){
+		let inputValue = e.target.previousSibling.value;
+		if(!inputValue || ~this.props.selectedTags.indexOf(inputValue)){return;}
+		this.props.addTag(inputValue);
+		this.props.saveTag(inputValue, this.props.projectId);
+		e.target.previousSibling.value = '';
+		this.props.fetchTags(this.props.projectId);
 	}
 
 	itemClick(tag){
-		if(getIndexOfArray(this.props.tags, tag, '_id') == -1){
+		let	idx = this.props.selectedTags.indexOf(tag);
+		if(idx == -1){
 			this.props.addTag(tag);
 		} else {
 			this.props.removeTag(tag);		//remove user by it's position(index)? Which method performs better?
@@ -48,6 +61,7 @@ class TagsContainer extends React.Component {
 	}
 
 	documentClick(e){
+		if( !$('#tagDropdown-newTask')[0] || !$('#tagDropdown-editTask')[0]){ return; }
 		if( !$('#tagDropdown-newTask')[0].contains(e.target) && !$('#tagDropdown-editTask')[0].contains(e.target) ){
 			this.props.closeTagsDropdown();
 		}
@@ -56,13 +70,13 @@ class TagsContainer extends React.Component {
 
 	render(){
 
-		const { showTagsDropdown, allTags, selectedTags, newTaskFlag } = this.props;
+		const { showTagsDropdown, projectTags, selectedTags, newTaskFlag } = this.props;
 
 		let dropdownInputData = {
-			menuList: allTags,
+			menuList: projectTags,
 			selectedList: selectedTags,
 			inputHandler: this.inputHandler,
-			btnHandler: null,
+			btnHandler: this.btnHandler,
 			itemClick: this.itemClick
 		}
 
@@ -74,10 +88,10 @@ class TagsContainer extends React.Component {
 		}.bind(this));
 
 		return(
-			<ul className="executor-list clearfix">
+			<ul className="tag-list clearfix">
  				{tagsList}
- 				<li id={dropdownId} onClick={this.changeTags.bind(this)} >
-						<a title="add new executor" className="new-executor glyphicon glyphicon-plus"></a>
+ 				<li id={dropdownId} onClick={this.changeTags} >
+						<a title="add new tag" className="new-tag glyphicon glyphicon-plus"></a>
  					{ showTagsDropdown && <DropdownInput dropdownInputData={dropdownInputData} projectId={this.props.projectId} />}
  				</li>
  			</ul>
@@ -87,7 +101,7 @@ class TagsContainer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	allTags: state.common.allTags,
+	projectTags: state.common.projectTags,
 	selectedTags: state.taskboard.task.selectedTags,
 	showTagsDropdown: state.taskboard.task.showTagsDropdown
 });
@@ -96,9 +110,10 @@ const mapDispatchToProps = dispatch => ({
 	openTagsDropdown: () => { dispatch(openTagsDropdown()); },
 	closeTagsDropdown: () => { dispatch(closeTagsDropdown()); },
 	fetchTags: () => { dispatch(fetchTags()); },
-	findTagByName: tagName => { dispatch(findTagByName(tagName)); },
-	addTag: tag => { dispatch(addTag(tag)); },
-	removeTag: tag => { dispatch(removeTag(tag)); }
+	findTagsByName: tagName => { dispatch(findTagsByName(tagName)); },
+	addTag: tagName => { dispatch(addTag(tagName)); },
+	removeTag: tagName => { dispatch(removeTag(tagName)); },
+	saveTag: (tagName, projectId) => { dispatch(saveTag(tagName, projectId)); }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TagsContainer);
