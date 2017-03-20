@@ -12,6 +12,9 @@ export const SAVE_TAGS_REQUEST = 'SAVE_TAGS_REQUEST';
 export const SAVE_TAGS_SUCCESS = 'SAVE_TAGS_SUCCESS';
 export const SAVE_TAGS_FAILURE = 'SAVE_TAGS_FAILURE';
 
+export const INVALID_INPUT_MAX_LENGTH = 'INVALID_INPUT_MAX_LENGTH';
+export const INVALID_INPUT = 'INVALID_INPUT';
+
 export function findUsersByName(userName){
 	return function(dispatch){
 		dispatch(fetchUsersRequest());
@@ -164,5 +167,23 @@ export function saveTagsFailure(err){
 		payload: {
 			errors: err
 		}
+	}
+}
+
+
+
+export function invalidInput(errorObj){
+	switch (errorObj.type) {
+		case 'maxLength':
+			return {
+				type: 'INVALID_INPUT_MAX_LENGTH',
+				payload: errorObj.maxLength
+			}
+			break;
+		default:
+			return {
+				type: 'INVALID_INPUT'
+			}
+			break;
 	}
 }

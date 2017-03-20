@@ -171,6 +171,8 @@ input, textarea {
 }
 .tag-list > li > a {
   padding: 4px 8px;
+  color: #555;
+  background-color: #e1e1e1;
 }
 .executor-list > li > a > img, .tag-list > li > a > img {
   width: 24px;
@@ -192,6 +194,10 @@ input, textarea {
   transition: all 0.2s;
   cursor: pointer;
 }
+.tag-list > li > .remove-label {
+  color: #555;
+  background-color: #e1e1e1;
+}
 .executor-list li.removable:hover .remove-label, .tag-list li.removable:hover .remove-label {
   opacity: 1;
   z-index: 2;
@@ -206,6 +212,7 @@ input, textarea {
   padding: 4px 0 8px 0;
   background-color: #fff;
   left: -85px;
+  max-width: 200px;
   border-radius: 2px;
   border: 1px solid #ccc;
   border: 1px solid rgba(0,0,0,.15);

@@ -4,6 +4,7 @@ import DropdownInput from './dropdown/dropdownInput';
 import InfoLabel from './infoLabel';
 import { addTag, removeTag, openTagsDropdown, closeTagsDropdown } from '../actions/taskActions';
 import { fetchTags, findTagsByName, saveTag } from '../../common/actions';
+import { invalidInput } from '../../common/actions';
 import { getIndexOfArray, getIndexOfArrayByValue } from '../../../utils';
 
 class TagsContainer extends React.Component {
@@ -33,6 +34,10 @@ class TagsContainer extends React.Component {
 	btnHandler(e){
 		let inputValue = e.target.previousSibling.value;
 		if(!inputValue || ~this.props.selectedTags.indexOf(inputValue)){return;}
+		if(inputValue.length > 20){
+			this.props.invalidInput('lengthError'); 
+			return;
+		}
 		this.props.addTag(inputValue);
 		this.props.saveTag(inputValue, this.props.projectId);
 		e.target.previousSibling.value = '';
@@ -113,7 +118,8 @@ const mapDispatchToProps = dispatch => ({
 	findTagsByName: tagName => { dispatch(findTagsByName(tagName)); },
 	addTag: tagName => { dispatch(addTag(tagName)); },
 	removeTag: tagName => { dispatch(removeTag(tagName)); },
-	saveTag: (tagName, projectId) => { dispatch(saveTag(tagName, projectId)); }
+	saveTag: (tagName, projectId) => { dispatch(saveTag(tagName, projectId)); },
+	invalidInput: (errorType) => { dispatch(invalidInput(errorType)) }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TagsContainer);

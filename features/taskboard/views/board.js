@@ -24,7 +24,7 @@ class Board extends React.Component {
 
 	render(){
 
-		const { tasklistLoading, tasklistError, tasklistInfoText, 
+		const { publicErrMsg, tasklistLoading, tasklistError, tasklistInfoText, 
 						taskLoading, taskError, taskInfoText, 
 						currentTasklistId, tasklists,
 						dropdownLoading, dropdownError, dropdownInfoText,
@@ -40,6 +40,8 @@ class Board extends React.Component {
 
 		return(
 				<div className="container taskboard">
+					{publicErrMsg && <div className="container col-md-9 alert alert-danger" role="alert">{publicErrMsg}.</div>}
+					
 					{tasklistLoading && <div className="container col-md-9 alert alert-default" role="alert">{tasklistInfoText}.</div>}
 					{taskLoading && <div className="container col-md-9 alert alert-default" role="alert">{taskInfoText}.</div>}
 					{/*dropdownLoading && <div className="container col-md-9 alert alert-default" role="alert">{dropdownInfoText}.</div>*/}
@@ -73,6 +75,8 @@ class Board extends React.Component {
 const mapStateToProps = state => {
 	const tb = state.taskboard;
 	return {
+		publicErrMsg:  					state.common.publicErrMsg,
+
 		taskLoading: 						tb.task.taskLoading,
 		taskError: 							tb.task.taskError,
 		taskInfoText: 					tb.task.taskInfoText,

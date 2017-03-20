@@ -1,7 +1,8 @@
 import { 
 	FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE,
 	FETCH_TAGS_REQUEST, FETCH_TAGS_SUCCESS, FETCH_TAGS_FAILURE,
-	SAVE_TAGS_REQUEST, SAVE_TAGS_SUCCESS, SAVE_TAGS_FAILURE 
+	SAVE_TAGS_REQUEST, SAVE_TAGS_SUCCESS, SAVE_TAGS_FAILURE,
+	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT 
 } from '../actions';
 import { addNewItemToArrayEnd } from '../../../utils';
 
@@ -9,7 +10,8 @@ const initialState = {
 	projectUsers: [],
 	projectTags: [],
 	loading: false,
-	infoText: ''
+	infoText: '',
+	commonErrorText: ''
 }
 
 export default function common(state=initialState, action){
@@ -61,6 +63,15 @@ export default function common(state=initialState, action){
 				infoText: action.payload.errors
 			});
 		
+
+		case INVALID_INPUT_MAX_LENGTH:
+			return Object.assign({}, state, {
+				publicErrMsg: 'Input text length should be less than ' + action.payload + '.'
+			});
+		case INVALID_INPUT:
+			return Object.assign({}, state, {
+				publicErrMsg: 'Invalid input.'
+			})
 		default:
 			return state;
 	}
