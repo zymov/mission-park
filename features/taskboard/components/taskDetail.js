@@ -6,7 +6,7 @@ import Dropdown from './dropdown/dropdown';
 import ExecutorsContainer from './executorsContainer';
 import TagsContainer from './tagsContainer';
 import { addTask, editTask, closeUsersDropdown, closeTagsDropdown, removeAllExecutor, removeAllTag } from '../actions/taskActions';
-import { priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList, checkPropertyEquals } from '../../../utils';
+import { formatDate, priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList, checkPropertyEquals } from '../../../utils';
 
 class TaskDetail extends React.Component {
 
@@ -105,7 +105,7 @@ class TaskDetail extends React.Component {
 				this.setState({
 					taskName: taskName,
 					description: description,
-					dueDate: dueDate,
+					dueDate: formatDate(dueDate),
 					priority: priority,
 					repeat: repeat,
 					executors: executors,

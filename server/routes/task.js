@@ -90,7 +90,10 @@ router.post('/edittask', function(req, res){
 			}
 			task.taskName = rb.taskName;
 			task.description = rb.description;
-			task.dueDate = rb.dueDate;
+			let utc = new Date(rb.dueDate);
+			utc.setHours(utc.getHours() + 8);
+			// task.dueDate = new Date(rb.dueDate);
+			task.dueDate = utc;
 			task.priority = rb.priority;
 			task.repeat = rb.repeat;
 			task.executors = rb.executors;
