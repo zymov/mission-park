@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { fetchUsers } from '../../common/actions';
+import { openNotification } from '../../common/actions';
 
 export const ADD_TASK_REQUEST = 'ADD_TASK_REQUEST';
 export const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
@@ -36,10 +36,14 @@ export const TOGGLE_TASK_FAILURE = 'TOGGLE_TASK_FAILURE';
 
 export const SHOW_TASK_DETAIL = 'SHOW_TASK_DETAIL';
 
+export const INVALID_INPUT = 'INVALID_INPUT';
+export const INVALID_INPUT_MAX_LENGTH = 'INVALID_INPUT_MAX_LENGTH';
+
 /* add and edit tasks */
 export function addTask(payload){
 	return function(dispatch){
 		dispatch(addTaskRequest());
+		dispatch(openNotification());
 		axios.post('/tasks/addtask', payload)
 		.then(function(res){
 			dispatch(addTaskSuccess(res.data.task));
@@ -76,6 +80,7 @@ export function addTaskFailure(err){
 export function editTask(payload){
 	return function(dispatch){
 		dispatch(editTaskRequest());
+		dispatch(openNotification());
 		axios.post('/tasks/edittask', payload)
 		.then(function(res){
 			dispatch(editTaskSuccess(res.data.task));
@@ -116,6 +121,7 @@ export function fetchTasks(tasklistId, index, tasklistName){
 	return function(dispatch){
 		dispatch(setCurrentTasklist(tasklistId, index, tasklistName));
 		dispatch(fetchTasksRequest());
+		dispatch(openNotification());
 		axios.get('/tasks/fetchtasks', {
 			params: {
 				tasklistId: tasklistId
@@ -236,6 +242,7 @@ export function removeAllTag(){
 export function toggleTask(task){
 	return function(dispatch){
 		dispatch(toggleTaskRequest());
+		dispatch(openNotification());
 		axios.post('/tasks/toggletask', {
 			task: task
 		})
@@ -275,5 +282,33 @@ export function showTaskDetail(task){	// need to be fetched from database to avo
 	return {
 		type: 'SHOW_TASK_DETAIL',
 		payload: task
+	}
+}
+
+
+export function invalidInput(errorObj){
+	return function(dispatch){
+		dispatch(openNotification());
+		switch (errorObj.type) {
+			case 'maxLength':
+				dispatch(invalidInputMaxLength(errorObj.maxLength));
+				break;
+			default:
+				dispatch(invalidInputDefault());
+				break;
+		}
+	}
+}
+
+export function invalidInputDefault(){
+	return {
+		type: 'INVALID_INPUT'
+	}	
+}
+
+export function invalidInputMaxLength(payload){
+	return {
+		type: 'INVALID_INPUT_MAX_LENGTH',
+		payload: payload
 	}
 }

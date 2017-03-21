@@ -12,12 +12,13 @@ export const SAVE_TAGS_REQUEST = 'SAVE_TAGS_REQUEST';
 export const SAVE_TAGS_SUCCESS = 'SAVE_TAGS_SUCCESS';
 export const SAVE_TAGS_FAILURE = 'SAVE_TAGS_FAILURE';
 
-export const INVALID_INPUT_MAX_LENGTH = 'INVALID_INPUT_MAX_LENGTH';
-export const INVALID_INPUT = 'INVALID_INPUT';
+export const OPEN_NOTIFICATION = 'OPEN_NOTIFICATION';
+export const CLOSE_NOTIFICATION = 'CLOSE_NOTIFICATION';
 
 export function findUsersByName(userName){
 	return function(dispatch){
 		dispatch(fetchUsersRequest());
+		dispatch(openNotification());
 		axios.get('/projects/getusers', {
 			params: {
 				userName: userName
@@ -36,6 +37,7 @@ export function findUsersByName(userName){
 export function fetchUsers(projectId){
 	return function(dispatch){
 		dispatch( fetchUsersRequest() );
+		dispatch(openNotification());
 		axios.get('/projects/getusers', {
 			params: {
 				projectId: projectId
@@ -94,7 +96,8 @@ export function findTagsByName(tagName){
 
 export function fetchTags(projectId){
 	return function(dispatch){
-		dispatch( fetchTagsRequest() );
+		dispatch(fetchTagsRequest());
+		dispatch(openNotification());
 		axios.get('/projects/fetchtags', {
 			params: {
 				projectId: projectId
@@ -134,7 +137,8 @@ export function fetchTagsFailure(err){
 
 export function saveTag(tagName, projectId){		//return value from action or dispatch ?
 	return function(dispatch){
-		dispatch( saveTagsRequest() );
+		dispatch(saveTagsRequest());
+		dispatch(openNotification());
 		axios.post('/projects/addtag', {
 			tagName: tagName,	
 			projectId: projectId
@@ -172,18 +176,14 @@ export function saveTagsFailure(err){
 
 
 
-export function invalidInput(errorObj){
-	switch (errorObj.type) {
-		case 'maxLength':
-			return {
-				type: 'INVALID_INPUT_MAX_LENGTH',
-				payload: errorObj.maxLength
-			}
-			break;
-		default:
-			return {
-				type: 'INVALID_INPUT'
-			}
-			break;
+export function openNotification(){
+	return {
+		type: 'OPEN_NOTIFICATION'
+	}
+}
+
+export function closeNotification(){
+	return {
+		type: 'CLOSE_NOTIFICATION'
 	}
 }

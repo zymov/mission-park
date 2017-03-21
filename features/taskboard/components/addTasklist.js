@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
-import * as actionCreators from '../actions/tasklistActions';
+import { addTasklist } from '../actions/tasklistActions';
 import { priorityList, priorityColors } from '../../../utils';
 
 class AddTasklist extends React.Component {
@@ -51,7 +51,7 @@ class AddTasklist extends React.Component {
 			priority: this.state.priority,
 			dueDate: this.state.dueDate
 		}
-		this.props.actions.addTasklist(payload);
+		this.props.addTasklist(payload);
 		this.setState({
 			tasklistName: '',
 			priority: 0,
@@ -112,7 +112,7 @@ class AddTasklist extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	actions: bindActionCreators(actionCreators, dispatch)
+	addTasklist: (payload) => { dispatch(addTasklist(payload)); }
 });
 
 export default connect(null, mapDispatchToProps)(AddTasklist);

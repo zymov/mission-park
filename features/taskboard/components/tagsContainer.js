@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import DropdownInput from './dropdown/dropdownInput';
 import InfoLabel from './infoLabel';
-import { addTag, removeTag, openTagsDropdown, closeTagsDropdown } from '../actions/taskActions';
+import { addTag, removeTag, openTagsDropdown, closeTagsDropdown, invalidInput } from '../actions/taskActions';
 import { fetchTags, findTagsByName, saveTag } from '../../common/actions';
-import { invalidInput } from '../../common/actions';
+// import { invalidInput } from '../../common/actions';
 import { getIndexOfArray, getIndexOfArrayByValue } from '../../../utils';
 
 class TagsContainer extends React.Component {
@@ -35,7 +35,10 @@ class TagsContainer extends React.Component {
 		let inputValue = e.target.previousSibling.value;
 		if(!inputValue || ~this.props.selectedTags.indexOf(inputValue)){return;}
 		if(inputValue.length > 20){
-			this.props.invalidInput('lengthError'); 
+			this.props.invalidInput({type: 'maxLength', maxLength: 20}); 
+			e.target.previousSibling.value = '';
+			e.target.previousSibling.focus();
+			this.props.fetchTags(this.props.projectId);
 			return;
 		}
 		this.props.addTag(inputValue);

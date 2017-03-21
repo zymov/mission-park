@@ -12,7 +12,7 @@ const initialState = {
 
 	tasklistError: false,
 
-	tasklistInfoText: ''
+	tasklistInfoText: {}
 }
 
 export default function tasklist(state = initialState, action){
@@ -20,40 +20,55 @@ export default function tasklist(state = initialState, action){
 		case ADD_TASKLIST_REQUEST:
 			return Object.assign({}, state, {
 				tasklistLoading: true,
-				tasklistInfoText: 'adding task list...'
+				tasklistInfoText: {
+					message: '正在添加...',
+					level: 'normal'
+				}
 			});
 		case ADD_TASKLIST_SUCCESS:
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				newTasklist: action.payload,
 				tasklists: addNewItemToArrayBegin(state.tasklists, action.payload),
-				tasklistInfoText: ''
+				tasklistInfoText: {
+					message: '添加成功！',
+					level: 'success'
+				}
 			});
 		case ADD_TASKLIST_FAILURE:
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				tasklistError: true,
 				newTasklist: null,
-				tasklistInfoText: 'Error:' + action.payload.errors
+				tasklistInfoText: {
+					message: '错误：' + action.payload.errors,
+					level: 'error'
+				}
 			});
 
 		case FETCH_TASKLISTS_REQUEST:
 			return Object.assign({}, state, {
 				tasklistLoading: true,
-				tasklistInfoText: 'fetching task list...'
+				tasklistInfoText: {
+					message: '正在加载...',
+					level: 'normal'
+				}
 			});
 		case FETCH_TASKLISTS_SUCCESS:
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				tasklists: action.payload,
-				tasklistInfoText: ''
+				tasklistInfoText: {}
 			});
 		case FETCH_TASKLISTS_FAILURE:
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				tasklistError: true,
 				tasklists: [],
-				tasklistInfoText: 'Error:' + action.payload.errors
+				tasklistInfoText: {
+					message: '错误：' + action.payload.errors,
+					level: 'error'
+				}
 			});
 
 		default:

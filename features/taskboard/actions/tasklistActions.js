@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { fetchTasks } from './taskActions';
+import { openNotification } from '../../common/actions';
 
 export const ADD_TASKLIST_REQUEST = 'ADD_TASKLIST_REQUEST';
 export const ADD_TASKLIST_SUCCESS = 'ADD_TASKLIST_SUCCESS';
@@ -14,6 +15,7 @@ export const SET_CURRENT_TASKLIST_ID_TO_NULL = 'SET_CURRENT_TASKLIST_ID_TO_NULL'
 export function addTasklist(payload){
 	return function(dispatch){
 		dispatch(addTasklistRequest());
+		dispatch(openNotification());
 		axios.post('/tasks/addtasklist', payload)
 		.then(function(res){
 			dispatch(addTasklistSuccess(res.data.tasklist));
@@ -49,6 +51,7 @@ export function addTasklistFailure(err){
 export function fetchTasklists(projectId){
 	return function(dispatch){
 		dispatch(fetchTasklistsRequest());
+		dispatch(openNotification());
 		axios.get('/tasks/fetchtasklists', {
 			params: {
 				projectId: projectId

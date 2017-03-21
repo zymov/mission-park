@@ -7,6 +7,9 @@ import TaskToolbar from '../components/taskToolbar';
 import TaskContainer from '../components/taskContainer';
 import Tasklist from '../components/tasklist';
 import TaskDetail from '../components/taskDetail';
+import Notification from '../../common/components/notification/notification';
+import NotificationsContainer from '../../common/components/notification/notificationsContainer';
+import { isEmptyObject } from '../../../utils';
 
 class Board extends React.Component {
 
@@ -24,7 +27,7 @@ class Board extends React.Component {
 
 	render(){
 
-		const { publicErrMsg, tasklistLoading, tasklistError, tasklistInfoText, 
+		const { showNotification, publicErrMsg, tasklistLoading, tasklistError, tasklistInfoText, 
 						taskLoading, taskError, taskInfoText, 
 						currentTasklistId, tasklists,
 						dropdownLoading, dropdownError, dropdownInfoText,
@@ -40,14 +43,18 @@ class Board extends React.Component {
 
 		return(
 				<div className="container taskboard">
-					{publicErrMsg && <div className="container col-md-9 alert alert-danger" role="alert">{publicErrMsg}.</div>}
+					<NotificationsContainer>
+						{(!isEmptyObject(publicErrMsg) && showNotification) && <Notification notification={publicErrMsg} />}
+						{(!isEmptyObject(tasklistInfoText) && showNotification) && <Notification notification={tasklistInfoText} />}
+						{(!isEmptyObject(taskInfoText) && showNotification) && <Notification notification={taskInfoText} />}
+					</NotificationsContainer>
 					
-					{tasklistLoading && <div className="container col-md-9 alert alert-default" role="alert">{tasklistInfoText}.</div>}
-					{taskLoading && <div className="container col-md-9 alert alert-default" role="alert">{taskInfoText}.</div>}
+					{/*tasklistLoading && <div className="container col-md-9 alert alert-default" role="alert">{tasklistInfoText}.</div>*/}
+					{/*taskLoading && <div className="container col-md-9 alert alert-default" role="alert">{taskInfoText}.</div>*/}
 					{/*dropdownLoading && <div className="container col-md-9 alert alert-default" role="alert">{dropdownInfoText}.</div>*/}
 
-					{tasklistError && <div className="container col-md-9 alert alert-danger" role="alert">{tasklistInfoText}.</div>}
-					{taskError && <div className="container col-md-9 alert alert-danger" role="alert">{taskInfoText}.</div>}
+					{/*tasklistError && <div className="container col-md-9 alert alert-danger" role="alert">{tasklistInfoText}.</div>*/}
+					{/*taskError && <div className="container col-md-9 alert alert-danger" role="alert">{taskInfoText}.</div>*/}
 					{/*dropdownError && <div className="container col-md-9 alert alert-danger" role="alert">{dropdownInfoText}.</div>*/}
 
 					<div className="row">
@@ -75,6 +82,7 @@ class Board extends React.Component {
 const mapStateToProps = state => {
 	const tb = state.taskboard;
 	return {
+		showNotification: 			state.common.showNotification,
 		publicErrMsg:  					state.common.publicErrMsg,
 
 		taskLoading: 						tb.task.taskLoading,

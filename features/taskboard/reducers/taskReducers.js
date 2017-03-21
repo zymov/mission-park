@@ -6,7 +6,8 @@ import {
 	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN, OPEN_TAGS_DROPDOWN, CLOSE_TAGS_DROPDOWN, 
 	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR, ADD_TAG, REMOVE_TAG, REMOVE_ALL_TAG, 
 	TOGGLE_TASK_REQUEST, TOGGLE_TASK_SUCCESS, TOGGLE_TASK_FAILURE, 
-	SHOW_TASK_DETAIL
+	SHOW_TASK_DETAIL,
+	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT
 } from '../actions/taskActions';
 import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
 
@@ -20,7 +21,7 @@ const initialState = {
 	tasks: [],
 	newTask: null,
 	taskError: false,
-	taskInfoText: '',
+	taskInfoText: {},
 	currentTasklistId: null,
 	activeTasklist: 0,
 	currentTasklistName: '',
@@ -46,60 +47,84 @@ export default function task(state = initialState, action){
 		case ADD_TASK_REQUEST:
 			return Object.assign({}, state, {
 				taskLoading: true,
-				taskInfoText: 'adding task...'
+				taskInfoText: {
+					message: '正在添加...',
+					level: 'normal'
+				}
 			});
 		case ADD_TASK_SUCCESS:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				newTask: action.payload,
 				tasks: addNewItemToArrayBegin(state.tasks, action.payload),
-				taskInfoText: ''
+				taskInfoText: {
+					message: '添加成功！',
+					level: 'success'
+				}
 			});
 		case ADD_TASK_FAILURE:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				taskError: true,
 				newTask: null,
-				taskInfoText: 'Error:' + action.payload.errors
+				taskInfoText: {
+					message: '错误：' + action.payload.errors,
+					level: 'error'
+				}
 			});
 			
 		/* edit task */
 		case EDIT_TASK_REQUEST:
 			return Object.assign({}, state, {
 				taskLoading: true,
-				taskInfoText: 'saving task...'
+				taskInfoText: {
+					message: '正在保存...',
+					level: 'normal'
+				}
 			});
 		case EDIT_TASK_SUCCESS:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				tasks: updateItemInArray(state.tasks, action.payload),
-				taskInfoText: ''
+				taskInfoText: {
+					message: '保存成功！',
+					level: 'success'
+				}
 			});
 		case EDIT_TASK_FAILURE:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				taskError: true,
-				taskInfoText: 'Error:' + action.payload.errors
+				taskInfoText: {
+					message: '错误：' + action.payload.errors,
+					level: 'error'
+				}
 			});
 
 		/* fetch task */
 		case FETCH_TASKS_REQUEST:
 			return Object.assign({}, state, {
 				taskLoading: true,
-				taskInfoText: 'fetching task ...'
+				taskInfoText: {
+					message: '正在加载...',
+					level: 'normal'
+				}
 			});
 		case FETCH_TASKS_SUCCESS:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				tasks: action.payload,
-				taskInfoText: ''
+				taskInfoText: {}
 			});
 		case FETCH_TASKS_FAILURE:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				taskError: true,
 				tasks: [],
-				taskInfoText: 'Error:' + action.payload.errors
+				taskInfoText: {
+					message: '错误：' + action.payload.errors,
+					level: 'error'
+				} 
 			});
 		case SET_CURRENT_TASKLIST:
 			return Object.assign({}, state, {
@@ -119,6 +144,7 @@ export default function task(state = initialState, action){
 		/* users dropdown reducer */
 		case OPEN_USERS_DROPDOWN:
 			return Object.assign({}, state, {
+				taskInfoText: {},
 				showUsersDropdown: true
 			});
 		
@@ -128,6 +154,7 @@ export default function task(state = initialState, action){
 			});
 		case OPEN_TAGS_DROPDOWN:
 			return Object.assign({}, state, {
+				taskInfoText: {},
 				showTagsDropdown: true
 			});
 		
@@ -176,7 +203,10 @@ export default function task(state = initialState, action){
 			return Object.assign({}, state, {
 				toggling: false,
 				taskError: true,
-				taskInfoText: 'Error:' + action.payload.errors
+				taskInfoText: {
+					message: '错误：' + action.payload.errors,
+					level: 'error'
+				}
 			});
 
 		/* show task detail */
@@ -186,6 +216,22 @@ export default function task(state = initialState, action){
 				taskDetail: action.payload,
 				executors: action.payload.executors,
 				selectedTags: action.payload.tags
+			});
+
+
+		case INVALID_INPUT_MAX_LENGTH:
+			return Object.assign({}, state, {
+				taskInfoText: {
+					message:'输入文本长度应小于' + action.payload,
+					level: 'error'
+				}
+			});
+		case INVALID_INPUT:
+			return Object.assign({}, state, {
+				taskInfoText: {
+					message: '无效的输入',
+					level: 'error'
+				}
 			});
 		default:
 			return state;

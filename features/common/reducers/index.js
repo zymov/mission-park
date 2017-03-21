@@ -2,7 +2,8 @@ import {
 	FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE,
 	FETCH_TAGS_REQUEST, FETCH_TAGS_SUCCESS, FETCH_TAGS_FAILURE,
 	SAVE_TAGS_REQUEST, SAVE_TAGS_SUCCESS, SAVE_TAGS_FAILURE,
-	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT 
+	OPEN_NOTIFICATION, CLOSE_NOTIFICATION
+	//INVALID_INPUT_MAX_LENGTH, //INVALID_INPUT 
 } from '../actions';
 import { addNewItemToArrayEnd } from '../../../utils';
 
@@ -10,8 +11,9 @@ const initialState = {
 	projectUsers: [],
 	projectTags: [],
 	loading: false,
-	infoText: '',
-	commonErrorText: ''
+	commonInfoText: '',
+	publicErrMsg: {},
+	showNotification: false
 }
 
 export default function common(state=initialState, action){
@@ -19,7 +21,7 @@ export default function common(state=initialState, action){
 		case FETCH_USERS_REQUEST:
 			return Object.assign({}, state, {
 				loading: true,
-				infoText: 'fetching users...'
+				commonInfoText: 'fetching users...'
 			});
 		case FETCH_USERS_SUCCESS:
 			return Object.assign({}, state, {
@@ -29,13 +31,13 @@ export default function common(state=initialState, action){
 		case FETCH_USERS_FAILURE:
 			return Object.assign({}, state, {
 				projectUsers: [],
-				infoText: action.payload.errors
+				commonInfoText: action.payload.errors
 			});
 
 		case FETCH_TAGS_REQUEST:
 			return Object.assign({}, state, {
 				loading: true,
-				infoText: 'fetching tags...'
+				commonInfoText: 'fetching tags...'
 			});
 		case FETCH_TAGS_SUCCESS:
 			return Object.assign({}, state, {
@@ -45,13 +47,13 @@ export default function common(state=initialState, action){
 		case FETCH_TAGS_FAILURE:
 			return Object.assign({}, state, {
 				projectTags: [],
-				infoText: action.payload.errors
+				commonInfoText: action.payload.errors
 			});
 
 		case SAVE_TAGS_REQUEST:
 			return Object.assign({}, state, {
 				loading: true,
-				infoText: 'saving tag...'
+				commonInfoText: 'saving tag...'
 			});
 		case SAVE_TAGS_SUCCESS:
 			return Object.assign({}, state, {
@@ -60,18 +62,22 @@ export default function common(state=initialState, action){
 			});
 		case SAVE_TAGS_FAILURE:
 			return Object.assign({}, state, {
-				infoText: action.payload.errors
+				commonInfoText: action.payload.errors
 			});
 		
-
-		case INVALID_INPUT_MAX_LENGTH:
+		case OPEN_NOTIFICATION:
 			return Object.assign({}, state, {
-				publicErrMsg: 'Input text length should be less than ' + action.payload + '.'
+				showNotification: true
 			});
-		case INVALID_INPUT:
+
+		case CLOSE_NOTIFICATION:
 			return Object.assign({}, state, {
-				publicErrMsg: 'Invalid input.'
-			})
+				showNotification: false
+			});
+
+		
+
+
 		default:
 			return state;
 	}
