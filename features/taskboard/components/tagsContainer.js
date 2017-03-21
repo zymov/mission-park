@@ -4,7 +4,6 @@ import DropdownInput from './dropdown/dropdownInput';
 import InfoLabel from './infoLabel';
 import { addTag, removeTag, openTagsDropdown, closeTagsDropdown, invalidInput } from '../actions/taskActions';
 import { fetchTags, findTagsByName, saveTag } from '../../common/actions';
-// import { invalidInput } from '../../common/actions';
 import { getIndexOfArray, getIndexOfArrayByValue } from '../../../utils';
 
 class TagsContainer extends React.Component {

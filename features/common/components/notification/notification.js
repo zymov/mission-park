@@ -32,12 +32,6 @@ class Notifications extends React.Component {
 
 }
 
-// const mapStateToProps = state => {
-// 	return ({
-// 		showNotification: state.common.showNotification
-// 	});
-// }
-
 const mapDispatchToProps = dispatch => {
 	return ({
 		closeNotification: () => { dispatch(closeNotification()); }

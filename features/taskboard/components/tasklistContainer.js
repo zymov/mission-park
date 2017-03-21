@@ -11,12 +11,6 @@ class TasklistContainer extends React.Component {
 
 	render(){
 
-		// var fetchedTaskList = [];
-
-		// fetchedTaskList = this.props.tasklists.map(function(tasklist, index){
-		// 	return <Tasklist key={index} index={index} tasklist={tasklist} />;
-		// });
-
 		return(
 			<div className="list-group">
 				{this.props.children}

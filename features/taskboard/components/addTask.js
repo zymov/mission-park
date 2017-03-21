@@ -1,12 +1,9 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
-// import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
 import ExecutorsContainer from './executorsContainer';
 import { removeAllExecutor, removeAllTag } from '../actions/taskActions';
-// import { priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList } from '../../../utils';
 import TaskDetail from './taskDetail';
 
 class AddTask extends React.Component {
