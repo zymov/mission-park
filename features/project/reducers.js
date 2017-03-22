@@ -34,7 +34,7 @@ export default function project(state = initialState, action){
 				isError: true,
 				projects: [],
 				infoText: {
-					message: '错误：' + action.payload.errors,
+					message: '出错了！' + action.payload.errors,
 					level: 'error'
 				}
 			})
@@ -63,7 +63,7 @@ export default function project(state = initialState, action){
 				isError: true,
 				newProject: null,
 				infoText: {
-					message: '错误：' + action.payload.errors,
+					message: '出错了！' + action.payload.errors,
 					level: 'error'
 				} 
 			})

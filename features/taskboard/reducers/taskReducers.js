@@ -9,6 +9,7 @@ import {
 	SHOW_TASK_DETAIL,
 	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT
 } from '../actions/taskActions';
+import { ADD_TASKLIST_REQUEST } from '../actions/tasklistActions';
 import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
 
 import { 
@@ -68,7 +69,7 @@ export default function task(state = initialState, action){
 				taskError: true,
 				newTask: null,
 				taskInfoText: {
-					message: '错误：' + action.payload.errors,
+					message: '出错了！' + action.payload.errors,
 					level: 'error'
 				}
 			});
@@ -96,7 +97,7 @@ export default function task(state = initialState, action){
 				taskLoading: false,
 				taskError: true,
 				taskInfoText: {
-					message: '错误：' + action.payload.errors,
+					message: '出错了！' + action.payload.errors,
 					level: 'error'
 				}
 			});
@@ -122,7 +123,7 @@ export default function task(state = initialState, action){
 				taskError: true,
 				tasks: [],
 				taskInfoText: {
-					message: '错误：' + action.payload.errors,
+					message: '出错了！' + action.payload.errors,
 					level: 'error'
 				} 
 			});
@@ -192,19 +193,21 @@ export default function task(state = initialState, action){
 		/* toggle task */
 		case TOGGLE_TASK_REQUEST:
 			return Object.assign({}, state, {
+				taskInfoText: {},
 				toggling: true
 			});
 		case TOGGLE_TASK_SUCCESS: 
 			return Object.assign({}, state, {
 				toggling: false,
-				tasks: updateAndMoveItemInArray(state.tasks, action.payload)
+				tasks: updateAndMoveItemInArray(state.tasks, action.payload),
+				taskInfoText: {}
 			});
 		case TOGGLE_TASK_FAILURE:
 			return Object.assign({}, state, {
 				toggling: false,
 				taskError: true,
 				taskInfoText: {
-					message: '错误：' + action.payload.errors,
+					message: '出错了！' + action.payload.errors,
 					level: 'error'
 				}
 			});
@@ -233,6 +236,13 @@ export default function task(state = initialState, action){
 					level: 'error'
 				}
 			});
+
+		case ADD_TASKLIST_REQUEST:
+			return Object.assign({}, state, {
+				taskInfoText: {}
+			});
+
+
 		default:
 			return state;
 	}

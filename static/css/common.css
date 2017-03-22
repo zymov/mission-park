@@ -16,6 +16,7 @@ input, textarea {
 .notifications-container {
   position: absolute;
   z-index: 1100;
+  transition: .2s;
 }
 .notifications-container-bottomLeft {
   left: 0px;
@@ -30,9 +31,33 @@ input, textarea {
   font-size: 16px;
   padding: 12px;
   width: 300px;
+  opacity: 0;
   border-radius: 2px;
   background-color: #fff;
   box-shadow: 1px 2px 2px rgba(0,0,0,.2);
+  -webkit-animation-name: show;
+  -webkit-animation-duration: 0.2s;
+  -webkit-animation-fill-mode: forwards;
+  animation-name: show;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+  transition: all .2s;
+}
+@-webkit-keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }  
 }
 .notification-error, .notification-success, .notification-normal, .notification-warning {
   position: absolute;
@@ -72,6 +97,7 @@ input, textarea {
 .modal-body .form-group {
   border-right: 1px solid #ddd;
 }
+.modal-body .form-group.right-col {border-right: 0;}
 .modal-body .form-group .dropdown {
   text-align: center;
 }

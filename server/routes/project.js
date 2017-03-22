@@ -21,7 +21,7 @@ router.post('/addproject', function(req, res){
 			var project = new Project();
 			project.projectName = req.body.projectName;
 			project.description = req.body.description;
-			project.createTime = new Date();
+			project.createTime = utils.getLocaleDate(new Date());
 			project.owner = userName;
 			project.ownerId = decoded.sub;
 			project.save(function(err){

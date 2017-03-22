@@ -49,14 +49,6 @@ class Board extends React.Component {
 						{(!isEmptyObject(taskInfoText) && showNotification) && <Notification notification={taskInfoText} />}
 					</NotificationsContainer>
 					
-					{/*tasklistLoading && <div className="container col-md-9 alert alert-default" role="alert">{tasklistInfoText}.</div>*/}
-					{/*taskLoading && <div className="container col-md-9 alert alert-default" role="alert">{taskInfoText}.</div>*/}
-					{/*dropdownLoading && <div className="container col-md-9 alert alert-default" role="alert">{dropdownInfoText}.</div>*/}
-
-					{/*tasklistError && <div className="container col-md-9 alert alert-danger" role="alert">{tasklistInfoText}.</div>*/}
-					{/*taskError && <div className="container col-md-9 alert alert-danger" role="alert">{taskInfoText}.</div>*/}
-					{/*dropdownError && <div className="container col-md-9 alert alert-danger" role="alert">{dropdownInfoText}.</div>*/}
-
 					<div className="row">
 						<div className="tasklist-box col-md-4">
 							<TasklistToolbar projectId={projectId} />

@@ -28,13 +28,6 @@ class Tasklist extends React.Component {
 				<div className={`tasklist-priority priority-${priority}`}></div>
 	      <h4 title={tasklistName} className="list-group-item-heading">{tasklistName}</h4>
 	      <label className="label label-danger" >截止日期: {formatDate(dueDate)}</label>
-		    <div className="label-wrapper">
-		    	<span className="badge">标签1</span>
-			    <span className="badge">label2</span>
-			    <span className="badge">label3</span>
-			    <span className="badge">labe2</span>
-			    <span className="badge">lab标签1e2labe2</span>
-		    </div>
 	      <small className="tasklist-footer">创建时间: {formatDate(createTime)}</small>
 		  </div>
 		);

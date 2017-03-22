@@ -4,15 +4,22 @@ import { closeNotification } from '../../actions';
 
 class Notifications extends React.Component {
 
+	constructor(props){
+		super(props);
+		this.timer = null;
+	}
+
 	componentDidMount(){
-		setTimeout(function(){
+		var timer = setTimeout(function(){
 			this.props.closeNotification();
+			clearTimeout(timer);
 		}.bind(this), 3000);
 	}
 
 	componentDidUpdate(prevProps, prevState){
-		setTimeout(function(){
+		var timer = setTimeout(function(){
 			this.props.closeNotification();
+			clearTimeout(timer);
 		}.bind(this), 3000);
 	}
 
@@ -21,7 +28,7 @@ class Notifications extends React.Component {
 		const { message, level } = this.props.notification;
 
 		return (
-			<div className="notification">
+			<div className="notification" >
 				<div className={`notification-${level}`}></div>
 				<div className="notification-content">
 					{message}
@@ -32,10 +39,14 @@ class Notifications extends React.Component {
 
 }
 
+const mapStateToProps = state => ({
+	showNotification: state.common.showNotification
+})
+
 const mapDispatchToProps = dispatch => {
 	return ({
 		closeNotification: () => { dispatch(closeNotification()); }
 	})
 }
 
-export default connect(null, mapDispatchToProps)(Notifications)
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications)

@@ -20,11 +20,17 @@ module.exports = {
     return date.replace('T', ' ').slice(0, -8);
   },
 
+  getLocaleDate: function(date){
+    let utc = new Date(date);
+    utc.setHours(utc.getHours() + 8);
+    return utc;
+  },
+
   checkHttpStatus: function (response){
   	if(response.status >= 200 && response.status < 300){
   		return response;
   	} else {
-  		var err = new Error(response.statusText);
+  		let err = new Error(response.statusText);
   		err.response = response;
   		throw err;
   	}
@@ -57,7 +63,7 @@ module.exports = {
   },
 
   addNewItemToArrayBegin: function (list, newObject){
-    var newList = list.slice(0);
+    let newList = list.slice(0);
     newList.unshift(newObject);
     return newList;
   },
@@ -68,10 +74,10 @@ module.exports = {
 
   getQueryVariable: function (url, key){
     if(~url.indexOf('?')){
-      var query = url.split('?')[1];
-      var variables = query.split('&');
-      for(var i = 0; i < variables.length; i++){
-        var pair = variables[i].split('=');
+      let query = url.split('?')[1];
+      let variables = query.split('&');
+      for(let i = 0; i < variables.length; i++){
+        let pair = variables[i].split('=');
         if(key == pair[0]){
           return pair[1];
         }
@@ -110,14 +116,14 @@ module.exports = {
   },
 
   updateItemInArray: function(arr, obj){
-    var index = module.exports.getIndexOfArray(arr, obj, '_id')
-    var newArr = arr.slice();
+    let index = module.exports.getIndexOfArray(arr, obj, '_id')
+    let newArr = arr.slice();
     newArr[index] = obj;
     return newArr;
   },
 
   insertItemIntoArray: function(arr, obj, index){
-    var newArr = arr.slice();
+    let newArr = arr.slice();
     newArr.splice(index, 0, obj);
     return newArr;
   },
@@ -127,11 +133,11 @@ module.exports = {
     if(obj.repeat){
       return self.updateItemInArray(arr, obj);
     } else{
-      var newArr = self.removeSpecificItemFromArray(arr, obj, '_id');
+      let newArr = self.removeSpecificItemFromArray(arr, obj, '_id');
       if(obj.accomplished){
         return self.addNewItemToArrayEnd(newArr, obj);
       } else {
-        var index = self.getIndexOfArrayByValue(arr, 'accomplished', true);
+        let index = self.getIndexOfArrayByValue(arr, 'accomplished', true);
         return self.insertItemIntoArray(newArr, obj, index);
       }
     } 

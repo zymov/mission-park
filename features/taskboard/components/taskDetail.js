@@ -159,7 +159,7 @@ class TaskDetail extends React.Component {
 								btnName={priorityList[this.state.priority]} />
 		     		</div>
 
-     				<div className="col-md-4 form-group">
+     				<div className="col-md-4 form-group right-col">
 	     				<label>重复</label>
 	     				<Dropdown dropdown={this.repeatDropdown} 
 	     					btnStyle={{color: '#555'}}

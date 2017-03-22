@@ -3,17 +3,19 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ProjectToolbar from '../components/projectToolbar';
 import ProjectCard from '../components/projectCard';
-
-import * as actionCreators from '../actions';
+import Notification from '../../common/components/notification/notification';
+import NotificationsContainer from '../../common/components/notification/notificationsContainer'
+import { isEmptyObject } from '../../../utils';
+import { fetchProject } from '../actions';
 
 class ProjectList extends React.Component {
 
 	componentWillMount(){
-		this.props.actions.fetchProject();
+		this.props.fetchProject();
 	}
 
 	render(){
-		const { newProject, isLoading, projects, isError, infoText } = this.props;
+		const { newProject, isLoading, projects, isError, infoText, showNotification } = this.props;
 
 		var fetchedProject = [];
 		
@@ -23,9 +25,10 @@ class ProjectList extends React.Component {
 
 		return(
 				<div id="project-list" className="container">
+					<NotificationsContainer>
+						{(!isEmptyObject(infoText) && showNotification ) && <Notification notification={infoText} />}
+					</NotificationsContainer>
 					<ProjectToolbar />
-					{isLoading && <div className="container col-md-9 alert alert-default" role="alert">{infoText}.</div>}
-					{isError && <div className="container col-md-9 alert alert-danger" role="alert">{infoText}.</div>}
 					<div className="row">
 						{fetchedProject}
 					</div>
@@ -35,6 +38,7 @@ class ProjectList extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
+	showNotification: state.common.showNotification,
 	isLoading: state.project.isLoading,
 	projects: state.project.projects,
 	isError: state.project.isError,
@@ -43,7 +47,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	actions: bindActionCreators(actionCreators, dispatch)
+	fetchProject: () => { dispatch(fetchProject()); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectList);

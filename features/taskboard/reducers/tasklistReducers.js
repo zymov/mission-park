@@ -1,6 +1,7 @@
 import { 
 	ADD_TASKLIST_REQUEST, ADD_TASKLIST_SUCCESS, ADD_TASKLIST_FAILURE,
 	FETCH_TASKLISTS_REQUEST, FETCH_TASKLISTS_SUCCESS, FETCH_TASKLISTS_FAILURE } from '../actions/tasklistActions';
+import { FETCH_TASKS_REQUEST } from '../actions/taskActions';
 
 import { addNewItemToArrayBegin } from '../../../utils';
 
@@ -41,7 +42,7 @@ export default function tasklist(state = initialState, action){
 				tasklistError: true,
 				newTasklist: null,
 				tasklistInfoText: {
-					message: '错误：' + action.payload.errors,
+					message: '出错了！' + action.payload.errors,
 					level: 'error'
 				}
 			});
@@ -66,9 +67,14 @@ export default function tasklist(state = initialState, action){
 				tasklistError: true,
 				tasklists: [],
 				tasklistInfoText: {
-					message: '错误：' + action.payload.errors,
+					message: '出错了！' + action.payload.errors,
 					level: 'error'
 				}
+			});
+
+		case FETCH_TASKS_REQUEST:
+			return Object.assign({}, state, {
+				tasklistInfoText: {}
 			});
 
 		default:

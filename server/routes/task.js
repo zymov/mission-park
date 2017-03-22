@@ -11,9 +11,9 @@ router.post('/addtasklist', function(req, res){
 	if(req.body.tasklistName.trim()){
 		var tasklist = new Tasklist();
 		tasklist.tasklistName = req.body.tasklistName;
-		tasklist.createTime = new Date();
+		tasklist.createTime = utils.getLocaleDate(new Date());
 		tasklist._projectid = req.body.projectId;
-		tasklist.dueDate = new Date(req.body.dueDate);
+		tasklist.dueDate = utils.getLocaleDate(req.body.dueDate);
 		tasklist.accomplished = false;
 		tasklist.priority = req.body.priority;
 		tasklist.save(function(err){
@@ -56,10 +56,10 @@ router.post('/addtask', function(req, res){
 		task = new Task();
 		task._tasklistId = rb.tasklistId;
 		task.accomplished = false;
-		task.createTime = new Date();
+		task.createTime = utils.getLocaleDate(new Date());
 		task.taskName = rb.taskName;
 		task.description = rb.description;
-		task.dueDate = rb.dueDate;
+		task.dueDate = utils.getLocaleDate(rb.dueDate);
 		task.priority = rb.priority;
 		task.repeat = rb.repeat;
 		task.executors = rb.executors;
@@ -90,12 +90,12 @@ router.post('/edittask', function(req, res){
 			}
 			task.taskName = rb.taskName;
 			task.description = rb.description;
-			let utc = new Date(rb.dueDate);
-			utc.setHours(utc.getHours() + 8);
-			// task.dueDate = new Date(rb.dueDate);
-			task.dueDate = utc;
+			task.dueDate = utils.getLocaleDate(rb.dueDate);
 			task.priority = rb.priority;
 			task.repeat = rb.repeat;
+			if(rb.repeat){
+				task.accomplished = false;
+			}
 			task.executors = rb.executors;
 			task.tags = rb.selectedTags;
 
