@@ -8,7 +8,6 @@ var Tag = require('mongoose').model('Tag');
 
 /* tasklist router */
 router.post('/addtasklist', function(req, res){
-	// if(req.body.tasklistName.trim()){
 		var tasklist = new Tasklist();
 		tasklist.tasklistName = req.body.tasklistName;
 		tasklist.createTime = utils.getLocaleDate(new Date());
@@ -27,11 +26,6 @@ router.post('/addtasklist', function(req, res){
 				});
 			}
 		});
-	// } else {
-	// 	res.status(400).json({
-	// 		errors: 'check your tasklist name'
-	// 	})
-	// }
 });
 
 router.get('/fetchtasklists', function(req, res){

@@ -17,21 +17,11 @@ class Board extends React.Component {
 		super(props);
 	}
 
-
-	componentWillReceiveProps(nextProps){
-		if(this.props.taskDetail != nextProps.taskDetail){
-			console.log(nextProps.taskDetail._id, nextProps.taskDetail.taskName);
-			// $(`[data-target="#taskDetail${nextProps.taskDetail._id}"]`).click();
-		}
-	}
-
 	render(){
 
-		const { showNotification, publicErrMsg, tasklistLoading, tasklistError, tasklistInfoText, 
-						taskLoading, taskError, taskInfoText, 
+		const { showNotification, publicErrMsg, tasklistInfoText, taskInfoText, 
 						currentTasklistId, tasklists,
-						dropdownLoading, dropdownError, dropdownInfoText,
-						showTaskDetail, taskDetail } = this.props;
+						taskDetail } = this.props;
 
 		let projectId = this.props.params.projectId;
 
@@ -76,24 +66,11 @@ const mapStateToProps = state => {
 	return {
 		showNotification: 			state.common.showNotification,
 		publicErrMsg:  					state.common.publicErrMsg,
-
-		taskLoading: 						tb.task.taskLoading,
-		taskError: 							tb.task.taskError,
 		taskInfoText: 					tb.task.taskInfoText,
 		currentTasklistId: 			tb.task.currentTasklistId,
-
-		dropdownLoading: 				tb.task.dropdownLoading,
-		dropdownError: 					tb.task.dropdownError,
-		dropdownInfoText: 			tb.task.dropdownInfoText,
-
 		taskDetail: 						tb.task.taskDetail,
-
 		tasklists: 							tb.tasklist.tasklists,
-		tasklistLoading: 				tb.tasklist.tasklistLoading,
-		tasklistError: 					tb.tasklist.tasklistError,
 		tasklistInfoText: 			tb.tasklist.tasklistInfoText
-
-
 	}
 }
 
