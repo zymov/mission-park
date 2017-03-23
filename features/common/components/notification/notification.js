@@ -6,18 +6,17 @@ class Notifications extends React.Component {
 
 	constructor(props){
 		super(props);
-		this.timer = null;
 	}
 
 	componentDidMount(){
-		var timer = setTimeout(function(){
+		let timer = setTimeout(function(){
 			this.props.closeNotification();
 			clearTimeout(timer);
 		}.bind(this), 3000);
 	}
 
 	componentDidUpdate(prevProps, prevState){
-		var timer = setTimeout(function(){
+		let timer = setTimeout(function(){
 			this.props.closeNotification();
 			clearTimeout(timer);
 		}.bind(this), 3000);

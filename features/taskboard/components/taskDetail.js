@@ -7,6 +7,7 @@ import ExecutorsContainer from './executorsContainer';
 import TagsContainer from './tagsContainer';
 import { addTask, editTask, closeUsersDropdown, closeTagsDropdown, removeAllExecutor, removeAllTag } from '../actions/taskActions';
 import { formatDate, priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList, checkPropertyEquals } from '../../../utils';
+import { validateTaskForm } from '../../../utils/validations';
 
 class TaskDetail extends React.Component {
 
@@ -19,7 +20,8 @@ class TaskDetail extends React.Component {
 			description: '',
 			repeat: 0,
 			executors: [],
-			selectedTags: []
+			selectedTags: [],
+			inputError: {}
 		}
 		this.state = this.initialState;
 
@@ -46,7 +48,10 @@ class TaskDetail extends React.Component {
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
 		this.setState({
-			[name]: value
+			[name]: value,
+			inputError: Object.assign({}, this.state.inputError, {
+				[name]: false
+			})
 		});
 	}
 
@@ -75,6 +80,13 @@ class TaskDetail extends React.Component {
 			repeat: this.state.repeat,
 			executors: this.props.executors,
 			selectedTags: this.props.selectedTags
+		}
+		let validation = validateTaskForm(payload);
+		if(!validation.isFormValid){
+			this.setState({
+				inputError: validation.errors
+			});
+			return;
 		}
 		if(this.props.modalName == 'newTask'){
 			payload.tasklistId = this.props.tasklistId;
@@ -118,16 +130,18 @@ class TaskDetail extends React.Component {
 
 	render(){
 
-		let newTaskFlag = this.props.modalName == 'newTask';
+		const { modalName, currentTasklistName, projectId } = this.props;
+
+		let newTaskFlag = modalName == 'newTask';
 
 		return(
-			<ModalWrapper id={this.props.modalName} >
-				<ModalHeader createTaskTo={this.props.currentTasklistName} newTaskFlag={newTaskFlag} />
+			<ModalWrapper id={modalName} >
+				<ModalHeader createTaskTo={currentTasklistName} newTaskFlag={newTaskFlag} />
 				<div className="modal-body">
 
 					<div className="row">
 						<div className="col-md-12 form-group" >
-		        	<input className="form-control" name="taskName" 
+		        	<input className={`form-control ${this.state.inputError.taskName ? 'error-input' : ''}`} name="taskName" 
 			        	placeholder="任务内容" 
 			        	onChange={this.handleInputChange} 
 			        	value={this.state.taskName} />
@@ -137,7 +151,7 @@ class TaskDetail extends React.Component {
 		    	<div className="row">
 		    		<div className="col-md-12 form-group">
 			    		<textarea className="form-control" name="description" 
-			        	placeholder="任务简介" rows="3" 
+			        	placeholder="任务简介（选填）" rows="3" 
 			        	onChange={this.handleInputChange} 
 			        	value={this.state.description}></textarea>
 		        </div>
@@ -147,7 +161,7 @@ class TaskDetail extends React.Component {
 		      	<div className="col-md-4 form-group">
 						  <div className='date'>
 						  	<label>截止时间</label>
-                <input type='text' placeholder="点击设置" title="点击设置" className="form-control" name='dueDate' id='taskDueDate' 
+                <input type='text' placeholder="点击设置" title="点击设置" className={`form-control ${this.state.inputError.dueDate ? 'error-input' : ''}`} name='dueDate' id='taskDueDate' 
                 	 onBlur={this.handleInputChange} onChange={function(){}} value={this.state.dueDate}/>
               </div>
 						</div>
@@ -169,12 +183,12 @@ class TaskDetail extends React.Component {
 
 	     		<div className="row executor-row">
 	     			<label>执行者</label>
-	     			<ExecutorsContainer projectId={this.props.projectId} newTaskFlag={newTaskFlag}/>
+	     			<ExecutorsContainer projectId={projectId} newTaskFlag={newTaskFlag}/>
 	     		</div>
 
 	     		<div className="row tag-row">
 	     			<label>标签</label>
-	     			<TagsContainer projectId={this.props.projectId} newTaskFlag={newTaskFlag}/>
+	     			<TagsContainer projectId={projectId} newTaskFlag={newTaskFlag}/>
 	     		</div>
 
 	      </div>

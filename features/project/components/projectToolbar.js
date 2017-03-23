@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
 import * as actionCreators from '../actions';
+import { validateProjectForm } from '../../../utils/validations';
 
 class ProjectToolbar extends React.Component {
 
@@ -11,7 +12,8 @@ class ProjectToolbar extends React.Component {
 
 		this.state = {
 			projectName: '',
-			description: ''
+			description: '',
+			inputError: {}
 		}
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,22 +24,32 @@ class ProjectToolbar extends React.Component {
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
 		this.setState({
-			[name]: value
+			[name]: value,
+			inputError: Object.assign({}, this.state.inputError, {
+				[name]: false
+			})
 		});
 	}
 
 	handleSubmit(event){
 
-		var payload = {
+		let payload = {
 			projectName: this.state.projectName,
 			description: this.state.description,
 			token: localStorage.getItem('token')
 		}
-
+		let validation = validateProjectForm(payload);
+		if(!validation.isFormValid){
+			this.setState({
+				inputError: validation.errors
+			});
+			return;
+		}
 		this.props.actions.addProject(payload);
 		this.setState({
 			projectName: '',
-			description: ''
+			description: '',
+			inputError: {}
 		});
 		$('#addProject').click();
 		// this.props.actions.fetchProject();
@@ -52,7 +64,7 @@ class ProjectToolbar extends React.Component {
 					<ModalHeader createProject={true} />
 					<div className="modal-body">
 						<div className="form-group" >
-			        <input className="form-control" name="projectName" 
+			        <input className={`form-control ${this.state.inputError.projectName ? 'error-input' : ''}`} name="projectName" 
 				        placeholder="项目名称" 
 				        onChange={this.handleInputChange} 
 				        value={this.state.projectName} />

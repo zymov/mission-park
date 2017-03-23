@@ -8,7 +8,7 @@ var Tag = require('mongoose').model('Tag');
 
 /* tasklist router */
 router.post('/addtasklist', function(req, res){
-	if(req.body.tasklistName.trim()){
+	// if(req.body.tasklistName.trim()){
 		var tasklist = new Tasklist();
 		tasklist.tasklistName = req.body.tasklistName;
 		tasklist.createTime = utils.getLocaleDate(new Date());
@@ -27,11 +27,11 @@ router.post('/addtasklist', function(req, res){
 				});
 			}
 		});
-	} else {
-		res.status(400).json({
-			errors: 'check your tasklist name'
-		})
-	}
+	// } else {
+	// 	res.status(400).json({
+	// 		errors: 'check your tasklist name'
+	// 	})
+	// }
 });
 
 router.get('/fetchtasklists', function(req, res){
@@ -51,7 +51,6 @@ router.get('/fetchtasklists', function(req, res){
 
 /* task router */
 router.post('/addtask', function(req, res){
-	if(req.body.taskName.trim()){	// validation function
 		let rb = req.body;
 		task = new Task();
 		task._tasklistId = rb.tasklistId;
@@ -73,11 +72,6 @@ router.post('/addtask', function(req, res){
 				res.status(200).json({task});
 			}
 		});
-	} else {
-		return res.status(400).json({
-			message: 'check your task name.'
-		});
-	}
 });
 
 router.post('/edittask', function(req, res){

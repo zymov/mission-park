@@ -86,7 +86,7 @@ input, textarea {
 }
 .modal-content {border-radius: 3px;}
 .modal-body .date > input {
-  border: none !important;
+  border: 1px solid transparent;
   cursor: pointer;
   text-align: center;
   background-color: #f8f8f8;
@@ -96,6 +96,9 @@ input, textarea {
 }
 .modal-body .form-group {
   border-right: 1px solid #ddd;
+}
+.modal-body .form-group .error-input {
+  border: 1px solid #ff4f3e;
 }
 .modal-body .form-group.right-col {border-right: 0;}
 .modal-body .form-group .dropdown {

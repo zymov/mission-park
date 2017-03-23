@@ -8,7 +8,7 @@ var taskSchema = new mongoose.Schema({
 	accomplished: { type: Boolean },
 	priority: { type: Number },
 	repeat: { type: Number },
-	executors: { type: Array, required: true },
+	executors: { type: Array },
 	tags: { type: Array },
 	createTime: { type: Date },
 });

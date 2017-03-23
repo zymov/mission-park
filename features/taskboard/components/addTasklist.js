@@ -5,6 +5,7 @@ import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common
 import Dropdown from './dropdown/dropdown';
 import { addTasklist } from '../actions/tasklistActions';
 import { priorityList, priorityColors } from '../../../utils';
+import { validateTasklistForm } from '../../../utils/validations';
 
 class AddTasklist extends React.Component {
 
@@ -13,7 +14,8 @@ class AddTasklist extends React.Component {
 		this.state = {
 			tasklistName: '',
 			dueDate: '',
-			priority: 0	// 0: normal, 1: important, 2:very important
+			priority: 0,	// 0: normal, 1: important, 2:very important
+			inputError: {}
 		}; 
 
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -40,7 +42,10 @@ class AddTasklist extends React.Component {
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
 		this.setState({
-			[name]: value
+			[name]: value,
+			inputError: Object.assign({}, this.state.inputError, {
+				[name]: false
+			})
 		});
 	}
 
@@ -51,11 +56,19 @@ class AddTasklist extends React.Component {
 			priority: this.state.priority,
 			dueDate: this.state.dueDate
 		}
+		let validation = validateTasklistForm(payload);
+		if(!validation.isFormValid){
+			this.setState({
+				inputError: validation.errors
+			});
+			return;
+		}
 		this.props.addTasklist(payload);
 		this.setState({
 			tasklistName: '',
 			priority: 0,
-			dueDate: ''
+			dueDate: '',
+			inputError: {}
 		});
 		$('#addTasklist').click();
 	}
@@ -78,7 +91,7 @@ class AddTasklist extends React.Component {
 					<div className="modal-body clearfix">
 						<div className="row">
 							<div className="col-md-12 form-group" >
-			        	<input className="form-control" name="tasklistName" 
+			        	<input className={`form-control ${this.state.inputError.tasklistName ? 'error-input' : ''}`} name="tasklistName" 
 				        	placeholder="列表名称" 
 				        	onChange={this.handleInputChange} 
 				        	value={this.state.tasklistName} />
@@ -89,7 +102,7 @@ class AddTasklist extends React.Component {
 				      	<div className="col-md-6 form-group">
 								  <div className='date'>
 								  	<label>截止时间</label>
-		                <input type='text' placeholder="点击设置" className="form-control" name='dueDate' id='tasklistDueDate' 
+		                <input type='text' placeholder="点击设置" className={`form-control ${this.state.inputError.dueDate ? 'error-input' : ''}`} name='dueDate' id='tasklistDueDate' 
 		                	onBlur={this.handleInputChange} value={this.state.dueDate}/>
 		              </div>
 								</div>
