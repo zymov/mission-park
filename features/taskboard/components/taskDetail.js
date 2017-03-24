@@ -182,7 +182,7 @@ class TaskDetail extends React.Component {
 	     		</div>
 
 	     		<div className="row executor-row">
-	     			<label>执行者</label>
+	     			<label>参与者</label>
 	     			<ExecutorsContainer projectId={projectId} newTaskFlag={newTaskFlag}/>
 	     		</div>
 

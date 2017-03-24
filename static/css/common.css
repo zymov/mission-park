@@ -392,14 +392,17 @@ a.dd-list-item i {
   background: none;
   border: 0;
 }
-.tasklist > label {
-  margin-right: 20px;
+.tasklist > .tasklist-attr {
+  margin-bottom: 10px;
 }
-.label-wrapper {
-  padding: 10px 0;
-}
-.label-wrapper span {
-  margin: 6px 12px 0 0;
+.tasklist > .tasklist-attr span{
+  display: block;
+  float: left;
+  margin-right: 15px;
+  padding: 0 6px;
+  color: #fff;
+  border-radius: 2px;
+  background-color: #3DA8F5;
 }
 .tasklist-footer {
   background-color: #f5f5f5;
@@ -422,10 +425,16 @@ a.dd-list-item i {
   position: relative;
   margin-bottom: 10px;
   background-color: #fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  box-shadow: 0 2px 2px rgba(0,0,0,.1);
   cursor: pointer;
+  transition: all .2s;
 }
 .task:last-child {margin-bottom: 0;}
+.task-container .done {
+  background-color: #F7F7F7;
+  box-shadow: none;
+  transition: all .2s;
+}
 .task .check-box {
   display: block;
   float: left;
@@ -445,7 +454,8 @@ a.dd-list-item i {
   text-align: center;
 }
 .task .task-content {
-  margin-left: 54px;
+  position: relative;
+  margin: 0 60px 0 54px;
 }
 .task .task-content .task-basic {
   padding: 15px 0;
@@ -459,7 +469,7 @@ a.dd-list-item i {
   margin-top: 1px;
   font-size: 16px;
   margin-bottom: 0;
-  max-width: 410px;
+  max-width: 380px;
   white-space: nowrap;
   padding-left: 0;
   overflow: hidden;
@@ -468,12 +478,11 @@ a.dd-list-item i {
 .task-basic .task-attr {
   float: right;
   border-left: 1px solid #ddd;
-  padding: 0 15px;
 }
 .task-basic .task-attr span {
   display: block;
   float: left;
-  margin-right: 15px;
+  margin-left: 15px;
   padding: 0 6px;
   color: #fff;
   border-radius: 2px;
@@ -488,6 +497,24 @@ a.dd-list-item i {
 .task .task-content .task-info {
   padding-bottom: 10px;
   line-height: 24px;
+}
+.task .task-tools {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 34px;
+  color: #a6a6a6;
+  display: flex;
+  justify-content: center;
+}
+.task .task-tools .dropdown {
+  display: flex;
+  align-items: center;
+}
+.task .task-tools .dropdown button.dropdown-toggle {
+  background: none;
+  border: 0;
 }
 .task-tags {
   margin-bottom: 0;

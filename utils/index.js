@@ -10,6 +10,7 @@ module.exports = {
   repeatList: ['不重复', '每小时', '每天', '每周', '每月', '每年'],
   repeatFuncList: ['', 'Hours', 'Date', 'Date', 'Month', 'FullYear'],
   repeatMenuList: [ {name: '不重复'}, {name: '每小时'}, {name: '每天'}, {name: '每周'}, {name: '每月'}, {name: '每年'} ],
+  taskToolMenuList: [ {name: '删除'} ],
 
   escapeRegex: function(text){
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -109,6 +110,12 @@ module.exports = {
     return arr.map(function(item, index){
       return item[key];
     })
+  },
+
+  removeSpecificItemByAttrValue: function(arr, attribute, value){
+    return arr.filter(function(object){
+      return object[attribute] != value;
+    });
   },
 
   removeSpecificItemFromArray: function(arr, obj, attribute){ //return a new array instead of mutating the original array

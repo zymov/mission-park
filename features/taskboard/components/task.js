@@ -1,12 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { formatDate, getLocaleDateR, repeatList } from '../../../utils'
-import { toggleTask, showTaskDetail } from '../actions/taskActions';
+import { formatDate, getLocaleDateR, repeatList, taskToolMenuList } from '../../../utils'
+import { toggleTask, showTaskDetail, deleteTask } from '../actions/taskActions';
 import TriggerBtn from '../../common/components/modal_dialog/triggerBtn';
+import Dropdown from './dropdown/dropdown';
 
 class Task extends React.Component {
 	constructor(props){
 		super(props);
+
+		this.taskToolDropdown = {
+			menuList: taskToolMenuList,
+			btnId: 'taskToolDropdown',
+			handleClick: this.clickTaskTool.bind(this)
+		}
 	}
 
 	clickCheckbox(e){
@@ -17,9 +24,15 @@ class Task extends React.Component {
 		this.props.showTaskDetail(this.props.task);
 	}
 
+	clickTaskTool(e){
+		if(e.target.name == '删除'){
+			this.props.deleteTask(this.props.task._id);
+		}
+	}
+
 	render(){
 
-		const { taskName, dueDate, priority, repeat, tags, accomplished, createTime } = this.props.task;
+		const { _id, taskName, description, dueDate, priority, repeat, tags, accomplished, createTime } = this.props.task;
 
 		const interval = Date.parse(getLocaleDateR(new Date(dueDate))) - Date.now();
 
@@ -37,14 +50,14 @@ class Task extends React.Component {
 		});
 
 		return(
-			<div className="task">
+			<div id={_id} className={`task ${accomplished ? 'done' : ''}`} >
 				<div className={`task-priority priority-${priority}`}></div>
 				<a className="check-box" onClick={this.clickCheckbox.bind(this)}>
 					{ accomplished && <span className="glyphicon glyphicon-ok"></span> }
 				</a>
 				<div className="task-content" onClick={this.showTask.bind(this)}>
 					<div className="task-basic">
-							<p className="task-name">{taskName}</p>
+							<p className="task-name" title={description} >{taskName}</p>
 							<div className="task-attr">
 								<span className={`task-duedate ${delay}`}>{formatDate(dueDate)} 截止</span>
 								{ !!repeat &&  <span className="task-repeat">{repeatList[repeat]}重复</span>}
@@ -56,6 +69,11 @@ class Task extends React.Component {
 						</ul>
 					</div>
 				</div>
+				<div className="task-tools">
+					<Dropdown dropdown={this.taskToolDropdown} btnStyle={{}} 
+						btnName={<i className="glyphicon glyphicon-option-vertical"></i>} />
+				</div>
+				
 				<TriggerBtn dataTarget={`#taskDetail${this.props.task._id}`} btnName="" display="none" />
 			</div>
 		)
@@ -69,7 +87,8 @@ class Task extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
 	toggleTask: task => { dispatch(toggleTask(task)); },
-	showTaskDetail: task => { dispatch(showTaskDetail(task)); }
+	showTaskDetail: task => { dispatch(showTaskDetail(task)); },
+	deleteTask: taskId => { dispatch(deleteTask(taskId)); }
 });
 
 export default connect(null, mapDispatchToProps)(Task);

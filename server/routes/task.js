@@ -149,4 +149,19 @@ router.post('/toggletask', function(req, res){
 });
 
 
+router.delete('/deletetask', function(req, res){
+	let taskId = utils.getQueryVariable(req.url, 'taskId');
+
+	Task.remove({_id: taskId}).exec(function(err, task){
+		if(err){
+			console.log(err);
+			return res.status(500).json({
+				message: 'Could not delete this task.'
+			});
+		}
+		return res.status(200).json({taskId: taskId});
+	});
+
+});
+
 module.exports = router;

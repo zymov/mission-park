@@ -20,10 +20,17 @@ class Board extends React.Component {
 	render(){
 
 		const { showNotification, publicErrMsg, tasklistInfoText, taskInfoText, 
-						currentTasklistId, tasklists,
+						currentTasklistId, tasklists, tasks,
 						taskDetail } = this.props;
 
 		let projectId = this.props.params.projectId;
+
+		let accomplishedAmount = 0;
+		tasks.forEach(function(item, index){
+			if(item.accomplished){
+				++accomplishedAmount;
+			}
+		});
 
 		var fetchedTaskList = [];
 
@@ -70,7 +77,8 @@ const mapStateToProps = state => {
 		currentTasklistId: 			tb.task.currentTasklistId,
 		taskDetail: 						tb.task.taskDetail,
 		tasklists: 							tb.tasklist.tasklists,
-		tasklistInfoText: 			tb.tasklist.tasklistInfoText
+		tasklistInfoText: 			tb.tasklist.tasklistInfoText,
+		tasks: 									tb.task.tasks
 	}
 }
 

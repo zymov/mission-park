@@ -99,3 +99,20 @@ export function setCurrentTasklistIdToNull(){
 		type: 'SET_CURRENT_TASKLIST_ID_TO_NULL'
 	}
 }
+
+
+// export function fetchTasklistStatus(tasklistId){
+// 	return function(dispatch){
+// 		axios.get('/tasks/taskliststatus', {
+// 			params: {
+// 				tasklistId: tasklistId
+// 			}
+// 		})
+// 		.then(function(res){
+// 			dispatch(fetchTasklistStatusSuccess(res.data.status))
+// 		})
+// 		.catch(function(err){
+// 			dispatch(fetchTasklistStatusFailure(err));
+// 		});
+// 	}
+// }

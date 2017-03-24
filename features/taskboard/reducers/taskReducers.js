@@ -7,14 +7,15 @@ import {
 	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR, ADD_TAG, REMOVE_TAG, REMOVE_ALL_TAG, 
 	TOGGLE_TASK_REQUEST, TOGGLE_TASK_SUCCESS, TOGGLE_TASK_FAILURE, 
 	SHOW_TASK_DETAIL,
-	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT
+	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT,
+	DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE
 } from '../actions/taskActions';
 import { ADD_TASKLIST_REQUEST } from '../actions/tasklistActions';
 import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
 
 import { 
 	addNewItemToArrayBegin, addNewItemToArrayEnd, 
-	updateItemInArray, removeSpecificItemFromArray, updateAndMoveItemInArray 
+	updateItemInArray, removeSpecificItemByAttrValue, removeSpecificItemFromArray, updateAndMoveItemInArray 
 } from '../../../utils';
 
 const initialState = {
@@ -38,7 +39,7 @@ const initialState = {
 
 	// show task detail
 	editTaskTimestamp: null,
-	taskDetail: null,
+	taskDetail: null
 
 }
 
@@ -242,6 +243,29 @@ export default function task(state = initialState, action){
 				taskInfoText: {}
 			});
 
+
+		case DELETE_TASK_REQUEST:
+			return Object.assign({}, state, {
+				taskInfoText: {
+					message: '正在删除...',
+					level: 'normal'
+				}
+			});
+		case DELETE_TASK_SUCCESS:
+			return Object.assign({}, state, {
+				taskInfoText: {
+					message: '删除成功！',
+					level: 'success'
+				},
+				tasks: removeSpecificItemByAttrValue(state.tasks, '_id', action.payload)
+			});
+		case DELETE_TASK_FAILURE:
+			return Object.assign({}, state, {
+				taskInfoText: {
+					message: '删除失败！',
+					level: 'error'
+				}
+			});
 
 		default:
 			return state;

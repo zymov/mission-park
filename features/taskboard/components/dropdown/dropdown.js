@@ -19,7 +19,7 @@ class Dropdown extends React.Component {
 	  return (
 	  	<div className="dropdown">
   	  	<button className="dropdown-toggle" type="button" id={btnId} 
-  	  	data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style={this.props.btnStyle}>
+  	  		data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style={this.props.btnStyle}>
   		    {this.props.btnName}
   		  </button>
   		  <ul className="dropdown-menu" onClick={handleClick.bind(this)} aria-labelledby={btnId}>

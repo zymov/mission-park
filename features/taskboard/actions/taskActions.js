@@ -39,6 +39,11 @@ export const SHOW_TASK_DETAIL = 'SHOW_TASK_DETAIL';
 export const INVALID_INPUT = 'INVALID_INPUT';
 export const INVALID_INPUT_MAX_LENGTH = 'INVALID_INPUT_MAX_LENGTH';
 
+export const DELETE_TASK_REQUEST = 'DELETE_TASK_REQUEST';
+export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
+export const DELETE_TASK_FAILURE = 'DELETE_TASK_FAILURE';
+
+
 /* add and edit tasks */
 export function addTask(payload){
 	return function(dispatch){
@@ -310,5 +315,42 @@ export function invalidInputMaxLength(payload){
 	return {
 		type: 'INVALID_INPUT_MAX_LENGTH',
 		payload: payload
+	}
+}
+
+
+export function deleteTask(taskId){
+	return function(dispatch){
+		dispatch(deleteTaskRequest());
+		axios.delete('/tasks/deletetask', {
+			params: {
+				taskId: taskId
+			}
+		})
+		.then(function(res){
+			dispatch(deleteTaskSuccess(res.data.taskId));
+		})
+		.catch(function(err){
+			dispatch(deleteTaskFailure(err));
+		});
+	}
+}
+
+export function deleteTaskRequest(){
+	return {
+		type: 'DELETE_TASK_REQUEST'
+	}
+}
+
+export function deleteTaskSuccess(taskId){
+	return {
+		type: 'DELETE_TASK_SUCCESS',
+		payload: taskId
+	}
+}
+
+export function deleteTaskFailure(err){
+	return {
+		type: 'DELETE_TASK_FAILURE'
 	}
 }
