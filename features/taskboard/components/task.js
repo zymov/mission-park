@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { formatDate, repeatList } from '../../../utils'
+import { formatDate, getLocaleDateR, repeatList } from '../../../utils'
 import { toggleTask, showTaskDetail } from '../actions/taskActions';
 import TriggerBtn from '../../common/components/modal_dialog/triggerBtn';
 
@@ -21,6 +21,15 @@ class Task extends React.Component {
 
 		const { taskName, dueDate, priority, repeat, tags, accomplished, createTime } = this.props.task;
 
+		const interval = Date.parse(getLocaleDateR(new Date(dueDate))) - Date.now();
+
+		let delay = '';
+		if(interval < 0){
+			delay = 'delay';
+		} else if(900000 > interval > 0){
+			delay = 'almost-delay';
+		}
+
 		let tagsList = tags.map(function(item, index){
 			return (
 				<li key={index}><span><span className="tag-dot"></span>{item}</span></li>
@@ -37,7 +46,7 @@ class Task extends React.Component {
 					<div className="task-basic">
 							<p className="task-name">{taskName}</p>
 							<div className="task-attr">
-								<span className="task-duedate">{formatDate(dueDate)} 截止</span>
+								<span className={`task-duedate ${delay}`}>{formatDate(dueDate)} 截止</span>
 								{ !!repeat &&  <span className="task-repeat">{repeatList[repeat]}重复</span>}
 							</div>
 					</div>

@@ -339,6 +339,9 @@ ul.dd-menu > li > a.dd-list-item {
 ul.dd-menu > li > a.dd-list-item:hover {
   background-color: #f1f8ff;
 }
+.tag-list ul.dd-menu > li > a.dd-list-item {
+  padding: 6px 32px 6px 12px;
+}
 a.dd-list-item img {
     width: 32px;
     height: 32px;
@@ -476,6 +479,12 @@ a.dd-list-item i {
   border-radius: 2px;
   background-color: #3DA8F5;
 }
+.task-basic .task-attr span.delay {
+  background-color: #ff4f3e;
+} 
+.task-basic .task-attr span.almost-delay {
+  background-color: #ffaf38;
+} 
 .task .task-content .task-info {
   padding-bottom: 10px;
   line-height: 24px;

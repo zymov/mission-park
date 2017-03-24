@@ -26,6 +26,12 @@ module.exports = {
     return utc;
   },
 
+  getLocaleDateR: function(date){
+    let utc = new Date(date);
+    utc.setHours(utc.getHours() - 8);
+    return utc;
+  },
+
   checkHttpStatus: function (response){
   	if(response.status >= 200 && response.status < 300){
   		return response;
