@@ -404,6 +404,28 @@ a.dd-list-item i {
   border-radius: 2px;
   background-color: #3DA8F5;
 }
+.tasklist .tasklist-tools {
+  position: absolute;
+  top: 3px;
+  right: 0px;
+  width: 30px;
+  height: 34px;
+  color: #a6a6a6;
+  display: flex;
+  justify-content: center;
+}
+.tasklist .tasklist-tools .dropdown {
+  display: flex;
+  align-items: center;
+}
+.tasklist .tasklist-tools .dropdown button.dropdown-toggle {
+  background: none;
+  border: 0;
+}
+.tasklist .tasklist-tools .dropdown .dropdown-menu {
+  left: -140px;
+  text-align: right;
+}
 .tasklist-footer {
   background-color: #f5f5f5;
   border-top: 1px solid #eee;

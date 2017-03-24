@@ -1,11 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { fetchTasklistStatus } from '../actions/tasklistActions';
+import { deleteTasklist/*fetchTasklistStatus*/ } from '../actions/tasklistActions';
 import { fetchTasks } from '../actions/taskActions';
-import { formatDate, getLocaleDateR } from '../../../utils';
+import { formatDate, getLocaleDateR, tasklistToolMenuList } from '../../../utils';
+import Dropdown from './dropdown/dropdown';
 
 class Tasklist extends React.Component {
+
+	constructor(props){
+		super(props);
+
+		this.tasklistToolDropdown = {
+			menuList: tasklistToolMenuList,
+			btnId: 'tasklistToolDropdown',
+			handleClick: this.clickTasklistTool.bind(this)
+		}
+	}
 
 	handleClick(e){
 		e.stopPropagation();
@@ -17,6 +28,14 @@ class Tasklist extends React.Component {
 	// 	this.props.fetchTasklistStatus(this.props.tasklist._id);
 
 	// }
+
+
+	clickTasklistTool(e){
+		if(e.target.name == '删除'){
+			this.props.deleteTasklist(this.props.tasklist._id);
+		}
+	}
+
 
 	render(){
 
@@ -39,6 +58,10 @@ class Tasklist extends React.Component {
 	      <div className="tasklist-attr clearfix">
 	      	{/*<span className={`tasklist-dueDate ${delay}`}>{formatDate(dueDate)} 截止</span>*/}
 	      </div>
+				<div className="tasklist-tools">
+					<Dropdown dropdown={this.tasklistToolDropdown} btnStyle={{}} 
+						btnName={<i className="glyphicon glyphicon-option-vertical"></i>} />
+				</div>
 	      <small className="tasklist-footer">创建时间: {formatDate(createTime)}</small>
 		  </div>
 		);
@@ -52,7 +75,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	fetchTasks: (tasklistId, index, tasklistName) => { dispatch(fetchTasks(tasklistId, index, tasklistName)); },
-	fetchTasklistStatus: (tasklistId) => { dispatch(fetchTasklistStatus(tasklistId)); }
+	deleteTasklist: (tasklistId) => { dispatch(deleteTasklist(tasklistId)); }
+	// fetchTasklistStatus: (tasklistId) => { dispatch(fetchTasklistStatus(tasklistId)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasklist);

@@ -10,8 +10,7 @@ import {
 	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT,
 	DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE
 } from '../actions/taskActions';
-import { ADD_TASKLIST_REQUEST } from '../actions/tasklistActions';
-import { SET_CURRENT_TASKLIST_ID_TO_NULL } from '../actions/tasklistActions';
+import { ADD_TASKLIST_REQUEST, SET_CURRENT_TASKLIST_ID_TO_NULL, DELETE_TASKLIST_SUCCESS } from '../actions/tasklistActions';
 
 import { 
 	addNewItemToArrayBegin, addNewItemToArrayEnd, 
@@ -265,6 +264,11 @@ export default function task(state = initialState, action){
 					message: '删除失败！',
 					level: 'error'
 				}
+			});
+
+		case DELETE_TASKLIST_SUCCESS:
+			return Object.assign({}, state, {
+				tasks: []
 			});
 
 		default:

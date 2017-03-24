@@ -43,6 +43,28 @@ router.get('/fetchtasklists', function(req, res){
 
 });
 
+
+router.delete('/deletetasklist', function(req, res){
+	let tasklistId = utils.getQueryVariable(req.url, 'tasklistId');
+
+	Task.remove({_tasklistId: tasklistId}).exec(function(err){
+		if(err){
+			console.log(err);
+			return res.status(500).json({message: 'Could not delete this tasklist.'});
+		}
+		Tasklist.remove({_id: tasklistId}).exec(function(err){
+			if(err){
+				console.log(err);
+				return res.status(500).json({
+					message: 'Could not delete this tasklist.'
+				});
+			}
+			return res.status(200).json({tasklistId: tasklistId});
+		});
+	});
+
+});
+
 /* task router */
 router.post('/addtask', function(req, res){
 		let rb = req.body;
@@ -152,7 +174,7 @@ router.post('/toggletask', function(req, res){
 router.delete('/deletetask', function(req, res){
 	let taskId = utils.getQueryVariable(req.url, 'taskId');
 
-	Task.remove({_id: taskId}).exec(function(err, task){
+	Task.remove({_id: taskId}).exec(function(err){
 		if(err){
 			console.log(err);
 			return res.status(500).json({

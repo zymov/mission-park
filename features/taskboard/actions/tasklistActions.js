@@ -12,6 +12,10 @@ export const FETCH_TASKLISTS_FAILURE = 'FETCH_TASKLISTS_FAILURE';
 
 export const SET_CURRENT_TASKLIST_ID_TO_NULL = 'SET_CURRENT_TASKLIST_ID_TO_NULL';
 
+export const DELETE_TASKLIST_REQUEST = 'DELETE_TASKLIST_REQUEST';
+export const DELETE_TASKLIST_SUCCESS = 'DELETE_TASKLIST_SUCCESS';
+export const DELETE_TASKLIST_FAILURE = 'DELETE_TASKLIST_FAILURE';
+
 export function addTasklist(payload){
 	return function(dispatch){
 		dispatch(addTasklistRequest());
@@ -99,6 +103,48 @@ export function setCurrentTasklistIdToNull(){
 		type: 'SET_CURRENT_TASKLIST_ID_TO_NULL'
 	}
 }
+
+
+export function deleteTasklist(tasklistId){
+	return function(dispatch){
+		dispatch(deleteTasklistRequest());
+		axios.delete('/tasks/deletetasklist', {
+			params: {
+				tasklistId: tasklistId
+			}
+		})
+		.then(function(res){
+			dispatch(deleteTasklistSuccess(res.data.tasklistId));
+		})
+		.catch(function(err){
+			dispatch(deleteTasklistFailure(err));
+		});
+	}
+}
+
+export function deleteTasklistRequest(){
+	return {
+		type: 'DELETE_TASKLIST_REQUEST'
+	}
+}
+
+export function deleteTasklistSuccess(tasklistId){
+	return {
+		type: 'DELETE_TASKLIST_SUCCESS',
+		payload: tasklistId
+	}
+}
+
+export function deleteTasklistFailure(err){
+	return {
+		type: 'DELETE_TASKLIST_FAILURE'
+	}
+}
+
+
+
+
+
 
 
 // export function fetchTasklistStatus(tasklistId){

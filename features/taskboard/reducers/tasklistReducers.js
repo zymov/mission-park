@@ -1,9 +1,11 @@
 import { 
 	ADD_TASKLIST_REQUEST, ADD_TASKLIST_SUCCESS, ADD_TASKLIST_FAILURE,
-	FETCH_TASKLISTS_REQUEST, FETCH_TASKLISTS_SUCCESS, FETCH_TASKLISTS_FAILURE } from '../actions/tasklistActions';
+	FETCH_TASKLISTS_REQUEST, FETCH_TASKLISTS_SUCCESS, FETCH_TASKLISTS_FAILURE,
+	DELETE_TASKLIST_REQUEST, DELETE_TASKLIST_SUCCESS, DELETE_TASKLIST_FAILURE 
+} from '../actions/tasklistActions';
 import { FETCH_TASKS_REQUEST } from '../actions/taskActions';
 
-import { addNewItemToArrayBegin } from '../../../utils';
+import { addNewItemToArrayBegin, removeSpecificItemByAttrValue } from '../../../utils';
 
 const initialState = {
 	tasklistLoading: false,
@@ -76,6 +78,31 @@ export default function tasklist(state = initialState, action){
 			return Object.assign({}, state, {
 				tasklistInfoText: {}
 			});
+
+		case DELETE_TASKLIST_REQUEST:
+			return Object.assign({}, state, {
+				taskInfoText: {
+					message: '正在删除...',
+					level: 'normal'
+				}
+			});
+		case DELETE_TASKLIST_SUCCESS:
+			return Object.assign({}, state, {
+				taskInfoText: {
+					message: '删除成功！',
+					level: 'success'
+				},
+				tasklists: removeSpecificItemByAttrValue(state.tasklists, '_id', action.payload)
+			});
+		case DELETE_TASKLIST_FAILURE:
+			return Object.assign({}, state, {
+				taskInfoText: {
+					message: '删除失败！',
+					level: 'error'
+				}
+			});
+
+
 
 		default:
 			return state;
