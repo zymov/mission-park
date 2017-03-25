@@ -57,7 +57,7 @@ class ProjectToolbar extends React.Component {
 
 	render(){
 		return(
-			<div className="row" style={{marginTop: '20px'}}>
+			<div className="row project-toolbar" >
 
 			<button type="button" className="btn btn-primary btn-lg" data-toggle="modal" data-target="#addProject">添加新项目</button>
 				<ModalWrapper id="addProject" >

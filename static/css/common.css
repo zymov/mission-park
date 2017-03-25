@@ -140,6 +140,10 @@ input, textarea {
 }
 
 /* project start */
+.project-toolbar {
+  margin-top: 20px;
+  padding: 0 15px;
+}
 #project-list .thumbnail {
   padding: 0;
   border: 0;
@@ -208,6 +212,37 @@ input, textarea {
   background-color: #eee;
 }
 /* common navbar end */
+
+/* toolbar start */
+.toolbar {
+  margin-bottom: 10px;
+  width: 100%;
+}
+.toolbar-btn {
+  float: left;
+  margin-right: 10px;
+}
+.toolbar-search .dropdown {
+  float: left;
+}
+#taskAttrDropdown {
+  background: none;
+  border: 1px solid #ccc;
+  border-right: 0;
+  line-height: 32px;
+  background-color: #fff;
+  padding: 0 25px 0 5px;
+  width: 65px;
+  box-sizing: content-box;
+}
+#taskAttrDropdown i {
+  position: absolute;
+  top: 9px;
+  right: 5px;
+  color: #999;
+
+}
+/* toolbar end */
 
 /* task modal-dialog start */
 .executor-row > label, .tag-row > label {

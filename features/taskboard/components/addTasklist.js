@@ -75,6 +75,7 @@ class AddTasklist extends React.Component {
 
 	selectPriority(event){
 		const target = event.target;
+		if(!target.text) { return; }
 		const priority = priorityList.indexOf(target.text);
 		this.setState({
 			priority: priority
@@ -84,7 +85,7 @@ class AddTasklist extends React.Component {
 	render(){
 
 		return(
-			<div>
+			<div className="toolbar-btn">
 				<TriggerBtn dataTarget="#addTasklist" btnName="添加新任务列表"/>
 				<ModalWrapper id="addTasklist" >
 					<ModalHeader createTasklistTo='project'/>

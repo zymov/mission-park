@@ -15,6 +15,12 @@ export const SAVE_TAGS_FAILURE = 'SAVE_TAGS_FAILURE';
 export const OPEN_NOTIFICATION = 'OPEN_NOTIFICATION';
 export const CLOSE_NOTIFICATION = 'CLOSE_NOTIFICATION';
 
+export const SEARCH_INPUT_REQUEST = 'SEARCH_INPUT_REQUEST';
+export const UPDATE_PROJECT_ARR = 'UPDATE_PROJECT_ARR';
+export const UPDATE_TASKLIST_ARR = 'UPDATE_TASKLIST_ARR';
+export const UPDATE_TASK_ARR = 'UPDATE_TASK_ARR';
+export const SEARCH_INPUT_FAILURE = 'SEARCH_INPUT_FAILURE';
+
 export function findUsersByName(userName){
 	return function(dispatch){
 		dispatch(fetchUsersRequest());
@@ -185,5 +191,67 @@ export function openNotification(){
 export function closeNotification(){
 	return {
 		type: 'CLOSE_NOTIFICATION'
+	}
+}
+
+export function searchInput(value, model, attr, parentId){
+	const modelName = model;
+	return function(dispatch){
+		dispatch(searchInputRequest());
+		dispatch(openNotification());
+		axios.get('/tasks/searchinput', {
+			params: {
+				model: model,
+				value: value,
+				attr: attr,
+				parentId: parentId
+			}
+		})
+		.then(function(res){
+			if(modelName == 'project'){
+				dispatch(updateProjectArr(res.data.projects));
+			} else if (modelName == 'tasklist'){
+				dispatch(updateTasklistArr(res.data.tasklists));
+			} else if (modelName == 'task'){
+				dispatch(updateTaskArr(res.data.tasks));
+			}
+		})
+		.catch(function(err){
+			dispatch(searchInputFailure(err));
+		});
+	}
+}
+
+export function searchInputRequest(){
+	return {
+		type: 'SEARCH_INPUT_REQUEST'
+	}
+}
+
+export function updateProjectArr(projects){
+	return {
+		type: 'UPDATE_PROJECT_ARR',
+		payload: projects
+	}
+}
+export function updateTasklistArr(tasklists){
+	return {
+		type: 'UPDATE_TASKLIST_ARR',
+		payload: tasklists
+	}
+}
+export function updateTaskArr(tasks){
+	return {
+		type: 'UPDATE_TASK_ARR',
+		payload: tasks
+	}
+}
+
+export function searchInputFailure(err){
+	return {
+		type: 'SEARCH_INPUT_FAILURE',
+		payload: {
+			errors: err
+		}
 	}
 }

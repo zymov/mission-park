@@ -2,8 +2,8 @@ import {
 	FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE,
 	FETCH_TAGS_REQUEST, FETCH_TAGS_SUCCESS, FETCH_TAGS_FAILURE,
 	SAVE_TAGS_REQUEST, SAVE_TAGS_SUCCESS, SAVE_TAGS_FAILURE,
-	OPEN_NOTIFICATION, CLOSE_NOTIFICATION
-	//INVALID_INPUT_MAX_LENGTH, //INVALID_INPUT 
+	OPEN_NOTIFICATION, CLOSE_NOTIFICATION, 
+	SEARCH_INPUT_REQUEST, SEARCH_INPUT_FAILURE 
 } from '../actions';
 import { addNewItemToArrayEnd } from '../../../utils';
 
@@ -12,7 +12,7 @@ const initialState = {
 	projectTags: [],
 	loading: false,
 	commonInfoText: '',
-	publicErrMsg: {},
+	publicMsg: {},
 	showNotification: false
 }
 
@@ -75,7 +75,17 @@ export default function common(state=initialState, action){
 				showNotification: false
 			});
 
-		
+		case SEARCH_INPUT_REQUEST: 
+			return Object.assign({}, state, {
+				publicMsg: {}
+			});
+		case SEARCH_INPUT_FAILURE:
+			return Object.assign({}, state, {
+				publicMsg: {
+					message: '查找不到您输入的内容，请重新输入。',
+					level: 'error'
+				}
+			});		
 
 
 		default:

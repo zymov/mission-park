@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 import AddTasklist from './addTasklist';
+import SearchInput from '../../common/components/searchInput';
 
 class TasklistToolbar extends React.Component {
 
@@ -11,10 +12,9 @@ class TasklistToolbar extends React.Component {
 
 	render(){
 		return(
-			<div className="btn-group" role="group" aria-label="Basic example">
+			<div className="btn-group toolbar" role="group" aria-label="Basic example">
 			  <AddTasklist projectId={this.props.projectId} />
-			  <button type="button" className="btn btn-secondary">btn2</button>
-			  <button type="button" className="btn btn-secondary">btn3</button>
+			  <SearchInput model="tasklist" parentId={this.props.projectId} attr={{name:"任务列表名称", modelName: 'tasklistName'}} />
 			</div>
 		);
 	}

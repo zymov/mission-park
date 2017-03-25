@@ -11,7 +11,7 @@ import {
 	DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE
 } from '../actions/taskActions';
 import { ADD_TASKLIST_REQUEST, SET_CURRENT_TASKLIST_ID_TO_NULL, DELETE_TASKLIST_SUCCESS } from '../actions/tasklistActions';
-
+import { SEARCH_INPUT_REQUEST, UPDATE_TASK_ARR } from '../../common/actions';
 import { 
 	addNewItemToArrayBegin, addNewItemToArrayEnd, 
 	updateItemInArray, removeSpecificItemByAttrValue, removeSpecificItemFromArray, updateAndMoveItemInArray 
@@ -265,10 +265,19 @@ export default function task(state = initialState, action){
 					level: 'error'
 				}
 			});
-
 		case DELETE_TASKLIST_SUCCESS:
 			return Object.assign({}, state, {
 				tasks: []
+			});
+
+		case SEARCH_INPUT_REQUEST:
+			return Object.assign({}, state, {
+				taskInfoText: {}
+			});
+
+		case UPDATE_TASK_ARR:
+			return Object.assign({}, state, {
+				tasks: action.payload
 			});
 
 		default:

@@ -186,4 +186,41 @@ router.delete('/deletetask', function(req, res){
 
 });
 
+
+router.get('/searchinput', function(req, res){
+	let value = utils.getQueryVariable(req.url, 'value');
+	let model = utils.getQueryVariable(req.url, 'model');
+	let attr = utils.getQueryVariable(req.url, 'attr');
+	let parentId = utils.getQueryVariable(req.url, 'parentId');
+
+	const regex = new RegExp(utils.escapeRegex(value ? value : ''), 'gi'); 
+
+	if(model == 'tasklist'){
+		Tasklist.find({tasklistName: regex, _projectid: parentId}).exec(function(err, tasklists){
+			if(err){
+				console.log(err);
+				return res.status(500).json({message: 'Could not receive any value.'});
+			}
+			return res.status(200).json({tasklists});
+		});
+	} else if (model == 'task'){
+		let query = {};
+		let name = attr;
+		query[name] = regex;
+		query["_tasklistId"] = parentId;
+		
+		Task.find(query).exec(function(err, tasks){
+			if(err){
+				console.log(err);
+				return res.status(500).json({message: 'Could not receive any value.'});
+			}
+			return res.status(200).json({tasks});
+		});
+	} else {
+		return res.status(304).json({});//is `json({})` necessary?
+	}
+
+});
+
+
 module.exports = router;

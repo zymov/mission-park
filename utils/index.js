@@ -12,6 +12,8 @@ module.exports = {
   repeatMenuList: [ {name: '不重复'}, {name: '每小时'}, {name: '每天'}, {name: '每周'}, {name: '每月'}, {name: '每年'} ],
   taskToolMenuList: [ {name: '删除'} ],
   tasklistToolMenuList: [ {name: '删除'} ],
+  taskAttrMenuList: [ {name: '任务名称', modelName: 'taskName'}, {name: '标签', modelName: 'tags'}, {name: '参与者', modelName: 'executors.name'} ],
+
 
   escapeRegex: function(text){
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");

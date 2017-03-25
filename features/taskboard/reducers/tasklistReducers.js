@@ -4,6 +4,7 @@ import {
 	DELETE_TASKLIST_REQUEST, DELETE_TASKLIST_SUCCESS, DELETE_TASKLIST_FAILURE 
 } from '../actions/tasklistActions';
 import { FETCH_TASKS_REQUEST } from '../actions/taskActions';
+import { SEARCH_INPUT_REQUEST, UPDATE_TASKLIST_ARR } from '../../common/actions';
 
 import { addNewItemToArrayBegin, removeSpecificItemByAttrValue } from '../../../utils';
 
@@ -102,7 +103,15 @@ export default function tasklist(state = initialState, action){
 				}
 			});
 
+		case SEARCH_INPUT_REQUEST:
+			return Object.assign({}, state, {
+				taskInfoText: {}
+			});
 
+		case UPDATE_TASKLIST_ARR:
+			return Object.assign({}, state, {
+				tasklists: action.payload
+			});
 
 		default:
 			return state;

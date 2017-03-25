@@ -27,7 +27,7 @@ class AddTask extends React.Component {
 
 	render(){
 		return(
-			<div>
+			<div className="toolbar-btn">
 				<TriggerBtn dataTarget="#newTask" btnName="添加新任务"/>
 				<TaskDetail modalName="newTask" projectId={this.props.projectId} tasklistId={this.props.tasklistId} />
 			</div>

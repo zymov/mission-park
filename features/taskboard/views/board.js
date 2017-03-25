@@ -19,7 +19,7 @@ class Board extends React.Component {
 
 	render(){
 
-		const { showNotification, publicErrMsg, tasklistInfoText, taskInfoText, 
+		const { showNotification, publicMsg, tasklistInfoText, taskInfoText, 
 						currentTasklistId, tasklists, tasks,
 						taskDetail } = this.props;
 
@@ -41,7 +41,7 @@ class Board extends React.Component {
 		return(
 				<div className="container taskboard">
 					<NotificationsContainer>
-						{(!isEmptyObject(publicErrMsg) && showNotification) && <Notification notification={publicErrMsg} />}
+						{(!isEmptyObject(publicMsg) && showNotification) && <Notification notification={publicMsg} />}
 						{(!isEmptyObject(tasklistInfoText) && showNotification) && <Notification notification={tasklistInfoText} />}
 						{(!isEmptyObject(taskInfoText) && showNotification) && <Notification notification={taskInfoText} />}
 					</NotificationsContainer>
@@ -72,7 +72,7 @@ const mapStateToProps = state => {
 	const tb = state.taskboard;
 	return {
 		showNotification: 			state.common.showNotification,
-		publicErrMsg:  					state.common.publicErrMsg,
+		publicMsg:  					state.common.publicMsg,
 		taskInfoText: 					tb.task.taskInfoText,
 		currentTasklistId: 			tb.task.currentTasklistId,
 		taskDetail: 						tb.task.taskDetail,

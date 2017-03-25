@@ -57,6 +57,7 @@ class TaskDetail extends React.Component {
 
 	selectPriority(event){
 		const target = event.target;
+		if(!target.text) { return; }
 		const priority = priorityList.indexOf(target.text);
 		this.setState({
 			priority: priority
@@ -65,6 +66,7 @@ class TaskDetail extends React.Component {
 
 	selectRepeat(event){
 		const target = event.target;
+		if(!target.text) { return; }
 		const repeat = repeatList.indexOf(target.text);
 		this.setState({
 			repeat: repeat
