@@ -1,11 +1,9 @@
 import React, { PropTypes } from 'react';
-import {Link} from 'react-router';
 
 export default class ProjectCard extends React.Component {
 
 	constructor(props, context){
 		super(props, context);
-
 	}
 
 	handleClick(){
@@ -31,9 +29,7 @@ export default class ProjectCard extends React.Component {
 				    </div>
 			    </div>
 			  </div>
-
-
-		)
+		);
 	}
 }
 

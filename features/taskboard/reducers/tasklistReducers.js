@@ -113,6 +113,7 @@ export default function tasklist(state = initialState, action){
 				tasklists: action.payload
 			});
 
+			
 		default:
 			return state;
 	}

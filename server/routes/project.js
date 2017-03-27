@@ -136,5 +136,19 @@ router.get('/gettags', function(req, res){
 	});
 })
 
+router.delete('/deleteproject', function(req, res){
+	let projectId = utils.getQueryVariable(req.url, 'projectId');
+
+	Project.remove({_id: projectId}).exec(function(err){
+		if(err){
+			console.log(err);
+			return res.status(500).json({
+				message: 'Could not delete this task.'
+			});
+		}
+		return res.status(200).json({projectId: projectId});
+	});
+
+});
 
 module.exports = router;

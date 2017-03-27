@@ -1,0 +1,33 @@
+/* bootstrap overwrite start */
+a {
+  color: #3DA8F5;
+  text-decoration: none;
+}
+.btn-primary, .btn-primary:focus, .btn-primary:active, .btn-primary:hover, .btn-primary:visited, .btn-primary:active:hover {color: #fff;}
+.btn-primary {
+  background-color: #3DA8F5;
+  border-color: #3DA8F5;
+}
+.btn-primary:focus {
+  background-color: #3DA8F5;
+  border-color: #3DA8F5;
+}
+.btn-primary:active, .btn-primary:visited {
+  background-color: #348fd0;
+  border-color: #348fd0;
+}
+.btn-primary:hover {
+  background-color: #5ab5f7;
+  border-color: #5ab5f7;
+}
+.btn-primary:active:hover {
+  background-color: #5ab5f7;
+  border-color: #5ab5f7;
+}
+.btn:focus, .btn:active:focus {
+  outline: 0;
+}
+.btn:active {
+  -webkit-box-shadow: none; 
+  box-shadow: none; 
+}

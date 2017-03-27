@@ -9,6 +9,10 @@ export const FETCH_PROJECT_REQUEST = 'FETCH_PROJECT_REQUEST';
 export const FETCH_PROJECT_SUCCESS = 'FETCH_PROJECT_SUCCESS';
 export const FETCH_PROJECT_FAILURE = 'FETCH_PROJECT_FAILURE';
 
+export const DELETE_PROJECT_REQUEST = 'DELETE_PROJECT_REQUEST';
+export const DELETE_PROJECT_SUCCESS = 'DELETE_PROJECT_SUCCESS';
+export const DELETE_PROJECT_FAILURE = 'DELETE_PROJECT_FAILURE';
+
 export function addProject(payload){
 
 	return function(dispatch){
@@ -80,5 +84,42 @@ export function fetchProjectFailure(err){
 		payload: {
 			errors: err
 		}
+	}
+}
+
+
+export function deleteProject(projectId){
+	return function(dispatch){
+		dispatch(deleteProjectRequest());
+		axios.delete('/projects/deleteproject', {
+			params: {
+				projectId: projectId
+			}
+		})
+		.then(function(res){
+			dispatch(deleteProjectSuccess(res.data.projectId));
+		})
+		.catch(function(err){
+			dispatch(deleteProjectFailure(err));
+		});
+	}
+}
+
+export function deleteProjectRequest(){
+	return {
+		type: 'DELETE_PROJECT_REQUEST'
+	}
+}
+
+export function deleteProjectSuccess(projectId){
+	return {
+		type: 'DELETE_PROJECT_SUCCESS',
+		payload: projectId
+	}
+}
+
+export function deleteProjectFailure(err){
+	return {
+		type: 'DELETE_PROJECT_FAILURE'
 	}
 }

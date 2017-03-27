@@ -12,6 +12,7 @@ module.exports = {
   repeatMenuList: [ {name: '不重复'}, {name: '每小时'}, {name: '每天'}, {name: '每周'}, {name: '每月'}, {name: '每年'} ],
   taskToolMenuList: [ {name: '删除'} ],
   tasklistToolMenuList: [ {name: '删除'} ],
+  projectToolMenuList: [ {name: '删除'} ],
   taskAttrMenuList: [ {name: '任务名称', modelName: 'taskName'}, {name: '标签', modelName: 'tags'}, {name: '参与者', modelName: 'executors.name'} ],
 
 
@@ -83,6 +84,7 @@ module.exports = {
   },
 
   getQueryVariable: function (url, key){
+    if(url.indexOf(key) == -1){return null;}
     if(~url.indexOf('?')){
       let query = url.split('?')[1];
       let variables = query.split('&');

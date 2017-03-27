@@ -2,9 +2,10 @@ const utils = require('../../utils');
 const express = require('express');
 const router = new express.Router();
 
-var Task = require('mongoose').model('Task');
-var Tasklist = require('mongoose').model('Tasklist');
-var Tag = require('mongoose').model('Tag');
+const Project = require('mongoose').model('Project');
+const Task = require('mongoose').model('Task');
+const Tasklist = require('mongoose').model('Tasklist');
+const Tag = require('mongoose').model('Tag');
 
 /* tasklist router */
 router.post('/addtasklist', function(req, res){
@@ -194,9 +195,16 @@ router.get('/searchinput', function(req, res){
 	let parentId = utils.getQueryVariable(req.url, 'parentId');
 
 	const regex = new RegExp(utils.escapeRegex(value ? value : ''), 'gi'); 
-
-	if(model == 'tasklist'){
-		Tasklist.find({tasklistName: regex, _projectid: parentId}).exec(function(err, tasklists){
+	if(model == 'project'){
+		Project.find({projectName: regex}).sort({createTime: -1}).exec(function(err, projects){
+			if(err){
+				console.log(err);
+				return res.status(500).json({message: 'Could not receive any value'});
+			}
+			return res.status(200).json({projects});
+		});
+	} else if(model == 'tasklist'){
+		Tasklist.find({tasklistName: regex, _projectid: parentId}).sort({createTime: -1}).exec(function(err, tasklists){
 			if(err){
 				console.log(err);
 				return res.status(500).json({message: 'Could not receive any value.'});
@@ -209,7 +217,7 @@ router.get('/searchinput', function(req, res){
 		query[name] = regex;
 		query["_tasklistId"] = parentId;
 		
-		Task.find(query).exec(function(err, tasks){
+		Task.find(query).sort({createTime: -1}).exec(function(err, tasks){
 			if(err){
 				console.log(err);
 				return res.status(500).json({message: 'Could not receive any value.'});
