@@ -21,11 +21,12 @@ module.exports = {
   },
 
   formatDate: function(date){
-    if(!date){return;}
+    if(!date){ return null; }
     return date.replace('T', ' ').slice(0, -8);
   },
 
   getLocaleDate: function(date){
+    if(!date){ return null; }
     let utc = new Date(date);
     utc.setHours(utc.getHours() + 8);
     return utc;
@@ -175,6 +176,10 @@ module.exports = {
 
   isEmptyObject: function(obj){
     return Object.keys(obj).length === 0 && obj.constructor === Object;
+  },
+
+  deepCloneObject: function(obj){
+    return JSON.parse(JSON.stringify(obj));
   }
 
 }

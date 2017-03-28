@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { openNotification } from '../../common/actions';
+import { deepCloneObject } from '../../../utils';
 
 export const ADD_TASK_REQUEST = 'ADD_TASK_REQUEST';
 export const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
@@ -33,6 +34,9 @@ export const REMOVE_ALL_TAG = 'REMOVE_ALL_TAG';
 export const TOGGLE_TASK_REQUEST = 'TOGGLE_TASK_REQUEST';
 export const TOGGLE_TASK_SUCCESS = 'TOGGLE_TASK_SUCCESS';
 export const TOGGLE_TASK_FAILURE = 'TOGGLE_TASK_FAILURE';
+export const ADD_ACCOMPLISHED_TASK_REQUEST = 'ADD_ACCOMPLISHED_TASK_REQUEST';
+export const ADD_ACCOMPLISHED_TASK_SUCCESS = 'ADD_ACCOMPLISHED_TASK_SUCCESS';
+export const ADD_ACCOMPLISHED_TASK_FAILURE = 'ADD_ACCOMPLISHED_TASK_FAILURE';
 
 export const SHOW_TASK_DETAIL = 'SHOW_TASK_DETAIL';
 
@@ -252,7 +256,22 @@ export function toggleTask(task){
 			task: task
 		})
 		.then(function(res){
-			dispatch(toggleTaskSuccess(res.data.updatedTask));
+				dispatch(toggleTaskSuccess(res.data.updatedTask));
+				if(res.data.updatedTask.repeat){
+					let task = deepCloneObject(res.data.updatedTask);
+					task.repeat = 0;
+					task.dueDate = null;
+					task.accomplished = true;
+					delete task._id;
+					dispatch(addAccomplishedTaskRequest());
+					axios.post('/tasks/addtask', task)
+					.then(function(res){
+						dispatch(addAccomplishedTaskSuccess(res.data.task));
+					})
+					.catch(function(err){
+						dispatch(addAccomplishedTaskFailure(err));
+					})
+				}
 		})
 		.catch(function(err){
 			dispatch(toggleTaskFailure(err));
@@ -263,6 +282,28 @@ export function toggleTask(task){
 export function toggleTaskRequest(){
 	return {
 		type: 'TOGGLE_TASK_REQUEST'
+	}
+}
+
+export function addAccomplishedTaskRequest(){
+	return {
+		type: 'ADD_ACCOMPLISHED_TASK_REQUEST'
+	}
+}
+
+export function addAccomplishedTaskSuccess(task){
+	return {
+		type: 'ADD_ACCOMPLISHED_TASK_SUCCESS',
+		payload: task
+	}
+}
+
+export function addAccomplishedTaskFailure(err){
+	return {
+		type: 'ADD_ACCOMPLISHED_TASK_FAILURE',
+		payload: {
+			errors: err
+		}
 	}
 }
 

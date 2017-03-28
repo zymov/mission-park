@@ -6,6 +6,7 @@ import {
 	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN, OPEN_TAGS_DROPDOWN, CLOSE_TAGS_DROPDOWN, 
 	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR, ADD_TAG, REMOVE_TAG, REMOVE_ALL_TAG, 
 	TOGGLE_TASK_REQUEST, TOGGLE_TASK_SUCCESS, TOGGLE_TASK_FAILURE, 
+	ADD_ACCOMPLISHED_TASK_REQUEST, ADD_ACCOMPLISHED_TASK_SUCCESS, ADD_ACCOMPLISHED_TASK_FAILURE, 
 	SHOW_TASK_DETAIL,
 	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT,
 	DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE
@@ -211,7 +212,21 @@ export default function task(state = initialState, action){
 					level: 'error'
 				}
 			});
-
+		case ADD_ACCOMPLISHED_TASK_REQUEST:
+			return Object.assign({}, state, {
+				taskInfoText: {}
+			});
+		case ADD_ACCOMPLISHED_TASK_SUCCESS:
+			return Object.assign({}, state, {
+				tasks: addNewItemToArrayEnd(state.tasks, action.payload)
+			});
+		case ADD_ACCOMPLISHED_TASK_FAILURE:
+			return Object.assign({}, state, {
+				taskInfoText: {
+					message: '出错了！' + action.payload.errors,
+					level: 'error'
+				}
+			});
 		/* show task detail */
 		case SHOW_TASK_DETAIL:
 			return Object.assign({}, state, {

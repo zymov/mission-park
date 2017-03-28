@@ -34,14 +34,7 @@ class Task extends React.Component {
 
 		const { _id, taskName, description, dueDate, priority, repeat, tags, accomplished, createTime } = this.props.task;
 
-		const interval = Date.parse(getLocaleDateR(new Date(dueDate))) - Date.now();
-
-		let delay = '';
-		if(interval < 0){
-			delay = 'delay';
-		} else if(900000 > interval > 0){
-			delay = 'almost-delay';
-		}
+		let delay = (Date.parse(getLocaleDateR(new Date(dueDate))) - Date.now()) < 0 ? 'delay' : '';
 
 		let tagsList = tags.map(function(item, index){
 			return (
@@ -57,9 +50,9 @@ class Task extends React.Component {
 				</a>
 				<div className="task-content" onClick={this.showTask.bind(this)}>
 					<div className="task-basic">
-							<p className="task-name" title={description} >{taskName}</p>
+							<p className="task-name" title={taskName} >{taskName}</p>
 							<div className="task-attr">
-								<span className={`task-duedate ${delay}`}>{formatDate(dueDate)} 截止</span>
+								{ !!dueDate && <span className={`task-duedate ${delay}`}>{formatDate(dueDate)} 截止</span>}
 								{ !!repeat &&  <span className="task-repeat">{repeatList[repeat]}重复</span>}
 							</div>
 					</div>

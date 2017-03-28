@@ -552,10 +552,7 @@ a.dd-list-item i {
 }
 .task-basic .task-attr span.delay {
   background-color: #ff4f3e;
-} 
-.task-basic .task-attr span.almost-delay {
-  background-color: #ffaf38;
-} 
+}  
 .task .task-content .task-info {
   padding-bottom: 10px;
   line-height: 24px;

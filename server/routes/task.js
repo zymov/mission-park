@@ -70,8 +70,8 @@ router.delete('/deletetasklist', function(req, res){
 router.post('/addtask', function(req, res){
 		let rb = req.body;
 		task = new Task();
-		task._tasklistId = rb.tasklistId;
-		task.accomplished = false;
+		task._tasklistId = rb.tasklistId || rb._tasklistId;
+		task.accomplished = rb.accomplished || false;
 		task.createTime = utils.getLocaleDate(new Date());
 		task.taskName = rb.taskName;
 		task.description = rb.description;
@@ -79,7 +79,7 @@ router.post('/addtask', function(req, res){
 		task.priority = rb.priority;
 		task.repeat = rb.repeat;
 		task.executors = rb.executors;
-		task.tags = rb.selectedTags;
+		task.tags = rb.selectedTags || rb.tags;
 
 		task.save(function(err){
 			if(err){
