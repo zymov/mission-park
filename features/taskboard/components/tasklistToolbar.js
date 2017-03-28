@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
+// import { connect } from 'react-redux';
 import AddTasklist from './addTasklist';
 import SearchInput from '../../common/components/searchInput';
 
@@ -21,11 +20,9 @@ class TasklistToolbar extends React.Component {
 
 }
 
-
 // const mapDispatchToProps = dispatch => ({
 	
 // });
-
 
 // export default connect(null, mapDispatchToProps)(TasklistToolbar);
 

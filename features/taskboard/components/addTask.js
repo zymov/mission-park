@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
-import Dropdown from './dropdown/dropdown';
-import ExecutorsContainer from './executorsContainer';
+import TriggerBtn from '../../common/components/modal_dialog/triggerBtn';
 import { removeAllExecutor, removeAllTag } from '../actions/taskActions';
 import TaskDetail from './taskDetail';
 

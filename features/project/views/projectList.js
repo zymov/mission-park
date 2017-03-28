@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import ProjectToolbar from '../components/projectToolbar';
 import ProjectCard from '../components/projectCard';
 import Notification from '../../common/components/notification/notification';

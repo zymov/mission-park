@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { deleteTasklist/*fetchTasklistStatus*/ } from '../actions/tasklistActions';
 import { fetchTasks } from '../actions/taskActions';
@@ -24,31 +23,17 @@ class Tasklist extends React.Component {
 		this.props.fetchTasks(this.props.tasklist._id, this.props.index, this.props.tasklist.tasklistName);
 	}
 
-	// componentWillMount(){
-	// 	this.props.fetchTasklistStatus(this.props.tasklist._id);
-
-	// }
-
-
 	clickTasklistTool(e){
 		if(e.target.name == '删除'){
 			this.props.deleteTasklist(this.props.tasklist._id);
 		}
 	}
 
-
 	render(){
 
-		const { _id, tasklistName, createTime, dueDate, priority } = this.props.tasklist;
+		const { tasklistName, createTime, dueDate, priority } = this.props.tasklist;
 
-		const interval = Date.parse(getLocaleDateR(new Date(dueDate))) - Date.now();
-
-		let delay = '';
-		if(interval < 0){
-			delay = 'delay';
-		} else if(900000 > interval > 0){
-			delay = 'almost-delay';
-		}
+		let delay = (Date.parse(getLocaleDateR(new Date(dueDate))) - Date.now()) > 0 ? 'delay' : '';
 
 		return(
 			<div onClick={this.handleClick.bind(this)} 

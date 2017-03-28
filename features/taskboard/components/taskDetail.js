@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { ModalWrapper, ModalHeader, ModalFooter } from '../../common/components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
 import ExecutorsContainer from './executorsContainer';

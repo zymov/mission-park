@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Task from './task';
-import TaskToolbar from './taskToolbar';
-import * as actionCreators from '../actions/taskActions';
+// import * as actionCreators from '../actions/taskActions';
 
 class TaskContainer extends React.Component {
 
@@ -11,13 +9,10 @@ class TaskContainer extends React.Component {
 		super(props);
 	}
 
-
 	render(){
-		const { taskLoading, tasks, newTask, taskError, taskInfoText, currentTasklistId } = this.props;
+		let fetchedTasks = [];
 
-		var fetchedTasks = [];
-
-		fetchedTasks = tasks.map(function(task, index){
+		fetchedTasks = this.props.tasks.map(function(task, index){
 			return <Task key={index} task={task} />;
 		});
 
@@ -29,22 +24,15 @@ class TaskContainer extends React.Component {
 	}
 }
 
-
 const mapStateToProps = state => {
 	const tbt = state.taskboard.task;
 	return {
-		taskLoading: tbt.taskLoading,
 		tasks: tbt.tasks,
-		newTask: tbt.newTask,
-		taskError: tbt.taskError,
-		taskInfoText: tbt.taskInfoText,
-		currentTasklistId: tbt.currentTasklistId,
-		activeTasklist: tbt.activeTasklist
 	}
 }
 
-const mapDispatchToProps = dispatch => ({
-	actions: bindActionCreators(actionCreators, dispatch)
-})
+// const mapDispatchToProps = dispatch => ({
+	
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskContainer);
+export default connect(mapStateToProps, null)(TaskContainer);
