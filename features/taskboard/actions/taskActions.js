@@ -56,7 +56,6 @@ export function addTask(payload){
 		axios.post('/tasks/addtask', payload)
 		.then(function(res){
 			dispatch(addTaskSuccess(res.data.task));
-			return res.data.task;
 		})
 		.catch(function(err){
 			dispatch(addTaskFailure(err));
@@ -363,6 +362,7 @@ export function invalidInputMaxLength(payload){
 export function deleteTask(taskId){
 	return function(dispatch){
 		dispatch(deleteTaskRequest());
+		dispatch(openNotification());
 		axios.delete('/tasks/deletetask', {
 			params: {
 				taskId: taskId

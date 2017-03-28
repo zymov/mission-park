@@ -3,19 +3,15 @@ import {
 	FETCH_TASKLISTS_REQUEST, FETCH_TASKLISTS_SUCCESS, FETCH_TASKLISTS_FAILURE,
 	DELETE_TASKLIST_REQUEST, DELETE_TASKLIST_SUCCESS, DELETE_TASKLIST_FAILURE 
 } from '../actions/tasklistActions';
-import { FETCH_TASKS_REQUEST } from '../actions/taskActions';
-import { SEARCH_INPUT_REQUEST, UPDATE_TASKLIST_ARR } from '../../common/actions';
+import { UPDATE_TASKLIST_ARR, CLOSE_NOTIFICATION } from '../../common/actions';
 
 import { addNewItemToArrayBegin, removeSpecificItemByAttrValue } from '../../../utils';
 
 const initialState = {
 	tasklistLoading: false,
-
 	tasklists: [],
 	newTasklist: null,
-
 	tasklistError: false,
-
 	tasklistInfoText: {}
 }
 
@@ -75,11 +71,6 @@ export default function tasklist(state = initialState, action){
 				}
 			});
 
-		case FETCH_TASKS_REQUEST:
-			return Object.assign({}, state, {
-				tasklistInfoText: {}
-			});
-
 		case DELETE_TASKLIST_REQUEST:
 			return Object.assign({}, state, {
 				taskInfoText: {
@@ -103,15 +94,16 @@ export default function tasklist(state = initialState, action){
 				}
 			});
 
-		case SEARCH_INPUT_REQUEST:
-			return Object.assign({}, state, {
-				taskInfoText: {}
-			});
-
 		case UPDATE_TASKLIST_ARR:
 			return Object.assign({}, state, {
 				tasklists: action.payload
 			});
+
+		case CLOSE_NOTIFICATION:
+			return Object.assign({}, state, {
+				tasklistInfoText: {}
+			});
+
 
 			
 		default:

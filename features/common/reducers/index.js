@@ -72,7 +72,8 @@ export default function common(state=initialState, action){
 
 		case CLOSE_NOTIFICATION:
 			return Object.assign({}, state, {
-				showNotification: false
+				showNotification: false,
+				publicMsg: {}
 			});
 
 		case SEARCH_INPUT_REQUEST: 

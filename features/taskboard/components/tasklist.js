@@ -17,6 +17,10 @@ class Tasklist extends React.Component {
 		}
 	}
 
+	componentWillMount(){
+		console.log(this.props.tasklist._id);
+	}
+
 	handleClick(e){
 		e.stopPropagation();
 		if(this.props.tasklist._id == this.props.currentTasklistId){return;}
@@ -37,11 +41,11 @@ class Tasklist extends React.Component {
 
 		return(
 			<div onClick={this.handleClick.bind(this)} 
-			className={`list-group-item tasklist clearfix ${this.props.activeTasklist == this.props.index ? 'current-tasklist' : ''}`}>
+				className={`list-group-item tasklist clearfix ${this.props.activeTasklist == this.props.index ? 'current-tasklist' : ''}`}>
 				<div className={`tasklist-priority priority-${priority}`}></div>
 	      <h4 title={tasklistName} className="list-group-item-heading">{tasklistName}</h4>
 	      <div className="tasklist-attr clearfix">
-	      	{/*<span className={`tasklist-dueDate ${delay}`}>{formatDate(dueDate)} 截止</span>*/}
+	      	<span className={`tasklist-dueDate ${delay}`}>{formatDate(dueDate)} 截止</span>
 	      </div>
 				<div className="tasklist-tools">
 					<Dropdown dropdown={this.tasklistToolDropdown} btnStyle={{}} 

@@ -7,7 +7,9 @@ var tasklistSchema = new mongoose.Schema({
 	priority: { type: Number },
 	dueDate: { type: Date },
 	accomplished: { type: Boolean },
-	_executorid: { type: String }
+	_executorid: { type: String },
+	accomplishedTaskSum: { type: Number, default: 0 },
+	taskSum: { type: Number, default: 0 }
 });
 
 var Tasklist = mongoose.model('Tasklist', tasklistSchema);

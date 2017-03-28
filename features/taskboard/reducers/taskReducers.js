@@ -6,13 +6,13 @@ import {
 	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN, OPEN_TAGS_DROPDOWN, CLOSE_TAGS_DROPDOWN, 
 	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR, ADD_TAG, REMOVE_TAG, REMOVE_ALL_TAG, 
 	TOGGLE_TASK_REQUEST, TOGGLE_TASK_SUCCESS, TOGGLE_TASK_FAILURE, 
-	ADD_ACCOMPLISHED_TASK_REQUEST, ADD_ACCOMPLISHED_TASK_SUCCESS, ADD_ACCOMPLISHED_TASK_FAILURE, 
+	ADD_ACCOMPLISHED_TASK_SUCCESS, ADD_ACCOMPLISHED_TASK_FAILURE, 
 	SHOW_TASK_DETAIL,
 	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT,
 	DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE
 } from '../actions/taskActions';
 import { ADD_TASKLIST_REQUEST, SET_CURRENT_TASKLIST_ID_TO_NULL, DELETE_TASKLIST_SUCCESS } from '../actions/tasklistActions';
-import { SEARCH_INPUT_REQUEST, UPDATE_TASK_ARR } from '../../common/actions';
+import { UPDATE_TASK_ARR, CLOSE_NOTIFICATION } from '../../common/actions';
 import { 
 	addNewItemToArrayBegin, addNewItemToArrayEnd, 
 	updateItemInArray, removeSpecificItemByAttrValue, removeSpecificItemFromArray, updateAndMoveItemInArray 
@@ -114,9 +114,9 @@ export default function task(state = initialState, action){
 			});
 		case FETCH_TASKS_SUCCESS:
 			return Object.assign({}, state, {
+				taskInfoText: {},
 				taskLoading: false,
-				tasks: action.payload,
-				taskInfoText: {}
+				tasks: action.payload
 			});
 		case FETCH_TASKS_FAILURE:
 			return Object.assign({}, state, {
@@ -146,7 +146,6 @@ export default function task(state = initialState, action){
 		/* users dropdown reducer */
 		case OPEN_USERS_DROPDOWN:
 			return Object.assign({}, state, {
-				taskInfoText: {},
 				showUsersDropdown: true
 			});
 		
@@ -156,7 +155,6 @@ export default function task(state = initialState, action){
 			});
 		case OPEN_TAGS_DROPDOWN:
 			return Object.assign({}, state, {
-				taskInfoText: {},
 				showTagsDropdown: true
 			});
 		
@@ -194,14 +192,12 @@ export default function task(state = initialState, action){
 		/* toggle task */
 		case TOGGLE_TASK_REQUEST:
 			return Object.assign({}, state, {
-				taskInfoText: {},
 				toggling: true
 			});
 		case TOGGLE_TASK_SUCCESS: 
 			return Object.assign({}, state, {
 				toggling: false,
-				tasks: updateAndMoveItemInArray(state.tasks, action.payload),
-				taskInfoText: {}
+				tasks: updateAndMoveItemInArray(state.tasks, action.payload)
 			});
 		case TOGGLE_TASK_FAILURE:
 			return Object.assign({}, state, {
@@ -212,10 +208,7 @@ export default function task(state = initialState, action){
 					level: 'error'
 				}
 			});
-		case ADD_ACCOMPLISHED_TASK_REQUEST:
-			return Object.assign({}, state, {
-				taskInfoText: {}
-			});
+
 		case ADD_ACCOMPLISHED_TASK_SUCCESS:
 			return Object.assign({}, state, {
 				tasks: addNewItemToArrayEnd(state.tasks, action.payload)
@@ -252,12 +245,6 @@ export default function task(state = initialState, action){
 				}
 			});
 
-		case ADD_TASKLIST_REQUEST:
-			return Object.assign({}, state, {
-				taskInfoText: {}
-			});
-
-
 		case DELETE_TASK_REQUEST:
 			return Object.assign({}, state, {
 				taskInfoText: {
@@ -285,15 +272,16 @@ export default function task(state = initialState, action){
 				tasks: []
 			});
 
-		case SEARCH_INPUT_REQUEST:
-			return Object.assign({}, state, {
-				taskInfoText: {}
-			});
-
 		case UPDATE_TASK_ARR:
 			return Object.assign({}, state, {
 				tasks: action.payload
 			});
+
+		case CLOSE_NOTIFICATION:
+			return Object.assign({}, state, {
+				taskInfoText: {}
+			});
+
 
 		default:
 			return state;
