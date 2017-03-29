@@ -6,6 +6,9 @@ export const ADD_TASK_REQUEST = 'ADD_TASK_REQUEST';
 export const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
 export const ADD_TASK_FAILURE = 'ADD_TASK_FAILURE';
 
+export const CHANGE_TASK_SUM_SUCCESS = 'CHANGE_TASK_SUM_SUCCESS';
+export const CHANGE_TASK_SUM_FAILURE = 'CHANGE_TASK_SUM_FAILURE';
+
 export const EDIT_TASK_REQUEST = 'EDIT_TASK_REQUEST';
 export const EDIT_TASK_SUCCESS = 'EDIT_TASK_SUCCESS';
 export const EDIT_TASK_FAILURE = 'EDIT_TASK_FAILURE';
@@ -60,6 +63,14 @@ export function addTask(payload){
 		.catch(function(err){
 			dispatch(addTaskFailure(err));
 		});
+
+		axios.post('/tasks/changetasksum', {add: 1, tasklistId: payload.tasklistId})
+		.then(function(res){
+			dispatch(changeTaskSumSuccess(res.data.tasklist));
+		})
+		.catch(function(err){
+			dispatch(changeTaskSumFailure(err));
+		});
 	}
 }
 
@@ -84,6 +95,24 @@ export function addTaskFailure(err){
 		}
 	}
 }
+
+
+export function changeTaskSumSuccess(tasklist){
+	return {
+		type: 'CHANGE_TASK_SUM_SUCCESS',
+		payload: tasklist
+	}
+}
+
+export function changeTaskSumFailure(err){
+	return {
+		type: 'CHANGE_TASK_SUM_FAILURE',
+		payload: {
+			errors: err
+		}
+	}
+}
+
 
 export function editTask(payload){
 	return function(dispatch){
@@ -359,7 +388,7 @@ export function invalidInputMaxLength(payload){
 }
 
 
-export function deleteTask(taskId){
+export function deleteTask(taskId, tasklistId){
 	return function(dispatch){
 		dispatch(deleteTaskRequest());
 		dispatch(openNotification());
@@ -373,6 +402,14 @@ export function deleteTask(taskId){
 		})
 		.catch(function(err){
 			dispatch(deleteTaskFailure(err));
+		});
+
+		axios.post('/tasks/changetasksum', {add: -1, tasklistId: tasklistId})
+		.then(function(res){
+			dispatch(changeTaskSumSuccess(res.data.tasklist));
+		})
+		.catch(function(err){
+			dispatch(changeTaskSumFailure(err));
 		});
 	}
 }

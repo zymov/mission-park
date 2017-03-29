@@ -12,6 +12,11 @@ input, textarea {
 .dropdown-menu, .form-control, .btn, .tooltip-inner { border-radius: 2px; }
 .tooltip.top { margin-top: 2px; }
 .dropdown { max-width: 160px; margin: 0 auto; } 
+.bc-default {background-color: #3da8f5;}
+.bc-success {background-color: #00a854;}
+.bc-error   {background-color: #ff4f3e;}
+.bc-warning {background-color: #ffaf38;}
+.bc-normal  {background-color: #a6a6a6;}
 /* common style end */
 
 /* notification style start */
@@ -72,8 +77,8 @@ input, textarea {
 }
 .notification-error {background-color: #ff4f3e;}
 .notification-success {background-color: #00a854;}
-.notification-normal {background-color: #A6A6A6;}
-.notification-warning {background-color: #FFAF38;}
+.notification-normal {background-color: #a6a6a6;}
+.notification-warning {background-color: #ffaf38;}
 
 /* notification style end */
 
@@ -132,7 +137,7 @@ input, textarea {
 /* modal-dialog end */
 
 .priority-0 {
-  background-color: #A6A6A6;
+  background-color: #a6a6a6;
 }
 .priority-1 {
   background-color: #ffaf38;
@@ -442,7 +447,6 @@ a.dd-list-item i {
   padding: 0 6px;
   color: #fff;
   border-radius: 2px;
-  background-color: #3DA8F5;
 }
 .tasklist .tasklist-tools {
   position: absolute;
@@ -493,7 +497,7 @@ a.dd-list-item i {
 }
 .task:last-child {margin-bottom: 0;}
 .task-container .done {
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   box-shadow: none;
   transition: all .2s;
 }
@@ -548,7 +552,7 @@ a.dd-list-item i {
   padding: 0 6px;
   color: #fff;
   border-radius: 2px;
-  background-color: #3DA8F5;
+  background-color: #3da8f5;
 }
 .task-basic .task-attr span.delay {
   background-color: #ff4f3e;
@@ -603,6 +607,6 @@ a.dd-list-item i {
   top: 3px;
   left: 6px;
   border-radius: 3px;
-  background-color: #3DA8F5;
+  background-color: #3da8f5;
 }
 /* task end */

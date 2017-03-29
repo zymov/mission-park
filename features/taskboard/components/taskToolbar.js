@@ -46,6 +46,10 @@ class TaskToolbar extends React.Component {
 						btnName={this.state.taskAttr.name} />
 			  	<SearchInput model="task" parentId={this.props.tasklistId} attr={this.state.taskAttr} />
 		  	</div>
+		  	<div className="toolbar-btn">
+		  		<button className="btn ">已完成</button>
+		  		<button className="btn ">未完成</button>
+		  	</div>
 			</div>
 		);
 	}

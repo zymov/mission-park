@@ -26,7 +26,7 @@ class Task extends React.Component {
 
 	clickTaskTool(e){
 		if(e.target.name == '删除'){
-			this.props.deleteTask(this.props.task._id);
+			this.props.deleteTask(this.props.task._id, this.props.tasklistId);
 		}
 	}
 
@@ -81,7 +81,7 @@ class Task extends React.Component {
 const mapDispatchToProps = dispatch => ({
 	toggleTask: task => { dispatch(toggleTask(task)); },
 	showTaskDetail: task => { dispatch(showTaskDetail(task)); },
-	deleteTask: taskId => { dispatch(deleteTask(taskId)); }
+	deleteTask: (taskId, tasklistId) => { dispatch(deleteTask(taskId, tasklistId)); }
 });
 
 export default connect(null, mapDispatchToProps)(Task);

@@ -8,7 +8,7 @@ var tasklistSchema = new mongoose.Schema({
 	dueDate: { type: Date },
 	accomplished: { type: Boolean },
 	_executorid: { type: String },
-	accomplishedTaskSum: { type: Number, default: 0 },
+	// accomplishedTaskSum: { type: Number, default: 0 },
 	taskSum: { type: Number, default: 0 }
 });
 

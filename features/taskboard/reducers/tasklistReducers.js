@@ -3,9 +3,10 @@ import {
 	FETCH_TASKLISTS_REQUEST, FETCH_TASKLISTS_SUCCESS, FETCH_TASKLISTS_FAILURE,
 	DELETE_TASKLIST_REQUEST, DELETE_TASKLIST_SUCCESS, DELETE_TASKLIST_FAILURE 
 } from '../actions/tasklistActions';
+import { CHANGE_TASK_SUM_SUCCESS, CHANGE_TASK_SUM_FAILURE } from '../actions/taskActions';
 import { UPDATE_TASKLIST_ARR, CLOSE_NOTIFICATION } from '../../common/actions';
 
-import { addNewItemToArrayBegin, removeSpecificItemByAttrValue } from '../../../utils';
+import { addNewItemToArrayBegin, removeSpecificItemByAttrValue, updateItemInArray } from '../../../utils';
 
 const initialState = {
 	tasklistLoading: false,
@@ -104,7 +105,17 @@ export default function tasklist(state = initialState, action){
 				tasklistInfoText: {}
 			});
 
-
+		case CHANGE_TASK_SUM_SUCCESS:
+			return Object.assign({}, state, {
+				tasklists: updateItemInArray(state.tasklists, action.payload)
+			});
+		case CHANGE_TASK_SUM_FAILURE:
+			return Object.assign({}, state, {
+				tasklistInfoText: {
+					message: '更新任务列表失败',
+					level: 'error'
+				}
+			});
 			
 		default:
 			return state;

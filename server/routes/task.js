@@ -18,14 +18,9 @@ router.post('/addtasklist', function(req, res){
 		tasklist.priority = req.body.priority;
 		tasklist.save(function(err){
 			if(err){
-				res.status(500).json({
-					errors: 'sorry, server is busy.'
-				});
-			} else {
-				res.status(200).json({
-					tasklist: tasklist
-				});
-			}
+				return res.status(500).json({errors: 'sorry, server is busy.'});
+			} 
+			return res.status(200).json({tasklist: tasklist});
 		});
 });
 
@@ -35,11 +30,9 @@ router.get('/fetchtasklists', function(req, res){
 	Tasklist.find({_projectid: projectId}).sort({createTime: -1}).exec(function(err, tasklists){
 		if(err) {
 			console.log(err);
-			return res.status(500).json({
-				message: 'Could not receive tasklists.'
-			});
+			return res.status(500).json({message: 'Could not receive tasklists.'});
 		} 
-		res.json({tasklists});
+		return res.status(200).json({tasklists});
 	});
 
 });
@@ -56,9 +49,7 @@ router.delete('/deletetasklist', function(req, res){
 		Tasklist.remove({_id: tasklistId}).exec(function(err){
 			if(err){
 				console.log(err);
-				return res.status(500).json({
-					message: 'Could not delete this tasklist.'
-				});
+				return res.status(500).json({message: 'Could not delete this tasklist.'});
 			}
 			return res.status(200).json({tasklistId: tasklistId});
 		});
@@ -84,10 +75,9 @@ router.post('/addtask', function(req, res){
 		task.save(function(err){
 			if(err){
 				console.log(err);
-				res.status(500).json({message: 'sorry, server is busy!'});
-			} else {
-				res.status(200).json({task});
-			}
+				return res.status(500).json({message: 'sorry, server is busy!'});
+			} 
+			return res.status(200).json({task});
 		});
 });
 
@@ -134,7 +124,7 @@ router.get('/fetchtasks', function(req, res){
 				message: 'Could not receive tasks.'
 			});
 		}
-		res.json({tasks});
+		return res.status(200).json({tasks});
 	})
 })
 
@@ -162,9 +152,8 @@ router.post('/toggletask', function(req, res){
 				return res.status(500).json({
 					message: 'Could not save the change.'
 				});
-			} else {
-				return res.status(200).json({updatedTask});
-			}
+			} 
+			return res.status(200).json({updatedTask});
 		});
 	});
 
@@ -187,6 +176,18 @@ router.delete('/deletetask', function(req, res){
 
 });
 
+
+router.post('/changetasksum', function(req, res){
+	let add = req.body.add;
+	let tasklistId = req.body.tasklistId;
+	Tasklist.findOneAndUpdate({_id: tasklistId}, {$inc:{taskSum: add}}, {new: true}, function(err, tasklist){
+		if(err){
+			console.log(err);
+			return res.status(500).json({message: 'could not save the tasklist'});
+		}
+		return res.status(200).json({tasklist});
+	});
+});
 
 router.get('/searchinput', function(req, res){
 	let value = utils.getQueryVariable(req.url, 'value');

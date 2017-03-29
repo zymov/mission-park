@@ -26,17 +26,12 @@ router.post('/addproject', function(req, res){
 			project.ownerId = decoded.sub;
 			project.save(function(err){
 				if(err){
-					res.status(500).json({
-						errors: 'sorry, server is busy!'
-					});
-				} else {
-					res.status(200).json({project});
+					res.status(500).json({errors: 'sorry, server is busy!'});
 				}
+				return res.status(200).json({project});
 			});
 		} else {
-			res.status(400).json({
-				errors: 'check your project name'
-			});
+			return res.status(400).json({errors: 'check your project name'});
 		}
 
 	});
@@ -48,12 +43,10 @@ router.get('/fetch', function(req, res){
 	Project.find({}).sort({createTime: -1}).exec(function(err, projects){
 		if(err) {
 			console.log(err);
-			return res.status(500).json({
-				errors: 'Could not receive projects.'
-			});
+			return res.status(500).json({errors: 'Could not receive projects.'});
 		} 
 
-		res.json({projects});
+		return res.status(200).json({projects});
 
 	});
 
@@ -69,12 +62,10 @@ router.get('/getusers', function(req, res){
 	User.find({name: regex}).sort({name: 1}).exec(function(err, users){
 		if(err){
 			console.log(err);
-			return res.status(500).json({
-				errors: 'Could not receive users.'
-			});
+			return res.status(500).json({errors: 'Could not receive users.'});
 		}
 
-		res.json({users});
+		return res.status(200).json({users});
 
 	});
 })
@@ -85,12 +76,9 @@ router.get('/fetchtags', function(req, res){
 	Tag.find({}).exec(function(err, tags){
 		if(err){
 			console.log(err);
-			return res.status(500).json({
-				errors: 'Could not receive tags.'
-			});
+			return res.status(500).json({errors: 'Could not receive tags.'});
 		}
 		let tagsNameList = utils.getArrayOfSpecKey(tags, 'name');
-		// res.json({tagsNameList});
 		res.send(tagsNameList);
 
 	});
@@ -123,14 +111,10 @@ router.get('/gettags', function(req, res){
 	Tag.find({name: regex}).sort({name: 1}).exec(function(err, tags){
 		if(err){
 			console.log(err);
-			return res.status(500).json({
-				errors: 'Could not receive tags.'
-			});
+			return res.status(500).json({errors: 'Could not receive tags.'});
 		}
 
 		tagsNameList = utils.getArrayOfSpecKey(tags, 'name');
-
-		// res.json({tagsNameList});
 		res.send(tagsNameList);
 
 	});
@@ -142,9 +126,7 @@ router.delete('/deleteproject', function(req, res){
 	Project.remove({_id: projectId}).exec(function(err){
 		if(err){
 			console.log(err);
-			return res.status(500).json({
-				message: 'Could not delete this task.'
-			});
+			return res.status(500).json({message: 'Could not delete this task.'});
 		}
 		return res.status(200).json({projectId: projectId});
 	});

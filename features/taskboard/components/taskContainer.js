@@ -11,9 +11,10 @@ class TaskContainer extends React.Component {
 
 	render(){
 		let fetchedTasks = [];
+		let tasklistId = this.props.tasklistId;
 
 		fetchedTasks = this.props.tasks.map(function(task, index){
-			return <Task key={index} task={task} />;
+			return <Task key={index} task={task} tasklistId={tasklistId}/>;
 		});
 
 		return(

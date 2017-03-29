@@ -17,10 +17,6 @@ class Tasklist extends React.Component {
 		}
 	}
 
-	componentWillMount(){
-		console.log(this.props.tasklist._id);
-	}
-
 	handleClick(e){
 		e.stopPropagation();
 		if(this.props.tasklist._id == this.props.currentTasklistId){return;}
@@ -35,9 +31,9 @@ class Tasklist extends React.Component {
 
 	render(){
 
-		const { tasklistName, createTime, dueDate, priority } = this.props.tasklist;
+		const { tasklistName, createTime, dueDate, priority, taskSum } = this.props.tasklist;
 
-		let delay = (Date.parse(getLocaleDateR(new Date(dueDate))) - Date.now()) > 0 ? 'delay' : '';
+		let delay = (Date.parse(getLocaleDateR(new Date(dueDate))) - Date.now()) < 0 ? 'delay' : '';
 
 		return(
 			<div onClick={this.handleClick.bind(this)} 
@@ -45,7 +41,8 @@ class Tasklist extends React.Component {
 				<div className={`tasklist-priority priority-${priority}`}></div>
 	      <h4 title={tasklistName} className="list-group-item-heading">{tasklistName}</h4>
 	      <div className="tasklist-attr clearfix">
-	      	<span className={`tasklist-dueDate ${delay}`}>{formatDate(dueDate)} 截止</span>
+	      	<span className={`${delay} bc-default`} >{formatDate(dueDate)} 截止</span>
+	      	<span className={`${delay} bc-warning`} >任务总数{taskSum}</span>
 	      </div>
 				<div className="tasklist-tools">
 					<Dropdown dropdown={this.tasklistToolDropdown} btnStyle={{}} 
