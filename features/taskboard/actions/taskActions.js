@@ -298,7 +298,16 @@ export function toggleTask(task){
 					})
 					.catch(function(err){
 						dispatch(addAccomplishedTaskFailure(err));
+					});
+
+					axios.post('/tasks/changetasksum', {add: 1, tasklistId: task._tasklistId})
+					.then(function(res){
+						dispatch(changeTaskSumSuccess(res.data.tasklist));
 					})
+					.catch(function(err){
+						dispatch(changeTaskSumFailure(err));
+					});
+
 				}
 		})
 		.catch(function(err){
