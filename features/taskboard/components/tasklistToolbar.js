@@ -11,7 +11,7 @@ class TasklistToolbar extends React.Component {
 
 	render(){
 		return(
-			<div className="btn-group toolbar" role="group" aria-label="Basic example">
+			<div className="btn-group toolbar" role="group" aria-label="tasklist toolbar">
 			  <AddTasklist projectId={this.props.projectId} />
 			  <SearchInput model="tasklist" parentId={this.props.projectId} attr={{name:"任务列表名称", modelName: 'tasklistName'}} />
 			</div>

@@ -215,7 +215,7 @@ router.get('/searchinput', function(req, res){
 	} else if (model == 'task'){
 		let query = {};
 		let name = attr;
-		query[name] = regex;
+		query[name] = (name == 'priority') ? value : regex;
 		query["_tasklistId"] = parentId;
 		
 		Task.find(query).sort({createTime: -1}).exec(function(err, tasks){

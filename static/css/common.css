@@ -17,6 +17,7 @@ input, textarea {
 .bc-error   {background-color: #ff4f3e;}
 .bc-warning {background-color: #ffaf38;}
 .bc-normal  {background-color: #a6a6a6;}
+.not-actived { opacity: .5; }
 /* common style end */
 
 /* notification style start */
@@ -235,6 +236,13 @@ input, textarea {
 .toolbar-search .dropdown {
   float: left;
 }
+.priority-btn-group button.btn {
+  height: 7px;
+  width: 7px;
+  margin: 6px 12px 6px 0;
+  border-radius: 2px;
+  box-sizing: content-box;
+}
 #taskAttrDropdown {
   background: none;
   border: 1px solid #ccc;
@@ -406,6 +414,10 @@ a.dd-list-item i {
 /* tasklist modal-dialog end */
 
 /* tasklist start */
+.tasklist-box .toolbar-btn:nth-child(2){
+  margin-right: 0;
+  width: 226px;
+}
 .list-group-item:first-child, .list-group-item:last-child{border-radius: 0;}
 .tasklist {
   position: relative;

@@ -1,9 +1,11 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import AddTask from './addTask';
 import Dropdown from './dropdown/dropdown';
 import SearchInput from '../../common/components/searchInput';
 import { taskAttrMenuList, getIndexOfArrayByValue } from '../../../utils';
+import { searchInput } from '../../common/actions';
+import { fetchTasks } from '../actions/taskActions';
 
 class TaskToolbar extends React.Component {
 
@@ -13,7 +15,8 @@ class TaskToolbar extends React.Component {
 			taskAttr: {
 				name: '任务名称',
 				modelName: 'taskName'
-			}
+			},
+			selectedPriority: null
 		}
 
 		this.taskAttrDropdown = {
@@ -36,9 +39,28 @@ class TaskToolbar extends React.Component {
 		});
 	}
 
+	//filter tasks by priority
+	choosePriority(e){
+		let priorityLevel = e.target.name;
+		if(this.state.selectedPriority != priorityLevel){
+			this.setState({
+				selectedPriority: priorityLevel
+			});
+			this.props.searchInput(priorityLevel, 'task', 'priority', this.props.tasklistId);
+		} else {
+			this.setState({
+				selectedPriority: null
+			});
+			this.props.fetchTasks(this.props.tasklistId);
+		}
+	}
+
 	render(){
+
+		const selectedPriority = this.state.selectedPriority;
+
 		return(
-			<div className="btn-group toolbar" role="group" aria-label="Basic example">
+			<div className="btn-group toolbar" role="group" aria-label="task toolbar">
 		  	<AddTask projectId={this.props.projectId} tasklistId={this.props.tasklistId} />
 		  	<div className="toolbar-btn toolbar-search">
 			  	<Dropdown dropdown={this.taskAttrDropdown} 
@@ -46,9 +68,10 @@ class TaskToolbar extends React.Component {
 						btnName={this.state.taskAttr.name} />
 			  	<SearchInput model="task" parentId={this.props.tasklistId} attr={this.state.taskAttr} />
 		  	</div>
-		  	<div className="toolbar-btn">
-		  		<button className="btn ">已完成</button>
-		  		<button className="btn ">未完成</button>
+		  	<div className="toolbar-btn priority-btn-group" onClick={this.choosePriority.bind(this)}>
+		  		<button name="2" className={`btn bc-error 	${selectedPriority != 2 ? 'not-actived' : ''}`}></button>
+		  		<button name="1" className={`btn bc-warning ${selectedPriority != 1 ? 'not-actived' : ''}`}></button>
+		  		<button name="0" className={`btn bc-normal 	${selectedPriority != 0 ? 'not-actived' : ''}`}></button>
 		  	</div>
 			</div>
 		);
@@ -57,10 +80,10 @@ class TaskToolbar extends React.Component {
 }
 
 
-// const mapDispatchToProps = dispatch => ({
-	
-// })
+const mapDispatchToProps = dispatch => ({
+	searchInput: (value, model, attr, parentId) => { dispatch(searchInput(value, model, attr, parentId)); },
+	fetchTasks: tasklistId => { dispatch(fetchTasks(tasklistId)); }
+});
 
 
-// export default connect(null, mapDispatchToProps)(TasklistToolbar);
-export default TaskToolbar;
+export default connect(null, mapDispatchToProps)(TaskToolbar);

@@ -26,7 +26,7 @@ class SearchInput extends React.Component {
 
 	render(){
 		return(
-			<div className="toolbar-btn" role="group" aria-label="Basic example">
+			<div className="toolbar-btn" role="group" aria-label="search">
 			  <input className="form-control" name="search" 
         	placeholder={`按${this.props.attr.name}查找`} 
         	onChange={this.handleInputChange.bind(this)} 
