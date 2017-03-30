@@ -194,7 +194,7 @@ export function closeNotification(){
 	}
 }
 
-export function searchInput(value, model, attr, parentId){
+export function searchInput(value, model, keyName, parentId){
 	const modelName = model;
 	return function(dispatch){
 		dispatch(searchInputRequest());
@@ -203,7 +203,7 @@ export function searchInput(value, model, attr, parentId){
 			params: {
 				model: model,
 				value: value,
-				attr: attr,
+				keyName: keyName,
 				parentId: parentId
 			}
 		})
@@ -254,4 +254,9 @@ export function searchInputFailure(err){
 			errors: err
 		}
 	}
+}
+
+
+export function updateCurrentFilter(searchContent){
+	
 }

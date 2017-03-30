@@ -70,7 +70,7 @@ router.post('/addtask', function(req, res){
 		task.priority = rb.priority;
 		task.repeat = rb.repeat;
 		task.executors = rb.executors;
-		task.tags = rb.selectedTags || rb.tags;
+		task.tags = rb.tags;
 
 		task.save(function(err){
 			if(err){
@@ -98,7 +98,7 @@ router.post('/edittask', function(req, res){
 				task.accomplished = false;
 			}
 			task.executors = rb.executors;
-			task.tags = rb.selectedTags;
+			task.tags = rb.tags;
 
 			task.save(function(err){
 				if(err){
@@ -192,7 +192,7 @@ router.post('/changetasksum', function(req, res){
 router.get('/searchinput', function(req, res){
 	let value = utils.getQueryVariable(req.url, 'value');
 	let model = utils.getQueryVariable(req.url, 'model');
-	let attr = utils.getQueryVariable(req.url, 'attr');
+	let keyName = utils.getQueryVariable(req.url, 'keyName');
 	let parentId = utils.getQueryVariable(req.url, 'parentId');
 
 	const regex = new RegExp(utils.escapeRegex(value ? value : ''), 'gi'); 
@@ -214,7 +214,7 @@ router.get('/searchinput', function(req, res){
 		});
 	} else if (model == 'task'){
 		let query = {};
-		let name = attr;
+		let name = keyName;
 		query[name] = (name == 'priority') ? value : regex;
 		query["_tasklistId"] = parentId;
 		

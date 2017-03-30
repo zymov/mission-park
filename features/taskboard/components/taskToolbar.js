@@ -4,7 +4,7 @@ import AddTask from './addTask';
 import Dropdown from './dropdown/dropdown';
 import SearchInput from '../../common/components/searchInput';
 import { taskAttrMenuList, getIndexOfArrayByValue } from '../../../utils';
-import { searchInput } from '../../common/actions';
+import { searchInput, updateCurrentFilter } from '../../common/actions';
 import { fetchTasks } from '../actions/taskActions';
 
 class TaskToolbar extends React.Component {
@@ -14,7 +14,7 @@ class TaskToolbar extends React.Component {
 		this.state = {
 			taskAttr: {
 				name: '任务名称',
-				modelName: 'taskName'
+				keyName: 'taskName'
 			},
 			selectedPriority: null
 		}
@@ -34,7 +34,7 @@ class TaskToolbar extends React.Component {
 		this.setState({
 			taskAttr: {
 				name: target.name,
-				modelName: taskAttrMenuList[index].modelName
+				keyName: taskAttrMenuList[index].keyName
 			}
 		});
 	}
@@ -43,6 +43,7 @@ class TaskToolbar extends React.Component {
 	choosePriority(e){
 		let priorityLevel = e.target.name;
 		if(this.state.selectedPriority != priorityLevel){
+			this.props.updateCurrentFilter({priority: priorityLevel});
 			this.setState({
 				selectedPriority: priorityLevel
 			});
@@ -82,7 +83,8 @@ class TaskToolbar extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
 	searchInput: (value, model, attr, parentId) => { dispatch(searchInput(value, model, attr, parentId)); },
-	fetchTasks: tasklistId => { dispatch(fetchTasks(tasklistId)); }
+	fetchTasks: tasklistId => { dispatch(fetchTasks(tasklistId)); },
+	updateCurrentFilter: obj => { dispatch(updateCurrentFilter(obj)); }
 });
 
 

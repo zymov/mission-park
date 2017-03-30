@@ -32,7 +32,7 @@ class TagsContainer extends React.Component {
 
 	btnHandler(e){
 		let inputValue = e.target.previousSibling.value;
-		if(!inputValue || ~this.props.selectedTags.indexOf(inputValue)){return;}
+		if(!inputValue || ~this.props.tags.indexOf(inputValue)){return;}
 		if(inputValue.length > 20){
 			this.props.invalidInput({type: 'maxLength', maxLength: 20}); 
 			e.target.previousSibling.value = '';
@@ -47,7 +47,7 @@ class TagsContainer extends React.Component {
 	}
 
 	itemClick(tag){
-		let	idx = this.props.selectedTags.indexOf(tag);
+		let	idx = this.props.tags.indexOf(tag);
 		if(idx == -1){
 			this.props.addTag(tag);
 		} else {
@@ -77,11 +77,11 @@ class TagsContainer extends React.Component {
 
 	render(){
 
-		const { showTagsDropdown, projectTags, selectedTags, newTaskFlag } = this.props;
+		const { showTagsDropdown, projectTags, tags, newTaskFlag } = this.props;
 
 		let dropdownInputData = {
 			menuList: projectTags,
-			selectedList: selectedTags,
+			selectedList: tags,
 			inputHandler: this.inputHandler,
 			btnHandler: this.btnHandler,
 			itemClick: this.itemClick
@@ -90,7 +90,7 @@ class TagsContainer extends React.Component {
 		let dropdownId = 'tagDropdown-' + (newTaskFlag ? 'newTask' : 'editTask');
 
 		var tagsList = [];
-		tagsList = selectedTags.map(function(item, index){
+		tagsList = tags.map(function(item, index){
 			return <InfoLabel key={index} item={item} removable={true} labelClick={this.labelClick} />;
 		}.bind(this));
 
@@ -109,7 +109,7 @@ class TagsContainer extends React.Component {
 
 const mapStateToProps = state => ({
 	projectTags: state.common.projectTags,
-	selectedTags: state.taskboard.task.selectedTags,
+	tags: state.taskboard.task.tags,
 	showTagsDropdown: state.taskboard.task.showTagsDropdown
 });
 

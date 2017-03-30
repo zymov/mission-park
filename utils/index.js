@@ -170,6 +170,10 @@ module.exports = {
   checkPropertyEquals: function(obj1, obj2){
     let keys = Object.keys(obj2);
     return keys.every(function(item, index){
+      if(item == 'dueDate'){
+        let dueDate1 = module.exports.formatDate(obj1[item]);
+        return dueDate1 == obj2[item];
+      }
       return obj1[item] == obj2[item];
     });
   },

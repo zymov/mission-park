@@ -32,7 +32,7 @@ const initialState = {
 	showUsersDropdown: false,
 	executors: [],
 	showTagsDropdown: false,
-	selectedTags:[],
+	tags:[],
 
 	// toggle task
 	toggling: false,
@@ -178,15 +178,15 @@ export default function task(state = initialState, action){
 
 		case ADD_TAG: 
 			return Object.assign({}, state, {
-				selectedTags: addNewItemToArrayEnd(state.selectedTags, action.payload)
+				tags: addNewItemToArrayEnd(state.tags, action.payload)
 			});
 		case REMOVE_TAG:
 			return Object.assign({}, state, {
-				selectedTags: removeSpecificItemFromArray(state.selectedTags, action.payload)
+				tags: removeSpecificItemFromArray(state.tags, action.payload)
 			});
 		case REMOVE_ALL_TAG:
 			return Object.assign({}, state, {
-				selectedTags: []
+				tags: []
 			});
 
 		/* toggle task */
@@ -226,7 +226,7 @@ export default function task(state = initialState, action){
 				editTaskTimestamp: Date.now(),
 				taskDetail: action.payload,
 				executors: action.payload.executors,
-				selectedTags: action.payload.tags
+				tags: action.payload.tags
 			});
 
 

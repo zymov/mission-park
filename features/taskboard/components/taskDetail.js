@@ -19,7 +19,7 @@ class TaskDetail extends React.Component {
 			description: '',
 			repeat: 0,
 			executors: [],
-			selectedTags: [],
+			tags: [],
 			inputError: {}
 		}
 		this.state = this.initialState;
@@ -80,7 +80,7 @@ class TaskDetail extends React.Component {
 			priority: this.state.priority,
 			repeat: this.state.repeat,
 			executors: this.props.executors,
-			selectedTags: this.props.selectedTags
+			tags: this.props.tags
 		}
 		let validation = validateTaskForm(payload);
 		if(!validation.isFormValid){
@@ -122,7 +122,7 @@ class TaskDetail extends React.Component {
 					priority: priority,
 					repeat: repeat,
 					executors: executors,
-					selectedTags: tags
+					tags: tags
 				});
 				$(`[data-target="#taskDetail${this.props.taskDetail._id}"]`).click();
 			}
@@ -205,7 +205,7 @@ const mapStateToProps = state => {
 	return ({
 		currentTasklistName: stt.currentTasklistName,
 		executors: stt.executors,
-		selectedTags: stt.selectedTags,
+		tags: stt.tags,
 		taskDetail: stt.taskDetail,
 		editTaskTimestamp: stt.editTaskTimestamp
 	});

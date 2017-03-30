@@ -12,7 +12,7 @@ class ProjectToolbar extends React.Component {
 					<TriggerBtn dataTarget="#addProject" btnName="添加新项目" ></TriggerBtn>
 					<ProjectModal />
 				</div>
-				<SearchInput model="project" attr={{name:"项目名称", modelName: 'projectName'}} />
+				<SearchInput model="project" attr={{name:"项目名称", keyName: 'projectName'}} />
 			</div>
 		)
 	}

@@ -21,7 +21,7 @@ class SearchInput extends React.Component {
 		this.setState({
 			[name]: value
 		});
-		this.props.searchInput(value, model, attr.modelName, parentId);
+		this.props.searchInput(value, model, attr.keyName, parentId);
 	}
 
 	render(){
@@ -39,7 +39,7 @@ class SearchInput extends React.Component {
 
 
 const mapDispatchToProps = dispatch => ({
-	searchInput: (value, model, modelName, parentId) => { dispatch(searchInput(value, model, modelName, parentId)); }	
+	searchInput: (value, model, keyName, parentId) => { dispatch(searchInput(value, model, keyName, parentId)); }	
 });
 
 
