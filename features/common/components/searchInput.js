@@ -21,7 +21,9 @@ class SearchInput extends React.Component {
 		this.setState({
 			[name]: value
 		});
-		this.props.searchInput(value, model, attr.keyName, parentId);
+		let searchObj = {};
+		searchObj[attr.keyName] = value;
+		this.props.searchInput(model, searchObj, parentId);
 	}
 
 	render(){

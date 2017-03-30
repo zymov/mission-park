@@ -13,7 +13,7 @@ module.exports = {
   taskToolMenuList: [ {name: '删除'} ],
   tasklistToolMenuList: [ {name: '删除'} ],
   projectToolMenuList: [ {name: '删除'} ],
-  taskAttrMenuList: [ {name: '任务名称', modelName: 'taskName'}, {name: '标签', modelName: 'tags'}, {name: '参与者', modelName: 'executors.name'} ],
+  taskAttrMenuList: [ {name: '任务名称', keyName: 'taskName'}, {name: '标签', keyName: 'tags'}, {name: '参与者', keyName: 'executors.name'} ],
 
 
   escapeRegex: function(text){

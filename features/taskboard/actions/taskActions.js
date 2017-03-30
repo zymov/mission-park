@@ -50,6 +50,7 @@ export const DELETE_TASK_REQUEST = 'DELETE_TASK_REQUEST';
 export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
 export const DELETE_TASK_FAILURE = 'DELETE_TASK_FAILURE';
 
+export const SET_SELECTED_PRIORITY = 'SET_SELECTED_PRIORITY';
 
 /* add and edit tasks */
 export function addTask(payload){
@@ -157,6 +158,7 @@ export function fetchTasks(tasklistId, index, tasklistName){
 	};
 	return function(dispatch){
 		dispatch(setCurrentTasklist(tasklistId, index, tasklistName));
+		dispatch(setSelectedPriority(null));
 		dispatch(fetchTasksRequest());
 		dispatch(openNotification());
 		axios.get('/tasks/fetchtasks', {
@@ -439,5 +441,13 @@ export function deleteTaskSuccess(taskId){
 export function deleteTaskFailure(err){
 	return {
 		type: 'DELETE_TASK_FAILURE'
+	}
+}
+
+
+export function setSelectedPriority(priority){
+	return {
+		type: 'SET_SELECTED_PRIORITY',
+		payload: priority
 	}
 }

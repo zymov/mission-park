@@ -9,7 +9,8 @@ import {
 	ADD_ACCOMPLISHED_TASK_SUCCESS, ADD_ACCOMPLISHED_TASK_FAILURE, 
 	SHOW_TASK_DETAIL,
 	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT,
-	DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE
+	DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE, 
+	SET_SELECTED_PRIORITY
 } from '../actions/taskActions';
 import { ADD_TASKLIST_REQUEST, SET_CURRENT_TASKLIST_ID_TO_NULL, DELETE_TASKLIST_SUCCESS } from '../actions/tasklistActions';
 import { UPDATE_TASK_ARR, CLOSE_NOTIFICATION } from '../../common/actions';
@@ -39,7 +40,8 @@ const initialState = {
 
 	// show task detail
 	editTaskTimestamp: null,
-	taskDetail: null
+	taskDetail: null,
+	selectedPriority: null
 
 }
 
@@ -282,7 +284,10 @@ export default function task(state = initialState, action){
 				taskInfoText: {}
 			});
 
-
+		case SET_SELECTED_PRIORITY:
+			return Object.assign({}, state, {
+				selectedPriority: action.payload
+			});
 		default:
 			return state;
 	}

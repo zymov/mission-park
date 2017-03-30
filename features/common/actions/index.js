@@ -21,6 +21,8 @@ export const UPDATE_TASKLIST_ARR = 'UPDATE_TASKLIST_ARR';
 export const UPDATE_TASK_ARR = 'UPDATE_TASK_ARR';
 export const SEARCH_INPUT_FAILURE = 'SEARCH_INPUT_FAILURE';
 
+
+
 export function findUsersByName(userName){
 	return function(dispatch){
 		dispatch(fetchUsersRequest());
@@ -194,18 +196,15 @@ export function closeNotification(){
 	}
 }
 
-export function searchInput(value, model, keyName, parentId){
+export function searchInput(model, searchObj, parentId){
 	const modelName = model;
 	return function(dispatch){
 		dispatch(searchInputRequest());
 		dispatch(openNotification());
-		axios.get('/tasks/searchinput', {
-			params: {
+		axios.post('/tasks/searchinput', {
 				model: model,
-				value: value,
-				keyName: keyName,
+				searchObj: searchObj,
 				parentId: parentId
-			}
 		})
 		.then(function(res){
 			if(modelName == 'project'){
@@ -258,5 +257,9 @@ export function searchInputFailure(err){
 
 
 export function updateCurrentFilter(searchContent){
-	
+	return function(dispatch){
+
+
+
+	}
 }

@@ -4,8 +4,8 @@ import AddTask from './addTask';
 import Dropdown from './dropdown/dropdown';
 import SearchInput from '../../common/components/searchInput';
 import { taskAttrMenuList, getIndexOfArrayByValue } from '../../../utils';
-import { searchInput, updateCurrentFilter } from '../../common/actions';
-import { fetchTasks } from '../actions/taskActions';
+import { searchInput } from '../../common/actions';
+import { setSelectedPriority } from '../actions/taskActions';
 
 class TaskToolbar extends React.Component {
 
@@ -16,7 +16,8 @@ class TaskToolbar extends React.Component {
 				name: '任务名称',
 				keyName: 'taskName'
 			},
-			selectedPriority: null
+			searchInputValue: ''
+			// selectedPriority: null
 		}
 
 		this.taskAttrDropdown = {
@@ -42,23 +43,45 @@ class TaskToolbar extends React.Component {
 	//filter tasks by priority
 	choosePriority(e){
 		let priorityLevel = e.target.name;
-		if(this.state.selectedPriority != priorityLevel){
-			this.props.updateCurrentFilter({priority: priorityLevel});
-			this.setState({
-				selectedPriority: priorityLevel
-			});
-			this.props.searchInput(priorityLevel, 'task', 'priority', this.props.tasklistId);
+		const { taskAttr, searchInputValue } = this.state;
+
+		if(this.props.selectedPriority != priorityLevel){
+			this.props.setSelectedPriority(priorityLevel);
+			// this.setState({
+			// 	selectedPriority: priorityLevel
+			// });
+			let searchObj = {priority: priorityLevel};
+			searchObj[taskAttr.keyName] = searchInputValue;
+			this.props.searchInput('task', searchObj, this.props.tasklistId);
 		} else {
-			this.setState({
-				selectedPriority: null
-			});
-			this.props.fetchTasks(this.props.tasklistId);
+			this.props.setSelectedPriority(null);
+			// this.setState({
+			// 	selectedPriority: null
+			// });
+			let searchObj = {};
+			searchObj[taskAttr.keyName] = searchInputValue;
+			this.props.searchInput('task', searchObj, this.props.tasklistId);
 		}
+	}
+
+	handleInputChange(event){
+		const target = event.target;
+		const value = target.value;
+		const name = target.name;
+		this.setState({
+			[name]: value
+		});
+		let searchObj = {};
+		searchObj[this.state.taskAttr.keyName] = value;
+		if(this.props.selectedPriority){
+			searchObj['priority'] = this.props.selectedPriority
+		}
+		this.props.searchInput('task', searchObj, this.props.tasklistId);
 	}
 
 	render(){
 
-		const selectedPriority = this.state.selectedPriority;
+		const selectedPriority = this.props.selectedPriority;
 
 		return(
 			<div className="btn-group toolbar" role="group" aria-label="task toolbar">
@@ -67,7 +90,15 @@ class TaskToolbar extends React.Component {
 			  	<Dropdown dropdown={this.taskAttrDropdown} 
 						btnStyle={{}} 
 						btnName={this.state.taskAttr.name} />
-			  	<SearchInput model="task" parentId={this.props.tasklistId} attr={this.state.taskAttr} />
+			  	{/*<SearchInput model="task" parentId={this.props.tasklistId} attr={this.state.taskAttr} />*/}
+
+  				<div className="toolbar-btn" role="group" aria-label="searchInputValue">
+					  <input className="form-control" name="searchInputValue" 
+			      	placeholder={`按${this.state.taskAttr.name}查找`} 
+			      	onChange={this.handleInputChange.bind(this)} 
+			      	value={this.state.searchInputValue} />
+					</div>
+
 		  	</div>
 		  	<div className="toolbar-btn priority-btn-group" onClick={this.choosePriority.bind(this)}>
 		  		<button name="2" className={`btn bc-error 	${selectedPriority != 2 ? 'not-actived' : ''}`}></button>
@@ -80,12 +111,14 @@ class TaskToolbar extends React.Component {
 
 }
 
+const mapStateToProps = state => ({
+	selectedPriority: state.taskboard.task.selectedPriority
+});
 
 const mapDispatchToProps = dispatch => ({
-	searchInput: (value, model, attr, parentId) => { dispatch(searchInput(value, model, attr, parentId)); },
-	fetchTasks: tasklistId => { dispatch(fetchTasks(tasklistId)); },
-	updateCurrentFilter: obj => { dispatch(updateCurrentFilter(obj)); }
+	searchInput: (model, searchObj, parentId) => { dispatch(searchInput(model, searchObj, parentId)); },
+	setSelectedPriority: priority => { dispatch(setSelectedPriority(priority)); }
 });
 
 
-export default connect(null, mapDispatchToProps)(TaskToolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskToolbar);

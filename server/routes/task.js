@@ -189,13 +189,18 @@ router.post('/changetasksum', function(req, res){
 	});
 });
 
-router.get('/searchinput', function(req, res){
-	let value = utils.getQueryVariable(req.url, 'value');
-	let model = utils.getQueryVariable(req.url, 'model');
-	let keyName = utils.getQueryVariable(req.url, 'keyName');
-	let parentId = utils.getQueryVariable(req.url, 'parentId');
+router.post('/searchinput', function(req, res){
+	const rb = req.body;
+	let model = rb.model;
+	let parentId = rb.parentId;
+	let keys = Object.keys(rb.searchObj);
 
-	const regex = new RegExp(utils.escapeRegex(value ? value : ''), 'gi'); 
+	let regex = null;
+	if(model == 'project' || model == 'tasklist'){
+		regex = new RegExp(utils.escapeRegex(rb.searchObj[keys[0]] ? rb.searchObj[keys[0]] : ''), 'gi'); 
+	}
+
+	// const regex = new RegExp(utils.escapeRegex(value ? value : ''), 'gi'); 
 	if(model == 'project'){
 		Project.find({projectName: regex}).sort({createTime: -1}).exec(function(err, projects){
 			if(err){
@@ -214,11 +219,16 @@ router.get('/searchinput', function(req, res){
 		});
 	} else if (model == 'task'){
 		let query = {};
-		let name = keyName;
-		query[name] = (name == 'priority') ? value : regex;
+		keys.forEach(function(item, index){
+			if(rb.searchObj[item].trim() == ''){return;}
+			query[item] = (item == 'priority') ? 
+										rb.searchObj[item] :
+										(new RegExp(utils.escapeRegex(rb.searchObj[item] ? rb.searchObj[item] : ''), 'gi'));
+		});
+
 		query["_tasklistId"] = parentId;
 		
-		Task.find(query).sort({createTime: -1}).exec(function(err, tasks){
+		Task.find(query).sort({accomplished: 1, createTime: -1}).exec(function(err, tasks){
 			if(err){
 				console.log(err);
 				return res.status(500).json({message: 'Could not receive any value.'});
