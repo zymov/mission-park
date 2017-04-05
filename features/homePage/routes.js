@@ -4,6 +4,7 @@ import Home   from './views/home';
 import ProjectList from '../project/views/projectList';
 import Project from '../project/views/project';
 import Board from '../taskboard/views/board';
+// import Board from '../groupchat/views/ChatRoom';
 import App from '../app';
 
 
@@ -13,6 +14,7 @@ const routes = (
 	  <Route path="/projects" component={ProjectList} />
 	  <Route path="/project/:projectId" component={Project} >
   		<Route path="taskboard" component={Board} />
+  		
   	</Route>
 	</Route>
 );

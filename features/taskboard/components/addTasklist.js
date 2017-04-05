@@ -88,7 +88,7 @@ class AddTasklist extends React.Component {
 			<div className="toolbar-btn">
 				<TriggerBtn dataTarget="#addTasklist" btnName="添加新任务列表"/>
 				<ModalWrapper id="addTasklist" >
-					<ModalHeader createTasklistTo='project'/>
+					<ModalHeader createTasklist />
 					<div className="modal-body clearfix">
 						<div className="row">
 							<div className="col-md-12 form-group" >
