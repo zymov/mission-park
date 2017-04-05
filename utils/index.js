@@ -15,6 +15,7 @@ module.exports = {
   projectToolMenuList: [ {name: '删除'} ],
   taskAttrMenuList: [ {name: '任务名称', keyName: 'taskName'}, {name: '标签', keyName: 'tags'}, {name: '参与者', keyName: 'executors.name'} ],
 
+  sendmsgMenuList: [ {name: '按Enter发送消息', keyName: 1}, {name: '按Ctrl+Enter发送消息', keyName: 2} ],
 
   escapeRegex: function(text){
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");

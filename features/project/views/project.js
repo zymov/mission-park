@@ -8,7 +8,7 @@ export default class Project extends React.Component {
 		const projectId = this.props.params.projectId;
 
 		return (
-			<div>
+			<div className="project-container">
 				<ProjectNav projectId={projectId}/>
         {this.props.children}
       </div>
