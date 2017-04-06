@@ -72,9 +72,13 @@ var server = app.listen(port, ()=>{console.log('listening at port ' + port)});
 var io = require('socket.io').listen(server);
 
 io.on('connection', function(socket){
-	socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
+  socket.on('create chatroom', function (route) {
+    var chatroom = io.of(`/project/${route}/groupchat`).on('connection', function(chatroomSocket){
+    	chatroomSocket.emit('chatroom created', { route: route });
+    	chatroomSocket.on('chatroom connected', function(){
+    		console.log(2);
+    	});
+    });
   });
 });
 

@@ -17,6 +17,11 @@ class Board extends React.Component {
 		super(props);
 	}
 
+	componentDidMount(){
+		var socket = io.connect();
+		socket.emit('create chatroom', { route: this.props.params.projectId });
+	}
+
 	render(){
 
 		const { showNotification, publicMsg, tasklistInfoText, taskInfoText, 
@@ -24,13 +29,6 @@ class Board extends React.Component {
 						taskDetail } = this.props;
 
 		let projectId = this.props.params.projectId;
-
-		let accomplishedAmount = 0;
-		tasks.forEach(function(item, index){
-			if(item.accomplished){
-				++accomplishedAmount;
-			}
-		});
 
 		var fetchedTaskList = [];
 

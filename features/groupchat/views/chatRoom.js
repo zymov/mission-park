@@ -5,6 +5,7 @@ import ChatMessage from '../components/chatMessage';
 
 class ChatRoom extends React.Component {
 
+
 	render(){
 
 		return(
