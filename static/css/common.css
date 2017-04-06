@@ -702,6 +702,7 @@ a.dd-list-item i {
 }
 .chatroom-footer {
   padding: 10px 10px;
+  background-color: #ddd;
 }
 .sendmsg-btn {
   width: 110px;
@@ -709,8 +710,9 @@ a.dd-list-item i {
   line-height: 34px;
   float: right;
   position: relative;
-  border-radius: 2px;
-  background-color: #ddd;
+  border-radius: 3px;
+  background-color: #3DA8F5;
+  color: #fff;
 }
 .sendmsg-btn .dropdown {
   position: absolute;
