@@ -7,7 +7,9 @@ export default class ProjectCard extends React.Component {
 	}
 
 	handleClick(){
+
 		this.context.router.push(`/project/${this.props.project._id}/taskboard`);
+		
 	}
 
 	render(){

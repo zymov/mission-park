@@ -1,9 +1,10 @@
 
-var socket = io.connect();
+// let socket = io.connect();
 
-socket.on('chatroom created', function (route) {
-	var chatroom = io.connect(`http://localhost:3000/project/${route}/chatroom`);
-  chatroom.on('connect', function(){
-  	chatroom.emit('chatroom connected');
-  })
-});
+// socket.on('connect', function(){
+// 	socket.emit('join room', { room: 'asd' });
+// });
+
+// socket.on('message', function(obj){
+// 	console.log(obj.msg);
+// });

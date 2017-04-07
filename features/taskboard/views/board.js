@@ -19,7 +19,14 @@ class Board extends React.Component {
 
 	componentDidMount(){
 		var socket = io.connect();
-		socket.emit('create chatroom', { route: this.props.params.projectId });
+		socket.emit('join room', { room: this.props.params.projectId, userToken: localStorage.getItem('token') });
+		socket.on('message', function(obj){
+			console.log(obj.msg);
+		});
+		socket.on('add user', function(data){
+			console.log(data.user);
+			console.log(data.userlist);
+		});
 	}
 
 	render(){
@@ -30,7 +37,7 @@ class Board extends React.Component {
 
 		let projectId = this.props.params.projectId;
 
-		var fetchedTaskList = [];
+		let fetchedTaskList = [];
 
 		fetchedTaskList = tasklists.map(function(tasklist, index){
 			return <Tasklist key={index} index={index} tasklist={tasklist} />;

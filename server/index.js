@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
 require('../models').connect(require('../config/dbUrl').url);	//connect db
+var User = require('mongoose').model('User');
 var jwt = require('jsonwebtoken');
+var jwtSecret = require('../config/jwt').jwtSecret;
+var chat = require('./chatroom');
 
 var port = process.env.PORT || 3000;
 var path = require('path');
@@ -62,23 +65,36 @@ app.use('/tasks', taskRouter);
 app.use('/projects', projectRouter);
 
 app.get('*', function (req, res){
-  res.sendFile(path.resolve(__dirname,'../index.html'))
+  res.sendFile(path.resolve(__dirname,'../index.html'));
 })
 
 
+const server = app.listen(port, ()=>{console.log('listening at port ' + port)});
 
-var server = app.listen(port, ()=>{console.log('listening at port ' + port)});
+const io = require('socket.io').listen(server);
 
-var io = require('socket.io').listen(server);
+let userlist = [];
 
-io.on('connection', function(socket){
-  socket.on('create chatroom', function (route) {
-    var chatroom = io.of(`/project/${route}/groupchat`).on('connection', function(chatroomSocket){
-    	chatroomSocket.emit('chatroom created', { route: route });
-    	chatroomSocket.on('chatroom connected', function(){
-    		console.log(2);
-    	});
+io.sockets.on('connection', function(_socket){
+
+  const socket = _socket;
+
+  socket.on('join room', function(obj){
+    let room = obj.room;
+    chat.joinRoom(socket, room);
+
+    let decoded = jwt.verify(obj.userToken, jwtSecret);
+    User.findById(decoded.sub, function(err, user){
+      if(err){
+        console.log(err);
+        io.sockets.to(room).emit('get user error');
+      }
+      userlist.push(user);
+      io.sockets.to(room).emit('add user', { user: user, userlist: userlist });
     });
+
+
+    io.sockets.to(room).emit('message', { msg: obj.room }); // io.sockets refers to all sockets connected, so it could emit event to all clients
   });
 });
 
