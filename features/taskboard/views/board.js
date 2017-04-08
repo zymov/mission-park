@@ -19,13 +19,9 @@ class Board extends React.Component {
 
 	componentDidMount(){
 		var socket = io.connect();
-		socket.emit('join room', { room: this.props.params.projectId, userToken: localStorage.getItem('token') });
-		socket.on('message', function(obj){
-			console.log(obj.msg);
-		});
-		socket.on('add user', function(data){
-			console.log(data.user);
-			console.log(data.userlist);
+		socket.on('connect', function(){
+			console.log(socket.id);
+			// socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
 		});
 	}
 

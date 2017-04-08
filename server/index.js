@@ -73,13 +73,14 @@ const server = app.listen(port, ()=>{console.log('listening at port ' + port)});
 
 const io = require('socket.io').listen(server);
 
-let userlist = [];
+let userlist = {};
 
 io.sockets.on('connection', function(_socket){
 
   const socket = _socket;
 
   socket.on('join room', function(obj){
+    console.log('join room');
     let room = obj.room;
     chat.joinRoom(socket, room);
 
@@ -89,13 +90,29 @@ io.sockets.on('connection', function(_socket){
         console.log(err);
         io.sockets.to(room).emit('get user error');
       }
-      userlist.push(user);
-      io.sockets.to(room).emit('add user', { user: user, userlist: userlist });
+
+      if(!userlist[room]) {
+        userlist[room] = {};
+      }
+      if(~JSON.stringify(userlist[room]).indexOf(user._id)){
+        io.sockets.to(room).emit('user reconnected', { user: user, userlist: userlist[room] });
+      } else {
+        userlist[room][socket.id] = user;
+        io.sockets.to(room).emit('add user', { user: user, userlist: userlist[room] });
+      }
     });
 
-
     io.sockets.to(room).emit('message', { msg: obj.room }); // io.sockets refers to all sockets connected, so it could emit event to all clients
+
+    
   });
+
+  socket.on('disconnect', function(){
+    console.log('disconnect');
+
+  });
+
 });
+
 
 
