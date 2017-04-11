@@ -3,7 +3,7 @@ require('../models').connect(require('../config/dbUrl').url);	//connect db
 var User = require('mongoose').model('User');
 var jwt = require('jsonwebtoken');
 var jwtSecret = require('../config/jwt').jwtSecret;
-var chat = require('./chatroom');
+// var chat = require('./chatroom');
 
 var port = process.env.PORT || 3000;
 var path = require('path');
@@ -74,18 +74,33 @@ const server = app.listen(port, ()=>{console.log('listening at port ' + port)});
 const io = require('socket.io').listen(server);
 
 let userlist = {};
-
-io.sockets.on('connection', function(_socket){
+let currentRoom = {};
+io.sockets.on('connection', function(_socket){    //write a express middleware ?
 
   const socket = _socket;
+  console.log('\x1b[33m', 'socket client id: ',socket.client.id);
 
   socket.on('join room', function(obj){
-    console.log('join room');
-    let room = obj.room;
-    chat.joinRoom(socket, room);
+    console.log('\x1b[33m', 'join room, current socket id is: ', socket.id);
+    let { room, userToken } = obj;
 
-    let decoded = jwt.verify(obj.userToken, jwtSecret);
-    User.findById(decoded.sub, function(err, user){
+    //component rerender or update, trigger 'componentDidMount', will not join room again.
+    if(currentRoom[socket.id] == room){            
+      console.log('\x1b[33m', 'not join room');
+      return;
+    }
+    currentRoom[socket.id] = room;
+    let rooms = io.sockets.adapter.sids[socket.id];
+    for(let room in rooms){
+      socket.leave(room);
+    }
+
+    socket.join(room);
+
+    console.log('\x1b[33m','clients in room ', room, ': ', io.sockets.adapter.rooms[room]);
+
+    let decoded = jwt.verify(userToken, jwtSecret);
+    User.findById(decoded.sub, function(err, user){     // any better way to maintain the userlist?
       if(err){
         console.log(err);
         io.sockets.to(room).emit('get user error');
@@ -94,21 +109,40 @@ io.sockets.on('connection', function(_socket){
       if(!userlist[room]) {
         userlist[room] = {};
       }
+
+      //if user is already in the userlist of current room, don't change userlist
       if(~JSON.stringify(userlist[room]).indexOf(user._id)){
         io.sockets.to(room).emit('user reconnected', { user: user, userlist: userlist[room] });
       } else {
-        userlist[room][socket.id] = user;
+        //remove user from userlist of previous room
+        for(let key in userlist){
+          if(key != room && ~JSON.stringify(userlist[key]).indexOf(user._id)){
+            delete userlist[key][user._id];
+            io.sockets.to(key).emit('user leave', {user: user, userlist: userlist[key]});
+            break;
+          }
+        }
+
+        userlist[room][user.id] = user;
         io.sockets.to(room).emit('add user', { user: user, userlist: userlist[room] });
+
       }
     });
 
-    io.sockets.to(room).emit('message', { msg: obj.room }); // io.sockets refers to all sockets connected, so it could emit event to all clients
+    // io.sockets refers to all sockets connected, so it could emit event to all clients
+    io.sockets.to(room).emit('message', { msg: room }); 
+
 
     
   });
 
+
+
+
   socket.on('disconnect', function(){
-    console.log('disconnect');
+    console.log('\x1b[33m', 'leave room, disconnect, socket id is:', socket.id);
+
+    
 
   });
 

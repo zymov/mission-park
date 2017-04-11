@@ -1,15 +1,13 @@
 import React, { PropTypes } from 'react';
 
-export default class ProjectCard extends React.Component {
+class ProjectCard extends React.Component {
 
 	constructor(props, context){
 		super(props, context);
 	}
 
 	handleClick(){
-
 		this.context.router.push(`/project/${this.props.project._id}/taskboard`);
-		
 	}
 
 	render(){
@@ -39,3 +37,4 @@ ProjectCard.contextTypes = {
 	router: PropTypes.object.isRequired
 }
 
+export default ProjectCard;

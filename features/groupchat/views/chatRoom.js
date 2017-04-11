@@ -6,12 +6,11 @@ import ChatMessage from '../components/chatMessage';
 class ChatRoom extends React.Component {
 
 	componentDidMount(){
-		let socket = io.connect();
-		let projectId = this.props.params.projectId;
+		// let projectId = this.props.params.projectId;
 		socket.on('connect', function(){
 			console.log(socket.id);
-			socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
-		})
+			// socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
+		});
 		
 		socket.on('message', function(obj){
 			console.log(obj.msg);
@@ -26,7 +25,6 @@ class ChatRoom extends React.Component {
 		});
 
 	}
-
 
 
 	render(){
