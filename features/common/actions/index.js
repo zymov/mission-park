@@ -22,7 +22,6 @@ export const UPDATE_TASK_ARR = 'UPDATE_TASK_ARR';
 export const SEARCH_INPUT_FAILURE = 'SEARCH_INPUT_FAILURE';
 
 
-
 export function findUsersByName(userName){
 	return function(dispatch){
 		dispatch(fetchUsersRequest());
@@ -255,11 +254,3 @@ export function searchInputFailure(err){
 	}
 }
 
-
-export function updateCurrentFilter(searchContent){
-	return function(dispatch){
-
-
-
-	}
-}

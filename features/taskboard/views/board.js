@@ -9,6 +9,7 @@ import Tasklist from '../components/tasklist';
 import TaskDetail from '../components/taskDetail';
 import Notification from '../../common/components/notification/notification';
 import NotificationsContainer from '../../common/components/notification/notificationsContainer';
+import { updateOnlineUsers } from '../../groupchat/actions';
 import { isEmptyObject } from '../../../utils';
 
 class Board extends React.Component {
@@ -19,30 +20,24 @@ class Board extends React.Component {
 
 	componentDidMount(){
 		let projectId = this.props.params.projectId;
+		let that = this;
 		socket.on('connect', function(){
-			console.log(socket.id);
+			console.log('socket id: ', socket.id);
 		});
-
 		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
 
-		socket.on('message', function(obj){
-			console.log('message');
-			console.log(obj.msg);
-		});
 		socket.on('add user', function(data){
 			console.log('add user');
 			console.log(data.user);
 			console.log(data.userlist);
+			that.props.updateOnlineUsers(data.user, data.userlist, true);
 		});
-		socket.on('user reconnected', function(data){
-			console.log('reconnected');
-			console.log(data.user);
-			console.log(data.userlist);
-		});
+
 		socket.on('user leave', function(data){
 			console.log('user leave');
 			console.log(data.user);
 			console.log(data.userlist);
+			that.props.updateOnlineUsers(data.user, data.userlist, false);
 		});
 	}
 
@@ -94,7 +89,7 @@ const mapStateToProps = state => {
 	const tb = state.taskboard;
 	return {
 		showNotification: 			state.common.showNotification,
-		publicMsg:  					state.common.publicMsg,
+		publicMsg:  						state.common.publicMsg,
 		taskInfoText: 					tb.task.taskInfoText,
 		currentTasklistId: 			tb.task.currentTasklistId,
 		taskDetail: 						tb.task.taskDetail,
@@ -104,7 +99,8 @@ const mapStateToProps = state => {
 	}
 }
 
-// const mapDispatchToProps = dispatch => ({
-// })
+const mapDispatchToProps = dispatch => ({
+	updateOnlineUsers: (user, userlist, flag) => { dispatch(updateOnlineUsers(user, userlist, flag)); }
+});
 
-export default connect(mapStateToProps, null)(Board);
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

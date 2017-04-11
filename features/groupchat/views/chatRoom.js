@@ -1,27 +1,34 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ChatroomInput from '../components/chatroomInput';
 import ChatroomHead from '../components/chatroomHead';
 import ChatMessage from '../components/chatMessage';
+import { updateOnlineUsers } from '../actions';
 
 class ChatRoom extends React.Component {
 
 	componentDidMount(){
-		// let projectId = this.props.params.projectId;
-		socket.on('connect', function(){
-			console.log(socket.id);
-			// socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
-		});
-		
+		let projectId = this.props.params.projectId;
+		let that = this;
+		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
+
 		socket.on('message', function(obj){
+			console.log('message');
 			console.log(obj.msg);
 		});
+
 		socket.on('add user', function(data){
+			console.log('add user');
 			console.log(data.user);
 			console.log(data.userlist);
+			that.props.updateOnlineUsers(data.user, data.userlist, true);
 		});
-		socket.on('user reconnected', function(data){
+
+		socket.on('user leave', function(data){
+			console.log('user leave');
 			console.log(data.user);
 			console.log(data.userlist);
+			that.props.updateOnlineUsers(data.user, data.userlist, false);
 		});
 
 	}
@@ -29,10 +36,12 @@ class ChatRoom extends React.Component {
 
 	render(){
 
+		const { onlineUserlist, updatedUser } = this.props;
+
 		return(
 			<div className="container chatroom">
 				<div className="chatroom-wrapper">
-					<ChatroomHead />
+					<ChatroomHead onlineUserlist={onlineUserlist} updatedUser={updatedUser} />
 					<div className="message-content-box">
 						<ul className="message-list">
 							<ChatMessage />
@@ -48,4 +57,13 @@ class ChatRoom extends React.Component {
 	}
 }
 
-export default ChatRoom;
+const mapStateToProps = state => ({
+	onlineUserlist: state.groupchat.onlineUserlist,
+	updatedUser: state.groupchat.updatedUser
+});
+
+const mapDispatchToProps = dispatch => ({
+	updateOnlineUsers: (user, userlist, flag) => { dispatch(updateOnlineUsers(user, userlist, flag)); }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatRoom);

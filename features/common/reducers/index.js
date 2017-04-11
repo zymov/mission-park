@@ -3,8 +3,7 @@ import {
 	FETCH_TAGS_REQUEST, FETCH_TAGS_SUCCESS, FETCH_TAGS_FAILURE,
 	SAVE_TAGS_REQUEST, SAVE_TAGS_SUCCESS, SAVE_TAGS_FAILURE,
 	OPEN_NOTIFICATION, CLOSE_NOTIFICATION, 
-	SEARCH_INPUT_REQUEST, SEARCH_INPUT_FAILURE, 
-
+	SEARCH_INPUT_REQUEST, SEARCH_INPUT_FAILURE 
 } from '../actions';
 import { addNewItemToArrayEnd } from '../../../utils';
 
@@ -14,7 +13,9 @@ const initialState = {
 	loading: false,
 	commonInfoText: '',
 	publicMsg: {},
-	showNotification: false
+	showNotification: false,
+	onlineUserlist: {},
+	updatedUser: null
 }
 
 export default function common(state=initialState, action){
@@ -88,6 +89,7 @@ export default function common(state=initialState, action){
 					level: 'error'
 				}
 			});		
+
 
 
 		default:
