@@ -642,8 +642,42 @@ a.dd-list-item i {
   flex-direction: column;
 }
 .chatroom-wrapper .chatroom-head {
-/*  position: absolute;
-  top: 0;*/
+  background-color: #f1f8ff;
+  border-bottom: 1px solid #c8e1ff;
+  height: 47px;
+}
+.chatroom-wrapper .chatroom-head .online-userlist {
+  float: left;
+  display: inline-block;
+  list-style-type: none;
+  margin-bottom: 0;
+  padding-left: 0;
+  height: 47px;
+  max-width: 650px;
+  /*background-color: #f1f8ff;*/
+  /*border-bottom: 1px solid #c8e1ff;*/
+  overflow: hidden;
+}
+.online-user-title, .online-userlist-item {
+  float: left;
+  height: 46px;
+  line-height: 46px;
+  border-radius: 3px;
+}
+.online-user-title span, .online-userlist-item span.user-square {
+  line-height: 34px;
+  display: block;
+  height: 46px;
+  padding: 6px 0 6px 12px;
+}
+.online-userlist-item span.user-square {
+  width: 46px;
+
+}
+.online-userlist-item span.user-square img {
+  width: 100%; 
+  height: 100%;
+  border-radius: 3px;
 }
 .chatroom-wrapper .chatroom-head .chatroom-tools {
   line-height: 34px;
@@ -744,4 +778,5 @@ a.dd-list-item i {
 .msg-input-area {
   margin-right: 120px;
 }
+
 /* group chat end */

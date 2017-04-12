@@ -8,19 +8,28 @@ class ChatroomHead extends React.Component {
 
 		let onlineUserArr = Object.keys(onlineUserlist).map(function(item, index){
 			return (
-				<li key={onlineUserlist[item]._id} className="online-userlist">
-					<span className="user-square" title={onlineUserlist[item].name}>{onlineUserlist[item].name}</span>
+				<li key={onlineUserlist[item]._id} className="online-userlist-item">
+					<span className="user-square" >
+						<img src="/static/imgs/101.png" title={onlineUserlist[item].name} />
+					</span>
 				</li>
 			);
 		});
 
+
 		return(
 			<div className="chatroom-head">
-				<ul>
+				<ul className="online-userlist clearfix">
+					<li className="online-user-title"><span>{`当前在线 ${Object.keys(onlineUserlist).length} 人`}</span></li>
 					{onlineUserArr}
 				</ul>
-				<div className="chatroom-tools">mute notification</div>
-				{updatedUser && <div className="online-userlist-info">{updatedUser.name}</div>}
+				{
+					Object.keys(onlineUserlist).length > 12 && 
+					<li className="online-userlist-item" style={{display: 'inline-block'}}><span title="更多用户" className="user-square glyphicon glyphicon-option-horizontal"></span></li>
+				}
+
+				{/*online-userlist-item className="chatroom-tools">mute notification</div>*/}
+				{/*updatedUser && <div className="online-userlist-info">{updatedUser.name}</div>*/}
 			</div>
 		);
 	}

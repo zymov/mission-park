@@ -30,14 +30,19 @@ class Board extends React.Component {
 			console.log('add user');
 			console.log(data.user);
 			console.log(data.userlist);
-			that.props.updateOnlineUsers(data.user, data.userlist, true);
+			that.props.updateOnlineUsers(data.user, data.userlist);
+		});
+
+		socket.on('user reconnect', function(data){
+			console.log('user reconnect');
+			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
 
 		socket.on('user leave', function(data){
 			console.log('user leave');
 			console.log(data.user);
 			console.log(data.userlist);
-			that.props.updateOnlineUsers(data.user, data.userlist, false);
+			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
 	}
 
@@ -100,7 +105,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-	updateOnlineUsers: (user, userlist, flag) => { dispatch(updateOnlineUsers(user, userlist, flag)); }
+	updateOnlineUsers: (user, userlist) => { dispatch(updateOnlineUsers(user, userlist)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

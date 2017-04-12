@@ -112,7 +112,7 @@ io.sockets.on('connection', function(_socket){    //write a express middleware ?
 
       //if user is already in the userlist of current room, don't change userlist
       if(~JSON.stringify(userlist[room]).indexOf(user._id)){
-        // io.sockets.to(room).emit('user reconnected', { user: user, userlist: userlist[room] });
+        io.sockets.to(room).emit('user reconnect', { user: user, userlist: userlist[room] });
         return;
       } else {
         //remove user from userlist of previous room
