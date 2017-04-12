@@ -1,8 +1,10 @@
-import { UPDATE_ONLINE_USERS } from '../actions';
+import { UPDATE_ONLINE_USERS, NEW_MESSAGE } from '../actions';
+import { addNewItemToArrayEnd } from '../../../utils';
 
 const initialState = {
 	onlineUserlist: {},
-	updatedUser: null
+	updatedUser: null,
+	messageList: []
 }
 
 export default function groupchat(state=initialState, action){
@@ -12,6 +14,12 @@ export default function groupchat(state=initialState, action){
 				updatedUser: action.payload.user,
 				onlineUserlist: action.payload.userlist
 			});
+
+		case NEW_MESSAGE:
+			return Object.assign({}, state, {
+				messageList: addNewItemToArrayEnd(state.messageList, action.payload)
+			});
+
 
 		default:
 			return state;

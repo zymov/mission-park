@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ChatroomInput from '../components/chatroomInput';
 import ChatroomHead from '../components/chatroomHead';
 import ChatMessage from '../components/chatMessage';
-import { updateOnlineUsers } from '../actions';
+import { updateOnlineUsers, newMessage } from '../actions';
 
 class ChatRoom extends React.Component {
 
@@ -12,9 +12,10 @@ class ChatRoom extends React.Component {
 		let that = this;
 		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
 
-		socket.on('message', function(obj){
-			console.log('message');
-			console.log(obj.msg);
+		socket.on('new message', function(data){
+			console.log('new message');
+			console.log(data.message, data.timestamp, data.byself);
+			that.props.newMessage(data);
 		});
 
 		socket.on('add user', function(data){
@@ -41,7 +42,13 @@ class ChatRoom extends React.Component {
 
 	render(){
 
-		const { onlineUserlist, updatedUser } = this.props;
+		const { onlineUserlist, updatedUser, messageList } = this.props;
+
+		let messageArr = messageList.map(function(item, index){
+			return(
+				<ChatMessage key={index} message={item} />
+			);
+		});
 
 		return(
 			<div className="container chatroom">
@@ -49,8 +56,7 @@ class ChatRoom extends React.Component {
 					<ChatroomHead onlineUserlist={onlineUserlist} updatedUser={updatedUser} />
 					<div className="message-content-box">
 						<ul className="message-list">
-							<ChatMessage />
-							<ChatMessage />
+							{messageArr}
 						</ul>
 					</div>
 					<div className="chatroom-footer">
@@ -64,11 +70,14 @@ class ChatRoom extends React.Component {
 
 const mapStateToProps = state => ({
 	onlineUserlist: state.groupchat.onlineUserlist,
-	updatedUser: state.groupchat.updatedUser
+	updatedUser: state.groupchat.updatedUser,
+	messageList: state.groupchat.messageList
 });
 
 const mapDispatchToProps = dispatch => ({
-	updateOnlineUsers: (user, userlist) => { dispatch(updateOnlineUsers(user, userlist)); }
+	updateOnlineUsers: (user, userlist) => { dispatch(updateOnlineUsers(user, userlist)); },
+	newMessage: (data) => { dispatch(newMessage(data)); }
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoom);

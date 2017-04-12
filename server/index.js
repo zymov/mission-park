@@ -133,6 +133,9 @@ io.sockets.on('connection', function(_socket){    //write a express middleware ?
     // io.sockets refers to all sockets connected, so it could emit event to all clients
     io.sockets.to(room).emit('message', { msg: room }); 
 
+    socket.on('send message', function(data){
+      socket.broadcast.to(room).emit('new message', {message: data.message, timestamp: data.timestamp});
+    });
 
     
   });

@@ -701,7 +701,7 @@ a.dd-list-item i {
 }
 .chatroom-wrapper .message-content-box .message-list {
   list-style-type: none;
-  padding: 0 10px;
+  padding: 10px 10px;
   width: 100%;
   margin-bottom: 0;
 }
@@ -716,6 +716,7 @@ a.dd-list-item i {
 }
 .message-list-item .message-body.self-msg {
   float: right;
+  text-align: right;
 }
 .message-list-item .message-body.self-msg .message-info {
   text-align: right;
@@ -728,8 +729,11 @@ a.dd-list-item i {
   word-break: break-word;
   font-size: 16px;
   padding: 6px 12px;
-  background-color: #f2f2f2;
+  background-color: #fff8dc;
   border-radius: 3px;
+}
+.self-msg .message-content {
+  background-color: #e0eaf1;
 }
 .message-content p {
   margin: 0;

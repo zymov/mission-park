@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Dropdown from '../../taskboard/components/dropdown/dropdown';
 import { sendmsgMenuList, getIndexOfArrayByValue } from '../../../utils';
+import { newMessage } from '../actions';
 
 class ChatroomInput extends React.Component {
 
@@ -8,7 +10,8 @@ class ChatroomInput extends React.Component {
 		super(props);
 
 		this.state = {
-			hotKey: 1
+			hotKey: 1,
+			message: ''
 		};
 
 		this.sendMsgHotKeyDropdown = {
@@ -18,8 +21,38 @@ class ChatroomInput extends React.Component {
 			dropdownIcon: true
 		}
 
+		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleKeyPress = this.handleKeyPress.bind(this);
 	}
 
+	// componentDidMount(){
+
+	// }
+
+	handleKeyPress(event){
+		if(event.charCode == 13){
+			event.preventDefault();		//prevent triggering onchange
+			if(this.state.message){
+				let payload = {message: this.state.message, timestamp: new Date(), byself: true};
+				socket.emit('send message', payload);
+				this.props.newMessage(payload);
+				this.setState({
+					message: ''
+				});
+			} else {
+				return;
+			}
+		}
+	}
+
+	handleInputChange(event){
+		const target = event.target;
+		const value = target.value;
+		const name = target.name;
+		this.setState({
+			[name]: value
+		});
+	}
 
 	selectSendMsgHotKey(e){
 		let target = e.target;
@@ -38,7 +71,10 @@ class ChatroomInput extends React.Component {
 					<Dropdown dropdown={this.sendMsgHotKeyDropdown} btnName="" btnStyle={{}} />
 				</div>
 				<div className="msg-input-area">
-					<input type="textarea" className="form-control" placeholder="说点什么吧" />
+					<textarea className="form-control" rows="1" name="message" 
+						placeholder="说点什么吧" 
+						onKeyPress={this.handleKeyPress}
+						onChange={this.handleInputChange} value={this.state.message} />
 					<div className="sendmsg-box-icon">
 						<div className="add-files-to-chat"></div>
 						<div className="add-emoji-to-chat"></div>
@@ -50,4 +86,8 @@ class ChatroomInput extends React.Component {
 
 }
 
-export default ChatroomInput;
+const mapDispatchToProps = dispatch => ({
+	newMessage: payload => { dispatch(newMessage(payload)); }
+});
+
+export default connect(null, mapDispatchToProps)(ChatroomInput);
