@@ -11,7 +11,7 @@ class ChatMessage extends React.Component {
 				<div className={`message-body ${byself ? 'self-msg' : ''}`}>
 					<div className="message-content"><p>{message}</p></div>
 					<div className="message-info">
-						<div className="message-info-time">{timestamp.toString()}</div>
+						<div className="message-info-time">{timestamp.substring(16, 24)}</div>
 					</div>
 				</div>
 			</li>

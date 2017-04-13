@@ -782,5 +782,8 @@ a.dd-list-item i {
 .msg-input-area {
   margin-right: 120px;
 }
-
+.msg-input-area textarea {
+  max-width: 830px;
+  max-height: 200px;
+}
 /* group chat end */

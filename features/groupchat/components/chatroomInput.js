@@ -23,17 +23,31 @@ class ChatroomInput extends React.Component {
 
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleKeyPress = this.handleKeyPress.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
 
 	// componentDidMount(){
 
 	// }
 
+	handleClick(event){
+		if(this.state.message){
+			let payload = {message: this.state.message, timestamp: (new Date()).toString(), byself: true};
+			socket.emit('send message', payload);
+			this.props.newMessage(payload);
+			this.setState({
+				message: ''
+			});
+		} else {
+			return;
+		}
+	}
+
 	handleKeyPress(event){
 		if(event.charCode == 13){
 			event.preventDefault();		//prevent triggering onchange
 			if(this.state.message){
-				let payload = {message: this.state.message, timestamp: new Date(), byself: true};
+				let payload = {message: this.state.message, timestamp: (new Date()).toString(), byself: true};
 				socket.emit('send message', payload);
 				this.props.newMessage(payload);
 				this.setState({
@@ -67,7 +81,7 @@ class ChatroomInput extends React.Component {
 		return(
 			<div className="sendmsg-box">
 				<div className="sendmsg-btn">
-					<span className="sendmsg-send">发送</span>
+					<span className="sendmsg-send" onClick={this.handleClick}>发送</span>
 					<Dropdown dropdown={this.sendMsgHotKeyDropdown} btnName="" btnStyle={{}} />
 				</div>
 				<div className="msg-input-area">
