@@ -4,10 +4,10 @@ import SignIn from './views/signin';
 import SignUp from './views/signup';
 import {deAuthenticateUser} from '../../utils';
 
-
+//	onEnter={ (nextState, replace)=>{deAuthenticateUser(); replace('/')} } 
 const routes = (
 	<Route >
-		<Route path="signout" onEnter={ (nextState, replace)=>{deAuthenticateUser(); replace('/')} } />
+		<Route path="/auth/signout" />
 		<Route path="signin" component={SignIn} />
 		<Route path="signup" component={SignUp} />
 	</Route>

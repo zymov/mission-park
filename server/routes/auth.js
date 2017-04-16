@@ -116,7 +116,7 @@ router.post('/signin', (req, res, next)=>{
     });
   }
 
-  return passport.authenticate('local-signin', (err, token, userData)=>{
+  return passport.authenticate('local-signin', (err, token, user)=>{
   	if (err) {
       if (err.name === 'IncorrectEmail') {
         return res.status(400).json({
@@ -143,12 +143,17 @@ router.post('/signin', (req, res, next)=>{
       });
     }
 
-    return res.json({
-      success: true,
-      message: 'You have successfully logged in!',
-      token,
-      user: userData
+    req.logIn(user, function(err){
+    	if(err){ return res.status(500).json({success: false, message: 'could not sign in user'}); }
+    	return res.status(200).json({success: true, message: 'You have successfully signed in!', token: token, user: user});
     });
+
+    // return res.json({
+    //   success: true,
+    //   message: 'You have successfully logged in!',
+    //   // token,
+    //   user: user
+    // });
 
   })(req, res, next);
 
@@ -158,6 +163,11 @@ router.post('/signin', (req, res, next)=>{
 // 	failureRedirect: '/signin',
 // 	failureFlash: true
 // }
+
+router.get('/signout', function(req, res){
+	req.logout();
+	res.redirect('/signin');
+});
 
 
 module.exports = router;

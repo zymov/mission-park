@@ -7,7 +7,8 @@ const jwtSecret = require('../jwt').jwtSecret;
 module.exports = function(passport){
 
 	passport.serializeUser(function(user, done) {
-	  done(null, user.id);
+		let sessionUser = { _id: user.id, name: user.name, email: user.email };
+	  done(null, sessionUser);
 	});
 
 	passport.deserializeUser(function(id, done) {
@@ -88,11 +89,11 @@ module.exports = function(passport){
 				else {
 
 					const payload = {sub: user._id};
-
 					const token = jwt.sign(payload, jwtSecret);
-					const data = {name: user.name};
+					// const data = {_id: user._id, name: user.name, email: user.email};
 
-					return done(null, token, data);	
+					// return done(null, token, data);	
+					return done(null, token, user);
 				}
 			});
 

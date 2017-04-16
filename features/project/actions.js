@@ -57,6 +57,10 @@ export function fetchProject(){
 		dispatch(openNotification());
 		axios.get('/projects/fetch')
 		.then(function(res){
+			// if(res.data.redirect){
+			// 	window.location = res.data.redirect;
+			// 	return;
+			// }
 			dispatch(fetchProjectSuccess(res.data.projects));
 		})
 		.catch(function(err){

@@ -38,6 +38,7 @@ router.post('/addproject', function(req, res){
 
 });
 
+
 router.get('/fetch', function(req, res){
 
 	Project.find({}).sort({createTime: -1}).exec(function(err, projects){

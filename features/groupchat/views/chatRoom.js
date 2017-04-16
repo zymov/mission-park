@@ -17,7 +17,7 @@ class ChatRoom extends React.Component {
 			console.log(data.message, data.timestamp, data.byself);
 			that.props.newMessage(data);
 		});
-
+		console.log(this.props.currentUser);
 		socket.on('add user', function(data){
 			console.log('add user');
 			console.log(data.user);
@@ -71,7 +71,8 @@ class ChatRoom extends React.Component {
 const mapStateToProps = state => ({
 	onlineUserlist: state.groupchat.onlineUserlist,
 	updatedUser: state.groupchat.updatedUser,
-	messageList: state.groupchat.messageList
+	messageList: state.groupchat.messageList,
+	currentUser: state.auth.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({

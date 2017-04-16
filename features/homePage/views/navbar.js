@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import { deAuthenticateUser } from '../../../utils';
 
 class Navbar extends React.Component {
 	render(){
@@ -21,7 +22,7 @@ class Navbar extends React.Component {
 			        <li className="active"><a href="/">projects <span className="sr-only">(current)</span></a></li>
 			      </ul>
 			      <ul className="nav navbar-nav navbar-right">
-			        <li><a href="/signout">Sign out</a></li>
+			        <li><a href="/auth/signout" onClick={deAuthenticateUser}>Sign out</a></li>
 			        <li className="dropdown">
 			          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
 			          <ul className="dropdown-menu">
