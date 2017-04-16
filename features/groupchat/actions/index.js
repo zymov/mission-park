@@ -18,6 +18,7 @@ export function newMessage(data){
 		payload: {
 			message: data.message,
 			timestamp: data.timestamp,
+			user: data.user,
 			byself: data.byself
 		}
 	}

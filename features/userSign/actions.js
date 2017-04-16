@@ -1,22 +1,14 @@
-// import 'whatwg-fetch';
-// require('es6-promise').polyfill();
-// require('isomorphic-fetch');
 import axios from 'axios';
-// import {USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAILURE, USER_SIGNOUT, USER_SIGNUP_SUCCESS, USER_SIGNUP_FAILURE} from '../constants';
 
-// export const USER_SIGNIN_REQUEST = 'USER_SIGNIN_REQUEST';
 export const USER_SIGNIN_SUCCESS = 'USER_SIGNIN_SUCCESS';
 export const USER_SIGNIN_FAILURE = 'USER_SIGNIN_FAILURE';
 export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS';
 export const USER_SIGNUP_FAILURE = 'USER_SIGNUP_FAILURE';
 export const USER_SIGNOUT = 'USER_SIGNOUT';
 
-//not used
-// export function signinRequest(){
-// 	return {
-// 		type: 'USER_SIGNIN_REQUEST'
-// 	}
-// }
+export const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS';
+export const GET_CURRENT_USER_FAILURE = 'GET_CURRENT_USER_FAILURE';
+
 export function signinSuccess(token, user){
 	localStorage.setItem('token', token);
 	return {
@@ -60,23 +52,6 @@ export function signupFailure(err){
 
 export function signinUser(email, password, context, redirect='/'){
 	return function(dispatch){
-		// dispatch(signinRequest());
-		// const formData = `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
-		// const xhr = new XMLHttpRequest();
-		// xhr.open('post', '/auth/signin');
-		// xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		// xhr.responseType = 'json';
-		// xhr.addEventListener('load', ()=>{
-		// 	if(xhr.status === 200){
-		// 		dispatch(signinSuccess());
-		// 		context.router.replace(redirect);
-		// 	} else {
-		// 		const errors = xhr.response.errors ? xhr.response.errors : {};
-		// 		errors.summary = xhr.response.message;
-		// 		dispatch(signinFailure(errors));
-		// 	}
-		// });
-		// xhr.send(formData);
 
 		axios.post('/auth/signin', {email: email, password: password})
 			.then(function(res){
@@ -91,32 +66,8 @@ export function signinUser(email, password, context, redirect='/'){
 }
 
 export function signupUser(name, email, password, context){
-  // const formData = `name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
  
   return function(dispatch){
-
- 		// create an AJAX request
-	  // const xhr = new XMLHttpRequest();
-	  // xhr.open('post', '/auth/signup');
-	  // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	  // xhr.responseType = 'json';
-	  // xhr.addEventListener('load', () => {
-	  //   if (xhr.status === 200) {
-	  //     // success
-	  //     dispatch(signupSuccess());
-	  //     // set a message
-	  //     // localStorage.setItem('successMessage', xhr.response.message);
-	  //     // make a redirect
-	  //     context.router.replace('/signin');
-
-	  //   } else {
-	  //     // failure
-	  //     const errors = xhr.response.errors ? xhr.response.errors : {};
-	  //     errors.summary = xhr.response.message;
-	  //     dispatch(signupFailure(errors));
-	  //   }
-	  // });
-	  // xhr.send(formData);
 
 	  axios.post('/auth/signup', { name: name, email: email, password: password})
 	  	.then(function(res){
@@ -132,10 +83,30 @@ export function signupUser(name, email, password, context){
 }
 
 
+export function getCurrentUser(){
+	axios.get('/auth/getcurrentuser', {token: localStorage.getItem('token')})
+		.then(function(res){
+			dispatch(getCurrentUserSuccess(res.user));
+		})
+		.then(function(err){
+			dispatch(getCurrentUserFailure(err));
+		});
+}
 
-
-
-
+export function getCurrentUserSuccess(user){
+	return {
+		type: 'GET_CURRENT_USER_SUCCESS',
+		payload: user
+	}
+}
+export function getCurrentUserFailure(err){
+	return {
+		type: 'GET_CURRENT_USER_FAILURE',
+		payload: {
+			errors: err
+		}
+	}
+}
 
 
 

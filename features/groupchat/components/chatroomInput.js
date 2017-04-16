@@ -26,9 +26,6 @@ class ChatroomInput extends React.Component {
 		this.handleClick = this.handleClick.bind(this);
 	}
 
-	// componentDidMount(){
-
-	// }
 
 	handleClick(event){
 		if(this.state.message){
@@ -99,6 +96,10 @@ class ChatroomInput extends React.Component {
 	}
 
 }
+
+// const mapStateToProps = state => ({
+// 	currentUser: state.auth.currentUser
+// });
 
 const mapDispatchToProps = dispatch => ({
 	newMessage: payload => { dispatch(newMessage(payload)); }

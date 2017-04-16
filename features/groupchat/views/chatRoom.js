@@ -10,6 +10,9 @@ class ChatRoom extends React.Component {
 	componentDidMount(){
 		let projectId = this.props.params.projectId;
 		let that = this;
+
+		console.log('token', jwt_decode(localStorage.getItem('token')));
+
 		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
 
 		socket.on('new message', function(data){
@@ -17,7 +20,6 @@ class ChatRoom extends React.Component {
 			console.log(data.message, data.timestamp, data.byself);
 			that.props.newMessage(data);
 		});
-		console.log(this.props.currentUser);
 		socket.on('add user', function(data){
 			console.log('add user');
 			console.log(data.user);

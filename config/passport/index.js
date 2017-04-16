@@ -88,7 +88,7 @@ module.exports = function(passport){
 				} 
 				else {
 
-					const payload = {sub: user._id};
+					const payload = {sub: user._id, name: user.name };
 					const token = jwt.sign(payload, jwtSecret);
 					// const data = {_id: user._id, name: user.name, email: user.email};
 
