@@ -62,25 +62,7 @@ module.exports = function(io){
       }
       // });
 
-      // io.sockets refers to all sockets connected, so it could emit event to all clients
-      socket.on('send message', function(data){
 
-        let his = new ChatMessageHistory();
-        his.roomId = room;
-        his.senderId = data.user.sub;
-        his.senderName = data.user.name;
-        his.timestamp = data.timestamp;
-        his.message = data.message;
-        his.save(function(err){
-          if(err){
-            console.log(err);
-            io.sockets.emit('save message error');
-          }
-          return;
-        });
-
-        socket.broadcast.to(room).emit('new message', {message: data.message, user: data.user, timestamp: data.timestamp});
-      });
 
       
       socket.on('leave', function(){
@@ -88,6 +70,26 @@ module.exports = function(io){
         socket.broadcast.to(room).emit('user leave', {user: decoded, userlist: userlist[room]});
       });
 
+    });
+
+    // io.sockets refers to all sockets connected, so it could emit event to all clients
+    socket.on('send message', function(data){
+
+      let his = new ChatMessageHistory();
+      his.roomId = data.room;
+      his.senderId = data.user.sub;
+      his.senderName = data.user.name;
+      his.timestamp = data.timestamp;
+      his.message = data.message;
+      his.save(function(err){
+        if(err){
+          console.log(err);
+          io.sockets.emit('save message error');
+        }
+        return;
+      });
+
+      socket.broadcast.to(data.room).emit('new message', {message: data.message, user: data.user, timestamp: data.timestamp});
     });
 
     socket.on('leave', function(data){

@@ -20,6 +20,7 @@ class ChatRoom extends React.Component {
 
 		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
 
+		socket.removeListener('new message');		// avoid duplicated event listeners when component remount
 		socket.on('new message', function(data){
 			that.props.newMessage(data);
 		});
@@ -59,7 +60,7 @@ class ChatRoom extends React.Component {
 						</ul>
 					</div>
 					<div className="chatroom-footer">
-						<ChatroomInput />
+						<ChatroomInput projectId={this.props.params.projectId} />
 					</div>
 				</div>
 			</div>

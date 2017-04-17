@@ -27,21 +27,14 @@ class Board extends React.Component {
 		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
 
 		socket.on('add user', function(data){
-			console.log('add user');
-			console.log(data.user);
-			console.log(data.userlist);
 			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
 
 		socket.on('user reconnect', function(data){
-			console.log('user reconnect');
 			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
 
 		socket.on('user leave', function(data){
-			console.log('user leave');
-			console.log(data.user);
-			console.log(data.userlist);
 			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
 	}

@@ -29,7 +29,13 @@ class ChatroomInput extends React.Component {
 
 	handleClick(event){
 		if(this.state.message.trim()){
-			let payload = {message: this.state.message, user: jwt_decode(localStorage.getItem('token')), timestamp: (new Date()).toString(), byself: true};
+			let payload = {
+				message: this.state.message, 
+				user: jwt_decode(localStorage.getItem('token')), 
+				room: this.props.projectId, 
+				timestamp: (new Date()).toString(), 
+				byself: true
+			};
 			socket.emit('send message', payload);
 			this.props.newMessage(payload);
 			this.setState({
@@ -44,7 +50,13 @@ class ChatroomInput extends React.Component {
 		if(event.charCode == 13){
 			event.preventDefault();		//prevent triggering onchange
 			if(this.state.message.trim()){
-				let payload = {message: this.state.message, user: jwt_decode(localStorage.getItem('token')), timestamp: (new Date()).toString(), byself: true};
+				let payload = {
+					message: this.state.message, 
+					user: jwt_decode(localStorage.getItem('token')), 
+					room: this.props.projectId, 
+					timestamp: (new Date()).toString(), 
+					byself: true
+				};
 				socket.emit('send message', payload);
 				this.props.newMessage(payload);
 				this.setState({
