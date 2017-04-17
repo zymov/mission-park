@@ -1,14 +1,12 @@
 import {createReducer} from '../../utils';
-import {USER_SIGNIN_SUCCESS, USER_SIGNIN_FAILURE, USER_SIGNUP_SUCCESS, USER_SIGNUP_FAILURE, GET_CURRENT_USER_SUCCESS, GET_CURRENT_USER_FAILURE} from './actions';
-import jwtDecode from 'jwt-decode';
+import {USER_SIGNIN_SUCCESS, USER_SIGNIN_FAILURE, USER_SIGNUP_SUCCESS, USER_SIGNUP_FAILURE } from './actions';
 
 const initialState = {
 	isAuthenticated: false,
 	userName: null,
 	userSaved: false,
 	signinErrors: {},
-	signupErrors: {},
-	currentUser: null
+	signupErrors: {}
 }
 
 export default function auth(state = initialState, action){
@@ -26,14 +24,12 @@ export default function auth(state = initialState, action){
 		case USER_SIGNIN_SUCCESS: 
 			return Object.assign({}, state, {
 				isAuthenticated: true,
-				signinErrors: {},
-				currentUser: action.payload.user
+				signinErrors: {}
 			});
 		case USER_SIGNIN_FAILURE: 
 			return Object.assign({}, state, {
 				isAuthenticated: false,
-				signinErrors: action.payload.errors,
-				currentUser: null
+				signinErrors: action.payload.errors
 			});
 		default:
 			return state;

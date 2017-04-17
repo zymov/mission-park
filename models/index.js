@@ -14,5 +14,6 @@ module.exports.connect = (url)=>{
 	var Project = require('./project/project');
 	var Tasklist = require('./tasklist/tasklist');
 	var Tag = require('./tag');
+	var ChatMessageHistory = require('./chat/chatMessageHistory');
 
 }

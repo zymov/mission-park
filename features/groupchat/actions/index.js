@@ -1,3 +1,4 @@
+import axios from 'axios';
 
 export const UPDATE_ONLINE_USERS = 'UPDATE_ONLINE_USERS';
 export const NEW_MESSAGE = 'NEW_MESSAGE';
@@ -21,5 +22,11 @@ export function newMessage(data){
 			user: data.user,
 			byself: data.byself
 		}
+	}
+}
+
+export function getChatroomHistory(projectId){
+	return function(dispatch){
+		// axios.get('/')
 	}
 }

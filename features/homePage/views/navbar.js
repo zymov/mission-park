@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import { deAuthenticateUser } from '../../../utils';
+import { deAuthenticateUser, leaveChatRoom } from '../../../utils';
 
 class Navbar extends React.Component {
 	render(){
@@ -19,7 +19,7 @@ class Navbar extends React.Component {
 
 			    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul className="nav navbar-nav">
-			        <li className="active"><a href="/">projects <span className="sr-only">(current)</span></a></li>
+			        <li className="active"><a href="/" onClick={leaveChatRoom}>projects <span className="sr-only">(current)</span></a></li>
 			      </ul>
 			      <ul className="nav navbar-nav navbar-right">
 			        <li><a href="/auth/signout" onClick={deAuthenticateUser}>Sign out</a></li>

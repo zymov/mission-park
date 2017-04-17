@@ -145,7 +145,7 @@ router.post('/signin', (req, res, next)=>{
 
     req.logIn(user, function(err){
     	if(err){ return res.status(500).json({success: false, message: 'could not sign in user'}); }
-    	return res.status(200).json({success: true, message: 'You have successfully signed in!', token: token, user: user});
+    	return res.status(200).json({success: true, message: 'You have successfully signed in!', token: token});
     });
 
     // return res.json({

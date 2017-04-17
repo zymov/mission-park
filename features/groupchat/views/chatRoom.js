@@ -3,39 +3,36 @@ import { connect } from 'react-redux';
 import ChatroomInput from '../components/chatroomInput';
 import ChatroomHead from '../components/chatroomHead';
 import ChatMessage from '../components/chatMessage';
-import { updateOnlineUsers, newMessage } from '../actions';
+import { getChatroomHistory, updateOnlineUsers, newMessage } from '../actions';
 
 class ChatRoom extends React.Component {
+
+	componentWillMount(){
+		console.log('chatroom will mount');
+		this.props.getChatroomHistory(this.props.params.projectId);
+	}
 
 	componentDidMount(){
 		let projectId = this.props.params.projectId;
 		let that = this;
 
-		console.log('token', jwt_decode(localStorage.getItem('token')));
+		// console.log('token', jwt_decode(localStorage.getItem('token')));
 
 		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
 
 		socket.on('new message', function(data){
-			console.log('new message');
-			console.log(data.message, data.timestamp, data.byself);
 			that.props.newMessage(data);
 		});
+
 		socket.on('add user', function(data){
-			console.log('add user');
-			console.log(data.user);
-			console.log(data.userlist);
 			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
 
 		socket.on('user reconnect', function(data){
-			console.log('user reconnect');
 			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
 
 		socket.on('user leave', function(data){
-			console.log('user leave');
-			console.log(data.user);
-			console.log(data.userlist);
 			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
 
@@ -73,14 +70,13 @@ class ChatRoom extends React.Component {
 const mapStateToProps = state => ({
 	onlineUserlist: state.groupchat.onlineUserlist,
 	updatedUser: state.groupchat.updatedUser,
-	messageList: state.groupchat.messageList,
-	currentUser: state.auth.currentUser
+	messageList: state.groupchat.messageList
 });
 
 const mapDispatchToProps = dispatch => ({
+	getChatroomHistory: (projectId) => { dispatch(getChatroomHistory(projectId)); },
 	updateOnlineUsers: (user, userlist) => { dispatch(updateOnlineUsers(user, userlist)); },
 	newMessage: (data) => { dispatch(newMessage(data)); }
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoom);

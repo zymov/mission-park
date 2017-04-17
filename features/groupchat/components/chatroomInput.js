@@ -19,7 +19,7 @@ class ChatroomInput extends React.Component {
 			btnId: 'sendmsgTypeDropdown',
 			handleClick: this.selectSendMsgHotKey.bind(this),
 			dropdownIcon: true
-		}
+		};
 
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -28,8 +28,8 @@ class ChatroomInput extends React.Component {
 
 
 	handleClick(event){
-		if(this.state.message){
-			let payload = {message: this.state.message, timestamp: (new Date()).toString(), byself: true};
+		if(this.state.message.trim()){
+			let payload = {message: this.state.message, user: jwt_decode(localStorage.getItem('token')), timestamp: (new Date()).toString(), byself: true};
 			socket.emit('send message', payload);
 			this.props.newMessage(payload);
 			this.setState({
@@ -43,8 +43,8 @@ class ChatroomInput extends React.Component {
 	handleKeyPress(event){
 		if(event.charCode == 13){
 			event.preventDefault();		//prevent triggering onchange
-			if(this.state.message){
-				let payload = {message: this.state.message, timestamp: (new Date()).toString(), byself: true};
+			if(this.state.message.trim()){
+				let payload = {message: this.state.message, user: jwt_decode(localStorage.getItem('token')), timestamp: (new Date()).toString(), byself: true};
 				socket.emit('send message', payload);
 				this.props.newMessage(payload);
 				this.setState({

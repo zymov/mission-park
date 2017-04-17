@@ -67,23 +67,16 @@ module.exports = {
   },
 
 
-
-  // isUserSignedIn: function(req, res, next){
-  //   if(req.user){
-  //     next();
-  //   } else {
-  //     res.redirect('/signin');
-  //   }
-  // },
-
-
-
-
   checkUserSignin: function (){
     return !!localStorage.getItem('token');
   },
 
+  leaveChatRoom: function(){
+    socket.emit('leave', {token: localStorage.getItem('token')});
+  },
+
   deAuthenticateUser: function (){
+    socket.emit('leave', {token: localStorage.getItem('token')});
     localStorage.removeItem('token');
   },
 

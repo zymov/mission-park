@@ -6,16 +6,10 @@ export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS';
 export const USER_SIGNUP_FAILURE = 'USER_SIGNUP_FAILURE';
 export const USER_SIGNOUT = 'USER_SIGNOUT';
 
-export const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS';
-export const GET_CURRENT_USER_FAILURE = 'GET_CURRENT_USER_FAILURE';
-
-export function signinSuccess(token, user){
+export function signinSuccess(token){
 	localStorage.setItem('token', token);
 	return {
-		type: 'USER_SIGNIN_SUCCESS',
-		payload: {
-			user: user
-		}
+		type: 'USER_SIGNIN_SUCCESS'
 	}
 }
 export function signinFailure(err){
@@ -55,7 +49,7 @@ export function signinUser(email, password, context, redirect='/'){
 
 		axios.post('/auth/signin', {email: email, password: password})
 			.then(function(res){
-				dispatch(signinSuccess(res.data.token, res.data.user));
+				dispatch(signinSuccess(res.data.token));
 				context.router.replace(redirect);
 			})
 			.catch(function(obj){
@@ -80,32 +74,6 @@ export function signupUser(name, email, password, context){
 
   }
  
-}
-
-
-export function getCurrentUser(){
-	axios.get('/auth/getcurrentuser', {token: localStorage.getItem('token')})
-		.then(function(res){
-			dispatch(getCurrentUserSuccess(res.user));
-		})
-		.then(function(err){
-			dispatch(getCurrentUserFailure(err));
-		});
-}
-
-export function getCurrentUserSuccess(user){
-	return {
-		type: 'GET_CURRENT_USER_SUCCESS',
-		payload: user
-	}
-}
-export function getCurrentUserFailure(err){
-	return {
-		type: 'GET_CURRENT_USER_FAILURE',
-		payload: {
-			errors: err
-		}
-	}
 }
 
 

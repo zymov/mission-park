@@ -4,11 +4,11 @@ class ChatroomHead extends React.Component {
 
 	render(){
 
-		const { onlineUserlist, updatedUser } = this.props;
+		const { onlineUserlist } = this.props;
 
 		let onlineUserArr = Object.keys(onlineUserlist).map(function(item, index){
 			return (
-				<li key={onlineUserlist[item]._id} className="online-userlist-item">
+				<li key={onlineUserlist[item].sub} className="online-userlist-item">
 					<span className="user-square" >
 						<img src="/static/imgs/101.png" title={onlineUserlist[item].name} />
 					</span>
