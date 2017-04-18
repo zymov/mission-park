@@ -10,7 +10,7 @@ class ChatroomInput extends React.Component {
 		super(props);
 
 		this.state = {
-			hotKey: 1,
+			hotKey: 1,	// send message with `enter`
 			message: ''
 		};
 
@@ -23,6 +23,7 @@ class ChatroomInput extends React.Component {
 
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleKeyPress = this.handleKeyPress.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 	}
 
@@ -46,8 +47,8 @@ class ChatroomInput extends React.Component {
 		}
 	}
 
-	handleKeyPress(event){
-		if(event.charCode == 13){
+	handleKeyDown(event){
+		if(event.which == 13 && (this.state.hotKey == 1 && !event.ctrlKey || this.state.hotKey == 2 && event.ctrlKey)){
 			event.preventDefault();		//prevent triggering onchange
 			if(this.state.message.trim()){
 				let payload = {
@@ -66,6 +67,17 @@ class ChatroomInput extends React.Component {
 				return;
 			}
 		}
+		if(event.which == 13 && (this.state.hotKey == 2 && !event.ctrlKey || this.state.hotKey == 1 && event.ctrlKey)){
+			event.preventDefault();
+			this.setState({
+				message: this.state.message + '\n'
+			});
+		}
+			
+	}
+
+	handleKeyPress(event){
+
 	}
 
 	handleInputChange(event){
@@ -97,6 +109,7 @@ class ChatroomInput extends React.Component {
 					<textarea className="form-control" rows="1" name="message" 
 						placeholder="说点什么吧" 
 						onKeyPress={this.handleKeyPress}
+						onKeyDown={this.handleKeyDown}
 						onChange={this.handleInputChange} value={this.state.message} />
 					<div className="sendmsg-box-icon">
 						<div className="add-files-to-chat"></div>
