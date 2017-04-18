@@ -1,4 +1,4 @@
-import { UPDATE_ONLINE_USERS, NEW_MESSAGE } from '../actions';
+import { UPDATE_ONLINE_USERS, NEW_MESSAGE, GET_MESSAGE_HISTORY_SUCCESS, GET_MESSAGE_HISTORY_FAILURE } from '../actions';
 import { addNewItemToArrayEnd } from '../../../utils';
 
 const initialState = {
@@ -20,7 +20,15 @@ export default function groupchat(state=initialState, action){
 				messageList: addNewItemToArrayEnd(state.messageList, action.payload)
 			});
 
-
+		case GET_MESSAGE_HISTORY_SUCCESS:
+			return Object.assign({}, state, {
+				messageList: action.payload.messages
+			});
+		case GET_MESSAGE_HISTORY_FAILURE:
+			return Object.assign({}, state, {
+				messageList: action.payload.error
+			});
+			
 		default:
 			return state;
 	}

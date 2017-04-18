@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import ChatroomInput from '../components/chatroomInput';
 import ChatroomHead from '../components/chatroomHead';
 import ChatMessage from '../components/chatMessage';
-import { getChatroomHistory, updateOnlineUsers, newMessage } from '../actions';
+import { getMessageHistory, updateOnlineUsers, newMessage } from '../actions';
 
 class ChatRoom extends React.Component {
 
 	componentWillMount(){
 		console.log('chatroom will mount');
-		this.props.getChatroomHistory(this.props.params.projectId);
+		this.props.getMessageHistory(this.props.params.projectId);
 	}
 
 	componentDidMount(){
@@ -20,7 +20,7 @@ class ChatRoom extends React.Component {
 
 		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
 
-		socket.removeListener('new message');		// avoid duplicated event listeners when component remount
+		socket.removeListener('new message');		// avoid duplicate event listeners when component remount
 		socket.on('new message', function(data){
 			that.props.newMessage(data);
 		});
@@ -39,6 +39,11 @@ class ChatRoom extends React.Component {
 
 	}
 
+	componentDidUpdate(){
+		if(this.props.messageList.length > 0){
+			$('.message-list li:last-child')[0].scrollIntoView();
+		}
+	}
 
 	render(){
 
@@ -75,7 +80,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	getChatroomHistory: (projectId) => { dispatch(getChatroomHistory(projectId)); },
+	getMessageHistory: (projectId) => { dispatch(getMessageHistory(projectId)); },
 	updateOnlineUsers: (user, userlist) => { dispatch(updateOnlineUsers(user, userlist)); },
 	newMessage: (data) => { dispatch(newMessage(data)); }
 });

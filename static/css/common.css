@@ -717,7 +717,6 @@ a.dd-list-item i {
 }
 .message-list-item .message-body.self-msg {
   float: right;
-  text-align: right;
 }
 .message-list-item .message-body.self-msg .message-info {
   text-align: right;

@@ -89,7 +89,7 @@ module.exports = function(io){
         return;
       });
 
-      socket.broadcast.to(data.room).emit('new message', {message: data.message, user: data.user, timestamp: data.timestamp});
+      socket.broadcast.to(data.room).emit('new message', {message: data.message, senderId: data.user.sub, senderName: data.user.name, timestamp: data.timestamp});
     });
 
     socket.on('leave', function(data){

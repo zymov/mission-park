@@ -36,9 +36,11 @@ app.use(flash());
 const authRouter = require('./routes/auth');
 const taskRouter = require('./routes/task');
 const projectRouter = require('./routes/project');
+const chatRouter = require('./routes/chat');
 app.use('/auth', authRouter);
 app.use('/tasks', taskRouter);
 app.use('/projects', projectRouter);
+app.use('/chat', chatRouter);
 
 app.get('*', function (req, res){
   res.sendFile(path.resolve(__dirname,'../index.html'));
