@@ -77,8 +77,8 @@ module.exports = function(io){
 
       let his = new ChatMessageHistory();
       his.roomId = data.room;
-      his.senderId = data.user.sub;
-      his.senderName = data.user.name;
+      his.senderId = data.senderId;
+      his.senderName = data.senderName;
       his.timestamp = data.timestamp;
       his.message = data.message;
       his.save(function(err){
@@ -89,7 +89,7 @@ module.exports = function(io){
         return;
       });
 
-      socket.broadcast.to(data.room).emit('new message', {message: data.message, senderId: data.user.sub, senderName: data.user.name, timestamp: data.timestamp});
+      socket.broadcast.to(data.room).emit('new message', {message: data.message, senderId: data.senderId, senderName: data.senderName, timestamp: data.timestamp});
     });
 
     socket.on('leave', function(data){

@@ -22,7 +22,8 @@ export function newMessage(data){
 		payload: {
 			message: data.message,
 			timestamp: data.timestamp,
-			user: data.user,
+			senderId: data.senderId,
+			senderName: data.senderName,
 			byself: data.byself
 		}
 	}

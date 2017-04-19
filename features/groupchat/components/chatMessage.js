@@ -17,7 +17,7 @@ class ChatMessage extends React.Component {
 		return(
 			<li className="message-list-item clearfix">
 				<div className={`message-body ${byself || checkByself ? 'self-msg' : ''}`}>
-					<div className="user-avatar" title={senderName}></div>
+					<div className="user-avatar" title={senderName}><img src={`https://api.adorable.io/avatars/40/${senderId}@adorable.io.png`} /></div>
 					<div className="message-content">{message}</div>
 					<div className="message-info">
 						<div className="message-info-time">{_timestamp.toString().substring(16, 24)}</div>

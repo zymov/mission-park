@@ -30,9 +30,11 @@ class ChatroomInput extends React.Component {
 
 	handleClick(event){
 		if(this.state.message.trim()){
+			let token = jwt_decode(localStorage.getItem('token'));
 			let payload = {
 				message: this.state.message, 
-				user: jwt_decode(localStorage.getItem('token')), 
+				senderId: token.sub, 
+				senderName: token.name,
 				room: this.props.projectId, 
 				timestamp: (new Date()).toString(), 
 				byself: true
@@ -51,9 +53,11 @@ class ChatroomInput extends React.Component {
 		if(event.which == 13 && (this.state.hotKey == 1 && !event.ctrlKey || this.state.hotKey == 2 && event.ctrlKey)){
 			event.preventDefault();		//prevent triggering onchange
 			if(this.state.message.trim()){
+				let token = jwt_decode(localStorage.getItem('token'));
 				let payload = {
 					message: this.state.message, 
-					user: jwt_decode(localStorage.getItem('token')), 
+					senderId: token.sub, 
+					senderName: token.name,
 					room: this.props.projectId, 
 					timestamp: (new Date()).toString(), 
 					byself: true
