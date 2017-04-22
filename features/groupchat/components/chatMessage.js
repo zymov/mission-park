@@ -1,11 +1,12 @@
 import React from 'react';
 import { getLocaleDate } from '../../../utils';
+import ImageMessage from './imageMessage';
 
 class ChatMessage extends React.Component {
 
 	render(){
 
-		const { message, timestamp, senderId, senderName, byself } = this.props.message;
+		const { message, file, timestamp, senderId, senderName, byself } = this.props.message;
 		let checkByself = false, _timestamp = timestamp;
 
 		if(!byself){
@@ -14,11 +15,12 @@ class ChatMessage extends React.Component {
 		if(~timestamp.indexOf('-')){
 			_timestamp = getLocaleDate(timestamp.replace('T', ' ').slice(0, -5));
 		}
+
 		return(
 			<li className="message-list-item clearfix">
 				<div className={`message-body ${byself || checkByself ? 'self-msg' : ''}`}>
 					<div className="user-avatar" title={senderName}><img src={`https://api.adorable.io/avatars/40/${senderId}@adorable.io.png`} /></div>
-					<div className="message-content">{message}</div>
+					<div className="message-content">{message || <ImageMessage src={file.path} name={file.name} />}</div>
 					<div className="message-info">
 						<div className="message-info-time">{_timestamp.toString().substring(16, 24)}</div>
 					</div>

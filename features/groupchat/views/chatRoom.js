@@ -8,15 +8,12 @@ import { getMessageHistory, updateOnlineUsers, newMessage } from '../actions';
 class ChatRoom extends React.Component {
 
 	componentWillMount(){
-		console.log('chatroom will mount');
 		this.props.getMessageHistory(this.props.params.projectId);
 	}
 
 	componentDidMount(){
 		let projectId = this.props.params.projectId;
 		let that = this;
-
-		// console.log('token', jwt_decode(localStorage.getItem('token')));
 
 		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
 

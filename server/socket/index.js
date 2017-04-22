@@ -2,6 +2,7 @@ var User = require('mongoose').model('User');
 var ChatMessageHistory = require('mongoose').model('ChatMessageHistory');
 var jwt = require('jsonwebtoken');
 var jwtSecret = require('../../config/jwt').jwtSecret;
+var fs = require('fs');
 
 module.exports = function(io){
   let userlist = {};
@@ -84,12 +85,42 @@ module.exports = function(io){
       his.save(function(err){
         if(err){
           console.log(err);
-          io.sockets.emit('save message error');
+          io.sockets.to(data.room).emit('save message error');
         }
         return;
       });
+      
+      socket.broadcast.to(data.room).emit('new message', {
+        message: data.message,        // send `data` instead of multiple keys?
+        senderId: data.senderId, 
+        senderName: data.senderName, 
+        timestamp: data.timestamp
+      });   
+    });
 
-      socket.broadcast.to(data.room).emit('new message', {message: data.message, senderId: data.senderId, senderName: data.senderName, timestamp: data.timestamp});
+    socket.on('send file', function(data){
+      let his = new ChatMessageHistory();
+      his.file.path = data.file.path;
+      his.file.name = data.file.name;
+      his.file.lastModified = data.file.lastModified;
+      his.roomId = data.room;
+      his.senderId = data.senderId;
+      his.senderName = data.senderName;
+      his.timestamp = data.timestamp; 
+      his.save(function(err){
+        if(err){
+          console.log(err);
+          io.sockets.to(data.room).emit('save file error');
+        }
+        return;
+      });
+      
+      socket.broadcast.to(data.room).emit('new message', {
+        file: data.file,             // send `data` instead of multiple keys?
+        senderId: data.senderId, 
+        senderName: data.senderName, 
+        timestamp: data.timestamp
+      });
     });
 
     socket.on('leave', function(data){

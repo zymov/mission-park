@@ -21,6 +21,7 @@ export function newMessage(data){
 		type: 'NEW_MESSAGE',
 		payload: {
 			message: data.message,
+			file: data.file,
 			timestamp: data.timestamp,
 			senderId: data.senderId,
 			senderName: data.senderName,
@@ -53,6 +54,7 @@ export function getMessageHistorySuccess(messages){
 		}
 	}
 }
+
 export function getMessageHistoryFailure(error){
 	return {
 		type: 'GET_MESSAGE_HISTORY_FAILURE',
@@ -60,4 +62,16 @@ export function getMessageHistoryFailure(error){
 			error: error
 		}
 	}
+}
+
+export function uploadChatFile(form){
+	axios.post('/chat/uploadfile', {
+		
+	})
+	.then(function(res){
+
+	})
+	.catch(function(err){
+		console.log(err);
+	});
 }

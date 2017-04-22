@@ -5,6 +5,11 @@ var chatMessageHistory = new mongoose.Schema({
 	senderId: {type: String},
 	senderName: {type: String},
 	message: {type: String},
+	file: {
+		path: String, 
+		name: String, 
+		lastModified: Date
+	},
 	timestamp: {type: Date}
 });
 

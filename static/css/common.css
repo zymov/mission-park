@@ -12,6 +12,7 @@ input, textarea {
 .dropdown-menu, .form-control, .btn, .tooltip-inner { border-radius: 2px; }
 .tooltip.top { margin-top: 2px; }
 .dropdown { max-width: 160px; margin: 0 auto; } 
+.bc-white   {background-color: #fff;}
 .bc-default {background-color: #3da8f5;}
 .bc-success {background-color: #00a854;}
 .bc-error   {background-color: #ff4f3e;}
@@ -760,12 +761,11 @@ a.dd-list-item i {
 }
 .sendmsg-btn {
   width: 110px;
-  height: 34px;
-  line-height: 34px;
+  height: 33px;
+  line-height: 33px;
   float: right;
   position: relative;
   border-radius: 3px;
-  background-color: #3DA8F5;
   color: #fff;
 }
 .sendmsg-btn .dropdown {
@@ -773,11 +773,11 @@ a.dd-list-item i {
   right: 0;
   top: 0;
   width: 25px;
-  height: 34px;
+  height: 33px;
 }
 .sendmsg-btn .dropdown .dropdown-toggle {
-  height: 34px;
-  line-height: 34px;
+  height: 33px;
+  line-height: 33px;
   width: 25px;
   background: none;
   border: 0;
@@ -788,18 +788,62 @@ a.dd-list-item i {
   top: -66px;
 }
 .sendmsg-send {
-  line-height: 34px;
+  line-height: 33px;
   text-align: center;
-  height: 34px;
+  height: 33px;
   display: block;
   width: 85px;
   cursor: pointer;
 }
 .msg-input-area {
   margin-right: 120px;
+  margin-left: 90px;
 }
 .msg-input-area textarea {
-  max-width: 830px;
+  max-width: 740px;
   max-height: 200px;
+}
+/*.input-file, .input-emoji {
+  width: 30px;
+  height: 30px;
+}*/
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.inputfile-label {
+  width: 30px;
+  height: 30px;
+  float: left;
+}
+.sendmsg-sendfile {
+  float: left;
+}
+.sendmsg-sendfile .fileInputDiv {
+  float: left;
+}
+.inputfile-label {
+  width: 33px;
+  height: 33px;
+  text-align: center;
+  line-height: 33px;
+  float: left;
+  margin: 0px 10px 0 0px;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  top: 0;
+}
+.imageMessage {
+  margin: 0 -6px;
+  max-width: 300px;
+}
+.imageMessage img {
+  width: 100%;
+  cursor: pointer;
 }
 /* group chat end */
