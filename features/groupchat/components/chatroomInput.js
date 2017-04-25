@@ -5,6 +5,7 @@ import Dropdown from '../../taskboard/components/dropdown/dropdown';
 import { sendmsgMenuList, getIndexOfArrayByValue } from '../../../utils';
 import { newMessage } from '../actions';
 import FileInput from '../../common/components/fileInput';
+import Emoji from './emoji';
 
 class ChatroomInput extends React.Component {
 
@@ -33,6 +34,7 @@ class ChatroomInput extends React.Component {
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.handleUpload = this.handleUpload.bind(this);
+		this.sendEmoji = this.sendEmoji.bind(this);
 		this.fileinputData = {
 			handleUpload: this.handleUpload,
 			icon: 'glyphicon glyphicon-paperclip',
@@ -144,12 +146,17 @@ class ChatroomInput extends React.Component {
 		});
 	}
 
+	sendEmoji(event){
+		console.log(event.target);
+		//let val = event.target.childNodes()[0];
+	}
+
 	render(){
 		return(
 			<div className="sendmsg-box">
 				<div className="sendmsg-sendfile clearfix">
 					<FileInput data={this.fileinputData} />
-					<FileInput data={this.emojiData} />
+					<Emoji sendEmoji={this.sendEmoji} />
 				</div>
 				<div className="sendmsg-btn bc-default">
 					<span className="sendmsg-send" onClick={this.handleClick}>发送</span>
