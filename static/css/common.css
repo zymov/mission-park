@@ -730,7 +730,6 @@ a.dd-list-item i {
   float: left;
   margin: 0 10px 0 0;
   height: 34px;
-  line-height: 34px;
   width: 34px;
   border-radius: 3px;
   background-color: #fff;
@@ -748,6 +747,11 @@ a.dd-list-item i {
   margin: 0 44px;
   background-color: #fff8dc;
   border-radius: 3px;
+}
+.message-content .emojiImg {
+  width: 34px;
+  height: 34px;
+  margin: 0 4px;
 }
 .self-msg .message-content {
   background-color: #e0eaf1;
@@ -799,14 +803,43 @@ a.dd-list-item i {
   margin-right: 120px;
   margin-left: 90px;
 }
-.msg-input-area textarea {
+.msg-input-area .divTextarea {
   max-width: 740px;
   max-height: 200px;
+  min-height: 33px;
+  line-height: 33px;
+  background-color: #fff;
+  border-radius: 2px;
+  padding-left: 10px;
+  font-size: 16px;
+  overflow-y: scroll;
 }
-/*.input-file, .input-emoji {
-  width: 30px;
-  height: 30px;
-}*/
+.msg-input-area .divTextarea:focus {
+  line-height: 33px;
+}
+.msg-input-area .divTextarea > div.br-div {
+  line-height: 33px;
+  height: 33px;
+  clear: both;
+}
+.divTextarea .emojiImg {
+  width: 26px;
+  height: 26px;
+  display: inline-block;
+  margin: -2px 5px 0px 5px;
+}
+.msg-input-area .divTextarea::-webkit-scrollbar-track {
+  background-color: #eee;
+  border-radius: 2px;
+}
+.msg-input-area .divTextarea::-webkit-scrollbar {
+  width: 4px;
+  background-color: #fff;
+}
+.msg-input-area .divTextarea::-webkit-scrollbar-thumb {
+  background-color: #9E9E9E;
+  border-radius: 2px;
+}
 .inputfile {
   width: 0.1px;
   height: 0.1px;

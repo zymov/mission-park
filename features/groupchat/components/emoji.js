@@ -53,7 +53,7 @@ class Emoji extends React.Component {
 				let str = i + String.fromCharCode(j).toLowerCase();
 				emojiList.push(
 					<li className="emoji-item" key={str} onClick={this.props.sendEmoji.bind(this)}>
-						<img alt={`emoji${str}`} src={`../../../static/imgs/faceEmoji/1f6${str}.png`} />
+						<img className="emojiImg" alt={`emoji${str}`} src={`../../../static/imgs/faceEmoji/1f6${str}.png`} />
 					</li>
 				);
 			}

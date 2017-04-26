@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Dropdown from '../../taskboard/components/dropdown/dropdown';
-import { sendmsgMenuList, getIndexOfArrayByValue } from '../../../utils';
+import { sendmsgMenuList, getIndexOfArrayByValue, setEndOfContenteditable, getCaretCharacterOffsetWithin } from '../../../utils';
 import { newMessage } from '../actions';
 import FileInput from '../../common/components/fileInput';
 import Emoji from './emoji';
@@ -29,7 +29,7 @@ class ChatroomInput extends React.Component {
 			dropdownIcon: true
 		};
 
-		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleInput = this.handleInput.bind(this);
 		this.handleKeyPress = this.handleKeyPress.bind(this);
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -89,6 +89,7 @@ class ChatroomInput extends React.Component {
 			this.setState({
 				message: ''
 			});
+			this.refs.textarea.innerHTML = "";
 		} else {
 			return;
 		}
@@ -97,7 +98,9 @@ class ChatroomInput extends React.Component {
 	handleKeyDown(event){
 		if(event.which == 13 && (this.state.hotKey == 1 && !event.ctrlKey || this.state.hotKey == 2 && event.ctrlKey)){
 			event.preventDefault();		//prevent triggering onchange
-			if(this.state.message.trim()){
+			// let message = this.state.message.trim().replace(/<div.*?><\/div>/g, '<br>');
+			// message.replace(/<br>/g,'')
+			if(this.state.message.replace(/&nbsp;/g, ' ').trim()){
 				let payload = {
 					message: this.state.message, 
 					senderId: this.senderId, 
@@ -111,16 +114,23 @@ class ChatroomInput extends React.Component {
 				this.setState({
 					message: ''
 				});
+				this.refs.textarea.innerHTML = "";
 			} else {
 				return;
 			}
 		}
-		if(event.which == 13 && (this.state.hotKey == 2 && !event.ctrlKey || this.state.hotKey == 1 && event.ctrlKey)){
-			event.preventDefault();
-			this.setState({
-				message: this.state.message + '\n'
-			});
-		}
+		// change line 
+		// if(event.which == 13 && (this.state.hotKey == 2 && !event.ctrlKey || this.state.hotKey == 1 && event.ctrlKey)){
+		// 	event.preventDefault();
+		// 	this.refs.textarea.innerHTML += this.refs.textarea.innerHTML.length > 0 ? 
+		// 																	'<div class="br-div"></div>' : 
+		// 																	'<div class="br-div"></div><div class="br-div"></div>';
+		// 	setEndOfContenteditable(event.target);	//move cursor to the last line
+		// 	$('.divTextarea div:last-child')[0].scrollIntoView();
+		// 	this.setState({
+		// 		message: this.state.message + '<br>'
+		// 	});
+		// }
 			
 	}
 
@@ -128,12 +138,10 @@ class ChatroomInput extends React.Component {
 
 	}
 
-	handleInputChange(event){
-		const target = event.target;
-		const value = target.value;
-		const name = target.name;
+	handleInput(event){
+		let text = this.refs.textarea.innerHTML;
 		this.setState({
-			[name]: value
+			message: text
 		});
 	}
 
@@ -147,8 +155,20 @@ class ChatroomInput extends React.Component {
 	}
 
 	sendEmoji(event){
-		console.log(event.target);
-		//let val = event.target.childNodes()[0];
+		this.setState({
+			message: this.state.message + event.target.outerHTML
+		});
+		// let cursorPos = getCaretCharacterOffsetWithin(this.refs.textarea);
+		let text = this.refs.textarea.innerHTML;
+
+		// if(~text.slice(0, cursorPos).indexOf('<img')){
+
+		// }
+
+		// this.refs.textarea.innerHTML = this.refs.textarea.innerHTML.slice(0, cursorPos) 
+																		// + event.target.outerHTML 
+																		// + this.refs.textarea.innerHTML.slice(cursorPos);
+		this.refs.textarea.innerHTML += event.target.outerHTML;
 	}
 
 	render(){
@@ -163,11 +183,12 @@ class ChatroomInput extends React.Component {
 					<Dropdown dropdown={this.sendMsgHotKeyDropdown} btnName="" btnStyle={{}} />
 				</div>
 				<div className="msg-input-area">
-					<textarea className="form-control" rows="1" name="message" 
-						placeholder="说点什么吧" 
+					<div className="divTextarea" name="message" 
+						contentEditable
+						ref="textarea" 
 						onKeyPress={this.handleKeyPress}
 						onKeyDown={this.handleKeyDown}
-						onChange={this.handleInputChange} value={this.state.message} />
+						onInput={this.handleInput} ></div>
 				</div>
 			</div>
 		);

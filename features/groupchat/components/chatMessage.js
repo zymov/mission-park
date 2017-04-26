@@ -20,7 +20,8 @@ class ChatMessage extends React.Component {
 			<li className="message-list-item clearfix">
 				<div className={`message-body ${byself || checkByself ? 'self-msg' : ''}`}>
 					<div className="user-avatar" title={senderName}><img src={`https://api.adorable.io/avatars/40/${senderId}@adorable.io.png`} /></div>
-					<div className="message-content">{message || <ImageMessage src={file.path} name={file.name} />}</div>
+					{ message && <div className="message-content" dangerouslySetInnerHTML={{ __html: message }} ></div> }
+					{ file && <div className="message-content"><ImageMessage src={file.path} name={file.name} /></div> }
 					<div className="message-info">
 						<div className="message-info-time">{_timestamp.toString().substring(16, 24)}</div>
 					</div>
