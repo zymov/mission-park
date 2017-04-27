@@ -38,6 +38,50 @@ module.exports = {
     }
   },
 
+  getHTMLCaretPosition: function(element){
+    var textPosition = module.exports.getCaretCharacterOffsetWithin(element),
+        htmlContent = element.innerHTML,
+        textIndex = 0,
+        htmlIndex = 0,
+        insideHtml = false,
+        htmlBeginChars = ['&', '<'],
+        htmlEndChars = [';', '>'];
+
+
+    if (textPosition == 0) {
+      return 0;
+    }
+
+    while(textIndex < textPosition) {
+
+      htmlIndex++;
+
+      // check if next character is html and if it is, iterate with htmlIndex to the next non-html character
+      while(htmlBeginChars.indexOf(htmlContent.charAt(htmlIndex)) > -1) {
+        // console.log('encountered HTML');
+        // now iterate to the ending char
+        insideHtml = true;
+
+        while(insideHtml) {
+          if (htmlEndChars.indexOf(htmlContent.charAt(htmlIndex)) > -1) {
+            if (htmlContent.charAt(htmlIndex) == ';') {
+              htmlIndex--; // entity is char itself
+            }
+            // console.log('encountered end of HTML');
+            insideHtml = false;
+          }
+          htmlIndex++;
+        }
+      }
+      textIndex++;
+    }
+
+    //console.log(htmlIndex);
+    //console.log(textPosition);
+    // in htmlIndex is caret position inside html
+    return htmlIndex;
+    },
+
   getCaretCharacterOffsetWithin: function(element) {
     var caretOffset = 0;
     var doc = element.ownerDocument || element.document;

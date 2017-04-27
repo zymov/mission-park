@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Dropdown from '../../taskboard/components/dropdown/dropdown';
-import { sendmsgMenuList, getIndexOfArrayByValue, setEndOfContenteditable, getCaretCharacterOffsetWithin } from '../../../utils';
+import { sendmsgMenuList, getIndexOfArrayByValue, setEndOfContenteditable, getCaretCharacterOffsetWithin, getHTMLCaretPosition } from '../../../utils';
 import { newMessage } from '../actions';
 import FileInput from '../../common/components/fileInput';
 import Emoji from './emoji';
@@ -75,7 +75,7 @@ class ChatroomInput extends React.Component {
 	}
 
 	handleClick(event){
-		if(this.state.message.trim()){
+		if(this.state.message.replace(/&nbsp;/g, ' ').trim()){
 			let payload = {
 				message: this.state.message, 
 				senderId: this.senderId, 
@@ -155,20 +155,13 @@ class ChatroomInput extends React.Component {
 	}
 
 	sendEmoji(event){
+		let cursorPos = getHTMLCaretPosition(this.refs.textarea);
+		let emoji = event.target.outerHTML;
 		this.setState({
-			message: this.state.message + event.target.outerHTML
+			message: this.state.message.slice(0, cursorPos) + emoji + this.state.message.slice(cursorPos)
 		});
-		// let cursorPos = getCaretCharacterOffsetWithin(this.refs.textarea);
 		let text = this.refs.textarea.innerHTML;
-
-		// if(~text.slice(0, cursorPos).indexOf('<img')){
-
-		// }
-
-		// this.refs.textarea.innerHTML = this.refs.textarea.innerHTML.slice(0, cursorPos) 
-																		// + event.target.outerHTML 
-																		// + this.refs.textarea.innerHTML.slice(cursorPos);
-		this.refs.textarea.innerHTML += event.target.outerHTML;
+		this.refs.textarea.innerHTML = text.slice(0, cursorPos) + emoji + text.slice(cursorPos);
 	}
 
 	render(){
