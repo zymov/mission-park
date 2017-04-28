@@ -6,6 +6,9 @@ export const NEW_MESSAGE = 'NEW_MESSAGE';
 export const GET_MESSAGE_HISTORY_SUCCESS = 'GET_MESSAGE_HISTORY_SUCCESS';
 export const GET_MESSAGE_HISTORY_FAILURE = 'GET_MESSAGE_HISTORY_FAILURE';
 
+export const CLOSE_IMG_VIEWER = 'CLOSE_IMG_VIEWER';
+export const OPEN_IMG_VIEWER = 'OPEN_IMG_VIEWER';
+
 export function updateOnlineUsers(user, userlist){
 	return {
 		type: 'UPDATE_ONLINE_USERS',
@@ -74,4 +77,18 @@ export function uploadChatFile(form){
 	.catch(function(err){
 		console.log(err);
 	});
+}
+
+
+export function closeImgViewer(){
+	return {
+		type: 'CLOSE_IMG_VIEWER'
+	}
+}
+
+export function openImgViewer(imgData){
+	return {
+		type: 'OPEN_IMG_VIEWER',
+		payload: imgData
+	}
 }

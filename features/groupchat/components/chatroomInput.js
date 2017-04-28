@@ -38,12 +38,9 @@ class ChatroomInput extends React.Component {
 		this.fileinputData = {
 			handleUpload: this.handleUpload,
 			icon: 'glyphicon glyphicon-paperclip',
-			id: 'chat_file'
-		}
-		this.emojiData = {
-			handleUpload: this.handleUpload,
-			icon: 'glyphicon glyphicon-paperclip',
-			id: 'emoji'
+			id: 'chat_file',
+			accept: 'image/*',
+			title: 'send image'
 		}
 	}
 

@@ -918,4 +918,37 @@ a.dd-list-item i {
   width: 100%;
   height: 100%;
 }
+.img-viewer-mask {
+  position: fixed;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-viewer-wrapper img {
+  width: 100%;
+}
+.img-viewer-tool {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  height: 43px;
+  margin-left: -78px;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 3px;
+  z-index: 9999;
+}
+.img-viewer-tool span, .img-viewer-tool a {
+  padding: 12px 14px;
+  margin: 0 3px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+.img-viewer-tool a {text-decoration: none;}
 /* group chat end */

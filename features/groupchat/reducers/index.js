@@ -1,10 +1,15 @@
-import { UPDATE_ONLINE_USERS, NEW_MESSAGE, GET_MESSAGE_HISTORY_SUCCESS, GET_MESSAGE_HISTORY_FAILURE } from '../actions';
+import { UPDATE_ONLINE_USERS, NEW_MESSAGE, GET_MESSAGE_HISTORY_SUCCESS, GET_MESSAGE_HISTORY_FAILURE, CLOSE_IMG_VIEWER, OPEN_IMG_VIEWER } from '../actions';
 import { addNewItemToArrayEnd } from '../../../utils';
 
 const initialState = {
 	onlineUserlist: {},
 	updatedUser: null,
-	messageList: []
+	messageList: [],
+	showImgViewer: false,
+	imgData: {
+		src: '',
+		name: ''
+	}
 }
 
 export default function groupchat(state=initialState, action){
@@ -28,7 +33,17 @@ export default function groupchat(state=initialState, action){
 			return Object.assign({}, state, {
 				messageList: action.payload.error
 			});
-			
+		
+		case CLOSE_IMG_VIEWER:
+			return Object.assign({}, state, {
+				showImgViewer: false
+			});
+		case OPEN_IMG_VIEWER:
+			return Object.assign({}, state, {
+				showImgViewer: true,
+				imgData: action.payload
+			});
+
 		default:
 			return state;
 	}

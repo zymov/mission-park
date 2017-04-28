@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ChatroomInput from '../components/chatroomInput';
 import ChatroomHead from '../components/chatroomHead';
 import ChatMessage from '../components/chatMessage';
+import ImgViewer from '../components/imgViewer';
 import { getMessageHistory, updateOnlineUsers, newMessage } from '../actions';
 
 class ChatRoom extends React.Component {
@@ -44,7 +45,7 @@ class ChatRoom extends React.Component {
 
 	render(){
 
-		const { onlineUserlist, updatedUser, messageList } = this.props;
+		const { onlineUserlist, updatedUser, messageList, showImgViewer, imgData } = this.props;
 
 		let messageArr = messageList.map(function(item, index){
 			return(
@@ -65,6 +66,7 @@ class ChatRoom extends React.Component {
 						<ChatroomInput projectId={this.props.params.projectId} />
 					</div>
 				</div>
+				
 			</div>
 		);
 	}
