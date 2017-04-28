@@ -25,7 +25,7 @@ class Tasklist extends React.Component {
 
 	clickTasklistTool(e){
 		if(e.target.name == '删除'){
-			this.props.deleteTasklist(this.props.tasklist._id);
+			this.props.deleteTasklist(this.props.tasklist._id, this.props.tasklist._projectid);
 		}
 	}
 
@@ -61,8 +61,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	fetchTasks: (tasklistId, index, tasklistName) => { dispatch(fetchTasks(tasklistId, index, tasklistName)); },
-	deleteTasklist: (tasklistId) => { dispatch(deleteTasklist(tasklistId)); }
-	// fetchTasklistStatus: (tasklistId) => { dispatch(fetchTasklistStatus(tasklistId)); }
+	deleteTasklist: (tasklistId, projectId) => { dispatch(deleteTasklist(tasklistId, projectId)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasklist);

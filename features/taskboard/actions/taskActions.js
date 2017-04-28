@@ -59,6 +59,7 @@ export function addTask(payload){
 		dispatch(openNotification());
 		axios.post('/tasks/addtask', payload)
 		.then(function(res){
+			socket.emit('add task', {task: res.data.task, room: payload.projectId});
 			dispatch(addTaskSuccess(res.data.task));
 		})
 		.catch(function(err){
@@ -67,6 +68,7 @@ export function addTask(payload){
 
 		axios.post('/tasks/changetasksum', {add: 1, tasklistId: payload.tasklistId})
 		.then(function(res){
+			socket.emit('change task sum', {tasklist: res.data.tasklist, room: payload.projectId});
 			dispatch(changeTaskSumSuccess(res.data.tasklist));
 		})
 		.catch(function(err){
@@ -121,6 +123,7 @@ export function editTask(payload){
 		dispatch(openNotification());
 		axios.post('/tasks/edittask', payload)
 		.then(function(res){
+			socket.emit('edit task', { task: res.data.task, room: payload.projectId});
 			dispatch(editTaskSuccess(res.data.task));
 		})
 		.catch(function(err){
@@ -278,7 +281,7 @@ export function removeAllTag(){
 
 
 /* toggle task accomplishment or change task due date*/
-export function toggleTask(task){
+export function toggleTask(task, projectId){
 	return function(dispatch){
 		dispatch(toggleTaskRequest());
 		dispatch(openNotification());
@@ -286,31 +289,34 @@ export function toggleTask(task){
 			task: task
 		})
 		.then(function(res){
-				dispatch(toggleTaskSuccess(res.data.updatedTask));
-				if(res.data.updatedTask.repeat){
-					let task = deepCloneObject(res.data.updatedTask);
-					task.repeat = 0;
-					task.dueDate = null;
-					task.accomplished = true;
-					delete task._id;
-					dispatch(addAccomplishedTaskRequest());
-					axios.post('/tasks/addtask', task)
-					.then(function(res){
-						dispatch(addAccomplishedTaskSuccess(res.data.task));
-					})
-					.catch(function(err){
-						dispatch(addAccomplishedTaskFailure(err));
-					});
+			socket.emit('toggle task', {task: res.data.updatedTask, room: projectId});
+			dispatch(toggleTaskSuccess(res.data.updatedTask));
+			if(res.data.updatedTask.repeat){
+				let task = deepCloneObject(res.data.updatedTask);
+				task.repeat = 0;
+				task.dueDate = null;
+				task.accomplished = true;
+				delete task._id;
+				dispatch(addAccomplishedTaskRequest());
+				axios.post('/tasks/addtask', task)
+				.then(function(res){
+					socket.emit('add accomplished task', {task: res.data.task, room: projectId});
+					dispatch(addAccomplishedTaskSuccess(res.data.task));
+				})
+				.catch(function(err){
+					dispatch(addAccomplishedTaskFailure(err));
+				});
 
-					axios.post('/tasks/changetasksum', {add: 1, tasklistId: task._tasklistId})
-					.then(function(res){
-						dispatch(changeTaskSumSuccess(res.data.tasklist));
-					})
-					.catch(function(err){
-						dispatch(changeTaskSumFailure(err));
-					});
+				axios.post('/tasks/changetasksum', {add: 1, tasklistId: task._tasklistId})
+				.then(function(res){
+					socket.emit('change task sum', {tasklist: res.data.tasklist, room: projectId});
+					dispatch(changeTaskSumSuccess(res.data.tasklist));
+				})
+				.catch(function(err){
+					dispatch(changeTaskSumFailure(err));
+				});
 
-				}
+			}
 		})
 		.catch(function(err){
 			dispatch(toggleTaskFailure(err));
@@ -399,7 +405,7 @@ export function invalidInputMaxLength(payload){
 }
 
 
-export function deleteTask(taskId, tasklistId){
+export function deleteTask(taskId, tasklistId, projectId){
 	return function(dispatch){
 		dispatch(deleteTaskRequest());
 		dispatch(openNotification());
@@ -409,6 +415,7 @@ export function deleteTask(taskId, tasklistId){
 			}
 		})
 		.then(function(res){
+			socket.emit('delete task', {taskId: res.data.taskId, room: projectId});
 			dispatch(deleteTaskSuccess(res.data.taskId));
 		})
 		.catch(function(err){
@@ -417,6 +424,7 @@ export function deleteTask(taskId, tasklistId){
 
 		axios.post('/tasks/changetasksum', {add: -1, tasklistId: tasklistId})
 		.then(function(res){
+			socket.emit('change task sum', {tasklist: res.data.tasklist, room: projectId});
 			dispatch(changeTaskSumSuccess(res.data.tasklist));
 		})
 		.catch(function(err){

@@ -10,15 +10,12 @@ module.exports = function(io){
   io.sockets.on('connection', function(_socket){    //write a express middleware ?
 
     const socket = _socket;
-    // console.log('\x1b[33m', 'socket client id: ',socket.client.id);
 
     socket.on('join room', function(obj){
-      // console.log('\x1b[33m', 'join room, current socket id is: ', socket.id);
       let { room, userToken } = obj;
 
       //component rerender or update, trigger 'componentDidMount', will not join room again.
       if(currentRoom[socket.id] == room){            
-        // console.log('\x1b[33m', 'not join room');
         return;
       }
       currentRoom[socket.id] = room;
@@ -28,8 +25,6 @@ module.exports = function(io){
       }
 
       socket.join(room);
-
-      console.log('\x1b[33m','clients in room ', room, ': ', io.sockets.adapter.rooms[room]);
 
       let decoded = jwt.verify(userToken, jwtSecret);
       let userId = decoded.sub, username = decoded.name;
@@ -63,9 +58,6 @@ module.exports = function(io){
       }
       // });
 
-
-
-      
       socket.on('leave', function(){
         delete userlist[room][userId];
         socket.broadcast.to(room).emit('user leave', {user: decoded, userlist: userlist[room]});
@@ -123,6 +115,33 @@ module.exports = function(io){
       });
     });
 
+
+    //taskboard socket
+    socket.on('add tasklist', function(data){
+      socket.broadcast.to(data.tasklist._projectid).emit('add-tasklist', {tasklist: data.tasklist});
+    });
+    socket.on('delete tasklist', function(data){
+      socket.broadcast.to(data.room).emit('delete-tasklist', {tasklistId: data.tasklistId});
+    });
+    socket.on('add task', function(data){
+      socket.broadcast.to(data.room).emit('add-task', {task: data.task});
+    });
+    socket.on('change task sum', function(data){
+      socket.broadcast.to(data.room).emit('change-task-sum', {tasklist: data.tasklist});
+    });
+    socket.on('edit task', function(data){
+      socket.broadcast.to(data.room).emit('edit-task', {task: data.task});
+    });
+    socket.on('toggle task', function(data){
+      socket.broadcast.to(data.room).emit('toggle-task', {task: data.task});
+    });
+    socket.on('add accomplished task', function(data){
+      socket.broadcast.to(data.room).emit('add-accomplished-task', {task: data.task});
+    });
+    socket.on('delete task', function(data){
+      socket.broadcast.to(data.room).emit('delete-task', {taskId: data.taskId});
+    })
+
     socket.on('leave', function(data){
       let decoded = jwt.verify(data.token, jwtSecret);
       for(let key in userlist){
@@ -137,9 +156,6 @@ module.exports = function(io){
 
     socket.on('disconnect', function(){
       console.log('\x1b[33m', 'leave room, disconnect, socket id is:', socket.id);
-
-      
-
     });
 
   });

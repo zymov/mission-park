@@ -11,6 +11,8 @@ import Notification from '../../common/components/notification/notification';
 import NotificationsContainer from '../../common/components/notification/notificationsContainer';
 import { updateOnlineUsers } from '../../groupchat/actions';
 import { isEmptyObject } from '../../../utils';
+import { addTasklistSuccess, deleteTasklistSuccess } from '../actions/tasklistActions';
+import { addTaskSuccess, changeTaskSumSuccess, editTaskSuccess, toggleTaskSuccess, addAccomplishedTaskSuccess, deleteTaskSuccess } from '../actions/taskActions';
 
 class Board extends React.Component {
 
@@ -25,18 +27,40 @@ class Board extends React.Component {
 			console.log('socket id: ', socket.id);
 		});
 		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
-
 		socket.on('add user', function(data){
 			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
-
 		socket.on('user reconnect', function(data){
 			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
-
 		socket.on('user leave', function(data){
 			that.props.updateOnlineUsers(data.user, data.userlist);
 		});
+
+		socket.on('add-tasklist', function(data){
+			that.props.addTasklistSuccess(data.tasklist);
+		});
+		socket.on('delete-tasklist', function(data){
+			that.props.deleteTasklistSuccess(data.tasklistId);
+		});
+		socket.on('add-task', function(data){
+			that.props.addTaskSuccess(data.task);
+		});
+		socket.on('change-task-sum', function(data){
+			that.props.changeTaskSumSuccess(data.tasklist);
+		});
+		socket.on('edit-task', function(data){
+			that.props.editTaskSuccess(data.task);
+		});
+		socket.on('toggle-task', function(data){
+			that.props.toggleTaskSuccess(data.task);
+		});
+		socket.on('add-accomplished-task', function(data){
+			that.props.addAccomplishedTaskSuccess(data.task);
+		});
+		socket.on('delete-task', function(data){
+			that.props.deleteTaskSuccess(data.taskId);
+		})
 	}
 
 	render(){
@@ -98,7 +122,15 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-	updateOnlineUsers: (user, userlist) => { dispatch(updateOnlineUsers(user, userlist)); }
+	updateOnlineUsers: (user, userlist) => { dispatch(updateOnlineUsers(user, userlist)); },
+	addTasklistSuccess: (tasklist) => { dispatch(addTasklistSuccess(tasklist)); },
+	deleteTasklistSuccess: (tasklistId) => { dispatch(deleteTasklistSuccess(tasklistId)); },
+	addTaskSuccess: (task) => { dispatch(addTaskSuccess(task)); },
+	changeTaskSumSuccess: (tasklist) => { dispatch(changeTaskSumSuccess(tasklist)); },
+	editTaskSuccess: (task) => { dispatch(editTaskSuccess(task)); },
+	toggleTaskSuccess: (task) => { dispatch(toggleTaskSuccess(task)); },
+	addAccomplishedTaskSuccess: (task) => { dispatch(addAccomplishedTaskSuccess(task)); },
+	deleteTaskSuccess: (taskId) => { dispatch(deleteTaskSuccess(taskId)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

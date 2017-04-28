@@ -17,7 +17,7 @@ class Task extends React.Component {
 	}
 
 	clickCheckbox(e){
-		this.props.toggleTask(this.props.task);
+		this.props.toggleTask(this.props.task, this.props.projectId);
 	}
 
 	showTask(){
@@ -26,7 +26,7 @@ class Task extends React.Component {
 
 	clickTaskTool(e){
 		if(e.target.name == '删除'){
-			this.props.deleteTask(this.props.task._id, this.props.tasklistId);
+			this.props.deleteTask(this.props.task._id, this.props.tasklistId, this.props.projectId);
 		}
 	}
 
@@ -79,9 +79,9 @@ class Task extends React.Component {
 // })
 
 const mapDispatchToProps = dispatch => ({
-	toggleTask: task => { dispatch(toggleTask(task)); },
+	toggleTask: (task, projectId) => { dispatch(toggleTask(task, projectId)); },
 	showTaskDetail: task => { dispatch(showTaskDetail(task)); },
-	deleteTask: (taskId, tasklistId) => { dispatch(deleteTask(taskId, tasklistId)); }
+	deleteTask: (taskId, tasklistId, projectId) => { dispatch(deleteTask(taskId, tasklistId, projectId)); }
 });
 
 export default connect(null, mapDispatchToProps)(Task);

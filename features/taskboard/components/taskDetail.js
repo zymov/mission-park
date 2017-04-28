@@ -80,7 +80,8 @@ class TaskDetail extends React.Component {
 			priority: this.state.priority,
 			repeat: this.state.repeat,
 			executors: this.props.executors,
-			tags: this.props.tags
+			tags: this.props.tags,
+			projectId: this.props.projectId
 		}
 		let validation = validateTaskForm(payload);
 		if(!validation.isFormValid){

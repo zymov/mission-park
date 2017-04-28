@@ -22,6 +22,7 @@ export function addTasklist(payload){
 		dispatch(openNotification());
 		axios.post('/tasks/addtasklist', payload)
 		.then(function(res){
+			socket.emit('add tasklist', {tasklist: res.data.tasklist});
 			dispatch(addTasklistSuccess(res.data.tasklist));
 		})
 		.catch(function(err){
@@ -105,7 +106,7 @@ export function setCurrentTasklistIdToNull(){
 }
 
 
-export function deleteTasklist(tasklistId){
+export function deleteTasklist(tasklistId, projectId){
 	return function(dispatch){
 		dispatch(deleteTasklistRequest());
 		axios.delete('/tasks/deletetasklist', {
@@ -114,6 +115,7 @@ export function deleteTasklist(tasklistId){
 			}
 		})
 		.then(function(res){
+			socket.emit('delete tasklist',{ tasklistId: res.data.tasklistId, room: projectId});
 			dispatch(deleteTasklistSuccess(res.data.tasklistId));
 		})
 		.catch(function(err){
@@ -141,24 +143,3 @@ export function deleteTasklistFailure(err){
 	}
 }
 
-
-
-
-
-
-
-// export function fetchTasklistStatus(tasklistId){
-// 	return function(dispatch){
-// 		axios.get('/tasks/taskliststatus', {
-// 			params: {
-// 				tasklistId: tasklistId
-// 			}
-// 		})
-// 		.then(function(res){
-// 			dispatch(fetchTasklistStatusSuccess(res.data.status))
-// 		})
-// 		.catch(function(err){
-// 			dispatch(fetchTasklistStatusFailure(err));
-// 		});
-// 	}
-// }
