@@ -301,6 +301,7 @@ input, textarea {
   position: absolute;
   top: 2px;
   left: 2px;
+  border-radius: 1px;
 }
 .executor-list > li > .remove-label, .tag-list > li > .remove-label {
   position: absolute;
@@ -397,11 +398,12 @@ ul.dd-menu > li > a.dd-list-item:hover {
   padding: 6px 32px 6px 12px;
 }
 a.dd-list-item img {
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    top: 6px;
-    left: 6px;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  border-radius: 2px;
 }
 a.dd-list-item i {
   position: absolute;
