@@ -22,7 +22,7 @@ export default class ProjectNav extends React.Component {
 				    <Link className="nav-link" activeClassName="active-projectnav" to="/someroute">分享</Link>
 				  </li>
 				  <li className="nav-item">
-				    <Link className="nav-link" activeClassName="active-projectnav" to="/someroute">文件</Link>
+				    <Link className="nav-link" activeClassName="active-projectnav" to={`/project/${this.props.projectId}/filecenter`}>文件</Link>
 				  </li>
 				  <li className="nav-item">
 				    <Link className="nav-link" activeClassName="active-projectnav" to="/someroute">日程</Link>

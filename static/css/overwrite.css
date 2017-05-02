@@ -3,6 +3,9 @@ a {
   color: #3DA8F5;
   text-decoration: none;
 }
+a:hover {
+  color: #0c92f3;
+}
 .btn-primary, .btn-primary:focus, .btn-primary:active, .btn-primary:hover, .btn-primary:visited, .btn-primary:active:hover, .btn-primary:active:focus {color: #fff;}
 .btn-primary {
   background-color: #3DA8F5;

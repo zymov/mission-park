@@ -954,3 +954,176 @@ a.dd-list-item i {
 }
 .img-viewer-tool a {text-decoration: none;}
 /* group chat end */
+
+/* file center start */
+.filecenter {
+  margin-top: 10px;
+  background-color: #fff;
+  padding: 0 15px;
+}
+.filecenter ul {list-style-type: none; margin: 0; padding: 0;}
+.filecenter .check-box {
+  display: block;
+  float: left;
+  margin: 0 15px 0 0;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  border: 2px solid #999;
+  border-radius: 3px;
+  box-sizing: content-box;
+  color: #555;
+  cursor: pointer;
+}
+.filecenter .check-box span {
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+}
+.fc-head {
+  padding: 15px 0;
+  background-color: #fff;
+  position: relative;
+}
+.fc-breadcrumbs {
+  padding-right: 300px;
+}
+.fc-breadcrumbs ul li {
+  float: left;
+  font-size: 18px;
+  line-height: 26px;
+}
+.fc-breadcrumbs .forward-slash {
+  padding: 0 10px;
+}
+.fc-creator {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+.fc-creator a.creator-item {
+  font-size: 14px;
+  line-height: 26px;
+  padding: 0 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.fc-creator a.creator-item span {
+  padding-right: 5px;
+}
+.fc-body {
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+}
+.fc-file-properties {
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd;
+}
+.fc-file-properties ul {
+  margin-left: 26px;
+}
+.fc-file-properties ul li.properties-item {
+  float: left;
+  line-height: 24px;
+  font-size: 14px;
+  padding: 0 15px;
+  color: #808080;
+  cursor: pointer;
+}
+li.properties-item.prop-name {
+  width: 45%;
+}
+li.properties-item.prop-size {
+  min-width: 100px;
+}
+li.properties-item.prop-creator {
+  min-width: 150px;
+}
+li.properties-item.prop-date {
+  min-width: 100px;
+}
+.fc-file-handler {
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd;
+}
+.fc-file-handler p {
+  display: inline-block;
+  line-height: 24px;
+  color: #808080;  
+  margin-bottom: 0;
+  padding: 0 40px 0 15px;
+}
+.fc-file-handler a.handler-item {
+  padding: 0 15px;
+  color: #808080;
+  text-decoration: none;
+  cursor: pointer;
+}
+.fc-file-handler a.handler-item:hover {
+  color: #0c92f3;
+}
+.fc-file-handler a.handler-item span {
+  padding-right: 5px;
+}
+.file-list {
+  padding: 0 0 15px 0;
+}
+.file-list-item {
+  padding: 15px 0;
+  border-bottom: 1px solid #efefef;
+}
+.file-list-item > div {
+  margin-left: 26px;
+}
+.file-list-item > div > .list-item-detail {
+  float: left;
+  width: 45%;
+  padding: 0 15px;
+}
+.list-item-detail span.item-icon {
+  color: #808080;
+  font-size: 20px;
+  padding-right: 5px;
+  line-height: 24px;
+  float: left;
+}
+.list-item-detail .item-name {
+  float: left;
+}
+.list-item-detail .item-name p {
+  display: inline-block;
+  margin-bottom: 0;
+  line-height: 24px;
+}
+.list-item-info {
+  float: left;
+}
+.list-item-info > div {
+  float: left;
+  padding: 0 15px;
+  line-height: 24px;
+}
+.list-item-info > div.item-size {
+  min-width: 100px;
+  color: #808080;
+}
+.list-item-info > div.item-creator {
+  min-width: 150px;
+  color: #808080;
+}
+.list-item-info > div.item-date {
+  min-width: 100px;
+  color: #808080;
+}
+.item-handler a.handler-item {
+  text-decoration: none;
+  cursor: pointer;
+  color: #808080;
+  padding: 0 6px;
+  line-height: 24px;
+}
+.item-handler a.handler-item:hover {
+  color: #0c92f3;
+}
+/* file center end */
