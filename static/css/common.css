@@ -959,7 +959,7 @@ a.dd-list-item i {
 .filecenter {
   margin-top: 10px;
   background-color: #fff;
-  padding: 0 15px;
+  padding: 0;
 }
 .filecenter ul {list-style-type: none; margin: 0; padding: 0;}
 .filecenter .check-box {
@@ -982,7 +982,7 @@ a.dd-list-item i {
   text-align: center;
 }
 .fc-head {
-  padding: 15px 0;
+  padding: 15px;
   background-color: #fff;
   position: relative;
 }
@@ -999,7 +999,7 @@ a.dd-list-item i {
 }
 .fc-creator {
   position: absolute;
-  right: 15px;
+  right: 35px;
   top: 15px;
 }
 .fc-creator a.creator-item {
@@ -1012,12 +1012,28 @@ a.dd-list-item i {
 .fc-creator a.creator-item span {
   padding-right: 5px;
 }
+.fc-creator a.creator-item .upload-input {
+  display: inline-block;
+}
+.fc-creator a.creator-item .upload-input input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.fc-creator a.creator-item .upload-input label {
+  font-weight: 100;
+  margin: 0;
+  cursor: pointer;
+}
 .fc-body {
   border-top: 1px solid #ddd;
   background-color: #fff;
 }
 .fc-file-properties {
-  padding: 15px 0;
+  padding: 15px;
   border-bottom: 1px solid #ddd;
 }
 .fc-file-properties ul {
@@ -1044,7 +1060,7 @@ li.properties-item.prop-date {
   min-width: 100px;
 }
 .fc-file-handler {
-  padding: 15px 0;
+  padding: 15px;
   border-bottom: 1px solid #ddd;
 }
 .fc-file-handler p {
@@ -1070,8 +1086,13 @@ li.properties-item.prop-date {
   padding: 0 0 15px 0;
 }
 .file-list-item {
-  padding: 15px 0;
+  padding: 15px;
   border-bottom: 1px solid #efefef;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.file-list-item:hover {
+  background-color: #f5f5f5;
 }
 .file-list-item > div {
   margin-left: 26px;
@@ -1087,6 +1108,7 @@ li.properties-item.prop-date {
   padding-right: 5px;
   line-height: 24px;
   float: left;
+  top: 0px;
 }
 .list-item-detail .item-name {
   float: left;
@@ -1095,6 +1117,13 @@ li.properties-item.prop-date {
   display: inline-block;
   margin-bottom: 0;
   line-height: 24px;
+  vertical-align: text-bottom;
+}
+.list-item-detail .item-name p:first-child {
+  text-overflow: ellipsis;
+  max-width: 380px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .list-item-info {
   float: left;
@@ -1105,15 +1134,15 @@ li.properties-item.prop-date {
   line-height: 24px;
 }
 .list-item-info > div.item-size {
-  min-width: 100px;
+  width: 100px;
   color: #808080;
 }
 .list-item-info > div.item-creator {
-  min-width: 150px;
+  width: 150px;
   color: #808080;
 }
 .list-item-info > div.item-date {
-  min-width: 100px;
+  width: 100px;
   color: #808080;
 }
 .item-handler a.handler-item {

@@ -28,6 +28,8 @@
     "es6-promise": "^4.0.5",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
+    "formidable": "^1.1.1",
+    "gridfs-stream": "^1.1.1",
     "jsonwebtoken": "^7.2.1",
     "jwt-decode": "^2.1.0",
     "mongoose": "^4.7.7",

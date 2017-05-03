@@ -1,6 +1,5 @@
 const express = require('express');
 const router = new express.Router();
-const fs = require('fs');
 let ChatMessageHistory = require('mongoose').model('ChatMessageHistory');
 let utils = require('../../utils');
 

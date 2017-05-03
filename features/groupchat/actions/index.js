@@ -67,19 +67,6 @@ export function getMessageHistoryFailure(error){
 	}
 }
 
-export function uploadChatFile(form){
-	axios.post('/chat/uploadfile', {
-		
-	})
-	.then(function(res){
-
-	})
-	.catch(function(err){
-		console.log(err);
-	});
-}
-
-
 export function closeImgViewer(){
 	return {
 		type: 'CLOSE_IMG_VIEWER'

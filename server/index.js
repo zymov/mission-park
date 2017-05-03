@@ -18,7 +18,8 @@ app.use('/', express.static(path.join(__dirname, '../')));
 
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(bodyParser());
+// app.use(bodyParser());
+app.use(bodyParser.json()).use(bodyParser.urlencoded());
 
 //use express session before passport session to ensure that the login session is restored in the correct order.
 app.use(session({ 
@@ -37,10 +38,12 @@ const authRouter = require('./routes/auth');
 const taskRouter = require('./routes/task');
 const projectRouter = require('./routes/project');
 const chatRouter = require('./routes/chat');
+const uploadRouter = require('./routes/upload');
 app.use('/auth', authRouter);
 app.use('/tasks', taskRouter);
 app.use('/projects', projectRouter);
 app.use('/chat', chatRouter);
+app.use('/filecenter', uploadRouter);
 
 app.get('*', function (req, res){
   res.sendFile(path.resolve(__dirname,'../index.html'));
