@@ -13,7 +13,7 @@ class FileProps extends React.Component {
 					<li className="properties-item prop-name">名称</li>
 					<li className="properties-item prop-size">大小</li>
 					<li className="properties-item prop-creator">创建者</li>
-					<li className="properties-item prop-date">更新时间</li>
+					<li className="properties-item prop-date">上传时间</li>
 				</ul>
 			</div>
 		);

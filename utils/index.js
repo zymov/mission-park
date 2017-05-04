@@ -99,6 +99,26 @@ module.exports = {
     return caretOffset;
   },
 
+  formatFileSize: function(size){
+    let s = '';
+    if(size < 1024){
+      return size + 'B';
+    } else if(1024 < size && size < 1024*1024){
+      s = size/1024 + '';
+      let sArr = s.split('.');
+      s = sArr[0] + '.' + sArr[1].substring(0, 2) + 'KB';
+      return s;
+    } else if(1024*1024 < size && size < 1024*1024*1024){
+      s = size/(1024*1024) + '';
+      let sArr = s.split('.');
+      s = sArr[0] + '.' + sArr[1].substring(0, 2) + 'MB';
+      return s;
+    } else {
+      return '大于1GB';
+    }
+
+  },
+
   escapeRegex: function(text){
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
   },

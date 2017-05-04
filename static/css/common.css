@@ -1140,6 +1140,8 @@ li.properties-item.prop-date {
 .list-item-info > div.item-creator {
   width: 150px;
   color: #808080;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .list-item-info > div.item-date {
   width: 100px;

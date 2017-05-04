@@ -8,7 +8,7 @@ class FileList extends React.Component {
 
 		let files = this.props.filelist.map(function(item, index){
 			return (
-				<FileItem fileData={item} />
+				<FileItem key={index} file={item} />
 			);
 		});
 

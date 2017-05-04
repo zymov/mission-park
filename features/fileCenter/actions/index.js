@@ -3,11 +3,15 @@ import axios from 'axios';
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS';
 export const UPLOAD_FILE_FAILURE = 'UPLOAD_FILE_FAILURE';
 
-export function uploadFile(e){
+export const FETCH_FILES_SUCCESS = 'FETCH_FILES_SUCCESS';
+export const FETCH_FILES_FAILURE = 'FETCH_FILES_FAILURE';
+
+export function uploadFile(e, projectId){
 	return function(dispatch){
 		let file = e.target.files[0];
 		let user = jwt_decode(localStorage.getItem('token'));
 		let data = new FormData();
+		data.append('projectId', projectId);
 		data.append('creatorId', user.sub);
 		data.append('creatorName', user.name);
 		data.append('uploadDate', new Date());
@@ -19,9 +23,7 @@ export function uploadFile(e){
 			})
 			.then(function(res){
 				dispatch(uploadFileSuccess({
-					file:res.data.file, 
-					creatorName: res.data.creatorName,
-					creatorId: res.data.creatorId 
+					file:res.data.file
 				}));
 			})
 			.catch(function(err){
@@ -30,16 +32,45 @@ export function uploadFile(e){
 	}
 }
 
-export function uploadFileSuccess(fileData){
+export function uploadFileSuccess(file){
 	return {
 		type: 'UPLOAD_FILE_SUCCESS',
-		payload: fileData
+		payload: file
 	}
 }
 
 export function uploadFileFailure(err){
 	return {
 		type: 'UPLOAD_FILE_FAILURE',
+		payload: err
+	}
+}
+
+export function fetchFiles(projectId){
+	return function(dispatch){
+		axios.get('/filecenter/fetch',{
+			params: {
+				projectId: projectId
+			}
+		})
+		.then(function(res){
+			dispatch(fetchFilesSuccess(res.data.files));
+		})
+		.catch(function(err){
+			dispatch(fetchFilesFailure(err));
+		});
+	}
+}
+
+export function fetchFilesSuccess(files){
+	return {
+		type: 'FETCH_FILES_SUCCESS',
+		payload: files
+	}
+}
+export function fetchFilesFailure(err){
+	return {
+		type: 'FETCH_FILES_FAILURE',
 		payload: err
 	}
 }
