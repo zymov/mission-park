@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { formatFileSize } from '../../../utils';
+import { deleteFile } from '../actions';
 
 class FileItem extends React.Component {
+
+
 
 	render(){
 		const file = this.props.file;
@@ -25,12 +29,12 @@ class FileItem extends React.Component {
 						<div className="item-size">{`${formatFileSize(file.length)}`}</div>
 						<div className="item-creator" title={fileInfo.creatorName} >{fileInfo.creatorName}</div>
 						<div className="item-date">{(new Date(file.uploadDate)).toLocaleDateString()}</div>
-						<div className="item-handler">
-							<a className="handler-item" >下载</a>
-							<a className="handler-item" >更新</a>
-							<a className="handler-item" >移动</a>
-							<a className="handler-item" >重命名</a>
-							<a className="handler-item" >删除</a>
+						<div className="item-handler" >
+							<a className="handler-item" href={`/filecenter/download/?filename=${file.filename}`} download >下载</a>
+							<a className="handler-item" data-handler="update" >更新</a>
+							<a className="handler-item" data-handler="move" >移动</a>
+							<a className="handler-item" data-handler="rename" >重命名</a>
+							<a className="handler-item" data-handler="delete" onClick={this.props.deleteFile.bind(null, file._id)} >删除</a>
 						</div>
 					</div>
 				</div>
@@ -41,4 +45,8 @@ class FileItem extends React.Component {
 
 }
 
-export default FileItem;
+const mapDispatchToProps = dispatch => ({
+	deleteFile: fileId => { dispatch(deleteFile(fileId)); }
+});
+
+export default connect(null, mapDispatchToProps)(FileItem);

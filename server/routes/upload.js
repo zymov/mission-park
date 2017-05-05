@@ -42,13 +42,38 @@ router.post('/upload', function(req, res){
 router.get('/fetch', function(req, res){
 	let projectId = utils.getQueryVariable(req.url, 'projectId');
 
-	GridModel.find({'metadata.projectId': projectId}).sort({updateDate: -1}).exec(function(err, files){
+	GridModel.find({'metadata.projectId': projectId}).sort({uploadDate: -1}).exec(function(err, files){
 		if(err){
 			console.log(err);
 			res.status(500).json({message: 'can not fetch files'});
 		}
 		return res.status(200).json({files: files});
 	});
+});
+
+router.get('/download', function(req, res){
+	let filename = utils.getQueryVariable(req.url, 'filename');
+	let decodedFilename = decodeURIComponent(filename);
+	// var mimetype = mime.lookup(files[0].filename);
+	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+	res.setHeader('Content-type', 'application/force-download');
+
+	// read from mongodb
+	let readStream = gfs.createReadStream({
+		filename: decodedFilename
+	});
+	readStream.pipe(res);
+});
+
+router.get('/delete', function(req, res){
+	let fileId = utils.getQueryVariable(req.url, 'fileId');
+	gfs.remove({_id: fileId}, function(err){
+		if(err){
+			console.log(err);
+			res.status(500).json({message: 'can not delete file'});
+		}
+		res.status(200).json({fileId:fileId});
+	})
 });
 
 module.exports = router;

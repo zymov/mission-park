@@ -6,6 +6,9 @@ export const UPLOAD_FILE_FAILURE = 'UPLOAD_FILE_FAILURE';
 export const FETCH_FILES_SUCCESS = 'FETCH_FILES_SUCCESS';
 export const FETCH_FILES_FAILURE = 'FETCH_FILES_FAILURE';
 
+export const DELETE_FILE_SUCCESS = 'DELETE_FILE_SUCCESS';
+export const DELETE_FILE_FAILURE = 'DELETE_FILE_FAILURE';
+
 export function uploadFile(e, projectId){
 	return function(dispatch){
 		let file = e.target.files[0];
@@ -71,6 +74,35 @@ export function fetchFilesSuccess(files){
 export function fetchFilesFailure(err){
 	return {
 		type: 'FETCH_FILES_FAILURE',
+		payload: err
+	}
+}
+
+export function deleteFile(fileId){
+	return function(dispatch){
+		axios.get('/filecenter/delete', {
+			params: {
+				fileId: fileId
+			}
+		})
+		.then(function(res){
+			dispatch(deleteFileSuccess(res.data.fileId));
+		})
+		.catch(function(err){
+			dispatch(deleteFileFailure(err));
+		});
+	}
+}
+
+export function deleteFileSuccess(fileId){
+	return {
+		type: 'DELETE_FILE_SUCCESS',
+		payload: fileId
+	}
+}
+export function deleteFileFailure(err){
+	return {
+		type: 'DELETE_FILE_FAILURE',
 		payload: err
 	}
 }
