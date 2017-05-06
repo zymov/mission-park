@@ -22,9 +22,9 @@ class FileCenter extends React.Component {
 	}
 
 	handleClick(e){
-		this.setState({
-			selected: !this.state.selected
-		});
+		// this.setState({
+		// 	selected: !this.state.selected
+		// });
 	}
 
 	render(){

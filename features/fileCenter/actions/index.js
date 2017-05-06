@@ -57,7 +57,7 @@ export function updateUploadProgress(data){
 	return {
 		type: 'UPDATE_UPLOAD_PROGRESS',
 		payload: {
-			lastModified: data.lastModified,
+			timestamp: data.timestamp,
 			filename: data.filename,
 			fileSize: data.fileSize,
 			folder: data.folder,
@@ -76,7 +76,7 @@ export function addUploadFile(data){
 	return {
 		type: 'ADD_UPLOAD_FILE',
 		payload: {
-			lastModified: data.lastModified,
+			timestamp: data.timestamp,
 			filename: data.filename,
 			fileSize: data.fileSize,
 			folder: data.folder,

@@ -17,7 +17,7 @@ export default function fileCenter(state = initialState, action){
 
 		case UPDATE_UPLOAD_PROGRESS:
 			return Object.assign({}, state, {
-				uploadFiles: updateItemInArray(state.uploadFiles, action.payload, 'lastModified')
+				uploadFiles: updateItemInArray(state.uploadFiles, action.payload, 'timestamp')
 			});
 		case UPDATE_COMPLETED_COUNT:
 			return Object.assign({}, state, {

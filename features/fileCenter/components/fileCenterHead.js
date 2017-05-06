@@ -17,27 +17,28 @@ class FileCenterHead extends React.Component {
 		data.append('creatorName', user.name);
 		data.append('uploadDate', new Date());
 		data.append('file', file);
+		let progressData = {
+			timestamp: Date.now(),
+			filename: file.name,
+			fileSize: file.size,
+			folder: 'new folder'
+		}
 		axios.post('/filecenter/upload', data, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				},
 				onUploadProgress: function(progressEvent){
-					let percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total);
-					let data = {
-						lastModified: file.lastModified,
-						filename: file.name,
-						fileSize: file.size,
-						folder: 'new folder',
-						percentage: percentCompleted
-					};
+					let percentCompleted = Math.floor( (progressEvent.loaded * 100) / progressEvent.total);
+					progressData.percentage = percentCompleted;
 					//if file is uploading, just update uploading percentage, otherwise, add new uploading file item in upload list
 					// use 'lastModified' may cause error! it just a temporary remedy
-					if(~getIndexOfArrayByValue(that.props.uploadFiles, 'lastModified', file.lastModified)){ 
-						that.props.updateUploadProgress(data);
+					if(~getIndexOfArrayByValue(that.props.uploadFiles, 'timestamp', progressData.timestamp)){ 
+						console.log(1);
+						that.props.updateUploadProgress(progressData);
 					} else {
-						that.props.addUploadFile(data);
+						that.props.addUploadFile(progressData);
 					}
-					if(data.percentage == 100){
+					if(progressData.percentage == 100){
 						that.props.updateCompletedCount();
 					}
 				}
