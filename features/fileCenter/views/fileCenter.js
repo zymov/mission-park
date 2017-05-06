@@ -4,6 +4,7 @@ import FileCenterHead from '../components/fileCenterHead';
 import FileProps from '../components/fileProps';
 import FileHandler from '../components/fileHandler';
 import FileList from '../components/fileList';
+import Uploader from '../components/uploader';
 import { fetchFiles } from '../actions';
 
 class FileCenter extends React.Component {
@@ -36,6 +37,7 @@ class FileCenter extends React.Component {
 					{this.state.selected && <FileHandler />}
 					<FileList />
 				</div>
+				{this.props.uploadFiles.length > 0 && <Uploader />}
 			</div>
 		);
 
@@ -43,8 +45,12 @@ class FileCenter extends React.Component {
 
 }
 
+const mapStateToProps = state => ({
+	uploadFiles: state.fileCenter.uploadFiles
+});
+
 const mapDispatchToProps = dispatch => ({
 	fetchFiles: (projectId) => { dispatch(fetchFiles(projectId)); }
 });
 
-export default connect(null, mapDispatchToProps)(FileCenter);
+export default connect(mapStateToProps, mapDispatchToProps)(FileCenter);

@@ -2,9 +2,14 @@
 a {
   color: #3DA8F5;
   text-decoration: none;
+  cursor: pointer;
 }
 a:hover {
   color: #0c92f3;
+  text-decoration: none;
+}
+p {
+  margin: 0;
 }
 .btn-primary, .btn-primary:focus, .btn-primary:active, .btn-primary:hover, .btn-primary:visited, .btn-primary:active:hover, .btn-primary:active:focus {color: #fff;}
 .btn-primary {

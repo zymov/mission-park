@@ -89,7 +89,7 @@ export default function task(state = initialState, action){
 		case EDIT_TASK_SUCCESS:
 			return Object.assign({}, state, {
 				taskLoading: false,
-				tasks: updateItemInArray(state.tasks, action.payload),
+				tasks: updateItemInArray(state.tasks, action.payload, '_id'),
 				taskInfoText: {
 					message: '保存成功！',
 					level: 'success'

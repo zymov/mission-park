@@ -107,7 +107,7 @@ export default function tasklist(state = initialState, action){
 
 		case CHANGE_TASK_SUM_SUCCESS:
 			return Object.assign({}, state, {
-				tasklists: updateItemInArray(state.tasklists, action.payload)
+				tasklists: updateItemInArray(state.tasklists, action.payload, '_id')
 			});
 		case CHANGE_TASK_SUM_FAILURE:
 			return Object.assign({}, state, {

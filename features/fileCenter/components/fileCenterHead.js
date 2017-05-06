@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { uploadFileSuccess, uploadFileFailure } from '../actions';
+import { uploadFileSuccess, uploadFileFailure, updateUploadProgress, addUploadFile } from '../actions';
+import { getIndexOfArrayByValue } from '../../../utils';
 
 class FileCenterHead extends React.Component {
 
@@ -19,6 +20,23 @@ class FileCenterHead extends React.Component {
 		axios.post('/filecenter/upload', data, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
+				},
+				onUploadProgress: function(progressEvent){
+					let percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total);
+					let data = {
+						lastModified: file.lastModified,
+						filename: file.name,
+						fileSize: file.size,
+						folder: 'new folder',
+						percentage: percentCompleted
+					};
+					//if file is uploading, just update uploading percentage, otherwise, add new uploading file item in upload list
+					// use 'lastModified' may cause error! it just a temporary remedy
+					if(~getIndexOfArrayByValue(that.props.uploadFiles, 'lastModified', file.lastModified)){ 
+						that.props.updateUploadProgress(data);
+					} else {
+						that.props.addUploadFile(data);
+					}
 				}
 			})
 			.then(function(res){
@@ -55,9 +73,15 @@ class FileCenterHead extends React.Component {
 
 }
 
-const mapDispatchToProps = dispatch => ({
-	uploadFileSuccess: file => { dispatch(uploadFileSuccess(file)); },
-	uploadFileFailure: err => { dispatch(uploadFileFailure(err)); }
+const mapStateToProps = state => ({
+	uploadFiles: state.fileCenter.uploadFiles
 });
 
-export default connect(null, mapDispatchToProps)(FileCenterHead);
+const mapDispatchToProps = dispatch => ({
+	uploadFileSuccess: file => { dispatch(uploadFileSuccess(file)); },
+	uploadFileFailure: err => { dispatch(uploadFileFailure(err)); },
+	updateUploadProgress: data => { dispatch(updateUploadProgress(data)); },
+	addUploadFile: data => { dispatch(addUploadFile(data)); }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FileCenterHead);

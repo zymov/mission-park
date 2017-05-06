@@ -1,17 +1,27 @@
 import { 
-	UPLOAD_FILE_SUCCESS, UPLOAD_FILE_FAILURE, 
+	UPDATE_UPLOAD_PROGRESS, ADD_UPLOAD_FILE, UPLOAD_FILE_SUCCESS, UPLOAD_FILE_FAILURE, 
 	FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, 
 	DELETE_FILE_SUCCESS, DELETE_FILE_FAILURE 
 } from '../actions';
-import { addNewItemToArrayBegin, removeSpecificItemByAttrValue } from '../../../utils';
+import { addNewItemToArrayBegin, removeSpecificItemByAttrValue, updateItemInArray } from '../../../utils';
 
 const initialState = {
-	filelist: []
+	filelist: [],
+	uploadFiles: []
 }
 
 export default function fileCenter(state = initialState, action){
 
 	switch(action.type){
+
+		case UPDATE_UPLOAD_PROGRESS:
+			return Object.assign({}, state, {
+				uploadFiles: updateItemInArray(state.uploadFiles, action.payload, 'lastModified')
+			});
+		case ADD_UPLOAD_FILE:
+			return Object.assign({}, state, {
+				uploadFiles: addNewItemToArrayBegin(state.uploadFiles, action.payload)
+			});
 
 		case UPLOAD_FILE_SUCCESS:
 			return Object.assign({}, state, {

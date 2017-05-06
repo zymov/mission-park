@@ -104,15 +104,11 @@ module.exports = {
     if(size < 1024){
       return size + 'B';
     } else if(1024 < size && size < 1024*1024){
-      s = size/1024 + '';
-      let sArr = s.split('.');
-      s = sArr[0] + '.' + sArr[1].substring(0, 2) + 'KB';
-      return s;
+      s = size/1024;
+      return s.toFixed(1) + 'KB';
     } else if(1024*1024 < size && size < 1024*1024*1024){
-      s = size/(1024*1024) + '';
-      let sArr = s.split('.');
-      s = sArr[0] + '.' + sArr[1].substring(0, 2) + 'MB';
-      return s;
+      s = size/(1024*1024);
+      return s.toFixed(1) + 'MB';
     } else {
       return '大于1GB';
     }
@@ -242,8 +238,8 @@ module.exports = {
     });
   },
 
-  updateItemInArray: function(arr, obj){
-    let index = module.exports.getIndexOfArray(arr, obj, '_id')
+  updateItemInArray: function(arr, obj, attribute){
+    let index = module.exports.getIndexOfArray(arr, obj, attribute);
     let newArr = arr.slice();
     newArr[index] = obj;
     return newArr;
@@ -258,7 +254,7 @@ module.exports = {
   updateAndMoveItemInArray: function(arr, obj){   //this method needs to be optimized!!!
     const self = module.exports;
     if(obj.repeat){
-      return self.updateItemInArray(arr, obj);
+      return self.updateItemInArray(arr, obj, '_id');
     } else{
       let newArr = self.removeSpecificItemFromArray(arr, obj, '_id');
       if(obj.accomplished){

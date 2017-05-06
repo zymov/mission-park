@@ -6,6 +6,8 @@ export const UPLOAD_FILE_FAILURE = 'UPLOAD_FILE_FAILURE';
 export const FETCH_FILES_SUCCESS = 'FETCH_FILES_SUCCESS';
 export const FETCH_FILES_FAILURE = 'FETCH_FILES_FAILURE';
 
+export const UPDATE_UPLOAD_PROGRESS = 'UPDATE_UPLOAD_PROGRESS';
+export const ADD_UPLOAD_FILE = 'ADD_UPLOAD_FILE';
 export const DELETE_FILE_SUCCESS = 'DELETE_FILE_SUCCESS';
 export const DELETE_FILE_FAILURE = 'DELETE_FILE_FAILURE';
 
@@ -49,6 +51,31 @@ export function uploadFileFailure(err){
 	}
 }
 
+export function updateUploadProgress(data){
+	return {
+		type: 'UPDATE_UPLOAD_PROGRESS',
+		payload: {
+			lastModified: data.lastModified,
+			filename: data.filename,
+			fileSize: data.fileSize,
+			folder: data.folder,
+			percentage: data.percentage
+		}
+	}
+}
+
+export function addUploadFile(data){
+	return {
+		type: 'ADD_UPLOAD_FILE',
+		payload: {
+			lastModified: data.lastModified,
+			filename: data.filename,
+			fileSize: data.fileSize,
+			folder: data.folder,
+			percentage: data.percentage
+		}
+	}
+}
 export function fetchFiles(projectId){
 	return function(dispatch){
 		axios.get('/filecenter/fetch',{
