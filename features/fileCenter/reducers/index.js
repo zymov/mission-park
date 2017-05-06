@@ -1,5 +1,5 @@
 import { 
-	UPDATE_UPLOAD_PROGRESS, ADD_UPLOAD_FILE, UPLOAD_FILE_SUCCESS, UPLOAD_FILE_FAILURE, 
+	UPDATE_UPLOAD_PROGRESS, ADD_UPLOAD_FILE, UPDATE_COMPLETED_COUNT, UPLOAD_FILE_SUCCESS, UPLOAD_FILE_FAILURE, 
 	FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, 
 	DELETE_FILE_SUCCESS, DELETE_FILE_FAILURE 
 } from '../actions';
@@ -7,7 +7,8 @@ import { addNewItemToArrayBegin, removeSpecificItemByAttrValue, updateItemInArra
 
 const initialState = {
 	filelist: [],
-	uploadFiles: []
+	uploadFiles: [],
+	completedCount: 0
 }
 
 export default function fileCenter(state = initialState, action){
@@ -17,6 +18,10 @@ export default function fileCenter(state = initialState, action){
 		case UPDATE_UPLOAD_PROGRESS:
 			return Object.assign({}, state, {
 				uploadFiles: updateItemInArray(state.uploadFiles, action.payload, 'lastModified')
+			});
+		case UPDATE_COMPLETED_COUNT:
+			return Object.assign({}, state, {
+				completedCount: state.completedCount + 1
 			});
 		case ADD_UPLOAD_FILE:
 			return Object.assign({}, state, {

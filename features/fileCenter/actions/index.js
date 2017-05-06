@@ -8,8 +8,10 @@ export const FETCH_FILES_FAILURE = 'FETCH_FILES_FAILURE';
 
 export const UPDATE_UPLOAD_PROGRESS = 'UPDATE_UPLOAD_PROGRESS';
 export const ADD_UPLOAD_FILE = 'ADD_UPLOAD_FILE';
+export const UPDATE_COMPLETED_COUNT = 'UPDATE_COMPLETED_COUNT';
 export const DELETE_FILE_SUCCESS = 'DELETE_FILE_SUCCESS';
 export const DELETE_FILE_FAILURE = 'DELETE_FILE_FAILURE';
+
 
 export function uploadFile(e, projectId){
 	return function(dispatch){
@@ -61,6 +63,12 @@ export function updateUploadProgress(data){
 			folder: data.folder,
 			percentage: data.percentage
 		}
+	}
+}
+
+export function updateCompletedCount(){
+	return {
+		type: 'UPDATE_COMPLETED_COUNT'
 	}
 }
 

@@ -115,6 +115,10 @@ module.exports = {
 
   },
 
+  emptyInputValue: function(e){
+    e.target.value = null;
+  },
+
   escapeRegex: function(text){
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
   },

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { uploadFileSuccess, uploadFileFailure, updateUploadProgress, addUploadFile } from '../actions';
-import { getIndexOfArrayByValue } from '../../../utils';
+import { uploadFileSuccess, uploadFileFailure, updateUploadProgress, addUploadFile, updateCompletedCount } from '../actions';
+import { getIndexOfArrayByValue, emptyInputValue } from '../../../utils';
 
 class FileCenterHead extends React.Component {
 
@@ -37,6 +37,9 @@ class FileCenterHead extends React.Component {
 					} else {
 						that.props.addUploadFile(data);
 					}
+					if(data.percentage == 100){
+						that.props.updateCompletedCount();
+					}
 				}
 			})
 			.then(function(res){
@@ -61,7 +64,7 @@ class FileCenterHead extends React.Component {
 					<a className="creator-item" ><span className="glyphicon glyphicon-plus"></span>创建文件夹</a>
 					<a className="creator-item" ><span className="glyphicon glyphicon-plus"></span>
 						<div className="upload-input">
-							<input type="file" id="fc-upload" onChange={this.handleChange.bind(this)} />
+							<input type="file" id="fc-upload" onClick={emptyInputValue.bind(this)} onChange={this.handleChange.bind(this)} />
 							<label htmlFor="fc-upload" >上传文件</label>
 						</div>
 					</a>
@@ -81,7 +84,8 @@ const mapDispatchToProps = dispatch => ({
 	uploadFileSuccess: file => { dispatch(uploadFileSuccess(file)); },
 	uploadFileFailure: err => { dispatch(uploadFileFailure(err)); },
 	updateUploadProgress: data => { dispatch(updateUploadProgress(data)); },
-	addUploadFile: data => { dispatch(addUploadFile(data)); }
+	addUploadFile: data => { dispatch(addUploadFile(data)); },
+	updateCompletedCount: () => { dispatch(updateCompletedCount()); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FileCenterHead);
