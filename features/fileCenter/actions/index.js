@@ -5,6 +5,7 @@ export const UPLOAD_FILE_FAILURE = 'UPLOAD_FILE_FAILURE';
 
 export const FETCH_FILES_SUCCESS = 'FETCH_FILES_SUCCESS';
 export const FETCH_FILES_FAILURE = 'FETCH_FILES_FAILURE';
+export const UPDATE_FILE_ITEM = 'UPDATE_FILE_ITEM';
 
 export const UPDATE_UPLOAD_PROGRESS = 'UPDATE_UPLOAD_PROGRESS';
 export const ADD_UPLOAD_FILE = 'ADD_UPLOAD_FILE';
@@ -110,6 +111,13 @@ export function fetchFilesFailure(err){
 	return {
 		type: 'FETCH_FILES_FAILURE',
 		payload: err
+	}
+}
+
+export function updateFileItem(file){
+	return {
+		type: 'UPDATE_FILE_ITEM',
+		payload: file
 	}
 }
 

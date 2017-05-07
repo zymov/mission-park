@@ -1,6 +1,6 @@
 import { 
 	UPDATE_UPLOAD_PROGRESS, ADD_UPLOAD_FILE, UPDATE_COMPLETED_COUNT, UPLOAD_FILE_SUCCESS, UPLOAD_FILE_FAILURE, 
-	FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, 
+	FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, UPDATE_FILE_ITEM, 
 	DELETE_FILE_SUCCESS, DELETE_FILE_FAILURE 
 } from '../actions';
 import { addNewItemToArrayBegin, removeSpecificItemByAttrValue, updateItemInArray } from '../../../utils';
@@ -41,6 +41,10 @@ export default function fileCenter(state = initialState, action){
 			});
 		case FETCH_FILES_FAILURE:
 			return state
+		case UPDATE_FILE_ITEM:
+			return Object.assign({}, state, {
+				filelist: updateItemInArray(state.filelist, action.payload, '_id')
+			});
 
 		case DELETE_FILE_SUCCESS:
 			return Object.assign({}, state, {

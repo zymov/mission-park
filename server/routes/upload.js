@@ -53,14 +53,15 @@ router.get('/fetch', function(req, res){
 
 router.get('/download', function(req, res){
 	let filename = utils.getQueryVariable(req.url, 'filename');
+	let fileId = utils.getQueryVariable(req.url, 'fileId');
 	let decodedFilename = decodeURIComponent(filename);
 	// var mimetype = mime.lookup(files[0].filename);
-	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+	res.setHeader('Content-disposition', 'attachment; filename=' + decodedFilename);
 	res.setHeader('Content-type', 'application/force-download');
 
 	// read from mongodb
 	let readStream = gfs.createReadStream({
-		filename: decodedFilename
+		_id: fileId
 	});
 	readStream.pipe(res);
 });
@@ -74,6 +75,17 @@ router.get('/delete', function(req, res){
 		}
 		res.status(200).json({fileId:fileId});
 	})
+});
+
+router.post('/rename', function(req, res){
+	let newName = req.body.newName;
+	let fileId = req.body.fileId;
+	GridModel.findOneAndUpdate({_id: fileId}, { $set: {filename: newName} }, {new: true}, function(err, file){
+		if(err){
+			console.log(err);
+		}
+		res.status(200).json({file: file});
+	});
 });
 
 module.exports = router;

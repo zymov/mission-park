@@ -1106,6 +1106,7 @@ li.properties-item.prop-date {
   float: left;
   width: 45%;
   padding: 0 15px;
+  height: 24px;
 }
 .list-item-detail span.item-icon {
   color: #808080;
@@ -1122,7 +1123,8 @@ li.properties-item.prop-date {
   display: inline-block;
   margin-bottom: 0;
   line-height: 24px;
-  vertical-align: text-bottom;
+  vertical-align: middle;
+  height: 24px;
 }
 .list-item-detail .item-name p:first-child {
   text-overflow: ellipsis;
@@ -1306,5 +1308,11 @@ li.properties-item.prop-date {
   padding: 0 5px;
   cursor: pointer;
   color: #a6a6a6;
+}
+.editName {
+  padding: 3px 12px 3px 24px;
+  height: 30px;
+  line-height: 30px;
+  margin-top: -3px;
 }
 /* file center end */
