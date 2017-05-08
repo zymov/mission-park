@@ -1,14 +1,17 @@
 import { 
 	UPDATE_UPLOAD_PROGRESS, ADD_UPLOAD_FILE, UPDATE_COMPLETED_COUNT, UPLOAD_FILE_SUCCESS, UPLOAD_FILE_FAILURE, 
 	FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, UPDATE_FILE_ITEM, 
-	DELETE_FILE_SUCCESS, DELETE_FILE_FAILURE 
+	DELETE_FILE_SUCCESS, DELETE_FILE_FAILURE,
+	CREATE_FOLDER_SUCCESS, CREATE_FOLDER_FAILURE, CHANGE_CURRENT_FOLDER 
 } from '../actions';
-import { addNewItemToArrayBegin, removeSpecificItemByAttrValue, updateItemInArray } from '../../../utils';
+import { addNewItemToArrayBegin, addNewItemToArrayEnd, removeSpecificItemByAttrValue, updateItemInArray, getIndexOfArrayByValue } from '../../../utils';
 
 const initialState = {
 	filelist: [],
 	uploadFiles: [],
-	completedCount: 0
+	completedCount: 0,
+	currentFolder: {folderId: '0', folderName: 'File Center'},
+	folderList: [{folderId: '0', folderName: 'File Center'}]
 }
 
 export default function fileCenter(state = initialState, action){
@@ -52,6 +55,27 @@ export default function fileCenter(state = initialState, action){
 			});
 		case DELETE_FILE_FAILURE:
 			return state
+
+		case CREATE_FOLDER_SUCCESS:
+			return Object.assign({}, state, {
+				filelist: addNewItemToArrayBegin(state.filelist, action.payload)
+			});
+		case CREATE_FOLDER_FAILURE:
+			return state
+
+		case CHANGE_CURRENT_FOLDER:
+			let newFolderList = [];
+			let index = getIndexOfArrayByValue(state.folderList, 'folderId', action.payload.folderId);
+			if(index == -1){
+				newFolderList = addNewItemToArrayEnd(state.folderList, action.payload);
+			} else {
+				newFolderList = state.folderList.slice(0, index+1);
+			}
+
+			return Object.assign({}, state, {
+				folderList: newFolderList,
+				currentFolder: action.payload
+			});
 
 		default:
 			return state;

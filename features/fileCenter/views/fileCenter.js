@@ -18,7 +18,7 @@ class FileCenter extends React.Component {
 	}
 
 	componentWillMount(){
-		this.props.fetchFiles(this.props.params.projectId);
+		this.props.fetchFiles(this.props.params.projectId, this.props.currentFolder.folderId);
 	}
 
 	handleClick(e){
@@ -46,11 +46,12 @@ class FileCenter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	uploadFiles: state.fileCenter.uploadFiles
+	uploadFiles: state.fileCenter.uploadFiles,
+	currentFolder: state.fileCenter.currentFolder
 });
 
 const mapDispatchToProps = dispatch => ({
-	fetchFiles: (projectId) => { dispatch(fetchFiles(projectId)); }
+	fetchFiles: (projectId, folderId) => { dispatch(fetchFiles(projectId, folderId)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FileCenter);

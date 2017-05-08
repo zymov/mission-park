@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { formatFileSize } from '../../../utils';
-import { deleteFile, updateFileItem } from '../actions';
+import { deleteFile, updateFileItem, changeCurrentFolder } from '../actions';
 
 class FileItem extends React.Component {
 
@@ -22,7 +22,11 @@ class FileItem extends React.Component {
 
 	renameFile(e){
 		let that = this;
-		let val = e.target.value;
+		let val = e.target.value.trim();
+		if(val == ''){
+			return;
+		}
+
 		let filename = this.props.file.filename;
 		let fileType = ~filename.indexOf('.') ? '.' + filename.split('.')[filename.split('.').length -1] : '';
 		let newName = `${val}${fileType}`;
@@ -48,6 +52,17 @@ class FileItem extends React.Component {
 		}
 	}
 
+	handleClickItem(e){
+		if(this.props.file.length || e.target.tagName.toLocaleLowerCase() == 'input'){
+			return;
+		}
+		let payload = {
+			folderId: this.props.file._id,
+			folderName: this.props.file.filename
+		}
+		this.props.changeCurrentFolder(payload);
+	}
+
 	render(){
 		const file = this.props.file;
 
@@ -60,27 +75,29 @@ class FileItem extends React.Component {
 		return(
 			<li className="file-list-item clearfix" >
 				<a className="check-box">{/*<span className="glyphicon glyphicon-ok"></span>*/}</a>
-				<div className="clearfix">
+				<div className="clearfix" >
 					<div className="list-item-detail">
-						{
+						<div className="clearfix" onClick={this.handleClickItem.bind(this)}>
+							{
+								file.length == 0 ? 
+								<span className="item-icon glyphicon glyphicon-folder-close"></span> : 
+								<span className="item-icon glyphicon glyphicon-file"></span> 
+							}
+							{
 							!this.state.editable && 
-								<div className="clearfix">
-									<span className="item-icon glyphicon glyphicon-file"></span>
-									<div className="item-name" title={`${filenamePart1}${filenamePart2}`} >
-										<p>{filenamePart1}</p>
-										<p>{filenamePart2}</p>
-									</div>
+								<div className="item-name" title={filename} >
+									<span>{filenamePart1}</span>
+									<span>{filenamePart2}</span>
 								</div>
-						}
-						{
+							}
+							{
 							this.state.editable && 
-							<div>
 								<input type="text" className="form-control editName" 
 									defaultValue={filename.replace(`${fileType}`, '')} 
 									onBlur={this.renameFile.bind(this)} 
 									onKeyDown={this.handleKeyDown.bind(this)} />
-							</div>
-						}
+							}
+						</div>
 					</div>
 					<div className="list-item-info">
 						<div className="item-size">{`${formatFileSize(file.length)}`}</div>
@@ -104,7 +121,8 @@ class FileItem extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
 	deleteFile: fileId => { dispatch(deleteFile(fileId)); },
-	updateFileItem: file => { dispatch(updateFileItem(file)); }
+	updateFileItem: file => { dispatch(updateFileItem(file)); },
+	changeCurrentFolder: folder => { dispatch(changeCurrentFolder(folder)); }
 });
 
 export default connect(null, mapDispatchToProps)(FileItem);

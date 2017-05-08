@@ -27,7 +27,7 @@ class UploadFileItem extends React.Component {
 					</div>
 					<div className="upload-info">
 						<p className="upload-filesize">{`(${completedFileSize}/${totalFileSize})`}</p>
-						<p className="upload-folder">上传至 {folder}</p>
+						<p className="upload-folder">上传至 {folder.folderName}</p>
 					</div>
 				</div>
 				<div className="upload-handler">

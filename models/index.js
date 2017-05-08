@@ -1,19 +1,20 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 module.exports.connect = (url)=>{
 	mongoose.connect(url);
 
-	var db = mongoose.connection;
+	const db = mongoose.connection;
 	db.on('error', (err)=>{
 		console.error(`connection error: ${err}`);
 		process.exit(1);
 	});
 
-	var User = require('./user/user');
-	var Task = require('./task/task');
-	var Project = require('./project/project');
-	var Tasklist = require('./tasklist/tasklist');
-	var Tag = require('./tag');
-	var ChatMessageHistory = require('./chat/chatMessageHistory');
+	const User = require('./user/user');
+	const Task = require('./task/task');
+	const Project = require('./project/project');
+	const Tasklist = require('./tasklist/tasklist');
+	const Tag = require('./tag');
+	const ChatMessageHistory = require('./chat/chatMessageHistory');
+	const Grid = require('./fileCenter/grid');
 
 }

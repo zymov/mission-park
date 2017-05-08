@@ -967,7 +967,7 @@ a.dd-list-item i {
 .filecenter .check-box {
   display: block;
   float: left;
-  margin: 0 15px 0 0;
+  margin: 15px;
   width: 20px;
   height: 20px;
   line-height: 20px;
@@ -984,7 +984,7 @@ a.dd-list-item i {
   text-align: center;
 }
 .fc-head {
-  padding: 15px;
+  padding: 0 15px;
   background-color: #fff;
   position: relative;
 }
@@ -996,8 +996,16 @@ a.dd-list-item i {
   font-size: 18px;
   line-height: 26px;
 }
+.fc-breadcrumbs ul li span {
+  display: inline-block;
+  padding: 15px 0;
+  vertical-align: middle;
+}
 .fc-breadcrumbs .forward-slash {
   padding: 0 10px;
+}
+.fc-breadcrumbs .folder-name {
+  cursor: pointer;
 }
 .fc-creator {
   position: absolute;
@@ -1035,17 +1043,16 @@ a.dd-list-item i {
   background-color: #fff;
 }
 .fc-file-properties {
-  padding: 15px;
   border-bottom: 1px solid #ddd;
 }
 .fc-file-properties ul {
-  margin-left: 26px;
+  margin-left: 54px;
 }
 .fc-file-properties ul li.properties-item {
   float: left;
   line-height: 24px;
   font-size: 14px;
-  padding: 0 15px;
+  padding: 15px;
   color: #808080;
   cursor: pointer;
 }
@@ -1088,7 +1095,6 @@ li.properties-item.prop-date {
   padding: 0 0 15px 0;
 }
 .file-list-item {
-  padding: 15px;
   border-bottom: 1px solid #efefef;
   cursor: pointer;
   transition: all 0.2s;
@@ -1100,17 +1106,18 @@ li.properties-item.prop-date {
   opacity: 1;
 }
 .file-list-item > div {
-  margin-left: 26px;
+  margin-left: 54px;
 }
 .file-list-item > div > .list-item-detail {
   float: left;
   width: 45%;
-  padding: 0 15px;
-  height: 24px;
+}
+.list-item-detail > div {
+  padding: 15px;
 }
 .list-item-detail span.item-icon {
   color: #808080;
-  font-size: 20px;
+  font-size: 32px;
   padding-right: 5px;
   line-height: 24px;
   float: left;
@@ -1119,17 +1126,17 @@ li.properties-item.prop-date {
 .list-item-detail .item-name {
   float: left;
 }
-.list-item-detail .item-name p {
+.list-item-detail .item-name span {
   display: inline-block;
   margin-bottom: 0;
   line-height: 24px;
   vertical-align: middle;
   height: 24px;
+  white-space: pre;
 }
-.list-item-detail .item-name p:first-child {
+.list-item-detail .item-name span:first-child {
   text-overflow: ellipsis;
   max-width: 380px;
-  white-space: nowrap;
   overflow: hidden;
 }
 .list-item-info {
@@ -1137,7 +1144,7 @@ li.properties-item.prop-date {
 }
 .list-item-info > div {
   float: left;
-  padding: 0 15px;
+  padding: 15px;
   line-height: 24px;
 }
 .list-item-info > div.item-size {
@@ -1310,9 +1317,11 @@ li.properties-item.prop-date {
   color: #a6a6a6;
 }
 .editName {
-  padding: 3px 12px 3px 24px;
+  padding: 3px 12px;
   height: 30px;
   line-height: 30px;
   margin-top: -3px;
+  width: 430px;
+  border-color: #eaeaea;
 }
 /* file center end */

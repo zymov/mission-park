@@ -13,6 +13,11 @@ export const UPDATE_COMPLETED_COUNT = 'UPDATE_COMPLETED_COUNT';
 export const DELETE_FILE_SUCCESS = 'DELETE_FILE_SUCCESS';
 export const DELETE_FILE_FAILURE = 'DELETE_FILE_FAILURE';
 
+export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS';
+export const CREATE_FOLDER_FAILURE = 'CREATE_FOLDER_FAILURE';
+
+export const CHANGE_CURRENT_FOLDER = 'CHANGE_CURRENT_FOLDER';
+
 
 export function uploadFile(e, projectId){
 	return function(dispatch){
@@ -85,11 +90,12 @@ export function addUploadFile(data){
 		}
 	}
 }
-export function fetchFiles(projectId){
+export function fetchFiles(projectId, folderId){
 	return function(dispatch){
 		axios.get('/filecenter/fetch',{
 			params: {
-				projectId: projectId
+				projectId: projectId,
+				folderId: folderId
 			}
 		})
 		.then(function(res){
@@ -149,3 +155,38 @@ export function deleteFileFailure(err){
 		payload: err
 	}
 }
+
+
+export function createFolder(payload){
+	return function(dispatch){
+		axios.post('/filecenter/createfolder', payload)
+			.then(function(res){
+				dispatch(createFolderSuccess(res.data.folder));
+			})
+			.catch(function(err){
+				dispatch(createFolderFailure(err));
+			})
+	}
+}
+
+export function createFolderSuccess(folder){
+	return {
+		type: 'CREATE_FOLDER_SUCCESS',
+		payload: folder
+	}
+}
+export function createFolderFailure(err){
+	return {
+		type: 'CREATE_FOLDER_FAILURE',
+		payload: err
+	}
+}
+
+
+export function changeCurrentFolder(folder){
+	return {
+		type: 'CHANGE_CURRENT_FOLDER',
+		payload: folder
+	}
+}
+
