@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import CurrentDirectory from './currentDirectory';
 import { uploadFileSuccess, uploadFileFailure, updateUploadProgress, addUploadFile, updateCompletedCount, createFolder, fetchFiles } from '../actions';
-import { getIndexOfArrayByValue, emptyInputValue } from '../../../utils';
+import { getIndexOfArrayByValue, emptyInputValue, getArrayOfSpecKey } from '../../../utils';
 
 class FileCenterHead extends React.Component {
 
@@ -15,6 +15,7 @@ class FileCenterHead extends React.Component {
 	componentDidUpdate(prevProps, prevState){
 		if(prevProps.currentFolder != this.props.currentFolder){
 			this.props.fetchFiles(this.props.projectId, this.props.currentFolder.folderId);
+			console.log(this.props.folderList);
 		}
 	}
 
@@ -24,7 +25,11 @@ class FileCenterHead extends React.Component {
 			creatorId: this.user.sub,
 			creatorName: this.user.name,
 			projectId: this.props.projectId,
-			folder: this.props.currentFolder
+			folder: {
+				directory: getArrayOfSpecKey(this.props.folderList, 'folderId'),
+				folderId: this.props.currentFolder.folderId,
+				folderName: this.props.currentFolder.folderName
+			}
 		}
 		this.props.createFolder(payload);
 	}
@@ -33,12 +38,15 @@ class FileCenterHead extends React.Component {
 		// this.props.uploadFile(e);
 		let that = this;
 		let file = e.target.files[0];
-		// let user = jwt_decode(localStorage.getItem('token'));
+
+		let folderIdArr = getArrayOfSpecKey(this.props.folderList, 'folderId');
+		
 		let data = new FormData();
 		data.append('projectId', this.props.projectId);
 		data.append('creatorId', this.user.sub);
 		data.append('creatorName', this.user.name);
 		data.append('uploadDate', new Date());
+		data.append('directory', folderIdArr);
 		data.append('folderId', this.props.currentFolder.folderId);
 		data.append('folderName', this.props.currentFolder.folderName);
 		data.append('file', file);
@@ -99,7 +107,8 @@ class FileCenterHead extends React.Component {
 
 const mapStateToProps = state => ({
 	uploadFiles: state.fileCenter.uploadFiles,
-	currentFolder: state.fileCenter.currentFolder
+	currentFolder: state.fileCenter.currentFolder,
+	folderList: state.fileCenter.folderList
 });
 
 const mapDispatchToProps = dispatch => ({

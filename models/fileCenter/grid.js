@@ -8,6 +8,7 @@ const gridSchema = new mongoose.Schema({
 		creatorName: String,
 		projectId: String,
 		folder: {
+			directory: Array,
 			folderId: String,
 			folderName: String
 		}

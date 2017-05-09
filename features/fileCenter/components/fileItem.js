@@ -110,6 +110,9 @@ class FileItem extends React.Component {
 							<a className="handler-item" onClick={this.changeEditable.bind(this)} >重命名</a>
 							<a className="handler-item" onClick={this.props.deleteFile.bind(null, file._id)} >删除</a>
 						</div>
+{/*						<div className="">
+							
+						</div>*/}
 					</div>
 				</div>
 			</li>

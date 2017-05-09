@@ -30,6 +30,7 @@ router.post('/upload', function(req, res){
 				creatorName: fields.creatorName,
 				projectId: fields.projectId,
 				folder: {
+					directory: fields.directory,
 					folderId: fields.folderId,
 					folderName: fields.folderName
 				}
@@ -78,12 +79,18 @@ router.get('/download', function(req, res){
 
 router.get('/delete', function(req, res){
 	let fileId = utils.getQueryVariable(req.url, 'fileId');
-	gfs.remove({_id: fileId}, function(err){
+	GridModel.remove({_id: fileId}, function(err){
 		if(err){
 			console.log(err);
-			res.status(500).json({message: 'can not delete file'});
+			return res.status(500).json({message: 'can not delete file'});
 		}
-		res.status(200).json({fileId:fileId});
+		GridModel.remove({'metadata.folder.directory': {"$regex": fileId}}, function(err){
+			if(err){
+				console.log(err);
+				return res.status(500).json({message: 'can not delete file'});
+			}
+			return res.status(200).json({fileId:fileId});
+		});
 	});
 });
 
@@ -100,16 +107,18 @@ router.post('/rename', function(req, res){
 });
 
 router.post('/createfolder', function(req, res){
+	let rb = req.body;
 	let grid = new GridModel();
 	grid.filename = 'new folder';
 	grid.length = 0;
 	grid.metadata = {
-		creatorId: req.body.creatorId,
-		creatorName: req.body.creatorName,
-		projectId: req.body.projectId,
+		creatorId: rb.creatorId,
+		creatorName: rb.creatorName,
+		projectId: rb.projectId,
 		folder: {
-			folderId: req.body.folder.folderId,
-			folderName: req.body.folder.folderName
+			directory: rb.folder.directory,
+			folderId: rb.folder.folderId,
+			folderName: rb.folder.folderName
 		}
 	};
 	
