@@ -4,6 +4,12 @@ import DirectoryItem from './directoryItem';
 
 class CurrentDirectory extends React.Component {
 
+	componentDidUpdate(){
+		if(this.props.folderList.length > 0){
+			$('#fc-directory li:last-child')[0].scrollIntoView();
+		}
+	}
+
 	render(){
 
 		let cd = this.props.folderList.map(function(item, index){
@@ -12,9 +18,12 @@ class CurrentDirectory extends React.Component {
 
 		return(
 			<div className="fc-breadcrumbs">
-				<ul className="clearfix">
+				<ul className="clearfix" id="fc-directory">
 					{cd}
 				</ul>
+				<div className="directory-slider">
+
+				</div>
 			</div>
 		);
 

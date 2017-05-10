@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { formatFileSize } from '../../../utils';
-import { deleteFile, updateFileItem, changeCurrentFolder } from '../actions';
+import { updateFileItem, changeCurrentFolder } from '../actions';
+import DeletePopover from './deletePopover';
 
 class FileItem extends React.Component {
 
@@ -10,8 +11,26 @@ class FileItem extends React.Component {
 		super(props);
 		this.state = {
 			editable: false,
-			filename: ''
+			deleteFlag: false
 		}
+		this.documentClick = this.documentClick.bind(this);
+	}
+
+	componentDidMount(){
+		document.addEventListener('click', this.documentClick, false);
+	}
+
+	componentWillUnmount(){
+		document.removeEventListener('click', this.documentClick, false);
+	}
+
+	documentClick(e){
+		// e.stopPropagation();
+		// if(!e.target.closest('.fc-popover') && this.state.deleteFlag){
+		// 	this.setState({
+		// 		deleteFlag: false
+		// 	});
+		// }
 	}
 
 	changeEditable(){
@@ -41,8 +60,7 @@ class FileItem extends React.Component {
 			console.log(err);
 		});
 		this.setState({
-			editable: false,
-			filename: newName
+			editable: false
 		});
 	}
 
@@ -61,6 +79,12 @@ class FileItem extends React.Component {
 			folderName: this.props.file.filename
 		}
 		this.props.changeCurrentFolder(payload);
+	}
+
+	clickDeleteFile(e){
+		this.setState({
+			deleteFlag: true
+		});
 	}
 
 	render(){
@@ -108,11 +132,10 @@ class FileItem extends React.Component {
 							<a className="handler-item"  >更新</a>
 							<a className="handler-item"  >移动</a>
 							<a className="handler-item" onClick={this.changeEditable.bind(this)} >重命名</a>
-							<a className="handler-item" onClick={this.props.deleteFile.bind(null, file._id)} >删除</a>
+							<a className="handler-item" onClick={this.clickDeleteFile.bind(this)} >删除</a>
+							{ this.state.deleteFlag && <DeletePopover fileId={file._id} />}
 						</div>
-{/*						<div className="">
-							
-						</div>*/}
+
 					</div>
 				</div>
 			</li>
@@ -123,7 +146,6 @@ class FileItem extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-	deleteFile: fileId => { dispatch(deleteFile(fileId)); },
 	updateFileItem: file => { dispatch(updateFileItem(file)); },
 	changeCurrentFolder: folder => { dispatch(changeCurrentFolder(folder)); }
 });

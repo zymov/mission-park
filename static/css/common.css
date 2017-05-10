@@ -959,9 +959,10 @@ a.dd-list-item i {
 .filecenter {
   margin-top: 10px;
   background-color: #fff;
-  padding: 0;
+  padding: 0 15px;
   min-height: 500px;
   border-radius: 3px;
+  overflow-x: hidden;
 }
 .filecenter ul {list-style-type: none; margin: 0; padding: 0;}
 .filecenter .check-box {
@@ -987,14 +988,24 @@ a.dd-list-item i {
   padding: 0 15px;
   background-color: #fff;
   position: relative;
+  border-bottom: 1px solid #eee;
 }
 .fc-breadcrumbs {
-  padding-right: 300px;
+  margin-right: 300px;
+  height: 56px;
+  width: 840px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+}
+.fc-breadcrumbs ul {
+  white-space: nowrap;
 }
 .fc-breadcrumbs ul li {
-  float: left;
   font-size: 18px;
   line-height: 26px;
+  display: inline;
+  height: 56px;
 }
 .fc-breadcrumbs ul li span {
   display: inline-block;
@@ -1039,11 +1050,10 @@ a.dd-list-item i {
   cursor: pointer;
 }
 .fc-body {
-  border-top: 1px solid #ddd;
   background-color: #fff;
 }
 .fc-file-properties {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #eee;
 }
 .fc-file-properties ul {
   margin-left: 54px;
@@ -1114,6 +1124,7 @@ li.properties-item.prop-date {
 }
 .list-item-detail > div {
   padding: 15px;
+  height: 56px;
 }
 .list-item-detail span.item-icon {
   color: #808080;
@@ -1125,6 +1136,10 @@ li.properties-item.prop-date {
 }
 .list-item-detail .item-name {
   float: left;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  width: 420px;
 }
 .list-item-detail .item-name span {
   display: inline-block;
@@ -1133,11 +1148,16 @@ li.properties-item.prop-date {
   vertical-align: middle;
   height: 24px;
   white-space: pre;
+  flex: 0 1 auto;
 }
 .list-item-detail .item-name span:first-child {
   text-overflow: ellipsis;
-  max-width: 380px;
+  min-width: 0%;
+  flex: 0 1 auto;
   overflow: hidden;
+}
+.list-item-detail .item-name span:last-child {
+  flex-shrink: 0;
 }
 .list-item-info {
   float: left;
@@ -1160,6 +1180,9 @@ li.properties-item.prop-date {
 .list-item-info > div.item-date {
   width: 100px;
   color: #808080;
+}
+.item-handler {
+  position: relative;
 }
 .item-handler a.handler-item {
   display: inline-block;
@@ -1243,6 +1266,23 @@ li.properties-item.prop-date {
   background-color: #9E9E9E;
   border-radius: 2px;
 }
+
+
+.fc-breadcrumbs::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+  background-color: #fff;
+  border-radius: 3px;
+}
+.fc-breadcrumbs::-webkit-scrollbar {
+  height: 6px;
+  background-color: #fff;
+}
+.fc-breadcrumbs::-webkit-scrollbar-thumb {
+  background-color: #9E9E9E;
+  border-radius: 3px;
+}
+
+
 .background-uploader .upload-item {
   margin: 0 10px 10px 0;
   background-color: #eee;
@@ -1321,7 +1361,30 @@ li.properties-item.prop-date {
   height: 30px;
   line-height: 30px;
   margin-top: -3px;
-  width: 430px;
+  width: 420px;
   border-color: #eaeaea;
+}
+.fc-popover {
+  position: absolute;
+  top: -70px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 7px 21px rgba(0,0,0,.1);
+}
+.fc-popover-head {
+  margin: 0 12px;
+  border-bottom: 1px solid #eee;
+}
+.fc-popover-head p, .fc-popover-body p {
+  padding: 5px 15px;
+  text-align: center;
+}
+.fc-popover-head p {font-size: 16px;}
+.fc-popover-body {
+  padding: 0 12px 12px;
+}
+.fc-popover-body button {
+  width: 100%;
 }
 /* file center end */

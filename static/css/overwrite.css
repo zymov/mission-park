@@ -32,6 +32,26 @@ p {
   background-color: #5ab5f7;
   border-color: #5ab5f7;
 }
+.btn-danger, .btn-danger:focus {
+  background-color: #FF4F3E;
+  border-color: #FF4F3E;
+  color: #FFFFFF;
+}
+.btn-danger:hover {
+  background-color: #ff695b;
+  border-color: #ff695b;
+  color: #FFFFFF;
+}
+.btn-danger:active {
+  background-color: #d94335;
+  border-color: #d94335;
+  color: #FFFFFF;
+}
+.btn-danger:active:focus{
+  background-color: #d94335;
+  border-color: #d94335;
+  color: #FFFFFF;
+}
 .btn:focus, .btn:active:focus {
   outline: 0;
 }
