@@ -25,12 +25,20 @@ class FileItem extends React.Component {
 	}
 
 	documentClick(e){
-		// e.stopPropagation();
-		// if(!e.target.closest('.fc-popover') && this.state.deleteFlag){
-		// 	this.setState({
-		// 		deleteFlag: false
-		// 	});
-		// }
+		//!$('.fc-popover')[0].contains(e.target) && e.target.getAttribute('data-refer') != 'delete'
+		let element = $('.fc-popover:visible')[0];
+		if(!element){return;}
+		if(e.target.getAttribute('data-refer') != 'delete' && e.target !== element && !element.contains(e.target)){
+			this.setState({
+				deleteFlag: false
+			});
+		}
+		//set the deleteFlag to false to remove the popover, otherwise it would be still shown on the next file, I don't know why...
+		if(e.target.getAttribute('data-refer') == 'delete-confirmed'){
+			this.setState({
+				deleteFlag: false
+			});
+		}
 	}
 
 	changeEditable(){
@@ -82,6 +90,7 @@ class FileItem extends React.Component {
 	}
 
 	clickDeleteFile(e){
+		console.log(1);
 		this.setState({
 			deleteFlag: true
 		});
@@ -132,8 +141,8 @@ class FileItem extends React.Component {
 							<a className="handler-item"  >更新</a>
 							<a className="handler-item"  >移动</a>
 							<a className="handler-item" onClick={this.changeEditable.bind(this)} >重命名</a>
-							<a className="handler-item" onClick={this.clickDeleteFile.bind(this)} >删除</a>
-							{ this.state.deleteFlag && <DeletePopover fileId={file._id} />}
+							<a className="handler-item" data-refer="delete" onClick={this.clickDeleteFile.bind(this)} >删除</a>
+							{this.state.deleteFlag && <DeletePopover file={file} />}
 						</div>
 
 					</div>

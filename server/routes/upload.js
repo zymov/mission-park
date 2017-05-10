@@ -67,7 +67,7 @@ router.get('/download', function(req, res){
 	let fileId = utils.getQueryVariable(req.url, 'fileId');
 	let decodedFilename = decodeURIComponent(filename);
 	// var mimetype = mime.lookup(files[0].filename);
-	res.setHeader('Content-disposition', 'attachment; filename=' + decodedFilename);
+	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
 	res.setHeader('Content-type', 'application/force-download');
 
 	// read from mongodb
