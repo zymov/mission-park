@@ -15,6 +15,7 @@ module.exports.connect = (url)=>{
 	const Tasklist = require('./tasklist/tasklist');
 	const Tag = require('./tag');
 	const ChatMessageHistory = require('./chat/chatMessageHistory');
-	const Grid = require('./fileCenter/grid');
+	const GridFiles = require('./fileCenter/gridFiles');
+	const GridChunks = require('./fileCenter/gridChunks');
 
 }

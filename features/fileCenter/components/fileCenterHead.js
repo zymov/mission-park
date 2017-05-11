@@ -15,7 +15,6 @@ class FileCenterHead extends React.Component {
 	componentDidUpdate(prevProps, prevState){
 		if(prevProps.currentFolder != this.props.currentFolder){
 			this.props.fetchFiles(this.props.projectId, this.props.currentFolder.folderId);
-			console.log(this.props.folderList);
 		}
 	}
 

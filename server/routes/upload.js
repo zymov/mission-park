@@ -3,10 +3,12 @@ const router = new express.Router();
 const fs = require('fs');
 const formidable = require('formidable');
 const mongoose = require('mongoose');
+let ObjectId = require('mongoose').Types.ObjectId; 
 // const Schema = mongoose.Schema;
 // const gridSchema = new Schema({filename: String},{ strict: false });
-// const GridModel = mongoose.model("Grid", gridSchema, "fs.files" );
-const GridModel = require('../../models/fileCenter/grid');
+// const GridFiles = mongoose.model("Grid", gridSchema, "fs.files" );
+const GridFiles = require('../../models/fileCenter/gridFiles');
+const GridChunks = require('../../models/fileCenter/gridChunks');
 const conn = mongoose.connection;
 const Grid = require('gridfs-stream');
 Grid.mongo = mongoose.mongo;
@@ -53,7 +55,7 @@ router.get('/fetch', function(req, res){
 	let projectId = utils.getQueryVariable(req.url, 'projectId');
 	let folderId = utils.getQueryVariable(req.url, 'folderId');
 
-	GridModel.find({'metadata.projectId': projectId, 'metadata.folder.folderId': folderId}).sort({uploadDate: -1}).exec(function(err, files){
+	GridFiles.find({'metadata.projectId': projectId, 'metadata.folder.folderId': folderId}).sort({uploadDate: -1}).exec(function(err, files){
 		if(err){
 			console.log(err);
 			res.status(500).json({message: 'can not fetch files'});
@@ -79,26 +81,47 @@ router.get('/download', function(req, res){
 
 router.get('/delete', function(req, res){
 	let fileId = utils.getQueryVariable(req.url, 'fileId');
-	GridModel.remove({_id: fileId}, function(err){
+
+	GridFiles.find({ $or: [ {_id: fileId}, {'metadata.folder.directory': {'$regex': fileId}} ] }, function(err, files){
 		if(err){
 			console.log(err);
-			return res.status(500).json({message: 'can not delete file'});
 		}
-		GridModel.remove({'metadata.folder.directory': {"$regex": fileId}}, function(err){
+		let fileIdArr = files.map(function(item){
+			return new ObjectId(item._id);
+		});
+		GridChunks.remove({ 'files_id': { $in: fileIdArr} }, function(err){
+			if(err){
+				console.log(err);
+				return res.status(500).json({message: 'can not delete file'});
+			}
+		});
+
+		GridFiles.remove({_id: fileId}, function(err){
+			if(err){
+				console.log(err);
+				return res.status(500).json({message: 'can not delete file'});
+			}
+		});
+
+		GridFiles.remove({'metadata.folder.directory': {'$regex': fileId}}, function(err){
 			if(err){
 				console.log(err);
 				return res.status(500).json({message: 'can not delete file'});
 			}
 			return res.status(200).json({fileId:fileId});
 		});
+
 	});
+
+
+
 });
 
 router.post('/rename', function(req, res){
 	let newName = req.body.newName;
 	let fileId = req.body.fileId;
 
-	GridModel.findOneAndUpdate({_id: fileId}, { $set: {filename: newName} }, {new: true}, function(err, file){
+	GridFiles.findOneAndUpdate({_id: fileId}, { $set: {filename: newName} }, {new: true}, function(err, file){
 		if(err){
 			console.log(err);
 		}
@@ -108,7 +131,7 @@ router.post('/rename', function(req, res){
 
 router.post('/createfolder', function(req, res){
 	let rb = req.body;
-	let grid = new GridModel();
+	let grid = new GridFiles();
 	grid.filename = 'new folder';
 	grid.length = 0;
 	grid.metadata = {

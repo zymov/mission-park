@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const gridSchema = new mongoose.Schema({
+const gridFilesSchema = new mongoose.Schema({
 	filename: {type: String},
 	length: {type: Number},
 	metadata: {
@@ -16,6 +16,6 @@ const gridSchema = new mongoose.Schema({
 	uploadDate: {type: Date, default: new Date()}
 },{ strict: false });
 
-const Grid = mongoose.model("Grid", gridSchema, "fs.files" );
+const GridFiles = mongoose.model("GridFiles", gridFilesSchema, "fs.files" );
 
-module.exports = Grid;
+module.exports = GridFiles;
