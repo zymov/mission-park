@@ -37,7 +37,7 @@ class FileCenterHead extends React.Component {
 		// this.props.uploadFile(e);
 		let that = this;
 		let file = e.target.files[0];
-
+		if(file.size == 0){return;}
 		let folderIdArr = getArrayOfSpecKey(this.props.folderList, 'folderId');
 		
 		let data = new FormData();

@@ -40,13 +40,15 @@ class ChatroomInput extends React.Component {
 			icon: 'glyphicon glyphicon-paperclip',
 			id: 'chat_file',
 			accept: 'image/*',
-			title: 'send image'
+			title: 'send image',
+			labelText: ''
 		}
 	}
 
 	handleUpload(event){
 		let path = event.target.value;
 		let file = event.target.files[0];
+		if(file.size == 0) {return;}
 
 		let fr = new FileReader();
 		fr.readAsDataURL(file);

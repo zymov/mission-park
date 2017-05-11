@@ -155,4 +155,59 @@ router.post('/createfolder', function(req, res){
 
 });
 
+router.post('/updatefile', function(req, res){
+	let form = new formidable.IncomingForm();
+	form.parse(req, function(err, fields, files){
+		if(files.file.size == 0){
+			return res.status(200).json({message: 'file size should not be zero.'});
+		}
+
+		GridFiles.find({_id: fields.fileId}, function(err, oldFile){
+
+			let oldData = oldFile[0].metadata;
+
+			let filename = files.file.name, 
+				path = files.file.path; 
+			let writestream = gfs.createWriteStream({
+				filename: filename,
+				metadata: {
+					creatorId: oldData.creatorId, 
+					creatorName: oldData.creatorName,
+					projectId: oldData.projectId,
+					folder: {
+						directory: oldData.folder.directory,
+						folderId: oldData.folder.folderId,
+						folderName: oldData.folder.folderName
+					}
+				}
+			});
+			fs.createReadStream(path).pipe(writestream);
+
+			//delete original file
+			GridFiles.remove({_id: fields.fileId}, function(err){
+				if(err){
+					console.log(err);
+				}
+			});
+			GridChunks.remove({files_id: fields.fileId}, function(err){
+				if(err){
+					console.log(err);
+				}
+			});
+
+			writestream.on('close', function(newFile){
+				console.log(filename + ' written to db');
+				//delete file from temp folder
+				fs.unlink(path, function(){
+					return res.status(200).json({newFile: newFile});
+				});
+			});
+
+		});
+
+	});
+
+});
+
+
 module.exports = router;

@@ -1,8 +1,9 @@
 import { 
 	UPDATE_UPLOAD_PROGRESS, ADD_UPLOAD_FILE, UPDATE_COMPLETED_COUNT, UPLOAD_FILE_SUCCESS, UPLOAD_FILE_FAILURE, 
-	FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, UPDATE_FILE_ITEM, 
+	FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, UPDATE_FILE_NAME, 
 	DELETE_FILE_SUCCESS, DELETE_FILE_FAILURE,
-	CREATE_FOLDER_SUCCESS, CREATE_FOLDER_FAILURE, CHANGE_CURRENT_FOLDER 
+	CREATE_FOLDER_SUCCESS, CREATE_FOLDER_FAILURE, CHANGE_CURRENT_FOLDER, 
+	UPDATE_FILE_SUCCESS, UPDATE_FILE_FAILURE 
 } from '../actions';
 import { addNewItemToArrayBegin, addNewItemToArrayEnd, removeSpecificItemByAttrValue, updateItemInArray, getIndexOfArrayByValue } from '../../../utils';
 
@@ -43,8 +44,9 @@ export default function fileCenter(state = initialState, action){
 				filelist: action.payload
 			});
 		case FETCH_FILES_FAILURE:
-			return state
-		case UPDATE_FILE_ITEM:
+			return state;
+
+		case UPDATE_FILE_NAME:
 			return Object.assign({}, state, {
 				filelist: updateItemInArray(state.filelist, action.payload, '_id')
 			});
@@ -61,7 +63,7 @@ export default function fileCenter(state = initialState, action){
 				filelist: addNewItemToArrayBegin(state.filelist, action.payload)
 			});
 		case CREATE_FOLDER_FAILURE:
-			return state
+			return state;
 
 		case CHANGE_CURRENT_FOLDER:
 			let newFolderList = [];
@@ -76,6 +78,16 @@ export default function fileCenter(state = initialState, action){
 				folderList: newFolderList,
 				currentFolder: action.payload
 			});
+
+		case UPDATE_FILE_SUCCESS:
+			let idx = getIndexOfArrayByValue(state.filelist, '_id', action.payload.oldFileId);
+			let stateCopy = state.filelist.slice();
+			stateCopy[idx] = action.payload.file;
+			return Object.assign({}, state, {
+				filelist: stateCopy
+			});
+		case UPDATE_FILE_FAILURE:
+			return state;
 
 		default:
 			return state;

@@ -5,7 +5,7 @@ export const UPLOAD_FILE_FAILURE = 'UPLOAD_FILE_FAILURE';
 
 export const FETCH_FILES_SUCCESS = 'FETCH_FILES_SUCCESS';
 export const FETCH_FILES_FAILURE = 'FETCH_FILES_FAILURE';
-export const UPDATE_FILE_ITEM = 'UPDATE_FILE_ITEM';
+export const UPDATE_FILE_NAME = 'UPDATE_FILE_NAME';
 
 export const UPDATE_UPLOAD_PROGRESS = 'UPDATE_UPLOAD_PROGRESS';
 export const ADD_UPLOAD_FILE = 'ADD_UPLOAD_FILE';
@@ -18,6 +18,8 @@ export const CREATE_FOLDER_FAILURE = 'CREATE_FOLDER_FAILURE';
 
 export const CHANGE_CURRENT_FOLDER = 'CHANGE_CURRENT_FOLDER';
 
+export const UPDATE_FILE_SUCCESS = 'UPDATE_FILE_SUCCESS';
+export const UPDATE_FILE_FAILURE = 'UPDATE_FILE_FAILURE';
 
 // export function uploadFile(e, projectId){
 // 	return function(dispatch){
@@ -120,9 +122,9 @@ export function fetchFilesFailure(err){
 	}
 }
 
-export function updateFileItem(file){
+export function updateFileName(file){
 	return {
-		type: 'UPDATE_FILE_ITEM',
+		type: 'UPDATE_FILE_NAME',
 		payload: file
 	}
 }
@@ -190,3 +192,18 @@ export function changeCurrentFolder(folder){
 	}
 }
 
+export function updateFileSuccess(oldFileId, file){
+	return {
+		type: 'UPDATE_FILE_SUCCESS',
+		payload: {
+			oldFileId: oldFileId,
+			file: file
+		}
+	}
+}
+export function updateFileFailure(err){
+	return {
+		type: 'UPDATE_FILE_FAILURE',
+		payload: err
+	}
+}

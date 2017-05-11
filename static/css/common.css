@@ -1198,7 +1198,17 @@ li.properties-item.prop-date {
 .item-handler a.handler-item:hover {
   color: #0c92f3;
 }
-
+.item-handler a.handler-item .inputfile-label {
+  width: 28px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  margin: 0px;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  font-weight: 100;
+}
 .background-uploader {
   position: fixed;
   bottom: 12px;

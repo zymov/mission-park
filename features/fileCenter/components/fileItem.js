@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { formatFileSize } from '../../../utils';
-import { updateFileItem, changeCurrentFolder } from '../actions';
+import { formatFileSize, getIndexOfArrayByValue, getArrayOfSpecKey } from '../../../utils';
+import { updateFileName, changeCurrentFolder, updateUploadProgress, addUploadFile, updateCompletedCount, updateFileSuccess, updateFileFailure } from '../actions';
 import DeletePopover from './deletePopover';
+import FileInput from '../../common/components/fileInput';
 
 class FileItem extends React.Component {
 
@@ -13,7 +14,16 @@ class FileItem extends React.Component {
 			editable: false,
 			deleteFlag: false
 		}
+		this.user = jwt_decode(localStorage.getItem('token'));
 		this.documentClick = this.documentClick.bind(this);
+		this.fileinputData = {
+			handleUpload: this.handleUpload.bind(this),
+			icon: '',
+			id: 'update_file',
+			accept: '',
+			title: 'update file',
+			labelText: '更新'
+		}
 	}
 
 	componentDidMount(){
@@ -41,6 +51,57 @@ class FileItem extends React.Component {
 		}
 	}
 
+	handleUpload(e){
+		// this.props.uploadFile(e);
+		let that = this;
+		let oldFile = this.props.file;
+		let newFile = e.target.files[0];
+
+		// let folderIdArr = getArrayOfSpecKey(this.props.folderList, 'folderId');
+		
+		let data = new FormData();
+		data.append('fileId', oldFile._id);
+		// data.append('projectId', oldFile.metadata.projectId);
+		// data.append('creatorId', this.user.sub);
+		// data.append('creatorName', this.user.name);
+		data.append('uploadDate', new Date());
+		// data.append('directory', folderIdArr);
+		// data.append('folderId', this.props.currentFolder.folderId);
+		// data.append('folderName', this.props.currentFolder.folderName);
+		data.append('file', newFile);
+		let progressData = {
+			timestamp: Date.now(),
+			filename: newFile.name,
+			fileSize: newFile.size,
+			folder: this.props.currentFolder
+		}
+		axios.post('/filecenter/updatefile', data, {
+			headers: {
+				'Content-Type': 'multipart/form-data'
+			},
+			onUploadProgress: function(progressEvent){
+				let percentCompleted = Math.floor( (progressEvent.loaded * 100) / progressEvent.total);
+				progressData.percentage = percentCompleted;
+				//if file is uploading, just update uploading percentage, otherwise, add new uploading file item in upload list
+				// use 'lastModified' may cause error! it just a temporary remedy
+				if(~getIndexOfArrayByValue(that.props.uploadFiles, 'timestamp', progressData.timestamp)){ 
+					that.props.updateUploadProgress(progressData);
+				} else {
+					that.props.addUploadFile(progressData);
+				}
+				if(progressData.percentage == 100){
+					that.props.updateCompletedCount();
+				}
+			}
+		})
+		.then(function(res){
+			that.props.updateFileSuccess(oldFile._id, res.data.newFile);
+		})
+		.catch(function(err){
+			that.props.updateFileFailure(err);
+		});
+	}
+
 	changeEditable(){
 		this.setState({
 			editable: !this.state.editable
@@ -62,7 +123,7 @@ class FileItem extends React.Component {
 			fileId: this.props.file._id
 		})
 		.then(function(res){
-			that.props.updateFileItem(res.data.file);
+			that.props.updateFileName(res.data.file);
 		})
 		.catch(function(err){
 			console.log(err);
@@ -90,7 +151,6 @@ class FileItem extends React.Component {
 	}
 
 	clickDeleteFile(e){
-		console.log(1);
 		this.setState({
 			deleteFlag: true
 		});
@@ -138,7 +198,9 @@ class FileItem extends React.Component {
 						<div className="item-date">{(new Date(file.uploadDate)).toLocaleDateString()}</div>
 						<div className="item-handler" >
 							<a className="handler-item" href={`/filecenter/download/?fileId=${file._id}&filename=${filename}`} download >下载</a>
-							<a className="handler-item"  >更新</a>
+							<a className="handler-item" >
+								<FileInput data={this.fileinputData} />
+							</a>
 							<a className="handler-item"  >移动</a>
 							<a className="handler-item" onClick={this.changeEditable.bind(this)} >重命名</a>
 							<a className="handler-item" data-refer="delete" onClick={this.clickDeleteFile.bind(this)} >删除</a>
@@ -154,9 +216,20 @@ class FileItem extends React.Component {
 
 }
 
-const mapDispatchToProps = dispatch => ({
-	updateFileItem: file => { dispatch(updateFileItem(file)); },
-	changeCurrentFolder: folder => { dispatch(changeCurrentFolder(folder)); }
+const mapStateToProps = state => ({
+	folderList: state.fileCenter.folderList,
+	currentFolder: state.fileCenter.currentFolder,
+	uploadFiles: state.fileCenter.uploadFiles
 });
 
-export default connect(null, mapDispatchToProps)(FileItem);
+const mapDispatchToProps = dispatch => ({
+	updateFileName: file => { dispatch(updateFileName(file)); },
+	changeCurrentFolder: folder => { dispatch(changeCurrentFolder(folder)); },
+	updateUploadProgress: data => { dispatch(updateUploadProgress(data)); },
+	addUploadFile: data => { dispatch(addUploadFile(data)); },
+	updateCompletedCount: () => { dispatch(updateCompletedCount()); },
+	updateFileSuccess: (oldFileId, file) => { dispatch(updateFileSuccess(oldFileId, file)); },
+	updateFileFailure: err => { dispatch(updateFileFailure(err)); }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FileItem);
