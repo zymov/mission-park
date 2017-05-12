@@ -2,7 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { formatFileSize, getIndexOfArrayByValue, getArrayOfSpecKey } from '../../../utils';
-import { updateFileName, changeCurrentFolder, updateUploadProgress, addUploadFile, updateCompletedCount, updateFileSuccess, updateFileFailure } from '../actions';
+import { 
+	updateFileName, changeCurrentFolder, 
+	updateUploadProgress, addUploadFile, 
+	updateCompletedCount, updateFileSuccess, 
+	updateFileFailure, selectItem, unselectItem } from '../actions';
 import DeletePopover from './deletePopover';
 import FileInput from '../../common/components/fileInput';
 
@@ -47,6 +51,21 @@ class FileItem extends React.Component {
 			this.setState({
 				deleteFlag: false
 			});
+		}
+	}
+
+	handleSelect(e){
+		let payload = {
+			fileId: this.props.file._id,
+			filename: this.props.file.filename
+		}
+		let ele = $(e.target).find('span').andSelf();
+		if(ele.hasClass('unselected')){
+			this.props.selectItem(payload);
+			ele.removeClass('unselected');
+		} else {
+			this.props.unselectItem(payload);
+			ele.addClass('unselected');
 		}
 	}
 
@@ -154,7 +173,9 @@ class FileItem extends React.Component {
 
 		return(
 			<li className="file-list-item clearfix" >
-				<a className="check-box">{/*<span className="glyphicon glyphicon-ok"></span>*/}</a>
+				<a className="check-box" onClick={this.handleSelect.bind(this)}>
+					<span className="unselected glyphicon glyphicon-ok"></span>
+				</a>
 				<div className="clearfix" >
 					<div className="list-item-detail">
 						<div className="clearfix" onClick={this.handleClickItem.bind(this)}>
@@ -213,6 +234,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+	selectItem: payload => { dispatch(selectItem(payload)); },
+	unselectItem: payload => { dispatch(unselectItem(payload)); },
 	updateFileName: file => { dispatch(updateFileName(file)); },
 	changeCurrentFolder: folder => { dispatch(changeCurrentFolder(folder)); },
 	updateUploadProgress: data => { dispatch(updateUploadProgress(data)); },

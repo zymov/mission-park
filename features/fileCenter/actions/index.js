@@ -21,6 +21,14 @@ export const CHANGE_CURRENT_FOLDER = 'CHANGE_CURRENT_FOLDER';
 export const UPDATE_FILE_SUCCESS = 'UPDATE_FILE_SUCCESS';
 export const UPDATE_FILE_FAILURE = 'UPDATE_FILE_FAILURE';
 
+export const SELECT_ITEM = 'SELECT_ITEM';
+export const UNSELECT_ITEM = 'UNSELECT_ITEM';
+export const SELECT_ALL = 'SELECT_ALL';
+export const UNSELECT_ALL = 'UNSELECT_ALL';
+
+export const SET_SELECTED_ITEM_AMOUNT_TO_ZERO = 'SET_SELECTED_ITEM_AMOUNT_TO_ZERO';
+
+
 // export function uploadFile(e, projectId){
 // 	return function(dispatch){
 // 		let file = e.target.files[0];
@@ -205,5 +213,37 @@ export function updateFileFailure(err){
 	return {
 		type: 'UPDATE_FILE_FAILURE',
 		payload: err
+	}
+}
+
+export function selectItem(payload){
+	return {
+		type: 'SELECT_ITEM',
+		payload: payload
+	}
+}
+
+export function unselectItem(payload){
+	return {
+		type: 'UNSELECT_ITEM',
+		payload: payload
+	}
+}
+
+export function selectAll(){
+	return {
+		type: 'SELECT_ALL'
+	}
+}
+
+export function unselectAll(){
+	return {
+		type: 'UNSELECT_ALL'
+	}
+}
+
+export function setSelectedItemAmountToZero(){
+	return {
+		type: 'SET_SELECTED_ITEM_AMOUNT_TO_ZERO'
 	}
 }

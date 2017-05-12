@@ -984,6 +984,9 @@ a.dd-list-item i {
   line-height: 20px;
   text-align: center;
 }
+.filecenter .check-box span.unselected {
+  display: none;
+}
 .fc-head {
   padding: 0 15px;
   background-color: #fff;
@@ -1052,13 +1055,13 @@ a.dd-list-item i {
 .fc-body {
   background-color: #fff;
 }
-.fc-file-properties {
+.fc-file-handler {
   border-bottom: 1px solid #eee;
 }
-.fc-file-properties ul {
+.fc-file-handler ul {
   margin-left: 54px;
 }
-.fc-file-properties ul li.properties-item {
+.fc-file-handler ul li.properties-item {
   float: left;
   line-height: 24px;
   font-size: 14px;
@@ -1079,26 +1082,28 @@ li.properties-item.prop-date {
   min-width: 100px;
 }
 .fc-file-handler {
-  padding: 15px;
   border-bottom: 1px solid #ddd;
 }
-.fc-file-handler p {
+.fc-file-handler .handler-group {
+  margin-left: 54px;
+}
+.handler-group p {
   display: inline-block;
   line-height: 24px;
-  color: #808080;  
+  color: #808080;
   margin-bottom: 0;
-  padding: 0 40px 0 15px;
+  padding: 15px 40px 15px 50px;
 }
-.fc-file-handler a.handler-item {
-  padding: 0 15px;
+.handler-group a.handler-item {
+  padding: 15px;
   color: #808080;
   text-decoration: none;
   cursor: pointer;
 }
-.fc-file-handler a.handler-item:hover {
+.handler-group a.handler-item:hover {
   color: #0c92f3;
 }
-.fc-file-handler a.handler-item span {
+.handler-group a.handler-item span {
   padding-right: 5px;
 }
 .file-list {

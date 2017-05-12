@@ -226,7 +226,7 @@ module.exports = {
     })
   },
 
-  removeSpecificItemByAttrValue: function(arr, attribute, value){
+  removeSpecificItemByAttrValue: function(arr, attribute, value){   //same as the next function...
     return arr.filter(function(object){
       return object[attribute] != value;
     });

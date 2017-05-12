@@ -3,11 +3,14 @@ import {
 	FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, UPDATE_FILE_NAME, 
 	DELETE_FILE_SUCCESS, DELETE_FILE_FAILURE,
 	CREATE_FOLDER_SUCCESS, CREATE_FOLDER_FAILURE, CHANGE_CURRENT_FOLDER, 
-	UPDATE_FILE_SUCCESS, UPDATE_FILE_FAILURE 
+	UPDATE_FILE_SUCCESS, UPDATE_FILE_FAILURE, 
+	SELECT_ITEM, UNSELECT_ITEM, SELECT_ALL, UNSELECT_ALL, SET_SELECTED_ITEM_AMOUNT_TO_ZERO
 } from '../actions';
 import { addNewItemToArrayBegin, addNewItemToArrayEnd, removeSpecificItemByAttrValue, updateItemInArray, getIndexOfArrayByValue } from '../../../utils';
 
 const initialState = {
+	selectedItem: [],
+	selectAll: false,
 	filelist: [],
 	uploadFiles: [],
 	completedCount: 0,
@@ -34,7 +37,7 @@ export default function fileCenter(state = initialState, action){
 
 		case UPLOAD_FILE_SUCCESS:
 			return Object.assign({}, state, {
-				filelist: addNewItemToArrayBegin(state.filelist, action.payload)
+				filelist: addNewItemToArrayEnd(state.filelist, action.payload)
 			});
 		case UPLOAD_FILE_FAILURE:
 			return state;
@@ -60,7 +63,7 @@ export default function fileCenter(state = initialState, action){
 
 		case CREATE_FOLDER_SUCCESS:
 			return Object.assign({}, state, {
-				filelist: addNewItemToArrayBegin(state.filelist, action.payload)
+				filelist: addNewItemToArrayEnd(state.filelist, action.payload)
 			});
 		case CREATE_FOLDER_FAILURE:
 			return state;
@@ -89,6 +92,36 @@ export default function fileCenter(state = initialState, action){
 		case UPDATE_FILE_FAILURE:
 			return state;
 
+		case SELECT_ITEM: 
+			return Object.assign({}, state, {
+				selectedItem: addNewItemToArrayEnd(state.selectedItem, action.payload)
+			});
+		case UNSELECT_ITEM: 
+			return Object.assign({}, state, {
+				selectedItem: removeSpecificItemByAttrValue(state.selectedItem, 'fileId', action.payload.fileId),
+				selectAll: false
+			});
+		case SELECT_ALL: 
+			let selectedObjArr = state.filelist.map(function(item){
+				return {
+					fileId: item._id,
+					filename: item.filename
+				}
+			});
+			return Object.assign({}, state, {
+				selectedItem: selectedObjArr,
+				selectAll: true
+			});
+		case UNSELECT_ALL: 
+			return Object.assign({}, state, {
+				selectedItem: [],
+				selectAll: false
+			});
+
+		case SET_SELECTED_ITEM_AMOUNT_TO_ZERO:
+			return Object.assign({}, state, {
+				selectedItem: []
+			})
 		default:
 			return state;
 	}

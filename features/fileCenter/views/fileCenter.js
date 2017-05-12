@@ -27,8 +27,7 @@ class FileCenter extends React.Component {
 			<div className="container filecenter">
 				<FileCenterHead projectId={this.props.params.projectId} />
 				<div className="fc-body" >
-					{!this.state.selected && <FileProps />}
-					{this.state.selected && <FileHandler />}
+					<FileHandler />
 					<FileList />
 				</div>
 				{this.props.uploadFiles.length > 0 && <Uploader />}
@@ -41,7 +40,8 @@ class FileCenter extends React.Component {
 
 const mapStateToProps = state => ({
 	uploadFiles: state.fileCenter.uploadFiles,
-	currentFolder: state.fileCenter.currentFolder
+	currentFolder: state.fileCenter.currentFolder,
+	selectedItem: state.fileCenter.selectedItem
 });
 
 const mapDispatchToProps = dispatch => ({
