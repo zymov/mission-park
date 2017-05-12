@@ -1161,6 +1161,7 @@ li.properties-item.prop-date {
 }
 .list-item-info {
   float: left;
+  width: 55%;
 }
 .list-item-info > div {
   float: left;
@@ -1181,8 +1182,9 @@ li.properties-item.prop-date {
   width: 100px;
   color: #808080;
 }
-.item-handler {
+.list-item-info > div.item-handler {
   position: relative;
+  float: right;
 }
 .item-handler a.handler-item {
   display: inline-block;
@@ -1376,8 +1378,10 @@ li.properties-item.prop-date {
 }
 .fc-popover {
   position: absolute;
-  top: -70px;
-  width: 100%;
+  top: 0;
+  width: 240px;
+  right: 0;
+  z-index: 999;
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 7px 21px rgba(0,0,0,.1);

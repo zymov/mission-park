@@ -94,22 +94,17 @@ router.get('/delete', function(req, res){
 				console.log(err);
 				return res.status(500).json({message: 'can not delete file'});
 			}
+
+			GridFiles.remove( { $or: [ {_id: fileId}, {'metadata.folder.directory': {'$regex': fileId}} ] } , function(err){
+				if(err){
+					console.log(err);
+					return res.status(500).json({message: 'can not delete file'});
+				}
+				return res.status(200).json({fileId:fileId});
+			});
+
 		});
 
-		GridFiles.remove({_id: fileId}, function(err){
-			if(err){
-				console.log(err);
-				return res.status(500).json({message: 'can not delete file'});
-			}
-		});
-
-		GridFiles.remove({'metadata.folder.directory': {'$regex': fileId}}, function(err){
-			if(err){
-				console.log(err);
-				return res.status(500).json({message: 'can not delete file'});
-			}
-			return res.status(200).json({fileId:fileId});
-		});
 
 	});
 
@@ -155,7 +150,7 @@ router.post('/createfolder', function(req, res){
 
 });
 
-router.post('/updatefile', function(req, res){
+router.post('/update', function(req, res){
 	let form = new formidable.IncomingForm();
 	form.parse(req, function(err, fields, files){
 		if(files.file.size == 0){
@@ -188,11 +183,13 @@ router.post('/updatefile', function(req, res){
 				if(err){
 					console.log(err);
 				}
-			});
-			GridChunks.remove({files_id: fields.fileId}, function(err){
-				if(err){
-					console.log(err);
-				}
+
+				GridChunks.remove({files_id: fields.fileId}, function(err){
+					if(err){
+						console.log(err);
+					}
+				});
+
 			});
 
 			writestream.on('close', function(newFile){

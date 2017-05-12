@@ -23,7 +23,7 @@ class FileItem extends React.Component {
 			accept: '',
 			title: 'update file',
 			labelText: '更新'
-		}
+		};
 	}
 
 	componentDidMount(){
@@ -35,7 +35,6 @@ class FileItem extends React.Component {
 	}
 
 	documentClick(e){
-		//!$('.fc-popover')[0].contains(e.target) && e.target.getAttribute('data-refer') != 'delete'
 		let element = $('.fc-popover:visible')[0];
 		if(!element){return;}
 		if(e.target.getAttribute('data-refer') != 'delete' && e.target !== element && !element.contains(e.target)){
@@ -57,17 +56,9 @@ class FileItem extends React.Component {
 		let oldFile = this.props.file;
 		let newFile = e.target.files[0];
 
-		// let folderIdArr = getArrayOfSpecKey(this.props.folderList, 'folderId');
-		
 		let data = new FormData();
 		data.append('fileId', oldFile._id);
-		// data.append('projectId', oldFile.metadata.projectId);
-		// data.append('creatorId', this.user.sub);
-		// data.append('creatorName', this.user.name);
 		data.append('uploadDate', new Date());
-		// data.append('directory', folderIdArr);
-		// data.append('folderId', this.props.currentFolder.folderId);
-		// data.append('folderName', this.props.currentFolder.folderName);
 		data.append('file', newFile);
 		let progressData = {
 			timestamp: Date.now(),
@@ -75,7 +66,7 @@ class FileItem extends React.Component {
 			fileSize: newFile.size,
 			folder: this.props.currentFolder
 		}
-		axios.post('/filecenter/updatefile', data, {
+		axios.post('/filecenter/update', data, {
 			headers: {
 				'Content-Type': 'multipart/form-data'
 			},
@@ -83,7 +74,6 @@ class FileItem extends React.Component {
 				let percentCompleted = Math.floor( (progressEvent.loaded * 100) / progressEvent.total);
 				progressData.percentage = percentCompleted;
 				//if file is uploading, just update uploading percentage, otherwise, add new uploading file item in upload list
-				// use 'lastModified' may cause error! it just a temporary remedy
 				if(~getIndexOfArrayByValue(that.props.uploadFiles, 'timestamp', progressData.timestamp)){ 
 					that.props.updateUploadProgress(progressData);
 				} else {
@@ -111,10 +101,7 @@ class FileItem extends React.Component {
 	renameFile(e){
 		let that = this;
 		let val = e.target.value.trim();
-		if(val == ''){
-			return;
-		}
-
+		if(val == ''){ return; }
 		let filename = this.props.file.filename;
 		let fileType = ~filename.indexOf('.') ? '.' + filename.split('.')[filename.split('.').length -1] : '';
 		let newName = `${val}${fileType}`;
@@ -193,14 +180,17 @@ class FileItem extends React.Component {
 						</div>
 					</div>
 					<div className="list-item-info">
-						<div className="item-size">{`${formatFileSize(file.length)}`}</div>
+						<div className="item-size">{`${file.length ? formatFileSize(file.length) : ''}`}</div>
 						<div className="item-creator" title={fileInfo.creatorName} >{fileInfo.creatorName}</div>
 						<div className="item-date">{(new Date(file.uploadDate)).toLocaleDateString()}</div>
 						<div className="item-handler" >
 							<a className="handler-item" href={`/filecenter/download/?fileId=${file._id}&filename=${filename}`} download >下载</a>
-							<a className="handler-item" >
-								<FileInput data={this.fileinputData} />
-							</a>
+							{
+								!!file.length && 
+								<a className="handler-item" >
+									<FileInput data={this.fileinputData} />
+								</a>
+							}
 							<a className="handler-item"  >移动</a>
 							<a className="handler-item" onClick={this.changeEditable.bind(this)} >重命名</a>
 							<a className="handler-item" data-refer="delete" onClick={this.clickDeleteFile.bind(this)} >删除</a>

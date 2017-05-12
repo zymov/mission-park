@@ -63,7 +63,6 @@ class FileCenterHead extends React.Component {
 					let percentCompleted = Math.floor( (progressEvent.loaded * 100) / progressEvent.total);
 					progressData.percentage = percentCompleted;
 					//if file is uploading, just update uploading percentage, otherwise, add new uploading file item in upload list
-					// use 'lastModified' may cause error! it just a temporary remedy
 					if(~getIndexOfArrayByValue(that.props.uploadFiles, 'timestamp', progressData.timestamp)){ 
 						that.props.updateUploadProgress(progressData);
 					} else {

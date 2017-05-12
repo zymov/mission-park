@@ -21,18 +21,12 @@ class FileCenter extends React.Component {
 		this.props.fetchFiles(this.props.params.projectId, this.props.currentFolder.folderId);
 	}
 
-	handleClick(e){
-		// this.setState({
-		// 	selected: !this.state.selected
-		// });
-	}
-
 	render(){
 
 		return(
 			<div className="container filecenter">
 				<FileCenterHead projectId={this.props.params.projectId} />
-				<div className="fc-body" onClick={this.handleClick.bind(this)}>
+				<div className="fc-body" >
 					{!this.state.selected && <FileProps />}
 					{this.state.selected && <FileHandler />}
 					<FileList />
