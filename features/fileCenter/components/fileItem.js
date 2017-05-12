@@ -19,7 +19,7 @@ class FileItem extends React.Component {
 		this.fileinputData = {
 			handleUpload: this.handleUpload.bind(this),
 			icon: '',
-			id: 'update_file',
+			id: `update_file_${this.props.file._id}`,
 			accept: '',
 			title: 'update file',
 			labelText: '更新'
