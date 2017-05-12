@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import CurrentDirectory from './currentDirectory';
 import { uploadFileSuccess, uploadFileFailure, updateUploadProgress, addUploadFile, updateCompletedCount, createFolder, fetchFiles } from '../actions';
-import { getIndexOfArrayByValue, emptyInputValue, getArrayOfSpecKey } from '../../../utils';
+import { getIndexOfArrayByValue, emptyInputValue, getArrayOfSpecKey, performanceNow } from '../../../utils';
 
 class FileCenterHead extends React.Component {
 
@@ -36,49 +36,59 @@ class FileCenterHead extends React.Component {
 	handleInputChange(e){
 		// this.props.uploadFile(e);
 		let that = this;
-		let file = e.target.files[0];
-		if(file.size == 0){return;}
-		let folderIdArr = getArrayOfSpecKey(this.props.folderList, 'folderId');
-		
-		let data = new FormData();
-		data.append('projectId', this.props.projectId);
-		data.append('creatorId', this.user.sub);
-		data.append('creatorName', this.user.name);
-		data.append('uploadDate', new Date());
-		data.append('directory', folderIdArr);
-		data.append('folderId', this.props.currentFolder.folderId);
-		data.append('folderName', this.props.currentFolder.folderName);
-		data.append('file', file);
-		let progressData = {
-			timestamp: Date.now(),
-			filename: file.name,
-			fileSize: file.size,
-			folder: this.props.currentFolder
-		}
-		axios.post('/filecenter/upload', data, {
-				headers: {
-					'Content-Type': 'multipart/form-data'
-				},
-				onUploadProgress: function(progressEvent){
-					let percentCompleted = Math.floor( (progressEvent.loaded * 100) / progressEvent.total);
-					progressData.percentage = percentCompleted;
-					//if file is uploading, just update uploading percentage, otherwise, add new uploading file item in upload list
-					if(~getIndexOfArrayByValue(that.props.uploadFiles, 'timestamp', progressData.timestamp)){ 
-						that.props.updateUploadProgress(progressData);
-					} else {
-						that.props.addUploadFile(progressData);
+		let filesObj = e.target.files;
+		let filesArr = Object.keys(filesObj).map(function(item){
+			return filesObj[item];
+		});
+		let files = filesArr.filter(function(item){
+			return item.size != 0;
+		});
+
+		files.forEach(function(file, index){
+			
+			let folderIdArr = getArrayOfSpecKey(this.props.folderList, 'folderId');
+			
+			let data = new FormData();
+			data.append('projectId', this.props.projectId);
+			data.append('creatorId', this.user.sub);
+			data.append('creatorName', this.user.name);
+			data.append('uploadDate', new Date());
+			data.append('directory', folderIdArr);
+			data.append('folderId', this.props.currentFolder.folderId);
+			data.append('folderName', this.props.currentFolder.folderName);
+			data.append('file', file);
+			let progressData = {
+				timestamp: window.performance.now(),
+				filename: file.name,
+				fileSize: file.size,
+				folder: this.props.currentFolder
+			};
+			axios.post('/filecenter/upload', data, {
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					},
+					onUploadProgress: function(progressEvent){
+						let percentCompleted = Math.floor( (progressEvent.loaded * 100) / progressEvent.total);
+						progressData.percentage = percentCompleted;
+						//if file is uploading, just update uploading percentage, otherwise, add new uploading file item in upload list
+						if(~getIndexOfArrayByValue(that.props.uploadFiles, 'timestamp', progressData.timestamp)){ 
+							that.props.updateUploadProgress(progressData);
+						} else {
+							that.props.addUploadFile(progressData);
+						}
+						if(progressData.percentage == 100){
+							that.props.updateCompletedCount();
+						}
 					}
-					if(progressData.percentage == 100){
-						that.props.updateCompletedCount();
-					}
-				}
-			})
-			.then(function(res){
-				that.props.uploadFileSuccess(res.data.file);
-			})
-			.catch(function(err){
-				that.props.uploadFileFailure(err);
-			});
+				})
+				.then(function(res){
+					that.props.uploadFileSuccess(res.data.file);
+				})
+				.catch(function(err){
+					that.props.uploadFileFailure(err);
+				});
+
+		}.bind(this));
 	}
 
 	render(){
@@ -91,7 +101,7 @@ class FileCenterHead extends React.Component {
 					<a className="creator-item" onClick={this.clickCreateFolder.bind(this)} ><span className="glyphicon glyphicon-plus"></span>创建文件夹</a>
 					<a className="creator-item" ><span className="glyphicon glyphicon-plus"></span>
 						<div className="upload-input">
-							<input type="file" id="fc-upload" onClick={emptyInputValue.bind(this)} onChange={this.handleInputChange.bind(this)} />
+							<input type="file" id="fc-upload" onClick={emptyInputValue.bind(this)} onChange={this.handleInputChange.bind(this)} multiple />
 							<label htmlFor="fc-upload" >上传文件</label>
 						</div>
 					</a>
