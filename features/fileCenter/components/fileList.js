@@ -25,7 +25,8 @@ class FileList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	filelist: state.fileCenter.filelist
+	filelist: state.fileCenter.filelist,
+	// filelistLoading: state.fileCenter.filelistLoading
 });
 
 export default connect(mapStateToProps, null)(FileList);

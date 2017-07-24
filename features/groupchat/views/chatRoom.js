@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ChatroomInput from '../components/chatroomInput';
 import ChatroomHead from '../components/chatroomHead';
+import ChatroomBody from '../components/chatroomBody';
 import ChatMessage from '../components/chatMessage';
 import ImgViewer from '../components/imgViewer';
 import { getMessageHistory, updateOnlineUsers, newMessage } from '../actions';
@@ -37,31 +38,21 @@ class ChatRoom extends React.Component {
 
 	}
 
-	componentDidUpdate(){
-		if(this.props.messageList.length > 0){
-			$('.message-list li:last-child')[0].scrollIntoView();
-		}
-	}
+	// componentDidUpdate(){
+	// 	if(this.props.messageList.length > 0){
+	// 		$('.message-list li:last-child')[0].scrollIntoView();
+	// 	}
+	// }
 
 	render(){
 
-		const { onlineUserlist, updatedUser, messageList, showImgViewer, imgData } = this.props;
-
-		let messageArr = messageList.map(function(item, index){
-			return(
-				<ChatMessage key={index} message={item} />
-			);
-		});
+		const { onlineUserlist, updatedUser } = this.props;
 
 		return(
 			<div className="container chatroom">
 				<div className="chatroom-wrapper">
 					<ChatroomHead onlineUserlist={onlineUserlist} updatedUser={updatedUser} />
-					<div className="message-content-box">
-						<ul className="message-list">
-							{messageArr}
-						</ul>
-					</div>
+					<ChatroomBody projectId={this.props.params.projectId} />
 					<div className="chatroom-footer">
 						<ChatroomInput projectId={this.props.params.projectId} />
 					</div>
@@ -74,8 +65,7 @@ class ChatRoom extends React.Component {
 
 const mapStateToProps = state => ({
 	onlineUserlist: state.groupchat.onlineUserlist,
-	updatedUser: state.groupchat.updatedUser,
-	messageList: state.groupchat.messageList
+	updatedUser: state.groupchat.updatedUser
 });
 
 const mapDispatchToProps = dispatch => ({

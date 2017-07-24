@@ -109,6 +109,7 @@ export default function task(state = initialState, action){
 		case FETCH_TASKS_REQUEST:
 			return Object.assign({}, state, {
 				taskLoading: true,
+				tasks: [],
 				taskInfoText: {
 					message: '正在加载...',
 					level: 'normal'

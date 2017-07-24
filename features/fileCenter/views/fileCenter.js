@@ -6,6 +6,7 @@ import FileHandler from '../components/fileHandler';
 import FileList from '../components/fileList';
 import Uploader from '../components/uploader';
 import { fetchFiles } from '../actions';
+import Spinner from '../../common/components/spinner';
 
 class FileCenter extends React.Component {
 
@@ -28,6 +29,7 @@ class FileCenter extends React.Component {
 				<FileCenterHead projectId={this.props.params.projectId} />
 				<div className="fc-body" >
 					<FileHandler />
+					<Spinner show={this.props.filelistLoading} />
 					<FileList />
 				</div>
 				{this.props.uploadFiles.length > 0 && <Uploader />}
@@ -41,7 +43,8 @@ class FileCenter extends React.Component {
 const mapStateToProps = state => ({
 	uploadFiles: state.fileCenter.uploadFiles,
 	currentFolder: state.fileCenter.currentFolder,
-	selectedItem: state.fileCenter.selectedItem
+	// selectedItem: state.fileCenter.selectedItem,
+	filelistLoading: state.fileCenter.filelistLoading
 });
 
 const mapDispatchToProps = dispatch => ({

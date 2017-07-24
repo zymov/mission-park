@@ -3,6 +3,7 @@ import axios from 'axios';
 export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS';
 export const UPLOAD_FILE_FAILURE = 'UPLOAD_FILE_FAILURE';
 
+export const FETCH_FILES_REQUEST = 'FETCH_FILES_REQUEST';
 export const FETCH_FILES_SUCCESS = 'FETCH_FILES_SUCCESS';
 export const FETCH_FILES_FAILURE = 'FETCH_FILES_FAILURE';
 export const UPDATE_FILE_NAME = 'UPDATE_FILE_NAME';
@@ -102,6 +103,7 @@ export function addUploadFile(data){
 }
 export function fetchFiles(projectId, folderId){
 	return function(dispatch){
+		dispatch(fetchFilesRequest());
 		axios.get('/filecenter/fetch',{
 			params: {
 				projectId: projectId,
@@ -114,6 +116,12 @@ export function fetchFiles(projectId, folderId){
 		.catch(function(err){
 			dispatch(fetchFilesFailure(err));
 		});
+	}
+}
+
+export function fetchFilesRequest(){
+	return {
+		type: 'FETCH_FILES_REQUEST'
 	}
 }
 

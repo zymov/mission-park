@@ -1,6 +1,6 @@
 import { 
 	UPDATE_UPLOAD_PROGRESS, ADD_UPLOAD_FILE, UPDATE_COMPLETED_COUNT, UPLOAD_FILE_SUCCESS, UPLOAD_FILE_FAILURE, 
-	FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, UPDATE_FILE_NAME, 
+	FETCH_FILES_REQUEST, FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, UPDATE_FILE_NAME, 
 	DELETE_FILE_SUCCESS, DELETE_FILE_FAILURE,
 	CREATE_FOLDER_SUCCESS, CREATE_FOLDER_FAILURE, CHANGE_CURRENT_FOLDER, 
 	UPDATE_FILE_SUCCESS, UPDATE_FILE_FAILURE, 
@@ -9,13 +9,15 @@ import {
 import { addNewItemToArrayBegin, addNewItemToArrayEnd, removeSpecificItemByAttrValue, updateItemInArray, getIndexOfArrayByValue } from '../../../utils';
 
 const initialState = {
+	filelistLoading: false,
 	selectedItem: [],
 	selectAll: false,
 	filelist: [],
 	uploadFiles: [],
 	completedCount: 0,
 	currentFolder: {folderId: '0', folderName: 'File Center'},
-	folderList: [{folderId: '0', folderName: 'File Center'}]
+	folderList: [{folderId: '0', folderName: 'File Center'}],
+	infoText: {}
 }
 
 export default function fileCenter(state = initialState, action){
@@ -42,12 +44,24 @@ export default function fileCenter(state = initialState, action){
 		case UPLOAD_FILE_FAILURE:
 			return state;
 
+		case FETCH_FILES_REQUEST:
+			return Object.assign({}, state, {
+				filelistLoading: true,
+				filelist: []
+			});
 		case FETCH_FILES_SUCCESS:
 			return Object.assign({}, state, {
+				filelistLoading: false,
 				filelist: action.payload
 			});
 		case FETCH_FILES_FAILURE:
-			return state;
+			return Object.assign({}, state, {
+				filelistLoading: false,
+				infoText: {
+					message: '获取文件列表失败',
+					level: 'error'
+				}
+			});
 
 		case UPDATE_FILE_NAME:
 			return Object.assign({}, state, {
