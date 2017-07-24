@@ -73,8 +73,8 @@ class ExecutorsContainer extends React.Component {
 		let dropdownId = 'executorDropdown-' + (newTaskFlag ? 'newTask' : 'editTask');
 
 		var executorList = [];
-		executorList = executors.map(function(item, index){
-			return <InfoLabel key={index} item={item} removable={true} labelClick={this.labelClick}/>;
+		executorList = executors.map(function(item){
+			return <InfoLabel key={item._id} item={item} removable={true} labelClick={this.labelClick}/>;
 		}.bind(this));
 
 		return(

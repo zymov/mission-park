@@ -6,12 +6,6 @@ class Dropdown extends React.Component {
 		super(props);
 	}
 
-	shouldComponentUpdate(nextProps, nextState){
-		if(nextProps.dropdown.menuList.length == this.props.dropdown.menuList.length){
-			return false;
-		}
-	}
-
 	render(){
 
 	  const { menuList, btnId, handleClick, dropdownIcon } = this.props.dropdown; 

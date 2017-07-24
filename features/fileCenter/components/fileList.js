@@ -6,9 +6,9 @@ class FileList extends React.Component {
 
 	render(){
 
-		let files = this.props.filelist.map(function(item, index){
+		let files = this.props.filelist.map(function(item){
 			return (
-				<FileItem key={index} file={item} />
+				<FileItem key={item._id} file={item} />
 			);
 		});
 

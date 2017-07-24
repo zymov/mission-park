@@ -20,6 +20,10 @@ class ImgViewer extends React.Component {
 	}
 
 	componentDidMount(){
+		$('.img-viewer-tool')[0].onselectstart = function(){	//prevent select element from double clicking
+			return false;
+		}
+
 		let imgWrapper = $('.img-viewer-wrapper')[0];
 		this.setState({
 			width: imgWrapper.offsetWidth,
@@ -45,7 +49,7 @@ class ImgViewer extends React.Component {
 				<div className="img-viewer-wrapper" >
 					<img src={src} alt={name}/>
 				</div>
-				<div className="img-viewer-tool">
+				<div className="img-viewer-tool" >
 					<span className="glyphicon glyphicon-plus" onClick={this.zoomImg.bind(this, 1)}></span>
 					<span className="glyphicon glyphicon-minus" onClick={this.zoomImg.bind(this, -1)}></span>
 					<a className="glyphicon glyphicon-cloud-download" href={src} download={name}></a>

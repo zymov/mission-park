@@ -12,8 +12,8 @@ class CurrentDirectory extends React.Component {
 
 	render(){
 
-		let cd = this.props.folderList.map(function(item, index){
-			return <DirectoryItem key={index} folder={item} />;
+		let cd = this.props.folderList.map(function(item){
+			return <DirectoryItem key={item.folderId} folder={item} />;
 		});
 
 		return(

@@ -74,7 +74,7 @@ class Board extends React.Component {
 		let fetchedTaskList = [];
 
 		fetchedTaskList = tasklists.map(function(tasklist, index){
-			return <Tasklist key={index} index={index} tasklist={tasklist} />;
+			return <Tasklist key={tasklist._id} index={index} tasklist={tasklist} />;
 		});
 
 		return(

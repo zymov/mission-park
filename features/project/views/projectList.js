@@ -18,8 +18,8 @@ class ProjectList extends React.Component {
 
 		var fetchedProject = [];
 		
-		fetchedProject = projects.map(function(project, index){
-			return <ProjectCard key={index} project={project} />;
+		fetchedProject = projects.map(function(project){
+			return <ProjectCard key={project._id} project={project} />;
 		});	
 
 		return(

@@ -15,17 +15,10 @@ class TaskContainer extends React.Component {
 		let tasklistId = this.props.tasklistId;
 		let projectId = this.props.projectId;
 
-		fetchedTasks = this.props.tasks.map(function(task, index){
-			return <Task key={index} task={task} tasklistId={tasklistId} projectId={projectId} />;
+		fetchedTasks = this.props.tasks.map(function(task){
+			return <Task key={task._id} task={task} tasklistId={tasklistId} projectId={projectId} />;
 		});
 
-		// if(this.props.taskLoading){
-		// 	return (
-		// 		<div className="task-container">
-		// 			<Spinner />
-		// 		</div>	
-		// 	)
-		// } 
 		return(
 			<div className="task-container">
 				<Spinner show={this.props.taskLoading}/>

@@ -19,9 +19,9 @@ class ChatroomBody extends React.Component {
 
 		let { haveMore, messageList, projectId } = this.props;
 
-		let messageArr = messageList.map(function(item, index){
+		let messageArr = messageList.map(function(item){
 			return(
-				<ChatMessage key={index} message={item} />
+				<ChatMessage key={item._id} message={item} />
 			);
 		});
 

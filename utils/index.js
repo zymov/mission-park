@@ -124,12 +124,12 @@ module.exports = {
   },
 
   formatDate: function(date){
-    if(!date){ return null; }
+    if(!date){ return ""; }
     return date.replace('T', ' ').slice(0, -8);
   },
 
   getLocaleDate: function(date){
-    if(!date){ return null; }
+    if(!date){ return ""; }
     let utc = new Date(date);
     utc.setHours(utc.getHours() + 8);
     return utc;
