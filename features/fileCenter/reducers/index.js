@@ -1,5 +1,5 @@
 import { 
-	UPDATE_UPLOAD_PROGRESS, ADD_UPLOAD_FILE, UPDATE_COMPLETED_COUNT, UPLOAD_FILE_SUCCESS, UPLOAD_FILE_FAILURE, 
+	UPDATE_UPLOAD_PROGRESS, ADD_UPLOAD_FILE, CLOSE_UPLOADER, UPDATE_COMPLETED_COUNT, UPLOAD_FILE_SUCCESS, UPLOAD_FILE_FAILURE, 
 	FETCH_FILES_REQUEST, FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, UPDATE_FILE_NAME, 
 	DELETE_FILE_SUCCESS, DELETE_FILE_FAILURE,
 	CREATE_FOLDER_SUCCESS, CREATE_FOLDER_FAILURE, CHANGE_CURRENT_FOLDER, 
@@ -14,6 +14,7 @@ const initialState = {
 	selectAll: false,
 	filelist: [],
 	uploadFiles: [],
+	uploaderShow: false,
 	completedCount: 0,
 	currentFolder: {folderId: '0', folderName: 'File Center'},
 	folderList: [{folderId: '0', folderName: 'File Center'}],
@@ -26,6 +27,7 @@ export default function fileCenter(state = initialState, action){
 
 		case UPDATE_UPLOAD_PROGRESS:
 			return Object.assign({}, state, {
+				uploaderShow: true,
 				uploadFiles: updateItemInArray(state.uploadFiles, action.payload, 'timestamp')
 			});
 		case UPDATE_COMPLETED_COUNT:
@@ -34,7 +36,12 @@ export default function fileCenter(state = initialState, action){
 			});
 		case ADD_UPLOAD_FILE:
 			return Object.assign({}, state, {
+				uploaderShow: true,
 				uploadFiles: addNewItemToArrayBegin(state.uploadFiles, action.payload)
+			});
+		case CLOSE_UPLOADER:
+			return Object.assign({}, state, {
+				uploaderShow: false
 			});
 
 		case UPLOAD_FILE_SUCCESS:

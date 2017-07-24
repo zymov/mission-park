@@ -1421,6 +1421,12 @@ li.properties-item.prop-date {
   cursor: pointer;
   color: #a6a6a6;
 }
+.icon-remove:before {
+  content: "\EB0F";
+}
+.icon-tick:before {
+  content: "\EB56";
+}
 .editName {
   padding: 3px 12px;
   height: 30px;
@@ -1455,3 +1461,8 @@ li.properties-item.prop-date {
   width: 100%;
 }
 /* file center end */
+
+
+
+
+

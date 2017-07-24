@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import UploadFileItem from './uploadFileItem';
+import { closeUploader } from '../actions';
 
 class Uploader extends React.Component {
 
@@ -18,6 +19,7 @@ class Uploader extends React.Component {
 		});
 	}
 
+
 	render(){
 
 		let {completedCount, uploadFiles} = this.props;
@@ -34,7 +36,7 @@ class Uploader extends React.Component {
 						<p className="card-title">{`${completedCount < uploadFiles.length ? '正在上传' : '上传完成'} ${completedCount}/${uploadFiles.length}`}</p>
 						{this.state.minimize && <a className="maximize-uploader glyphicon glyphicon-resize-full" onClick={this.minimizeCard.bind(this, false)}></a>}
 						{this.state.minimize || <a className="minimize-uploader glyphicon glyphicon-resize-small" onClick={this.minimizeCard.bind(this, true)}></a>}
-						<a className="close-uploader" >×</a>
+						<a className="close-uploader" onClick={this.props.closeUploader.bind(this)} >×</a>
 					</div>
 					<ul className="upload-list">
 						{uploadFileArr}
@@ -53,5 +55,9 @@ const mapStateToProps = state => ({
 	completedCount: state.fileCenter.completedCount
 });
 
-export default connect(mapStateToProps, null)(Uploader);
+const mapDispatchToProps = dispatch => ({
+	closeUploader: () => dispatch(closeUploader())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Uploader);
 

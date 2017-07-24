@@ -29,32 +29,7 @@ export const UNSELECT_ALL = 'UNSELECT_ALL';
 
 export const SET_SELECTED_ITEM_AMOUNT_TO_ZERO = 'SET_SELECTED_ITEM_AMOUNT_TO_ZERO';
 
-
-// export function uploadFile(e, projectId){
-// 	return function(dispatch){
-// 		let file = e.target.files[0];
-// 		let user = jwt_decode(localStorage.getItem('token'));
-// 		let data = new FormData();
-// 		data.append('projectId', projectId);
-// 		data.append('creatorId', user.sub);
-// 		data.append('creatorName', user.name);
-// 		data.append('uploadDate', new Date());
-// 		data.append('file', file);
-// 		axios.post('/filecenter/upload', data, {
-// 				headers: {
-// 					'Content-Type': 'multipart/form-data'
-// 				}
-// 			})
-// 			.then(function(res){
-// 				dispatch(uploadFileSuccess({
-// 					file:res.data.file
-// 				}));
-// 			})
-// 			.catch(function(err){
-// 				dispatch(uploadFileFailure(err));
-// 			});
-// 	}
-// }
+export const CLOSE_UPLOADER = 'CLOSE_UPLOADER';
 
 export function uploadFileSuccess(file){
 	return {
@@ -253,5 +228,12 @@ export function unselectAll(){
 export function setSelectedItemAmountToZero(){
 	return {
 		type: 'SET_SELECTED_ITEM_AMOUNT_TO_ZERO'
+	}
+}
+
+
+export function closeUploader(){
+	return {
+		type: 'CLOSE_UPLOADER'
 	}
 }

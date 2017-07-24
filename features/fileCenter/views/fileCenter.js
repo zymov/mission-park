@@ -24,15 +24,17 @@ class FileCenter extends React.Component {
 
 	render(){
 
+		let { params, uploaderShow, filelistLoading } = this.props;
+
 		return(
 			<div className="container filecenter">
-				<FileCenterHead projectId={this.props.params.projectId} />
+				<FileCenterHead projectId={params.projectId} />
 				<div className="fc-body" >
 					<FileHandler />
-					<Spinner show={this.props.filelistLoading} />
+					<Spinner show={filelistLoading} />
 					<FileList />
 				</div>
-				{this.props.uploadFiles.length > 0 && <Uploader />}
+				{uploaderShow && <Uploader />}
 			</div>
 		);
 
@@ -41,9 +43,9 @@ class FileCenter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	uploadFiles: state.fileCenter.uploadFiles,
+	// uploadFiles: state.fileCenter.uploadFiles,
+	uploaderShow: state.fileCenter.uploaderShow,
 	currentFolder: state.fileCenter.currentFolder,
-	// selectedItem: state.fileCenter.selectedItem,
 	filelistLoading: state.fileCenter.filelistLoading
 });
 

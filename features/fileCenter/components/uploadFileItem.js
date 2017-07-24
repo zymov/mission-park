@@ -31,7 +31,7 @@ class UploadFileItem extends React.Component {
 					</div>
 				</div>
 				<div className="upload-handler">
-					<a className="delete-upload-file">×</a>
+					{/*<a className="delete-upload-file">×</a>*/}
 				</div>
 			</li>
 		);
