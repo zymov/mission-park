@@ -1,21 +1,21 @@
 import axios from 'axios';
-
-export const USER_SIGNIN_SUCCESS = 'USER_SIGNIN_SUCCESS';
-export const USER_SIGNIN_FAILURE = 'USER_SIGNIN_FAILURE';
-export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS';
-export const USER_SIGNUP_FAILURE = 'USER_SIGNUP_FAILURE';
-export const USER_SIGNOUT = 'USER_SIGNOUT';
+import * as types from '../constants';
+// export const USER_SIGNIN_SUCCESS = 'USER_SIGNIN_SUCCESS';
+// export const USER_SIGNIN_FAILURE = 'USER_SIGNIN_FAILURE';
+// export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS';
+// export const USER_SIGNUP_FAILURE = 'USER_SIGNUP_FAILURE';
+// export const USER_SIGNOUT = 'USER_SIGNOUT';
 
 export function signinSuccess(token){
 	localStorage.setItem('token', token);
 	return {
-		type: 'USER_SIGNIN_SUCCESS'
+		type: types.USER_SIGNIN_SUCCESS
 	}
 }
 export function signinFailure(err){
 	localStorage.removeItem('token');
 	return {
-		type: 'USER_SIGNIN_FAILURE',
+		type: types.USER_SIGNIN_FAILURE,
 		payload: {
 			errors: err
 		}
@@ -25,19 +25,19 @@ export function signinFailure(err){
 export function signout(){
 	localStorage.removeItem('token');
 	return {
-		type: 'USER_SIGNOUT'
+		type: types.USER_SIGNOUT
 	}
 }
 
 export function signupSuccess(){
 	return {
-		type: USER_SIGNUP_SUCCESS
+		type: types.USER_SIGNUP_SUCCESS
 	}
 }
 
 export function signupFailure(err){
 	return {
-		type: USER_SIGNUP_FAILURE,
+		type: types.USER_SIGNUP_FAILURE,
 		payload: {
 			errors: err
 		}

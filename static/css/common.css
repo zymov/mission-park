@@ -231,6 +231,12 @@ input, textarea {
   -webkit-line-clamp: 5; /*line-to-show*/
   -webkit-box-orient: vertical;
 }
+.project-info {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 140px;
+  overflow: hidden;
+}
 /* project end */
 
 /* common navbar start */

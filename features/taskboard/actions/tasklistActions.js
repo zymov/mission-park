@@ -1,20 +1,21 @@
 import axios from 'axios';
 import { fetchTasks } from './taskActions';
 import { openNotification } from '../../common/actions';
+import * as types from '../constants/tasklistActionTypes';
 
-export const ADD_TASKLIST_REQUEST = 'ADD_TASKLIST_REQUEST';
-export const ADD_TASKLIST_SUCCESS = 'ADD_TASKLIST_SUCCESS';
-export const ADD_TASKLIST_FAILURE = 'ADD_TASKLIST_FAILURE';
+// export const ADD_TASKLIST_REQUEST = 'ADD_TASKLIST_REQUEST';
+// export const ADD_TASKLIST_SUCCESS = 'ADD_TASKLIST_SUCCESS';
+// export const ADD_TASKLIST_FAILURE = 'ADD_TASKLIST_FAILURE';
 
-export const FETCH_TASKLISTS_REQUEST = 'FETCH_TASKLISTS_REQUEST';
-export const FETCH_TASKLISTS_SUCCESS = 'FETCH_TASKLISTS_SUCCESS';
-export const FETCH_TASKLISTS_FAILURE = 'FETCH_TASKLISTS_FAILURE';
+// export const FETCH_TASKLISTS_REQUEST = 'FETCH_TASKLISTS_REQUEST';
+// export const FETCH_TASKLISTS_SUCCESS = 'FETCH_TASKLISTS_SUCCESS';
+// export const FETCH_TASKLISTS_FAILURE = 'FETCH_TASKLISTS_FAILURE';
 
-export const SET_CURRENT_TASKLIST_ID_TO_NULL = 'SET_CURRENT_TASKLIST_ID_TO_NULL';
+// export const SET_CURRENT_TASKLIST_ID_TO_NULL = 'SET_CURRENT_TASKLIST_ID_TO_NULL';
 
-export const DELETE_TASKLIST_REQUEST = 'DELETE_TASKLIST_REQUEST';
-export const DELETE_TASKLIST_SUCCESS = 'DELETE_TASKLIST_SUCCESS';
-export const DELETE_TASKLIST_FAILURE = 'DELETE_TASKLIST_FAILURE';
+// export const DELETE_TASKLIST_REQUEST = 'DELETE_TASKLIST_REQUEST';
+// export const DELETE_TASKLIST_SUCCESS = 'DELETE_TASKLIST_SUCCESS';
+// export const DELETE_TASKLIST_FAILURE = 'DELETE_TASKLIST_FAILURE';
 
 export function addTasklist(payload){
 	return function(dispatch){
@@ -33,20 +34,20 @@ export function addTasklist(payload){
 
 export function addTasklistRequest(){
 	return {
-		type: 'ADD_TASKLIST_REQUEST'
+		type: types.ADD_TASKLIST_REQUEST
 	}
 }
 
 export function addTasklistSuccess(tasklist){
 	return {
-		type: 'ADD_TASKLIST_SUCCESS',
+		type: types.ADD_TASKLIST_SUCCESS,
 		payload: tasklist
 	}
 }
 
 export function addTasklistFailure(err){
 	return {
-		type: 'ADD_TASKLIST_FAILURE',
+		type: types.ADD_TASKLIST_FAILURE,
 		payload: {
 			errors: err
 		}
@@ -79,20 +80,20 @@ export function fetchTasklists(projectId){
 
 export function fetchTasklistsRequest(){
 	return {
-		type: 'FETCH_TASKLISTS_REQUEST'
+		type: types.FETCH_TASKLISTS_REQUEST
 	}
 }
 
 export function fetchTasklistsSuccess(tasklists){
 	return {
-		type: 'FETCH_TASKLISTS_SUCCESS',
+		type: types.FETCH_TASKLISTS_SUCCESS,
 		payload: tasklists
 	}
 }
 
 export function fetchTasklistsFailure(err){
 	return {
-		type: 'FETCH_TASKLISTS_FAILURE',
+		type: types.FETCH_TASKLISTS_FAILURE,
 		payload: {
 			errors: err
 		}
@@ -101,7 +102,7 @@ export function fetchTasklistsFailure(err){
 
 export function setCurrentTasklistIdToNull(){
 	return {
-		type: 'SET_CURRENT_TASKLIST_ID_TO_NULL'
+		type: types.SET_CURRENT_TASKLIST_ID_TO_NULL
 	}
 }
 
@@ -126,20 +127,20 @@ export function deleteTasklist(tasklistId, projectId){
 
 export function deleteTasklistRequest(){
 	return {
-		type: 'DELETE_TASKLIST_REQUEST'
+		type: types.DELETE_TASKLIST_REQUEST
 	}
 }
 
 export function deleteTasklistSuccess(tasklistId){
 	return {
-		type: 'DELETE_TASKLIST_SUCCESS',
+		type: types.DELETE_TASKLIST_SUCCESS,
 		payload: tasklistId
 	}
 }
 
 export function deleteTasklistFailure(err){
 	return {
-		type: 'DELETE_TASKLIST_FAILURE'
+		type: types.DELETE_TASKLIST_FAILURE
 	}
 }
 

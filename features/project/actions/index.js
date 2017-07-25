@@ -1,17 +1,17 @@
 import axios from 'axios';
-import { openNotification } from '../common/actions';
+import { openNotification } from '../../common/actions';
+import * as types from '../constants';
+// export const ADD_PROJECT_REQUEST = 'ADD_PROJECT_REQUEST';
+// export const ADD_PROJECT_SUCCESS = 'ADD_PROJECT_SUCCESS';
+// export const ADD_PROJECT_FAILURE = 'ADD_PROJECT_FAILURE';
 
-export const ADD_PROJECT_REQUEST = 'ADD_PROJECT_REQUEST';
-export const ADD_PROJECT_SUCCESS = 'ADD_PROJECT_SUCCESS';
-export const ADD_PROJECT_FAILURE = 'ADD_PROJECT_FAILURE';
+// export const FETCH_PROJECT_REQUEST = 'FETCH_PROJECT_REQUEST';
+// export const FETCH_PROJECT_SUCCESS = 'FETCH_PROJECT_SUCCESS';
+// export const FETCH_PROJECT_FAILURE = 'FETCH_PROJECT_FAILURE';
 
-export const FETCH_PROJECT_REQUEST = 'FETCH_PROJECT_REQUEST';
-export const FETCH_PROJECT_SUCCESS = 'FETCH_PROJECT_SUCCESS';
-export const FETCH_PROJECT_FAILURE = 'FETCH_PROJECT_FAILURE';
-
-export const DELETE_PROJECT_REQUEST = 'DELETE_PROJECT_REQUEST';
-export const DELETE_PROJECT_SUCCESS = 'DELETE_PROJECT_SUCCESS';
-export const DELETE_PROJECT_FAILURE = 'DELETE_PROJECT_FAILURE';
+// export const DELETE_PROJECT_REQUEST = 'DELETE_PROJECT_REQUEST';
+// export const DELETE_PROJECT_SUCCESS = 'DELETE_PROJECT_SUCCESS';
+// export const DELETE_PROJECT_FAILURE = 'DELETE_PROJECT_FAILURE';
 
 export function addProject(payload){
 
@@ -31,20 +31,20 @@ export function addProject(payload){
 
 export function addProjectRequest(){
 	return {
-		type: 'ADD_PROJECT_REQUEST'
+		type: types.ADD_PROJECT_REQUEST
 	}
 }
 
 export function addProjectSuccess(project){
 	return {
-		type: 'ADD_PROJECT_SUCCESS',
+		type: types.ADD_PROJECT_SUCCESS,
 		payload: project
 	}
 }
 
 export function addProjectFailure(err){
 	return {
-		type: 'ADD_PROJECT_FAILURE',
+		type: types.ADD_PROJECT_FAILURE,
 		payload: {
 			errors: err
 		}
@@ -57,10 +57,6 @@ export function fetchProject(){
 		dispatch(openNotification());
 		axios.get('/projects/fetch')
 		.then(function(res){
-			// if(res.data.redirect){
-			// 	window.location = res.data.redirect;
-			// 	return;
-			// }
 			dispatch(fetchProjectSuccess(res.data.projects));
 		})
 		.catch(function(err){
@@ -71,20 +67,20 @@ export function fetchProject(){
 
 export function fetchProjectRequest(){
 	return {
-		type: 'FETCH_PROJECT_REQUEST'
+		type: types.FETCH_PROJECT_REQUEST
 	}
 }
 
 export function fetchProjectSuccess(projects){
 	return {
-		type: 'FETCH_PROJECT_SUCCESS',
+		type: types.FETCH_PROJECT_SUCCESS,
 		payload: projects
 	}
 }
 
 export function fetchProjectFailure(err){
 	return {
-		type: 'FETCH_PROJECT_FAILURE',
+		type: types.FETCH_PROJECT_FAILURE,
 		payload: {
 			errors: err
 		}
@@ -111,20 +107,20 @@ export function deleteProject(projectId){
 
 export function deleteProjectRequest(){
 	return {
-		type: 'DELETE_PROJECT_REQUEST'
+		type: types.DELETE_PROJECT_REQUEST
 	}
 }
 
 export function deleteProjectSuccess(projectId){
 	return {
-		type: 'DELETE_PROJECT_SUCCESS',
+		type: types.DELETE_PROJECT_SUCCESS,
 		payload: projectId
 	}
 }
 
 export function deleteProjectFailure(err){
 	return {
-		type: 'DELETE_PROJECT_FAILURE'
+		type: types.DELETE_PROJECT_FAILURE
 	}
 }
 

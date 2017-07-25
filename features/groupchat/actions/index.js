@@ -1,22 +1,22 @@
 import axios from 'axios';
+import * as types from '../constants';
+// export const UPDATE_ONLINE_USERS = 'UPDATE_ONLINE_USERS';
+// export const NEW_MESSAGE = 'NEW_MESSAGE';
 
-export const UPDATE_ONLINE_USERS = 'UPDATE_ONLINE_USERS';
-export const NEW_MESSAGE = 'NEW_MESSAGE';
+// export const GET_MESSAGE_HISTORY_REQUEST = 'GET_MESSAGE_HISTORY_REQUEST';
+// export const GET_MESSAGE_HISTORY_SUCCESS = 'GET_MESSAGE_HISTORY_SUCCESS';
+// export const GET_MESSAGE_HISTORY_FAILURE = 'GET_MESSAGE_HISTORY_FAILURE';
 
-export const GET_MESSAGE_HISTORY_REQUEST = 'GET_MESSAGE_HISTORY_REQUEST';
-export const GET_MESSAGE_HISTORY_SUCCESS = 'GET_MESSAGE_HISTORY_SUCCESS';
-export const GET_MESSAGE_HISTORY_FAILURE = 'GET_MESSAGE_HISTORY_FAILURE';
+// export const CLOSE_IMG_VIEWER = 'CLOSE_IMG_VIEWER';
+// export const OPEN_IMG_VIEWER = 'OPEN_IMG_VIEWER';
 
-export const CLOSE_IMG_VIEWER = 'CLOSE_IMG_VIEWER';
-export const OPEN_IMG_VIEWER = 'OPEN_IMG_VIEWER';
-
-export const FETCH_OLDER_CHAT_HISTORY_REQUEST = 'FETCH_OLDER_CHAT_HISTORY_REQUEST';
-export const FETCH_OLDER_CHAT_HISTORY_SUCCESS = 'FETCH_OLDER_CHAT_HISTORY_SUCCESS';
-export const FETCH_OLDER_CHAT_HISTORY_FAILURE = 'FETCH_OLDER_CHAT_HISTORY_FAILURE';
+// export const FETCH_OLDER_CHAT_HISTORY_REQUEST = 'FETCH_OLDER_CHAT_HISTORY_REQUEST';
+// export const FETCH_OLDER_CHAT_HISTORY_SUCCESS = 'FETCH_OLDER_CHAT_HISTORY_SUCCESS';
+// export const FETCH_OLDER_CHAT_HISTORY_FAILURE = 'FETCH_OLDER_CHAT_HISTORY_FAILURE';
 
 export function updateOnlineUsers(user, userlist){
 	return {
-		type: 'UPDATE_ONLINE_USERS',
+		type: types.UPDATE_ONLINE_USERS,
 		payload: {
 			user: user,
 			userlist: userlist
@@ -26,7 +26,7 @@ export function updateOnlineUsers(user, userlist){
 
 export function newMessage(data){
 	return {
-		type: 'NEW_MESSAGE',
+		type: types.NEW_MESSAGE,
 		payload: {
 			message: data.message,
 			file: data.file,
@@ -57,13 +57,13 @@ export function getMessageHistory(projectId){
 
 export function getMessageHistoryRequest(){
 	return {
-		type: 'GET_MESSAGE_HISTORY_REQUEST'
+		type: types.GET_MESSAGE_HISTORY_REQUEST
 	}
 }
 
 export function getMessageHistorySuccess(messages, haveMore){
 	return {
-		type: 'GET_MESSAGE_HISTORY_SUCCESS',
+		type: types.GET_MESSAGE_HISTORY_SUCCESS,
 		payload: {
 			messages: messages,
 			haveMore: haveMore
@@ -73,7 +73,7 @@ export function getMessageHistorySuccess(messages, haveMore){
 
 export function getMessageHistoryFailure(error){
 	return {
-		type: 'GET_MESSAGE_HISTORY_FAILURE',
+		type: types.GET_MESSAGE_HISTORY_FAILURE,
 		payload: {
 			error: error
 		}
@@ -82,13 +82,13 @@ export function getMessageHistoryFailure(error){
 
 export function closeImgViewer(){
 	return {
-		type: 'CLOSE_IMG_VIEWER'
+		type: types.CLOSE_IMG_VIEWER
 	}
 }
 
 export function openImgViewer(imgData){
 	return {
-		type: 'OPEN_IMG_VIEWER',
+		type: types.OPEN_IMG_VIEWER,
 		payload: imgData
 	}
 }
@@ -111,13 +111,13 @@ export function fetchOlderChatHistory(projectId, currentMsgCount){
 
 export function fetchOlderChatHistoryRequest(){
 	return {
-		type: 'FETCH_OLDER_CHAT_HISTORY_REQUEST'
+		type: types.FETCH_OLDER_CHAT_HISTORY_REQUEST
 	}
 }
 
 export function fetchOlderChatHistorySuccess(chatHistory, haveMore){
 	return {
-		type: 'FETCH_OLDER_CHAT_HISTORY_SUCCESS',
+		type: types.FETCH_OLDER_CHAT_HISTORY_SUCCESS,
 		payload: {
 			chatHistory: chatHistory,
 			haveMore: haveMore
@@ -126,7 +126,7 @@ export function fetchOlderChatHistorySuccess(chatHistory, haveMore){
 }
 export function fetchOlderChatHistoryFailure(error){
 	return {
-		type: 'FETCH_OLDER_CHAT_HISTORY_FAILURE',
+		type: types.FETCH_OLDER_CHAT_HISTORY_FAILURE,
 		payload: {
 			error: error
 		}

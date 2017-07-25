@@ -1,10 +1,12 @@
-import { 
-	ADD_PROJECT_REQUEST, ADD_PROJECT_SUCCESS, ADD_PROJECT_FAILURE, 
-	FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS, FETCH_PROJECT_FAILURE, 
-	DELETE_PROJECT_REQUEST, DELETE_PROJECT_SUCCESS, DELETE_PROJECT_FAILURE 
-} from './actions';
-import { UPDATE_PROJECT_ARR } from '../common/actions';
-import { addNewItemToArrayBegin } from '../../utils';
+// import { 
+// 	ADD_PROJECT_REQUEST, ADD_PROJECT_SUCCESS, ADD_PROJECT_FAILURE, 
+// 	FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS, FETCH_PROJECT_FAILURE, 
+// 	DELETE_PROJECT_REQUEST, DELETE_PROJECT_SUCCESS, DELETE_PROJECT_FAILURE 
+// } from './actions';
+import * as types from '../constants';
+// import { UPDATE_PROJECT_ARR } from '../common/actions';
+import { UPDATE_PROJECT_ARR } from '../../common/constants';
+import { addNewItemToArrayBegin } from '../../../utils';
 
 const initialState = {
 	isLoading: false,
@@ -18,7 +20,7 @@ const initialState = {
 export default function project(state = initialState, action){
 
 	switch (action.type) {
-		case FETCH_PROJECT_REQUEST:
+		case types.FETCH_PROJECT_REQUEST:
 			return Object.assign({}, state, {
 				isLoading: true,
 				projects: [],
@@ -27,13 +29,13 @@ export default function project(state = initialState, action){
 					level: 'normal'
 				}
 			});
-		case FETCH_PROJECT_SUCCESS:
+		case types.FETCH_PROJECT_SUCCESS:
 			return Object.assign({}, state, {
 				infoText: {},
 				isLoading: false,
 				projects: action.payload
 			});
-		case FETCH_PROJECT_FAILURE:
+		case types.FETCH_PROJECT_FAILURE:
 			return Object.assign({}, state, {
 				isLoading: false,
 				isError: true,
@@ -43,7 +45,7 @@ export default function project(state = initialState, action){
 					level: 'error'
 				}
 			});
-		case ADD_PROJECT_REQUEST: 
+		case types.ADD_PROJECT_REQUEST: 
 			return Object.assign({}, state, {
 				isLoading: true,
 				newProject: null,
@@ -52,7 +54,7 @@ export default function project(state = initialState, action){
 					level: 'normal'
 				}
 			});
-		case ADD_PROJECT_SUCCESS:
+		case types.ADD_PROJECT_SUCCESS:
 			return Object.assign({}, state, {
 				isLoading: false,
 				newProject: action.payload,
@@ -62,7 +64,7 @@ export default function project(state = initialState, action){
 					level: 'success'
 				}
 			});
-		case ADD_PROJECT_FAILURE:
+		case types.ADD_PROJECT_FAILURE:
 			return Object.assign({}, state, {
 				isLoading: false,
 				isError: true,
@@ -79,14 +81,14 @@ export default function project(state = initialState, action){
 			});
 
 
-		case DELETE_PROJECT_REQUEST:
+		case types.DELETE_PROJECT_REQUEST:
 			return Object.assign({}, state, {
 				infoText: {
 					message: '正在删除...',
 					level: 'normal'
 				}
 			});
-		case DELETE_PROJECT_SUCCESS:
+		case types.DELETE_PROJECT_SUCCESS:
 			return Object.assign({}, state, {
 				infoText: {
 					message: '删除成功！',
@@ -94,7 +96,7 @@ export default function project(state = initialState, action){
 				},
 				projects: removeSpecificItemByAttrValue(state.projects, '_id', action.payload)	
 			});
-		case DELETE_PROJECT_FAILURE:
+		case types.DELETE_PROJECT_FAILURE:
 			return Object.assign({}, state, {
 				infoText: {
 					message: '删除失败！',

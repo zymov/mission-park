@@ -1,19 +1,22 @@
-import { 
-	ADD_TASK_REQUEST, ADD_TASK_SUCCESS, ADD_TASK_FAILURE, 
-	EDIT_TASK_REQUEST, EDIT_TASK_SUCCESS, EDIT_TASK_FAILURE, 
-	FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, FETCH_TASKS_FAILURE, 
-	SET_CURRENT_TASKLIST, NULL_TASKLIST_ID,
-	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN, OPEN_TAGS_DROPDOWN, CLOSE_TAGS_DROPDOWN, 
-	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR, ADD_TAG, REMOVE_TAG, REMOVE_ALL_TAG, 
-	TOGGLE_TASK_REQUEST, TOGGLE_TASK_SUCCESS, TOGGLE_TASK_FAILURE, 
-	ADD_ACCOMPLISHED_TASK_SUCCESS, ADD_ACCOMPLISHED_TASK_FAILURE, 
-	SHOW_TASK_DETAIL,
-	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT,
-	DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE, 
-	SET_SELECTED_PRIORITY
-} from '../actions/taskActions';
-import { ADD_TASKLIST_REQUEST, SET_CURRENT_TASKLIST_ID_TO_NULL, DELETE_TASKLIST_SUCCESS } from '../actions/tasklistActions';
-import { UPDATE_TASK_ARR, CLOSE_NOTIFICATION } from '../../common/actions';
+// import { 
+// 	ADD_TASK_REQUEST, ADD_TASK_SUCCESS, ADD_TASK_FAILURE, 
+// 	EDIT_TASK_REQUEST, EDIT_TASK_SUCCESS, EDIT_TASK_FAILURE, 
+// 	FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, FETCH_TASKS_FAILURE, 
+// 	SET_CURRENT_TASKLIST, NULL_TASKLIST_ID,
+// 	OPEN_USERS_DROPDOWN, CLOSE_USERS_DROPDOWN, OPEN_TAGS_DROPDOWN, CLOSE_TAGS_DROPDOWN, 
+// 	ADD_EXECUTOR, REMOVE_EXECUTOR, REMOVE_ALL_EXECUTOR, ADD_TAG, REMOVE_TAG, REMOVE_ALL_TAG, 
+// 	TOGGLE_TASK_REQUEST, TOGGLE_TASK_SUCCESS, TOGGLE_TASK_FAILURE, 
+// 	ADD_ACCOMPLISHED_TASK_SUCCESS, ADD_ACCOMPLISHED_TASK_FAILURE, 
+// 	SHOW_TASK_DETAIL,
+// 	INVALID_INPUT_MAX_LENGTH, INVALID_INPUT,
+// 	DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE, 
+// 	SET_SELECTED_PRIORITY
+// } from '../actions/taskActions';
+import * as types from '../constants/taskActionTypes';
+// import { ADD_TASKLIST_REQUEST, SET_CURRENT_TASKLIST_ID_TO_NULL, DELETE_TASKLIST_SUCCESS } from '../actions/tasklistActions';
+import { SET_CURRENT_TASKLIST_ID_TO_NULL, DELETE_TASKLIST_SUCCESS } from '../constants/tasklistActionTypes';
+// import { UPDATE_TASK_ARR, CLOSE_NOTIFICATION } from '../../common/actions';
+import { UPDATE_TASK_ARR, CLOSE_NOTIFICATION } from '../../common/constants';
 import { 
 	addNewItemToArrayBegin, addNewItemToArrayEnd, 
 	updateItemInArray, removeSpecificItemByAttrValue, removeSpecificItemFromArray, updateAndMoveItemInArray 
@@ -48,7 +51,7 @@ const initialState = {
 export default function task(state = initialState, action){
 	switch(action.type){
 		/* add task */
-		case ADD_TASK_REQUEST:
+		case types.ADD_TASK_REQUEST:
 			return Object.assign({}, state, {
 				taskLoading: true,
 				taskInfoText: {
@@ -56,7 +59,7 @@ export default function task(state = initialState, action){
 					level: 'normal'
 				}
 			});
-		case ADD_TASK_SUCCESS:
+		case types.ADD_TASK_SUCCESS:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				newTask: action.payload,
@@ -66,7 +69,7 @@ export default function task(state = initialState, action){
 					level: 'success'
 				}
 			});
-		case ADD_TASK_FAILURE:
+		case types.ADD_TASK_FAILURE:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				taskError: true,
@@ -78,7 +81,7 @@ export default function task(state = initialState, action){
 			});
 			
 		/* edit task */
-		case EDIT_TASK_REQUEST:
+		case types.EDIT_TASK_REQUEST:
 			return Object.assign({}, state, {
 				taskLoading: true,
 				taskInfoText: {
@@ -86,7 +89,7 @@ export default function task(state = initialState, action){
 					level: 'normal'
 				}
 			});
-		case EDIT_TASK_SUCCESS:
+		case types.EDIT_TASK_SUCCESS:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				tasks: updateItemInArray(state.tasks, action.payload, '_id'),
@@ -95,7 +98,7 @@ export default function task(state = initialState, action){
 					level: 'success'
 				}
 			});
-		case EDIT_TASK_FAILURE:
+		case types.EDIT_TASK_FAILURE:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				taskError: true,
@@ -106,7 +109,7 @@ export default function task(state = initialState, action){
 			});
 
 		/* fetch task */
-		case FETCH_TASKS_REQUEST:
+		case types.FETCH_TASKS_REQUEST:
 			return Object.assign({}, state, {
 				taskLoading: true,
 				tasks: [],
@@ -115,13 +118,13 @@ export default function task(state = initialState, action){
 					level: 'normal'
 				}
 			});
-		case FETCH_TASKS_SUCCESS:
+		case types.FETCH_TASKS_SUCCESS:
 			return Object.assign({}, state, {
 				taskInfoText: {},
 				taskLoading: false,
 				tasks: action.payload
 			});
-		case FETCH_TASKS_FAILURE:
+		case types.FETCH_TASKS_FAILURE:
 			return Object.assign({}, state, {
 				taskLoading: false,
 				taskError: true,
@@ -131,13 +134,13 @@ export default function task(state = initialState, action){
 					level: 'error'
 				} 
 			});
-		case SET_CURRENT_TASKLIST:
+		case types.SET_CURRENT_TASKLIST:
 			return Object.assign({}, state, {
 				currentTasklistId: action.payload.tasklistId,
 				activeTasklist: action.payload.index,
 				currentTasklistName: action.payload.tasklistName
 			});
-		case NULL_TASKLIST_ID:
+		case types.NULL_TASKLIST_ID:
 			return Object.assign({}, state, {
 				tasks: []
 			});
@@ -147,62 +150,62 @@ export default function task(state = initialState, action){
 			});
 
 		/* users dropdown reducer */
-		case OPEN_USERS_DROPDOWN:
+		case types.OPEN_USERS_DROPDOWN:
 			return Object.assign({}, state, {
 				showUsersDropdown: true
 			});
 		
-		case CLOSE_USERS_DROPDOWN:
+		case types.CLOSE_USERS_DROPDOWN:
 			return Object.assign({}, state, {
 				showUsersDropdown: false
 			});
-		case OPEN_TAGS_DROPDOWN:
+		case types.OPEN_TAGS_DROPDOWN:
 			return Object.assign({}, state, {
 				showTagsDropdown: true
 			});
 		
-		case CLOSE_TAGS_DROPDOWN:
+		case types.CLOSE_TAGS_DROPDOWN:
 			return Object.assign({}, state, {
 				showTagsDropdown: false
 			});
 
-		case ADD_EXECUTOR: 
+		case types.ADD_EXECUTOR: 
 			return Object.assign({}, state, {
 				executors: addNewItemToArrayEnd(state.executors, action.payload)	// The concat method creates a new array instead of mutating the original array itself!!!
 			});
-		case REMOVE_EXECUTOR:
+		case types.REMOVE_EXECUTOR:
 			return Object.assign({}, state, {
 				executors: removeSpecificItemFromArray(state.executors, action.payload, '_id')
 			});
-		case REMOVE_ALL_EXECUTOR:
+		case types.REMOVE_ALL_EXECUTOR:
 			return Object.assign({}, state, {
 				executors: []
 			});
 
-		case ADD_TAG: 
+		case types.ADD_TAG: 
 			return Object.assign({}, state, {
 				tags: addNewItemToArrayEnd(state.tags, action.payload)
 			});
-		case REMOVE_TAG:
+		case types.REMOVE_TAG:
 			return Object.assign({}, state, {
 				tags: removeSpecificItemFromArray(state.tags, action.payload)
 			});
-		case REMOVE_ALL_TAG:
+		case types.REMOVE_ALL_TAG:
 			return Object.assign({}, state, {
 				tags: []
 			});
 
 		/* toggle task */
-		case TOGGLE_TASK_REQUEST:
+		case types.TOGGLE_TASK_REQUEST:
 			return Object.assign({}, state, {
 				toggling: true
 			});
-		case TOGGLE_TASK_SUCCESS: 
+		case types.TOGGLE_TASK_SUCCESS: 
 			return Object.assign({}, state, {
 				toggling: false,
 				tasks: updateAndMoveItemInArray(state.tasks, action.payload)
 			});
-		case TOGGLE_TASK_FAILURE:
+		case types.TOGGLE_TASK_FAILURE:
 			return Object.assign({}, state, {
 				toggling: false,
 				taskError: true,
@@ -212,11 +215,11 @@ export default function task(state = initialState, action){
 				}
 			});
 
-		case ADD_ACCOMPLISHED_TASK_SUCCESS:
+		case types.ADD_ACCOMPLISHED_TASK_SUCCESS:
 			return Object.assign({}, state, {
 				tasks: addNewItemToArrayEnd(state.tasks, action.payload)
 			});
-		case ADD_ACCOMPLISHED_TASK_FAILURE:
+		case types.ADD_ACCOMPLISHED_TASK_FAILURE:
 			return Object.assign({}, state, {
 				taskInfoText: {
 					message: '出错了！' + action.payload.errors,
@@ -224,7 +227,7 @@ export default function task(state = initialState, action){
 				}
 			});
 		/* show task detail */
-		case SHOW_TASK_DETAIL:
+		case types.SHOW_TASK_DETAIL:
 			return Object.assign({}, state, {
 				editTaskTimestamp: Date.now(),
 				taskDetail: action.payload,
@@ -233,14 +236,14 @@ export default function task(state = initialState, action){
 			});
 
 
-		case INVALID_INPUT_MAX_LENGTH:
+		case types.INVALID_INPUT_MAX_LENGTH:
 			return Object.assign({}, state, {
 				taskInfoText: {
 					message:'输入文本长度应小于' + action.payload,
 					level: 'error'
 				}
 			});
-		case INVALID_INPUT:
+		case types.INVALID_INPUT:
 			return Object.assign({}, state, {
 				taskInfoText: {
 					message: '无效的输入',
@@ -248,14 +251,14 @@ export default function task(state = initialState, action){
 				}
 			});
 
-		case DELETE_TASK_REQUEST:
+		case types.DELETE_TASK_REQUEST:
 			return Object.assign({}, state, {
 				taskInfoText: {
 					message: '正在删除...',
 					level: 'normal'
 				}
 			});
-		case DELETE_TASK_SUCCESS:
+		case types.DELETE_TASK_SUCCESS:
 			return Object.assign({}, state, {
 				taskInfoText: {
 					message: '删除成功！',
@@ -263,7 +266,7 @@ export default function task(state = initialState, action){
 				},
 				tasks: removeSpecificItemByAttrValue(state.tasks, '_id', action.payload)
 			});
-		case DELETE_TASK_FAILURE:
+		case types.DELETE_TASK_FAILURE:
 			return Object.assign({}, state, {
 				taskInfoText: {
 					message: '删除失败！',
@@ -285,7 +288,7 @@ export default function task(state = initialState, action){
 				taskInfoText: {}
 			});
 
-		case SET_SELECTED_PRIORITY:
+		case types.SET_SELECTED_PRIORITY:
 			return Object.assign({}, state, {
 				selectedPriority: action.payload
 			});

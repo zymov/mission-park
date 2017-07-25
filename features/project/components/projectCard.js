@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { formatDate } from '../../../utils';
 
 class ProjectCard extends React.Component {
 
@@ -23,9 +24,9 @@ class ProjectCard extends React.Component {
 			        <h3>{projectName}</h3>
 			        <p title={description}>{description}</p>
 			      </div>
-			      <div className="panel-footer">
-				    	{`owned by:${owner}`}
-				      <small className="text-muted">{createTime}</small>
+			      <div className="panel-footer" style={{display: 'flex', justifyContent: 'space-between'}}>
+				    	<p title={owner} className="text-muted project-info">{`创建者:${owner}`}</p>
+				      <p className="text-muted">{`创建时间：${formatDate(createTime)}`}</p>
 				    </div>
 			    </div>
 			  </div>

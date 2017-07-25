@@ -1,10 +1,11 @@
-import { 
-	FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE,
-	FETCH_TAGS_REQUEST, FETCH_TAGS_SUCCESS, FETCH_TAGS_FAILURE,
-	SAVE_TAGS_REQUEST, SAVE_TAGS_SUCCESS, SAVE_TAGS_FAILURE,
-	OPEN_NOTIFICATION, CLOSE_NOTIFICATION, 
-	SEARCH_INPUT_REQUEST, SEARCH_INPUT_FAILURE 
-} from '../actions';
+// import { 
+// 	FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE,
+// 	FETCH_TAGS_REQUEST, FETCH_TAGS_SUCCESS, FETCH_TAGS_FAILURE,
+// 	SAVE_TAGS_REQUEST, SAVE_TAGS_SUCCESS, SAVE_TAGS_FAILURE,
+// 	OPEN_NOTIFICATION, CLOSE_NOTIFICATION, 
+// 	SEARCH_INPUT_REQUEST, SEARCH_INPUT_FAILURE 
+// } from '../actions';
+import * as types from '../constants';
 import { addNewItemToArrayEnd } from '../../../utils';
 
 const initialState = {
@@ -20,69 +21,69 @@ const initialState = {
 
 export default function common(state=initialState, action){
 	switch(action.type){
-		case FETCH_USERS_REQUEST:
+		case types.FETCH_USERS_REQUEST:
 			return Object.assign({}, state, {
 				loading: true,
 				commonInfoText: 'fetching users...'
 			});
-		case FETCH_USERS_SUCCESS:
+		case types.FETCH_USERS_SUCCESS:
 			return Object.assign({}, state, {
 				loading: false,
 				projectUsers: action.payload
 			});
-		case FETCH_USERS_FAILURE:
+		case types.FETCH_USERS_FAILURE:
 			return Object.assign({}, state, {
 				projectUsers: [],
 				commonInfoText: action.payload.errors
 			});
 
-		case FETCH_TAGS_REQUEST:
+		case types.FETCH_TAGS_REQUEST:
 			return Object.assign({}, state, {
 				loading: true,
 				commonInfoText: 'fetching tags...'
 			});
-		case FETCH_TAGS_SUCCESS:
+		case types.FETCH_TAGS_SUCCESS:
 			return Object.assign({}, state, {
 				loading: false,
 				projectTags: action.payload
 			});
-		case FETCH_TAGS_FAILURE:
+		case types.FETCH_TAGS_FAILURE:
 			return Object.assign({}, state, {
 				projectTags: [],
 				commonInfoText: action.payload.errors
 			});
 
-		case SAVE_TAGS_REQUEST:
+		case types.SAVE_TAGS_REQUEST:
 			return Object.assign({}, state, {
 				loading: true,
 				commonInfoText: 'saving tag...'
 			});
-		case SAVE_TAGS_SUCCESS:
+		case types.SAVE_TAGS_SUCCESS:
 			return Object.assign({}, state, {
 				loading: false,
 				projectTags: addNewItemToArrayBegin(state.projectTags, action.payload)
 			});
-		case SAVE_TAGS_FAILURE:
+		case types.SAVE_TAGS_FAILURE:
 			return Object.assign({}, state, {
 				commonInfoText: action.payload.errors
 			});
 		
-		case OPEN_NOTIFICATION:
+		case types.OPEN_NOTIFICATION:
 			return Object.assign({}, state, {
 				showNotification: true
 			});
 
-		case CLOSE_NOTIFICATION:
+		case types.CLOSE_NOTIFICATION:
 			return Object.assign({}, state, {
 				showNotification: false,
 				publicMsg: {}
 			});
 
-		case SEARCH_INPUT_REQUEST: 
+		case types.SEARCH_INPUT_REQUEST: 
 			return Object.assign({}, state, {
 				publicMsg: {}
 			});
-		case SEARCH_INPUT_FAILURE:
+		case types.SEARCH_INPUT_FAILURE:
 			return Object.assign({}, state, {
 				publicMsg: {
 					message: '查找不到您输入的内容，请重新输入。',

@@ -1,10 +1,14 @@
-import { 
-	ADD_TASKLIST_REQUEST, ADD_TASKLIST_SUCCESS, ADD_TASKLIST_FAILURE,
-	FETCH_TASKLISTS_REQUEST, FETCH_TASKLISTS_SUCCESS, FETCH_TASKLISTS_FAILURE,
-	DELETE_TASKLIST_REQUEST, DELETE_TASKLIST_SUCCESS, DELETE_TASKLIST_FAILURE 
-} from '../actions/tasklistActions';
-import { CHANGE_TASK_SUM_SUCCESS, CHANGE_TASK_SUM_FAILURE } from '../actions/taskActions';
-import { UPDATE_TASKLIST_ARR, CLOSE_NOTIFICATION } from '../../common/actions';
+// import { 
+// 	ADD_TASKLIST_REQUEST, ADD_TASKLIST_SUCCESS, ADD_TASKLIST_FAILURE,
+// 	FETCH_TASKLISTS_REQUEST, FETCH_TASKLISTS_SUCCESS, FETCH_TASKLISTS_FAILURE,
+// 	DELETE_TASKLIST_REQUEST, DELETE_TASKLIST_SUCCESS, DELETE_TASKLIST_FAILURE 
+// } from '../actions/tasklistActions';
+import * as types from '../constants/tasklistActionTypes';
+
+// import { CHANGE_TASK_SUM_SUCCESS, CHANGE_TASK_SUM_FAILURE } from '../actions/taskActions';
+import { CHANGE_TASK_SUM_SUCCESS, CHANGE_TASK_SUM_FAILURE } from '../constants/taskActionTypes';
+// import { UPDATE_TASKLIST_ARR, CLOSE_NOTIFICATION } from '../../common/actions';
+import { UPDATE_TASKLIST_ARR, CLOSE_NOTIFICATION } from '../../common/constants';
 
 import { addNewItemToArrayBegin, removeSpecificItemByAttrValue, updateItemInArray } from '../../../utils';
 
@@ -18,7 +22,7 @@ const initialState = {
 
 export default function tasklist(state = initialState, action){
 	switch(action.type){
-		case ADD_TASKLIST_REQUEST:
+		case types.ADD_TASKLIST_REQUEST:
 			return Object.assign({}, state, {
 				tasklistLoading: true,
 				tasklistInfoText: {
@@ -26,7 +30,7 @@ export default function tasklist(state = initialState, action){
 					level: 'normal'
 				}
 			});
-		case ADD_TASKLIST_SUCCESS:
+		case types.ADD_TASKLIST_SUCCESS:
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				newTasklist: action.payload,
@@ -36,7 +40,7 @@ export default function tasklist(state = initialState, action){
 					level: 'success'
 				}
 			});
-		case ADD_TASKLIST_FAILURE:
+		case types.ADD_TASKLIST_FAILURE:
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				tasklistError: true,
@@ -47,7 +51,7 @@ export default function tasklist(state = initialState, action){
 				}
 			});
 
-		case FETCH_TASKLISTS_REQUEST:
+		case types.FETCH_TASKLISTS_REQUEST:
 			return Object.assign({}, state, {
 				tasklistLoading: true,
 				tasklistInfoText: {
@@ -55,13 +59,13 @@ export default function tasklist(state = initialState, action){
 					level: 'normal'
 				}
 			});
-		case FETCH_TASKLISTS_SUCCESS:
+		case types.FETCH_TASKLISTS_SUCCESS:
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				tasklists: action.payload,
 				tasklistInfoText: {}
 			});
-		case FETCH_TASKLISTS_FAILURE:
+		case types.FETCH_TASKLISTS_FAILURE:
 			return Object.assign({}, state, {
 				tasklistLoading: false,
 				tasklistError: true,
@@ -72,14 +76,14 @@ export default function tasklist(state = initialState, action){
 				}
 			});
 
-		case DELETE_TASKLIST_REQUEST:
+		case types.DELETE_TASKLIST_REQUEST:
 			return Object.assign({}, state, {
 				taskInfoText: {
 					message: '正在删除...',
 					level: 'normal'
 				}
 			});
-		case DELETE_TASKLIST_SUCCESS:
+		case types.DELETE_TASKLIST_SUCCESS:
 			return Object.assign({}, state, {
 				taskInfoText: {
 					message: '删除成功！',
@@ -87,7 +91,7 @@ export default function tasklist(state = initialState, action){
 				},
 				tasklists: removeSpecificItemByAttrValue(state.tasklists, '_id', action.payload)
 			});
-		case DELETE_TASKLIST_FAILURE:
+		case types.DELETE_TASKLIST_FAILURE:
 			return Object.assign({}, state, {
 				taskInfoText: {
 					message: '删除失败！',
