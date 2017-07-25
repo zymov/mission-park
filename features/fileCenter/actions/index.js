@@ -1,35 +1,5 @@
 import axios from 'axios';
 import * as types from '../constants';
-// export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS';
-// export const UPLOAD_FILE_FAILURE = 'UPLOAD_FILE_FAILURE';
-
-// export const FETCH_FILES_REQUEST = 'FETCH_FILES_REQUEST';
-// export const FETCH_FILES_SUCCESS = 'FETCH_FILES_SUCCESS';
-// export const FETCH_FILES_FAILURE = 'FETCH_FILES_FAILURE';
-// export const UPDATE_FILE_NAME = 'UPDATE_FILE_NAME';
-
-// export const UPDATE_UPLOAD_PROGRESS = 'UPDATE_UPLOAD_PROGRESS';
-// export const ADD_UPLOAD_FILE = 'ADD_UPLOAD_FILE';
-// export const UPDATE_COMPLETED_COUNT = 'UPDATE_COMPLETED_COUNT';
-// export const DELETE_FILE_SUCCESS = 'DELETE_FILE_SUCCESS';
-// export const DELETE_FILE_FAILURE = 'DELETE_FILE_FAILURE';
-
-// export const CREATE_FOLDER_SUCCESS = 'CREATE_FOLDER_SUCCESS';
-// export const CREATE_FOLDER_FAILURE = 'CREATE_FOLDER_FAILURE';
-
-// export const CHANGE_CURRENT_FOLDER = 'CHANGE_CURRENT_FOLDER';
-
-// export const UPDATE_FILE_SUCCESS = 'UPDATE_FILE_SUCCESS';
-// export const UPDATE_FILE_FAILURE = 'UPDATE_FILE_FAILURE';
-
-// export const SELECT_ITEM = 'SELECT_ITEM';
-// export const UNSELECT_ITEM = 'UNSELECT_ITEM';
-// export const SELECT_ALL = 'SELECT_ALL';
-// export const UNSELECT_ALL = 'UNSELECT_ALL';
-
-// export const SET_SELECTED_ITEM_AMOUNT_TO_ZERO = 'SET_SELECTED_ITEM_AMOUNT_TO_ZERO';
-
-// export const CLOSE_UPLOADER = 'CLOSE_UPLOADER';
 
 export function uploadFileSuccess(file){
 	return {

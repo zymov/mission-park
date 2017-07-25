@@ -1,15 +1,6 @@
-// import { 
-// 	ADD_TASKLIST_REQUEST, ADD_TASKLIST_SUCCESS, ADD_TASKLIST_FAILURE,
-// 	FETCH_TASKLISTS_REQUEST, FETCH_TASKLISTS_SUCCESS, FETCH_TASKLISTS_FAILURE,
-// 	DELETE_TASKLIST_REQUEST, DELETE_TASKLIST_SUCCESS, DELETE_TASKLIST_FAILURE 
-// } from '../actions/tasklistActions';
 import * as types from '../constants/tasklistActionTypes';
-
-// import { CHANGE_TASK_SUM_SUCCESS, CHANGE_TASK_SUM_FAILURE } from '../actions/taskActions';
 import { CHANGE_TASK_SUM_SUCCESS, CHANGE_TASK_SUM_FAILURE } from '../constants/taskActionTypes';
-// import { UPDATE_TASKLIST_ARR, CLOSE_NOTIFICATION } from '../../common/actions';
 import { UPDATE_TASKLIST_ARR, CLOSE_NOTIFICATION } from '../../common/constants';
-
 import { addNewItemToArrayBegin, removeSpecificItemByAttrValue, updateItemInArray } from '../../../utils';
 
 const initialState = {

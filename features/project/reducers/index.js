@@ -1,10 +1,4 @@
-// import { 
-// 	ADD_PROJECT_REQUEST, ADD_PROJECT_SUCCESS, ADD_PROJECT_FAILURE, 
-// 	FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS, FETCH_PROJECT_FAILURE, 
-// 	DELETE_PROJECT_REQUEST, DELETE_PROJECT_SUCCESS, DELETE_PROJECT_FAILURE 
-// } from './actions';
 import * as types from '../constants';
-// import { UPDATE_PROJECT_ARR } from '../common/actions';
 import { UPDATE_PROJECT_ARR } from '../../common/constants';
 import { addNewItemToArrayBegin } from '../../../utils';
 

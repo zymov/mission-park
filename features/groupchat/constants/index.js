@@ -1,4 +1,3 @@
-
 export const UPDATE_ONLINE_USERS = 'UPDATE_ONLINE_USERS';
 export const NEW_MESSAGE = 'NEW_MESSAGE';
 

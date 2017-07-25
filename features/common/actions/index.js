@@ -1,26 +1,5 @@
 import axios from 'axios';
 import * as types from '../constants';
-// export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
-// export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
-// export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
-
-// export const FETCH_TAGS_REQUEST = 'FETCH_TAGS_REQUEST';
-// export const FETCH_TAGS_SUCCESS = 'FETCH_TAGS_SUCCESS';
-// export const FETCH_TAGS_FAILURE = 'FETCH_TAGS_FAILURE';
-
-// export const SAVE_TAGS_REQUEST = 'SAVE_TAGS_REQUEST';
-// export const SAVE_TAGS_SUCCESS = 'SAVE_TAGS_SUCCESS';
-// export const SAVE_TAGS_FAILURE = 'SAVE_TAGS_FAILURE';
-
-// export const OPEN_NOTIFICATION = 'OPEN_NOTIFICATION';
-// export const CLOSE_NOTIFICATION = 'CLOSE_NOTIFICATION';
-
-// export const SEARCH_INPUT_REQUEST = 'SEARCH_INPUT_REQUEST';
-// export const UPDATE_PROJECT_ARR = 'UPDATE_PROJECT_ARR';
-// export const UPDATE_TASKLIST_ARR = 'UPDATE_TASKLIST_ARR';
-// export const UPDATE_TASK_ARR = 'UPDATE_TASK_ARR';
-// export const SEARCH_INPUT_FAILURE = 'SEARCH_INPUT_FAILURE';
-
 
 export function findUsersByName(userName){
 	return function(dispatch){

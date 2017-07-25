@@ -3,20 +3,6 @@ import { fetchTasks } from './taskActions';
 import { openNotification } from '../../common/actions';
 import * as types from '../constants/tasklistActionTypes';
 
-// export const ADD_TASKLIST_REQUEST = 'ADD_TASKLIST_REQUEST';
-// export const ADD_TASKLIST_SUCCESS = 'ADD_TASKLIST_SUCCESS';
-// export const ADD_TASKLIST_FAILURE = 'ADD_TASKLIST_FAILURE';
-
-// export const FETCH_TASKLISTS_REQUEST = 'FETCH_TASKLISTS_REQUEST';
-// export const FETCH_TASKLISTS_SUCCESS = 'FETCH_TASKLISTS_SUCCESS';
-// export const FETCH_TASKLISTS_FAILURE = 'FETCH_TASKLISTS_FAILURE';
-
-// export const SET_CURRENT_TASKLIST_ID_TO_NULL = 'SET_CURRENT_TASKLIST_ID_TO_NULL';
-
-// export const DELETE_TASKLIST_REQUEST = 'DELETE_TASKLIST_REQUEST';
-// export const DELETE_TASKLIST_SUCCESS = 'DELETE_TASKLIST_SUCCESS';
-// export const DELETE_TASKLIST_FAILURE = 'DELETE_TASKLIST_FAILURE';
-
 export function addTasklist(payload){
 	return function(dispatch){
 		dispatch(addTasklistRequest());

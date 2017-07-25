@@ -1,5 +1,4 @@
 import {createReducer} from '../../../utils';
-// import {USER_SIGNIN_SUCCESS, USER_SIGNIN_FAILURE, USER_SIGNUP_SUCCESS, USER_SIGNUP_FAILURE } from './actions';
 import * as types from '../constants';
 
 const initialState = {
