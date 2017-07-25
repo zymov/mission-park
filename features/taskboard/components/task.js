@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { formatDate, getLocaleDateR, repeatList, taskToolMenuList } from '../../../utils'
 import { formatDate, getLocaleDateR } from '../../../utils'
 import { repeatList, taskToolMenuList } from '../constants/constValue';
 import { toggleTask, showTaskDetail, deleteTask } from '../actions/taskActions';

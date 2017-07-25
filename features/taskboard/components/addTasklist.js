@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
 import Dropdown from './dropdown/dropdown';
 import { addTasklist } from '../actions/tasklistActions';
-// import { priorityList, priorityColors } from '../../../utils';
 import { priorityList, priorityColors } from '../constants/constValue';
 import { validateTasklistForm } from '../../../utils/validations';
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import AddTask from './addTask';
 import Dropdown from './dropdown/dropdown';
 import SearchInput from '../../common/components/searchInput';
-// import { taskAttrMenuList, getIndexOfArrayByValue } from '../../../utils';
 import { getIndexOfArrayByValue } from '../../../utils';
 import { taskAttrMenuList } from '../constants/constValue';
 import { searchInput } from '../../common/actions';
