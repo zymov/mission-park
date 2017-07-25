@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { deleteTasklist/*fetchTasklistStatus*/ } from '../actions/tasklistActions';
 import { fetchTasks } from '../actions/taskActions';
-import { formatDate, getLocaleDateR, tasklistToolMenuList } from '../../../utils';
+// import { formatDate, getLocaleDateR, tasklistToolMenuList } from '../../../utils';
+import { formatDate, getLocaleDateR } from '../../../utils';
+import { tasklistToolMenuList } from '../constants/constValue';
 import Dropdown from './dropdown/dropdown';
 
 class Tasklist extends React.Component {

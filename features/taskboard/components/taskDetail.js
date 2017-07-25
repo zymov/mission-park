@@ -5,7 +5,9 @@ import Dropdown from './dropdown/dropdown';
 import ExecutorsContainer from './executorsContainer';
 import TagsContainer from './tagsContainer';
 import { addTask, editTask, closeUsersDropdown, closeTagsDropdown, removeAllExecutor, removeAllTag } from '../actions/taskActions';
-import { formatDate, priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList, checkPropertyEquals } from '../../../utils';
+// import { formatDate, priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList, checkPropertyEquals } from '../../../utils';
+import { formatDate, checkPropertyEquals } from '../../../utils';
+import { priorityList, priorityColors, priorityMenuList, repeatList, repeatMenuList } from '../constants/constValue';
 import { validateTaskForm } from '../../../utils/validations';
 
 class TaskDetail extends React.Component {

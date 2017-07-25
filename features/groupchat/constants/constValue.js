@@ -1,0 +1,1 @@
+export const sendmsgMenuList = [ {name: '按Enter发送消息', keyName: 1}, {name: '按Ctrl+Enter发送消息', keyName: 2} ];
