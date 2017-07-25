@@ -82,7 +82,8 @@ module.exports = function(io){
         return;
       });
       
-      socket.broadcast.to(data.room).emit('new message', {
+      io.sockets.to(data.room).emit('new message', {
+        messageId: his.id,
         message: data.message,        // send `data` instead of multiple keys?
         senderId: data.senderId, 
         senderName: data.senderName, 
@@ -107,7 +108,8 @@ module.exports = function(io){
         return;
       });
       
-      socket.broadcast.to(data.room).emit('new message', {
+      io.sockets.to(data.room).emit('new message', {
+        messageId: his.id,
         file: data.file,             // send `data` instead of multiple keys?
         senderId: data.senderId, 
         senderName: data.senderName, 

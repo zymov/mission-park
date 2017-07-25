@@ -5,10 +5,6 @@ import LoadMoreHistory from './loadMoreHistory';
 
 class ChatroomBody extends React.Component {
 
-	// componentWillReceiveProps(nextProps){
-
-	// }
-
 	componentDidUpdate(prevProps, prevState){
 		if(prevProps.oldMsgLoading == this.props.oldMsgLoading){
 			$('.message-list li:last-child')[0].scrollIntoView();
@@ -17,11 +13,11 @@ class ChatroomBody extends React.Component {
 
 	render(){
 
-		let { haveMore, messageList, projectId } = this.props;
+		let { haveMore, messageList, projectId, decodedToken } = this.props;
 
 		let messageArr = messageList.map(function(item){
 			return(
-				<ChatMessage key={item._id} message={item} />
+				<ChatMessage key={item._id || item.messageId} message={item} decodedToken={decodedToken} />
 			);
 		});
 

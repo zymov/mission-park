@@ -19,9 +19,9 @@ class ChatroomInput extends React.Component {
 			message: ''
 		};
 
-		this.token = jwt_decode(localStorage.getItem('token'));
-		this.senderId = this.token.sub;
-		this.senderName = this.token.name;
+		this.decodedToken = this.props.decodedToken;
+		this.senderId = this.decodedToken.sub;
+		this.senderName = this.decodedToken.name;
 		this.room = this.props.projectId;
 
 		this.sendMsgHotKeyDropdown = {
@@ -66,11 +66,11 @@ class ChatroomInput extends React.Component {
 				senderId: that.senderId,
 				senderName: that.senderName,
 				room: that.room,
-				timestamp: (new Date()).toString(),
-				byself: true
+				timestamp: (new Date()).toString()
+				// byself: true
 			};	
 			socket.emit('send file', payload);
-			that.props.newMessage(payload);
+			// that.props.newMessage(payload);
 		}
 
 	}
@@ -82,11 +82,11 @@ class ChatroomInput extends React.Component {
 				senderId: this.senderId, 
 				senderName: this.senderName,
 				room: this.room, 
-				timestamp: (new Date()).toString(), 
-				byself: true
+				timestamp: (new Date()).toString() 
+				// byself: true
 			};
 			socket.emit('send message', payload);
-			this.props.newMessage(payload);
+			// this.props.newMessage(payload);
 			this.setState({
 				message: ''
 			});
@@ -107,11 +107,11 @@ class ChatroomInput extends React.Component {
 					senderId: this.senderId, 
 					senderName: this.senderName,
 					room: this.room, 
-					timestamp: (new Date()).toString(), 
-					byself: true
+					timestamp: (new Date()).toString() 
+					// byself: true
 				};
 				socket.emit('send message', payload);
-				this.props.newMessage(payload);
+				// this.props.newMessage(payload);
 				this.setState({
 					message: ''
 				});

@@ -15,12 +15,13 @@ export function newMessage(data){
 	return {
 		type: types.NEW_MESSAGE,
 		payload: {
+			messageId: data.messageId,
 			message: data.message,
 			file: data.file,
 			timestamp: data.timestamp,
 			senderId: data.senderId,
-			senderName: data.senderName,
-			byself: data.byself
+			senderName: data.senderName
+			// byself: data.byself
 		}
 	}
 }

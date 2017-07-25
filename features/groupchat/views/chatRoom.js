@@ -3,11 +3,19 @@ import { connect } from 'react-redux';
 import ChatroomInput from '../components/chatroomInput';
 import ChatroomHead from '../components/chatroomHead';
 import ChatroomBody from '../components/chatroomBody';
-import ChatMessage from '../components/chatMessage';
+// import ChatMessage from '../components/chatMessage';
 import ImgViewer from '../components/imgViewer';
 import { getMessageHistory, updateOnlineUsers, newMessage } from '../actions';
 
 class ChatRoom extends React.Component {
+
+	constructor(props){
+		super(props);
+
+		this.token = localStorage.getItem('token');
+		this.decodedToken = jwt_decode(this.token);
+
+	}
 
 	componentWillMount(){
 		this.props.getMessageHistory(this.props.params.projectId);
@@ -17,7 +25,7 @@ class ChatRoom extends React.Component {
 		let projectId = this.props.params.projectId;
 		let that = this;
 
-		socket.emit('join room', { room: projectId, userToken: localStorage.getItem('token') });
+		socket.emit('join room', { room: projectId, userToken: this.token });
 
 		socket.removeListener('new message');		// avoid duplicate event listeners when component remount
 		socket.on('new message', function(data){
@@ -38,11 +46,6 @@ class ChatRoom extends React.Component {
 
 	}
 
-	// componentDidUpdate(){
-	// 	if(this.props.messageList.length > 0){
-	// 		$('.message-list li:last-child')[0].scrollIntoView();
-	// 	}
-	// }
 
 	render(){
 
@@ -52,9 +55,9 @@ class ChatRoom extends React.Component {
 			<div className="container chatroom">
 				<div className="chatroom-wrapper">
 					<ChatroomHead onlineUserlist={onlineUserlist} updatedUser={updatedUser} />
-					<ChatroomBody projectId={this.props.params.projectId} />
+					<ChatroomBody projectId={this.props.params.projectId} decodedToken={this.decodedToken} />
 					<div className="chatroom-footer">
-						<ChatroomInput projectId={this.props.params.projectId} />
+						<ChatroomInput projectId={this.props.params.projectId} decodedToken={this.decodedToken} />
 					</div>
 				</div>
 				

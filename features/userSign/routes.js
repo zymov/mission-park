@@ -2,9 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import SignIn from './views/signin';
 import SignUp from './views/signup';
-import {deAuthenticateUser} from '../../utils';
 
-//	onEnter={ (nextState, replace)=>{deAuthenticateUser(); replace('/')} } 
 const routes = (
 	<Route >
 		<Route path="/auth/signout" />
