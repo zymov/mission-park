@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import DropdownInput from './dropdown/dropdownInput';
+import DropdownInput from '../../common/components/dropdown/dropdownInput';
 import InfoLabel from './infoLabel';
 import { addTag, removeTag, openTagsDropdown, closeTagsDropdown, invalidInput } from '../actions/taskActions';
 import { fetchTags, findTagsByName, saveTag } from '../../common/actions';

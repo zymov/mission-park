@@ -199,7 +199,7 @@ input, textarea {
   margin-top: 20px;
   padding: 0 15px;
 }
-#project-list .thumbnail {
+.thumbnail {
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -210,19 +210,34 @@ input, textarea {
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
 }
-#project-list .thumbnail:hover {
+.thumbnail:hover {
   box-shadow: 0 7px 21px rgba(0,0,0,.15);
   -webkit-transform: translate3d(0,-6px,0);
   transform: translate3d(0,-6px,0);
   transition: all 0.2s;  
 }
-#project-list .thumbnail>img {
+.project-options {
+  position: absolute;
+  right: 0px;
+  top: 145px;
+}
+.project-options span {
+  font-size: 20px;
+  color: #aaa;
+  padding-right: 20px;
+}
+.thumbnail > img {
   width: 100%;
 }
-#project-list .thumbnail .caption {
+.caption {
   height: 180px;
 }
-#project-list .thumbnail .caption p {
+.caption h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.caption p {
   display: block;
   display: -webkit-box;
   height: 95px; /* =line-height*font-size*line-to-show */
@@ -230,6 +245,8 @@ input, textarea {
   text-overflow: ellipsis;
   -webkit-line-clamp: 5; /*line-to-show*/
   -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  word-break: normal;
 }
 .project-info {
   white-space: nowrap;

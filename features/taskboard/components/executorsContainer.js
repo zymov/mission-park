@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import InfoLabel from './infoLabel';
-import DropdownInput from './dropdown/dropdownInput';
+import DropdownInput from '../../common/components/dropdown/dropdownInput';
 import { openUsersDropdown, closeUsersDropdown, addExecutor, removeExecutor } from '../actions/taskActions';
 import { fetchUsers, findUsersByName } from '../../common/actions';
 import { getIndexOfArray } from '../../../utils';

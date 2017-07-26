@@ -4,7 +4,7 @@ import { formatDate, getLocaleDateR } from '../../../utils'
 import { repeatList, taskToolMenuList } from '../constants/constValue';
 import { toggleTask, showTaskDetail, deleteTask } from '../actions/taskActions';
 import TriggerBtn from '../../common/components/modal_dialog/triggerBtn';
-import Dropdown from './dropdown/dropdown';
+import Dropdown from '../../common/components/dropdown/dropdown';
 
 class Task extends React.Component {
 	constructor(props){

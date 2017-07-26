@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import Dropdown from '../../taskboard/components/dropdown/dropdown';
+import Dropdown from '../../common/components/dropdown/dropdown';
 import { getIndexOfArrayByValue, setEndOfContenteditable, getCaretCharacterOffsetWithin, getHTMLCaretPosition } from '../../../utils';
 import { sendmsgMenuList } from '../constants/constValue';
 import { newMessage } from '../actions';

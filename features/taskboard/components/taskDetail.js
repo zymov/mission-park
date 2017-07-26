@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ModalWrapper, ModalHeader, ModalFooter } from '../../common/components/modal_dialog';
-import Dropdown from './dropdown/dropdown';
+import Dropdown from '../../common/components/dropdown/dropdown';
 import ExecutorsContainer from './executorsContainer';
 import TagsContainer from './tagsContainer';
 import { addTask, editTask, closeUsersDropdown, closeTagsDropdown, removeAllExecutor, removeAllTag } from '../actions/taskActions';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AddTask from './addTask';
-import Dropdown from './dropdown/dropdown';
+import Dropdown from '../../common/components/dropdown/dropdown';
 import SearchInput from '../../common/components/searchInput';
 import { getIndexOfArrayByValue } from '../../../utils';
 import { taskAttrMenuList } from '../constants/constValue';

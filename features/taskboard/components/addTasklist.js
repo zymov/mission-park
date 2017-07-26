@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
-import Dropdown from './dropdown/dropdown';
+import Dropdown from '../../common/components/dropdown/dropdown';
 import { addTasklist } from '../actions/tasklistActions';
 import { priorityList, priorityColors } from '../constants/constValue';
 import { validateTasklistForm } from '../../../utils/validations';
