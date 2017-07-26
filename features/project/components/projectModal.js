@@ -57,7 +57,7 @@ class ProjectModal extends React.Component {
 	render(){
 		return (
 			<ModalWrapper id="addProject" >
-				<ModalHeader createProject={true} />
+				<ModalHeader createProject />
 				<div className="modal-body">
 					<div className="form-group" >
 		        <input className={`form-control ${this.state.inputError.projectName ? 'error-input' : ''}`} name="projectName" 
