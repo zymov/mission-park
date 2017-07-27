@@ -10,15 +10,50 @@ var jwtSecret = require('../../config/jwt').jwtSecret;
 var utils = require('../../utils');
 
 
-router.post('/addproject', function(req, res){	
+router.post('/add', function(req, res){	
 	
 	var decoded = jwt.verify(req.body.token, jwtSecret);
 	User.findById(decoded.sub, function(err, user){
 		
 		var userName = user.name;
 
-		if(req.body.projectName.trim()){
-			var project = new Project();
+		var project = new Project();
+		project.projectName = req.body.projectName;
+		project.description = req.body.description;
+		project.createTime = utils.getLocaleDate(new Date());
+		project.owner = userName;
+		project.ownerId = decoded.sub;
+		project.save(function(err){
+			if(err){
+				res.status(500).json({errors: 'sorry, server is busy!'});
+			}
+			return res.status(200).json({project});
+		});
+		
+
+	});
+
+});
+
+router.post('/edit', function(req, res){
+
+	var decoded = jwt.verify(req.body.token, jwtSecret);
+	User.findById(decoded.sub, function(err, user){
+		
+		if(err){
+			console.log(err);
+			res.status(500).json({message: 'user not found'});
+		}
+
+		var userName = user.name;
+
+		Project.findOne({_id:req.body.projectId}).exec(function(err, project){
+
+			if(err){
+				console.log(err);
+				res.status(500).json({message: 'Could not find the project'});
+			}
+
 			project.projectName = req.body.projectName;
 			project.description = req.body.description;
 			project.createTime = utils.getLocaleDate(new Date());
@@ -30,14 +65,12 @@ router.post('/addproject', function(req, res){
 				}
 				return res.status(200).json({project});
 			});
-		} else {
-			return res.status(400).json({errors: 'check your project name'});
-		}
+
+		});
 
 	});
 
 });
-
 
 router.get('/fetch', function(req, res){
 

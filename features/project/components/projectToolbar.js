@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { TriggerBtn } from '../../common/components/modal_dialog';
 import ProjectModal from './projectModal';
 import SearchInput from '../../common/components/searchInput';
@@ -6,11 +7,12 @@ import SearchInput from '../../common/components/searchInput';
 class ProjectToolbar extends React.Component {
 
 	render(){
+
 		return(
 			<div className="toolbar clearfix" >
 				<div className="toolbar-btn">
 					<TriggerBtn dataTarget="#addProject" btnName="添加新项目" ></TriggerBtn>
-					<ProjectModal />
+					<ProjectModal createProject project={{}} />
 				</div>
 				<SearchInput model="project" attr={{name:"项目名称", keyName: 'projectName'}} />
 			</div>
@@ -18,5 +20,6 @@ class ProjectToolbar extends React.Component {
 	}
 
 }
+
 
 export default ProjectToolbar;

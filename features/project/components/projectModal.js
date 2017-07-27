@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addProject } from '../actions';
+import { addProject, editProject } from '../actions';
 import { validateProjectForm } from '../../../utils/validations';
 import { ModalWrapper, ModalHeader, ModalFooter, TriggerBtn } from '../../common/components/modal_dialog';
 
@@ -16,6 +16,15 @@ class ProjectModal extends React.Component {
 		}
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	componentWillReceiveProps(nextProps){
+		if(nextProps.project.projectName){
+			this.setState({
+				projectName: nextProps.project.projectName,
+				description: nextProps.project.description
+			});
+		}
 	}
 
 	handleInputChange(event){
@@ -44,20 +53,30 @@ class ProjectModal extends React.Component {
 			});
 			return;
 		}
-		this.props.addProject(payload);
+		if(this.props.editingProject){
+			payload.projectId = this.props.editingProject._id;
+			this.props.editProject(payload);
+		} else {
+			this.props.addProject(payload);	
+		}
 		this.setState({
 			projectName: '',
 			description: '',
 			inputError: {}
 		});
-		$('#addProject').click();
+		if(this.props.editingProject){
+			$('#editProject').click();
+		} else {
+			$('#addProject').click();
+		}
 		// this.props.actions.fetchProject();
 	}
 
 	render(){
+
 		return (
-			<ModalWrapper id="addProject" >
-				<ModalHeader createProject />
+			<ModalWrapper id={this.props.createProject ? 'addProject' : 'editProject' } >
+				<ModalHeader {...this.props} />
 				<div className="modal-body">
 					<div className="form-group" >
 		        <input className={`form-control ${this.state.inputError.projectName ? 'error-input' : ''}`} name="projectName" 
@@ -79,8 +98,13 @@ class ProjectModal extends React.Component {
 
 }
 
-const mapDispatchToProps = dispatch => ({
-	addProject: payload => { dispatch(addProject(payload)); }
+const mapStateToProps = state => ({
+	editingProject : state.project.editingProject
 });
 
-export default connect(null, mapDispatchToProps)(ProjectModal);
+const mapDispatchToProps = dispatch => ({
+	addProject: payload => dispatch(addProject(payload)),
+	editProject: payload => dispatch(editProject(payload))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectModal);

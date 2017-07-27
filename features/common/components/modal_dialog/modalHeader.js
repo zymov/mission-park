@@ -15,6 +15,8 @@ export default class ModalHeader extends React.Component {
 			headerText += '任务列表';
 		} else if(this.props.newTaskFlag){
 			headerText += '任务至  ' + this.props.createTaskTo;
+		} else if(this.props.editProject){
+			headerText = '编辑项目';
 		} else {
 			headerText = '编辑任务';
 		}

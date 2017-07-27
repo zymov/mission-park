@@ -1,12 +1,13 @@
 import * as types from '../constants';
 import { UPDATE_PROJECT_ARR } from '../../common/constants';
-import { addNewItemToArrayBegin } from '../../../utils';
+import { addNewItemToArrayBegin, updateItemInArray } from '../../../utils';
 
 const initialState = {
 	isLoading: false,
 	projects: [],
 	newProject: null,
 	fetchSuccess: false,
+	editingProject: null, 
 	isError: false,
 	infoText: {}
 }
@@ -98,6 +99,38 @@ export default function project(state = initialState, action){
 				}
 			});
 
+		case types.GET_EDITING_PROJECT:
+			return Object.assign({}, state, {
+				editingProject: action.payload
+			});
+
+		case types.EDIT_PROJECT_REQUEST:
+			return Object.assign({}, state, {
+				isLoading: true,
+				infoText: {
+					message: '正在保存...',
+					level: 'normal'
+				}
+			});
+		case types.EDIT_PROJECT_SUCCESS:
+			return Object.assign({}, state, {
+				isLoading: false,
+				editingProject: null,
+				projects: updateItemInArray(state.projects, action.payload, '_id'),
+				infoText: {
+					message: '保存成功！',
+					level: 'success'
+				}
+			});
+		case types.EDIT_PROJECT_FAILURE:
+			return Object.assign({}, state, {
+				isLoading: false,
+				editingProject: null,
+				infoText: {
+					message: '出错了！' + action.payload,
+					level: 'error'
+				} 
+			});
 
 		default:
 			return state;

@@ -7,7 +7,7 @@ export function addProject(payload){
 	return function(dispatch){
 		dispatch(addProjectRequest());
 		dispatch(openNotification());
-		axios.post('/projects/addproject',payload)
+		axios.post('/projects/add',payload)
 		.then(function(res){
 			dispatch(addProjectSuccess(res.data.project));
 		})
@@ -37,6 +37,41 @@ export function addProjectFailure(err){
 		payload: {
 			errors: err
 		}
+	}
+}
+
+export function editProject(payload){
+	return function(dispatch){
+
+		dispatch(editProjectRequest());
+		axios.post('/projects/edit', payload)
+			.then(function(res){
+				dispatch(editProjectSuccess(res.data.project));
+			})
+			.catch(function(err){
+				dispatch(editProjectFailure(err));
+			})
+
+	}
+}
+
+export function editProjectRequest(){
+	return {
+		type: types.EDIT_PROJECT_REQUEST
+	}
+}
+
+export function editProjectSuccess(project){
+	return {
+		type: types.EDIT_PROJECT_SUCCESS,
+		payload: project
+	}
+}
+
+export function editProjectFailure(err){
+	return {
+		type: types.EDIT_PROJECT_FAILURE,
+		payload: err
 	}
 }
 
@@ -110,6 +145,14 @@ export function deleteProjectSuccess(projectId){
 export function deleteProjectFailure(err){
 	return {
 		type: types.DELETE_PROJECT_FAILURE
+	}
+}
+
+
+export function getEditingProject(project){
+	return {
+		type: types.GET_EDITING_PROJECT,
+		payload: project
 	}
 }
 

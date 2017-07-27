@@ -8,7 +8,10 @@ class ProjectCard extends React.Component {
 		super(props, context);
 	}
 
-	handleClick(){
+	handleClick(e){
+		if(e.target.getAttribute('data-target') == ('#editProject' || '#deleteProject')){
+			return;
+		} 
 		this.context.router.push(`/project/${this.props.project._id}/taskboard`);
 	}
 

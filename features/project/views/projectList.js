@@ -6,6 +6,7 @@ import Notification from '../../common/components/notification/notification';
 import NotificationsContainer from '../../common/components/notification/notificationsContainer'
 import { isEmptyObject } from '../../../utils';
 import { fetchProject } from '../actions';
+import ProjectModal from '../components/projectModal';
 
 class ProjectList extends React.Component {
 
@@ -14,7 +15,7 @@ class ProjectList extends React.Component {
 	}
 
 	render(){
-		const { newProject, isLoading, projects, isError, infoText, showNotification } = this.props;
+		const { newProject, isLoading, projects, editingProject, isError, infoText, showNotification } = this.props;
 
 		var fetchedProject = [];
 		
@@ -31,6 +32,7 @@ class ProjectList extends React.Component {
 					<div className="row">
 						{fetchedProject}
 					</div>
+					<ProjectModal editProject project={editingProject ? editingProject : {}} />
 			  </div>
 		)
 	}
@@ -40,6 +42,7 @@ const mapStateToProps = (state) => ({
 	showNotification: state.common.showNotification,
 	isLoading: state.project.isLoading,
 	projects: state.project.projects,
+	editingProject: state.project.editingProject,
 	isError: state.project.isError,
 	newProject: state.project.newProject,
 	infoText: state.project.infoText

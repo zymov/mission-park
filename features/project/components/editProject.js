@@ -1,5 +1,6 @@
 import React from 'react';
-// import Dropdown from '../../common/components/dropdown/dropdown';
+import { connect } from 'react-redux';
+import { getEditingProject } from '../actions';
 
 class EditProject extends React.Component {
 
@@ -8,14 +9,26 @@ class EditProject extends React.Component {
 
 	}
 
+	handleEdit(){
+		this.props.getEditingProject(this.props.project);
+	}
 
+	handleDelelte(){
+
+	}
 
 	render(){
 
 		return (
 			<div className="project-options">
-				<span className="glyphicon glyphicon-pencil"></span>
-				<span className="glyphicon glyphicon-trash"></span>
+				<button type="button" 
+					data-toggle="modal" 
+					data-target="#editProject" 
+					className="glyphicon glyphicon-pencil" 
+					onClick={this.handleEdit.bind(this)} 
+					>
+				</button>
+				<button className="glyphicon glyphicon-trash" onClick={this.handleDelelte.bind(this, 'deleteProject')}></button>
 			</div>
 		);
 
@@ -23,4 +36,8 @@ class EditProject extends React.Component {
 
 }
 
-export default EditProject;
+const mapDispatchToProps = dispatch => ({
+	getEditingProject: project => dispatch(getEditingProject(project))
+});
+
+export default connect(null, mapDispatchToProps)(EditProject);
