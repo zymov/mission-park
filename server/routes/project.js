@@ -2,6 +2,8 @@ const express = require('express');
 const router = new express.Router();
 
 var Project = require('mongoose').model('Project');
+var Tasklist = require('mongoose').model('Tasklist');
+var Task = require('mongoose').model('Task');
 var User = require('mongoose').model('User');
 var Tag = require('mongoose').model('Tag');
 var jwt = require('jsonwebtoken');
@@ -154,16 +156,43 @@ router.get('/gettags', function(req, res){
 	});
 })
 
-router.delete('/deleteproject', function(req, res){
+router.delete('/delete', function(req, res){
 	let projectId = utils.getQueryVariable(req.url, 'projectId');
 
-	Project.remove({_id: projectId}).exec(function(err){
+	Tasklist.find({_projectid: projectId}).exec(function(err, tasklists){
 		if(err){
 			console.log(err);
-			return res.status(500).json({message: 'Could not delete this task.'});
+			return res.status(500).json({message: "There's an error finding tasklist in project." })
 		}
-		return res.status(200).json({projectId: projectId});
-	});
+
+		let tasklistIds = utils.getArrayOfSpecKey(tasklists, '_id');
+
+		Task.remove({_tasklistId: {$in: tasklistIds}}).exec(function(err){
+			if(err){
+				console.log(err);
+				return res.status(500).json({message: 'Could not delete tasks in this project'});
+			}
+
+			Tasklist.remove({_projectid: projectId}).exec(function(err){
+				if(err){
+					console.log(err);
+					return res.status(500).json({message: 'Could not delete tasklists in this project'});
+				}
+
+				Project.remove({_id: projectId}).exec(function(err){
+					if(err){
+						console.log(err);
+						return res.status(500).json({message: 'Could not delete this project.'});
+					}
+					return res.status(200).json({projectId: projectId});
+				});
+				
+			});
+
+		});
+
+	})
+
 
 });
 

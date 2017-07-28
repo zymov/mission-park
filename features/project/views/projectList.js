@@ -7,6 +7,7 @@ import NotificationsContainer from '../../common/components/notification/notific
 import { isEmptyObject } from '../../../utils';
 import { fetchProject } from '../actions';
 import ProjectModal from '../components/projectModal';
+import DeleteProjectModal from '../components/deleteProjectModal';
 
 class ProjectList extends React.Component {
 
@@ -33,6 +34,7 @@ class ProjectList extends React.Component {
 						{fetchedProject}
 					</div>
 					<ProjectModal editProject project={editingProject ? editingProject : {}} />
+					<DeleteProjectModal project={editingProject ? editingProject : {}} />
 			  </div>
 		)
 	}

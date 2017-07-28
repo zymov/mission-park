@@ -18,7 +18,8 @@ input, textarea {
 .bc-error   {background-color: #ff4f3e;}
 .bc-warning {background-color: #ffaf38;}
 .bc-normal  {background-color: #a6a6a6;}
-.not-actived { opacity: .5; }
+.not-actived {opacity: .5;}
+.common-error-input {border: 1px solid #ff4f3e;}
 /* common style end */
 
 /* notification style start */
@@ -221,6 +222,18 @@ input, textarea {
   right: 0px;
   top: 145px;
 }
+.project-options button {
+  border: 0;
+  background: none;
+  color: #999;
+  margin-right: 25px;
+  font-size: 20px;
+  display: none;
+  outline: 0;
+}
+.thumbnail:hover .project-options button {
+  display: inline-block;
+}
 .project-options span {
   font-size: 20px;
   color: #aaa;
@@ -253,6 +266,19 @@ input, textarea {
   text-overflow: ellipsis;
   width: 140px;
   overflow: hidden;
+}
+.double-check {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.double-check button {
+  flex: 1 1 auto;
+}
+.double-check input {
+  flex: 0 0 auto;
+  width: 70%;
+  transition: .2s;
 }
 /* project end */
 
@@ -1484,8 +1510,4 @@ li.properties-item.prop-date {
   width: 100%;
 }
 /* file center end */
-
-
-
-
 

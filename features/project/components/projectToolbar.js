@@ -3,8 +3,21 @@ import { connect } from 'react-redux';
 import { TriggerBtn } from '../../common/components/modal_dialog';
 import ProjectModal from './projectModal';
 import SearchInput from '../../common/components/searchInput';
+import { removeEditingProject } from '../actions';
 
 class ProjectToolbar extends React.Component {
+
+	componentDidMount(){
+		$('body').on('click', '[data-target="#addProject"]', this.clickHandler.bind(this));
+	}
+
+	clickHandler(){
+		this.props.removeEditingProject();
+	}
+
+	componentWillUnmount(){
+		$('body').off('click', '[data-target="#addProject"]', this.clickHandler.bind(this));
+	}
 
 	render(){
 
@@ -21,5 +34,8 @@ class ProjectToolbar extends React.Component {
 
 }
 
+const mapDispatchToProps = dispatch => ({
+	removeEditingProject: () => dispatch(removeEditingProject())
+})
 
-export default ProjectToolbar;
+export default connect(null, mapDispatchToProps)(ProjectToolbar);

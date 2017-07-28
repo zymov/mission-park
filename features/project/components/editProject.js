@@ -13,10 +13,6 @@ class EditProject extends React.Component {
 		this.props.getEditingProject(this.props.project);
 	}
 
-	handleDelelte(){
-
-	}
-
 	render(){
 
 		return (
@@ -28,7 +24,12 @@ class EditProject extends React.Component {
 					onClick={this.handleEdit.bind(this)} 
 					>
 				</button>
-				<button className="glyphicon glyphicon-trash" onClick={this.handleDelelte.bind(this, 'deleteProject')}></button>
+				<button type="button" 
+					data-toggle="modal" 
+					data-target="#deleteProject" 
+					className="glyphicon glyphicon-trash" 
+					onClick={this.handleEdit.bind(this)}>
+				</button>
 			</div>
 		);
 

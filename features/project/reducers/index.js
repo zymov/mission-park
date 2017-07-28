@@ -1,6 +1,6 @@
 import * as types from '../constants';
 import { UPDATE_PROJECT_ARR } from '../../common/constants';
-import { addNewItemToArrayBegin, updateItemInArray } from '../../../utils';
+import { addNewItemToArrayBegin, updateItemInArray, removeSpecificItemByAttrValue } from '../../../utils';
 
 const initialState = {
 	isLoading: false,
@@ -102,6 +102,10 @@ export default function project(state = initialState, action){
 		case types.GET_EDITING_PROJECT:
 			return Object.assign({}, state, {
 				editingProject: action.payload
+			});
+		case types.REMOVE_EDITING_PROJECT:
+			return Object.assign({}, state, {
+				editingProject: null
 			});
 
 		case types.EDIT_PROJECT_REQUEST:

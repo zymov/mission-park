@@ -115,7 +115,7 @@ export function fetchProjectFailure(err){
 export function deleteProject(projectId){
 	return function(dispatch){
 		dispatch(deleteProjectRequest());
-		axios.delete('/projects/deleteproject', {
+		axios.delete('/projects/delete', {
 			params: {
 				projectId: projectId
 			}
@@ -144,7 +144,8 @@ export function deleteProjectSuccess(projectId){
 
 export function deleteProjectFailure(err){
 	return {
-		type: types.DELETE_PROJECT_FAILURE
+		type: types.DELETE_PROJECT_FAILURE,
+		payload: err
 	}
 }
 
@@ -156,4 +157,8 @@ export function getEditingProject(project){
 	}
 }
 
-
+export function removeEditingProject(){
+	return {
+		type: types.REMOVE_EDITING_PROJECT
+	}
+}
