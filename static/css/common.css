@@ -278,6 +278,7 @@ input, textarea {
 .double-check input {
   flex: 0 0 auto;
   width: 70%;
+  margin-right: 15px;
   transition: .2s;
 }
 /* project end */

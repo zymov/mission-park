@@ -40,12 +40,17 @@ module.exports = {
 	    }
 	  ]
 	},
-	// plugins: [
-	//   new UglifyJsPlugin({
-	//   	sourceMap: true,
-	//   	compress: {
-	//   		warnings: true
-	//   	}
-	//   })
-	// ]
+	plugins: [
+		new webpack.DefinePlugin({
+		  'process.env': {
+		    NODE_ENV: JSON.stringify('production')
+		  }
+		}),
+	  new UglifyJsPlugin({
+	  	sourceMap: true,
+	  	compress: {
+	  		warnings: true
+	  	}
+	  })
+	]
 }
