@@ -90,7 +90,7 @@ router.get('/fetch', function(req, res){
 
 router.get('/getusers', function(req, res){
 
-	var userName = utils.getQueryVariable(req.url, 'userName');
+	let userName = req.query.userName;
 
 	const regex = new RegExp(utils.escapeRegex(userName ? userName : ''), 'gi'); 
 
@@ -139,7 +139,7 @@ router.post('/addtag', function(req, res){
 
 router.get('/gettags', function(req, res){
 
-	var tagName = utils.getQueryVariable(req.url, 'tagName');
+	let tagName = req.query.tagName;
 
 	const regex = new RegExp(utils.escapeRegex(tagName ? tagName : ''), 'gi'); 
 
@@ -157,7 +157,7 @@ router.get('/gettags', function(req, res){
 })
 
 router.delete('/delete', function(req, res){
-	let projectId = utils.getQueryVariable(req.url, 'projectId');
+	let projectId = req.query.projectId;
 
 	Tasklist.find({_projectid: projectId}).exec(function(err, tasklists){
 		if(err){

@@ -52,8 +52,8 @@ router.post('/upload', function(req, res){
 });
 
 router.get('/fetch', function(req, res){
-	let projectId = utils.getQueryVariable(req.url, 'projectId');
-	let folderId = utils.getQueryVariable(req.url, 'folderId');
+	let projectId = req.query.projectId,
+			folderId = req.query.folderId;
 
 	GridFiles.find({'metadata.projectId': projectId, 'metadata.folder.folderId': folderId}).sort({uploadDate: -1}).exec(function(err, files){
 		if(err){
@@ -65,8 +65,8 @@ router.get('/fetch', function(req, res){
 });
 
 router.get('/download', function(req, res){
-	let filename = utils.getQueryVariable(req.url, 'filename');
-	let fileId = utils.getQueryVariable(req.url, 'fileId');
+	let filename = req.query.filename,
+			fileId = req.query.fileId;
 	let decodedFilename = decodeURIComponent(filename);
 	// var mimetype = mime.lookup(files[0].filename);
 	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
@@ -80,7 +80,7 @@ router.get('/download', function(req, res){
 });
 
 router.get('/delete', function(req, res){
-	let fileId = utils.getQueryVariable(req.url, 'fileId');
+	let fileId = req.query.fileId;
 
 	GridFiles.find({ $or: [ {_id: fileId}, {'metadata.folder.directory': {'$regex': fileId}} ] }, function(err, files){
 		if(err){

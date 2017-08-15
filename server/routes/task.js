@@ -25,7 +25,7 @@ router.post('/addtasklist', function(req, res){
 });
 
 router.get('/fetchtasklists', function(req, res){
-	var projectId = utils.getQueryVariable(req.url, 'projectId');
+	let projectId = req.query.projectId;
 
 	Tasklist.find({_projectid: projectId}).sort({createTime: -1}).exec(function(err, tasklists){
 		if(err) {
@@ -39,7 +39,7 @@ router.get('/fetchtasklists', function(req, res){
 
 
 router.delete('/deletetasklist', function(req, res){
-	let tasklistId = utils.getQueryVariable(req.url, 'tasklistId');
+	let tasklistId = req.query.tasklistId;
 
 	Task.remove({_tasklistId: tasklistId}).exec(function(err){
 		if(err){
@@ -115,7 +115,7 @@ router.post('/edittask', function(req, res){
 })
 
 router.get('/fetchtasks', function(req, res){
-	var tasklistId = utils.getQueryVariable(req.url, 'tasklistId');
+	let tasklistId = req.query.tasklistId;
 
 	Task.find({_tasklistId: tasklistId}).sort({accomplished: 1, createTime: -1}).exec(function(err, tasks){
 		if(err){
@@ -162,7 +162,7 @@ router.post('/toggletask', function(req, res){
 
 
 router.delete('/deletetask', function(req, res){
-	let taskId = utils.getQueryVariable(req.url, 'taskId');
+	let taskId = req.query.taskId;
 
 	Task.remove({_id: taskId}).exec(function(err){
 		if(err){

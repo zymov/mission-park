@@ -176,21 +176,21 @@ module.exports = {
     return list.concat(newObject);
   },
 
-  getQueryVariable: function (url, key){
-    if(url.indexOf(key) == -1){return null;}
-    if(~url.indexOf('?')){
-      let query = url.split('?')[1];
-      let variables = query.split('&');
-      for(let i = 0; i < variables.length; i++){
-        let pair = variables[i].split('=');
-        if(key == pair[0]){
-          return pair[1];
-        }
-      }
-    } else {
-      return null;
-    }
-  },
+  // getQueryVariable: function (url, key){
+  //   if(url.indexOf(key) == -1){return null;}
+  //   if(~url.indexOf('?')){
+  //     let query = url.split('?')[1];
+  //     let variables = query.split('&');
+  //     for(let i = 0; i < variables.length; i++){
+  //       let pair = variables[i].split('=');
+  //       if(key == pair[0]){
+  //         return pair[1];
+  //       }
+  //     }
+  //   } else {
+  //     return null;
+  //   }
+  // },
 
   getIndexOfArray: function(arr, obj, attribute){
     return arr.map(function(item, index){

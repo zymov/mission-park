@@ -1,11 +1,10 @@
 const express = require('express');
 const router = new express.Router();
 let ChatMessageHistory = require('mongoose').model('ChatMessageHistory');
-let utils = require('../../utils');
 
 router.get('/getmessagehistory', function(req, res){
 
-	let room = utils.getQueryVariable(req.url, 'room');
+	let room = req.query.room;
 
 	ChatMessageHistory
 		.find({roomId: room})
@@ -26,8 +25,8 @@ router.get('/getmessagehistory', function(req, res){
 
 router.get('/fetcholderchathistory', function(req, res){
 
-	let room = utils.getQueryVariable(req.url, 'room'),
-			currentMsgCount = parseInt(utils.getQueryVariable(req.url, 'currentMsgCount'), 15);
+	let room = req.query.room,
+			currentMsgCount = parseInt(req.query.currentMsgCount, 15);
 
 	ChatMessageHistory
 		.find({roomId: room})
